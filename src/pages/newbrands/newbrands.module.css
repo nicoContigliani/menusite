@@ -1,0 +1,225 @@
+/* Variables para mantener la consistencia */
+
+
+/* Estilos generales */
+.body {
+  /* Estilos para el body */
+  box-shadow: 5px 4px 8px 5px var(--gray-shadow);
+  border-radius: var(--border-radius-small);
+}
+
+.link {
+  text-decoration: none;
+  color: inherit;
+  /* Asegura que el color del enlace se hereda */
+}
+
+/* Contenedor principal */
+.container {
+  display: grid;
+  grid-template-columns: 1fr;
+  /* Por defecto, una columna */
+  gap: 1px;
+  /* Espacio entre elementos */
+  padding: 1%;
+  /* Padding para evitar que el contenido toque los bordes */
+  box-sizing: border-box;
+  /* Incluye padding y borde dentro del ancho/alto */
+  max-width: 100%;
+  /* Evita que el contenedor sea más ancho que su padre */
+  overflow-x: auto;
+  /* Permite desplazamiento horizontal si es necesario */
+  word-wrap: break-word;
+  /* Rompe palabras largas para evitar desbordamientos */
+
+  justify-content: center;
+  /* Centra las columnas horizontalmente dentro del contenedor */
+  align-content: center;
+  /* Centra el contenido en el eje vertical */
+
+  justify-items: center;
+  /* Centra cada elemento en su celda horizontalmente */
+  align-items: center;
+  /* Centra cada elemento en su celda verticalmente */
+  background-color: red;
+}
+
+/* Contenedor para el texto */
+.textContainer {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Estilo para el título principal */
+.title {
+  font-size: 9vw;
+  font-weight: 700;
+  color: var(--gray-light);
+  margin: 5px 0;
+  box-shadow: 1px 4px 8px var(--gray-shadow);
+  border-radius: var(--border-radius-small);
+}
+
+/* Estilo para el título de la app */
+.titleApp {
+  font-size: 5vw;
+  font-weight: 500;
+  color: var(--gray-medium);
+  margin-top: 1px;
+  padding-bottom: 5%;
+}
+
+/* Estilo para la imagen */
+.image {
+  display: flex;
+  justify-content: center;
+  align-self: flex-end;
+  /* Alinea la imagen al final del contenedor */
+  padding: 5px;
+  border-radius: var(--border-radius-medium);
+}
+
+.image img {
+  max-width: 80%;
+  height: auto;
+  border-radius: var(--border-radius-medium);
+  padding-left: 2%;
+  display: block;
+  /* Evita espacios extra debajo de la imagen */
+}
+
+/* Estilos para los botones */
+.button {
+  width: 100%;
+  padding: 10px 50px;
+  font-size: 1.1rem;
+  border-radius: var(--border-radius-large);
+  font-weight: 300;
+  cursor: pointer;
+  transition: all var(--transition-duration) ease;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 4px 15px var(--white-shadow-light);
+  margin: 10px 0 18px;
+  /* Margen superior, 0 a los lados, inferior */
+  background: rgba(255, 255, 255, 0.0033);
+  color: #fff;
+  border: 2px solid var(--white-transparent-light);
+  display: flex;
+  /* Simplifica el centrado */
+  justify-content: center;
+  align-items: center;
+}
+
+.button:hover {
+  background: var(--white-transparent-medium);
+  border-color: var(--white-transparent-strong);
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px var(--white-shadow-medium);
+}
+
+.button:active {
+  transform: scale(0.98);
+}
+
+.button a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.steps {
+  grid-template-columns: repeat(3, 1fr);
+
+  box-shadow: 5px 4px 8px 5px var(--gray-shadow);
+  border-radius: var(--border-radius-small);
+  width: 360px;
+  margin: 1%;
+  padding: 5%;
+}
+
+.body {
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Media Queries (Mobile-First) */
+@media (min-width: 768px) {
+  .container {
+    grid-template-columns: 1fr 8fr;
+    /* 1/3 para .steps y 2/3 para .body */
+    align-items: center;
+    justify-items: center;
+    background-color: rgba(255, 255, 255, 0.003);
+    padding: 10px;
+    /* Aumenta el padding en pantallas grandes */
+    gap: 5px;
+    /* Espacio entre elementos */
+    box-sizing: border-box;
+    /* Incluye padding y borde dentro del ancho/alto */
+    max-width: 100%;
+    /* Evita que el contenedor sea más ancho que su padre */
+    overflow-x: auto;
+    /* Permite desplazamiento horizontal si es necesario */
+    word-wrap: break-word;
+    /* Rompe palabras largas para evitar desbordamientos */
+    justify-content: space-around;
+    /* Centra las columnas horizontalmente dentro del contenedor */
+    align-content: center;
+    /* Centra el contenido en el eje vertical */
+
+    background-color: #36454f;
+  }
+
+  .images {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.9;
+    padding-bottom: 0;
+    /* Elimina el padding inferior en pantallas grandes */
+  }
+
+  .textContainer {
+    justify-self: center;
+  }
+
+  .title {
+    font-size: 2em;
+    color: #ffffff;
+  }
+
+  .titleApp {
+    font-size: 2em;
+    color: #d0d0d0;
+  }
+
+  .image {
+    justify-content: start;
+    padding-right: 50px;
+    align-self: center;
+  }
+
+  .image img {
+    max-width: 50%;
+  }
+
+  .steps {
+    Position:sticky;
+
+    box-shadow: 5px 4px 8px 5px var(--gray-shadow);
+    border-radius: var(--border-radius-small);
+    width: 300px;
+    margin: 1%;
+    padding: 5%;
+    background-color: white;    /* Asegura que el fondo no se vuelva transparente */
+  
+    /* Sombra para el texto */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Sombra de texto: desplazamiento y difuso */
+  }
+  .body {
+    width: 100%;
+    overflow: hidden;
+  }
+
+}

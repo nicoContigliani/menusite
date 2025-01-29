@@ -1,0 +1,188 @@
+/* Contenedor principal con imagen de fondo */
+.menuContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.85);
+    /* Transparencia */
+    color: #333;
+    max-width: 1200px;
+    margin: 0 auto;
+    border-radius: 20px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    font-family: 'Merriweather', serif;
+    backdrop-filter: blur(30px);
+    /* Suavizado */
+    background-size: cover;
+    /* La imagen cubre todo el área */
+    background-position: center;
+    /* Centrada */
+    background-attachment: fixed;
+    /* Fijada mientras se hace scroll */
+}
+
+/* Encabezado */
+.header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.mainTitle {
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: #5c4033;
+    /* Marrón cálido */
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow: 4px 4px 10px white;
+
+}
+
+.searchInput {
+    width: 100%;
+    max-width: 400px;
+    padding: 12px 20px;
+    font-size: 1rem;
+    border: 2px solid #aaa;
+    border-radius: 50px;
+    background-color: rgba(255, 255, 255, 0.9);
+    /* Transparencia */
+    color: #333;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+}
+
+.searchInput:focus {
+    border-color: #6a5acd;
+    box-shadow: 0 0 10px rgba(106, 90, 205, 0.5);
+}
+
+/* Sección */
+.section {
+    width: 100%;
+    margin-bottom: 30px;
+    font-weight: 700;
+
+}
+
+.sectionTitle {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #ffffff;
+    /* Marrón oscuro */
+    margin-bottom: 20px;
+    text-align: center;
+    border-bottom: 2px solid rgba(200, 180, 150, 0.5);
+    padding-bottom: 5px;
+    text-shadow: 4px 4px 10px black;
+
+}
+
+/* Lista de elementos */
+.itemList {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+/* Tarjetas */
+.itemCard {
+    background-color: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(200, 180, 150, 0.6);
+    /* Color cálido */
+    border-radius: 12px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.itemCard:hover {
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
+    transform: translateY(-5px);
+}
+
+.cardImageWrapper {
+    height: 180px;
+    overflow: hidden;
+    position: relative;
+    background-color: rgba(245, 245, 245, 0.8);
+}
+
+.cardImageWrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.itemCard:hover .cardImageWrapper img {
+    transform: scale(1.1);
+}
+
+.cardContent {
+    padding: 20px;
+    text-align: left;
+}
+
+.cardTitle {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #2c2c2c;
+}
+
+.cardDescription {
+    font-size: 1rem;
+    margin-bottom: 15px;
+    color: #666;
+    line-height: 1.5;
+    font-style: italic;
+}
+
+.cardFooter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.cardPrice {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #6a5acd;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    .menuContainer {
+        padding: 20px;
+        background-size: cover;
+        /* Asegura que la imagen aún se vea bien */
+        background-position: center;
+        /* Centra la imagen */
+    }
+
+    .mainTitle {
+        font-size: 2.2rem;
+    }
+
+    .itemList {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .menuContainer {
+        padding: 10px;
+        background-size: cover;
+        /* Ajusta la imagen al tamaño del dispositivo */
+        background-position: center;
+    }
+
+    .itemList {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

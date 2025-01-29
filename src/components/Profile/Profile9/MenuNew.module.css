@@ -1,0 +1,151 @@
+/* Fondo limpio inspirado en Apple */
+.menuWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    padding: 20px;
+    background: linear-gradient(180deg, #f9f9f96e 0%, #ffffff21 50%, #ffffff85 100%);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #000000;
+}
+
+/* Filtro */
+.filterWrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.filterInput {
+    padding: 10px;
+    width: 300px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    color: #333;
+    transition: border 0.3s ease;
+}
+
+.filterInput:focus {
+    outline: none;
+    border-color: #0078d7;
+}
+
+/* Cabecera */
+.header {
+    text-align: center;
+    padding: 30px 0;
+    border-bottom: 3px solid #ffffff;
+}
+
+.header h1 {
+    font-size: 4rem;
+    font-weight: 700;
+    color: #e1e1e1;
+    text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.8);
+}
+
+/* Sección */
+.section {
+    width: 100%;
+}
+
+.sectionTitle {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333333;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    border-left: 5px solid #0078d7; /* Color azul de Windows */
+    padding-left: 10px;
+}
+
+/* Diseño de los bloques tipo "Live Tiles" */
+.sectionItems {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+/* Estilo para cada elemento del menú */
+.menuItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+.menuItem:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Imagen del elemento */
+.itemImage {
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.itemImage img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Información del elemento */
+.itemInfo {
+    text-align: center;
+}
+
+.itemInfo h2 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: white;
+}
+
+.itemInfo p {
+    font-size: 0.9rem;
+    margin: 5px 0;
+    color: #f0f0f0;
+}
+
+.itemInfo .price {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #f0f0f0;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    .sectionItems {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+}
+/* Estilo para el campo de búsqueda */
+.searchInput {
+    width: 50%;
+    padding: 10px;
+    margin: 20px 0;
+    font-size: 1rem;
+    border: 2px solid #909090;
+    border-radius: 5px;
+    outline: none;
+}
+
+.searchInput::placeholder {
+    color: #888;
+}

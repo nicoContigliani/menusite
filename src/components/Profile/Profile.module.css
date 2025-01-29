@@ -1,0 +1,96 @@
+.container {
+  display: grid;
+  grid-template-columns: 1fr;
+  /* Por defecto, una columna */
+  gap: 1px;
+  /* Espacio entre elementos */
+  padding: 1%;
+  /* Padding para evitar que el contenido toque los bordes */
+  box-sizing: border-box;
+  /* Incluye padding y borde dentro del ancho/alto */
+  max-width: 100%;
+  /* Evita que el contenedor sea más ancho que su padre */
+  overflow-x: auto;
+  /* Permite desplazamiento horizontal si es necesario */
+  word-wrap: break-word;
+  /* Rompe palabras largas para evitar desbordamientos */
+  
+  justify-content: center; /* Centra las columnas horizontalmente dentro del contenedor */
+  align-content: center;   /* Centra el contenido en el eje vertical */
+  
+  justify-items: center;   /* Centra cada elemento en su celda horizontalmente */
+  align-items: center;     /* Centra cada elemento en su celda verticalmente */
+  background-color: red;
+}
+
+@media (min-width: 768px) {
+  .container {
+    grid-template-columns: repeat(1, 1fr);
+    align-items: center;
+    justify-items: center;
+    background-color: rgba(255, 255, 255, 0.003);
+    padding: 4px;
+    /* Aumenta el padding en pantallas grandes */
+    gap: 5px;
+    /* Espacio entre elementos */
+    box-sizing: border-box;
+    /* Incluye padding y borde dentro del ancho/alto */
+    max-width: 100%;
+    /* Evita que el contenedor sea más ancho que su padre */
+    overflow-x: auto;
+    /* Permite desplazamiento horizontal si es necesario */
+    word-wrap: break-word;
+    /* Rompe palabras largas para evitar desbordamientos */
+    justify-content: space-around; /* Centra las columnas horizontalmente dentro del contenedor */
+    align-content: center;   /* Centra el contenido en el eje vertical */
+    
+  }
+
+  .images {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.9;
+    padding-bottom: 0;
+    /* Elimina el padding inferior en pantallas grandes */
+  }
+
+  .textContainer {
+    justify-self: center;
+  }
+
+  .title {
+    font-size: 2em;
+    color: #ffffff;
+  }
+
+  .titleApp {
+    font-size: 2em;
+    color: #d0d0d0;
+  }
+
+  .image {
+    justify-content: start;
+    padding-right: 50px;
+    align-self: center;
+  }
+
+  .image img {
+    max-width: 50%;
+  }
+
+  .steps {
+    box-shadow: 5px 4px 8px 5px var(--gray-shadow);
+    border-radius: var(--border-radius-small);
+    width: 300px;
+    margin: 1%;
+    padding: 5%;
+    
+  }
+
+  .body {
+    width: 100%;
+    overflow: hidden;
+  }
+
+}

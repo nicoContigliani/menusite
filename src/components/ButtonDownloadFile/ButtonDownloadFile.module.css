@@ -1,0 +1,139 @@
+/* Variables para mantener la consistencia y facilitar cambios */
+
+/* Estilo general para todo el fondo */
+
+.link {
+  text-decoration: none;
+}
+
+/* Contenedor principal */
+.container {
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  width: 100%;
+  padding: 20px;
+  background: linear-gradient(135deg, 
+              rgba(26, 26, 26, 0.8) 0%, 
+              rgba(60, 60, 60, 0.6) 50%, 
+              rgba(90, 90, 90, 0.3) 100%);
+  color: #e0e0e0;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+}
+
+/* Contenedor para el texto */
+.textContainer {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+/* Estilo para el título principal */
+.title {
+  font-size: 8vw;
+  font-weight: 800;
+  color: #f1f1f1;
+  margin: 10px 0;
+  text-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+}
+
+/* Estilo para el título de la app */
+.titleApp {
+  font-size: 4vw;
+  font-weight: 600;
+  color: #f0f0f0;
+  margin-top: 5px;
+  padding-bottom: 10px;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+/* Estilo para la imagen */
+.image {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  border-radius: 15px;
+}
+
+.image img {
+  padding: 10px;
+  max-width: 90%;
+  height: auto;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+/* Estilos para los botones */
+.button {
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  border-radius: var(--border-radius);
+  font-weight: 500; /* Peso de fuente más ligero */
+  cursor: pointer;
+  transition: all var(--transition-duration) ease;
+  text-transform: uppercase;
+  border: 1px solid var(--primary-color); /* Borde con el color primario */
+  background-color: transparent; /* Fondo transparente */
+  color: var(--primary-color);
+  box-shadow: 0 0.25rem 0.5rem var(--shadow-color);
+}
+
+/* Efecto al pasar el mouse */
+.button:hover {
+  background-color: var(--primary-color);
+  color: #fff;
+  transform: translateY(-0.25rem);
+  box-shadow: 0 0.5rem 1rem var(--hover-shadow-color);
+}
+
+/* Efecto al hacer clic */
+.button:active,
+.inputFile:active {
+  transform: translateY(0);
+  box-shadow: 0 0.125rem 0.25rem var(--shadow-color);
+}
+.buttonSend {
+  background-color: var(--primary-color);
+  color: #fff;
+}
+
+/* Estilos para pantallas grandes (escritorio) */
+@media (min-width: 768px) {
+  .container {
+    padding: 40px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    align-items: center;
+    justify-items: center;
+  }
+
+  .textContainer {
+    justify-self: center;
+    gap: 20px;
+  }
+
+  .title {
+    font-size: 3em;
+    color: #ffffff;
+  }
+
+  .titleApp {
+    font-size: 2.5em;
+    color: #e0e0e0;
+  }
+
+  .image {
+    justify-content: center;
+    padding-right: 20px;
+    align-self: center;
+  }
+
+  .image img {
+    max-width: 70%;
+  }
+}

@@ -1,0 +1,25 @@
+.descriptionContainer {
+    width: 100%;
+    padding: 16px;
+    box-sizing: border-box;
+  }
+  
+  .description {
+    margin: 0 auto;
+    max-width: 800px;
+  }
+  
+  @media (max-width: 768px) {
+    .description {
+      max-width: 100%; /* Usa el ancho completo en pantallas pequeñas */
+      font-size: 14px; /* Ajusta el tamaño de fuente */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .description {
+      font-size: 12px; /* Reduce aún más el tamaño en pantallas pequeñas */
+      padding: 8px;    /* Reduce el padding */
+    }
+  }
+  

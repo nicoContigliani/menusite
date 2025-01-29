@@ -1,0 +1,142 @@
+/* Contenedor general del menú */
+.menuContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    padding: 20px;
+    background: linear-gradient(to bottom, #1e1e1e, #0a0a0a);
+    color: #f0f0f0;
+    overflow: hidden;
+    max-width: 1200px;
+    margin: 0 auto;
+    border-radius: 10px;
+    background-size: cover; /* La imagen cubre todo el área */
+    background-position: center; /* Centrada */
+    background-attachment: fixed; /* Fijada mientras se hace scroll */
+}
+
+/* Encabezado */
+.header {
+    width: 100%;
+    text-align: center;
+}
+
+.mainTitle {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #00ffcc;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+
+.searchInput {
+    padding: 12px 16px;
+    font-size: 1rem;
+    border: 2px solid #00ffcc;
+    border-radius: 20px;
+    background-color: #1e1e1e;
+    color: white;
+    outline: none;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+    transition: border-color 0.3s ease;
+}
+
+.searchInput:focus {
+    border-color: #ff0077;
+}
+
+/* Sección */
+.section {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.sectionTitle {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #ff0077;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Lista de elementos */
+.itemList {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+/* Tarjetas */
+.itemCard {
+    background-color: #222;
+    border: 2px solid #333;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+}
+
+.itemCard:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+    border-color: #00ffcc;
+}
+
+.cardImageWrapper {
+    height: 150px;
+    overflow: hidden;
+    position: relative;
+}
+
+.cardImageWrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.itemCard:hover .cardImageWrapper img {
+    transform: scale(1.1);
+}
+
+.cardContent {
+    padding: 15px;
+    text-align: center;
+}
+
+.cardTitle {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #f0f0f0;
+    margin-bottom: 10px;
+}
+
+.cardDescription {
+    font-size: 0.9rem;
+    color: #ccc;
+    margin-bottom: 10px;
+}
+
+.cardPrice {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #ff0077;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .mainTitle {
+        font-size: 2rem;
+    }
+
+    .sectionTitle {
+        font-size: 1.5rem;
+    }
+
+    .itemList {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

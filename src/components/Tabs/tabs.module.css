@@ -1,0 +1,21 @@
+.tabsContainer {
+    width: 100%;
+    margin: 0 auto;
+    padding: 16px;
+  }
+  
+  .tabs {
+    display: flex;
+    flex-direction: norows;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  @media (max-width: 768px) {
+    .tabs {
+      flex-direction: column; /* Cambia a columna en pantallas pequeñas */
+      align-items: stretch;
+    }
+  }
+  

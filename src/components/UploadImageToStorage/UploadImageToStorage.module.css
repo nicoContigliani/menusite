@@ -1,0 +1,157 @@
+/* Variables para mantener la consistencia y facilitar cambios */
+
+
+/* Estilos generales */
+.body {
+  font-family: sans-serif; /* Fuente más moderna */
+  line-height: 1.6;
+  color: var(--text-color);
+  background-color: #fff; /* Fondo blanco */
+  margin: 0; /* Elimina márgenes por defecto del body */
+}
+
+.link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  gap: 2rem;
+  max-width: var(--max-content-width);
+  margin: 0 auto; /* Centra el contenedor principal */
+}
+
+.textContainer {
+  text-align: center;
+  margin-bottom: 2rem; /* Espacio entre texto e imágenes */
+}
+
+.title {
+  font-weight: 700;
+  color: #000;
+  font-size: clamp(2.5rem, 6vw, 4rem); /* Aumenta un poco el tamaño */
+  margin-bottom: 1rem;
+}
+
+.titleApp {
+  font-weight: 500;
+  color: #6c757d; /* Gris un poco más oscuro */
+  font-size: clamp(1.2rem, 3vw, 2rem);
+}
+
+.imageContainer {
+  display: grid;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  width: 100%; /* Ocupa todo el ancho disponible */
+}
+
+.image {
+  overflow: hidden; /* Recorta la imagen si se sale del contenedor */
+  border-radius: var(--border-radius);
+  box-shadow: 0 0.5rem 1rem var(--shadow-color); /* Sombra más moderna */
+  transition: transform var(--transition-duration) ease-in-out;
+}
+
+.image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Cubre todo el contenedor manteniendo la proporción */
+  display: block;
+}
+
+.image:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0.75rem 1.5rem var(--hover-shadow-color);
+}
+
+.button,
+.inputFile {
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  border-radius: var(--border-radius);
+  font-weight: 500; /* Peso de fuente más ligero */
+  cursor: pointer;
+  transition: all var(--transition-duration) ease;
+  text-transform: uppercase;
+  border: 1px solid var(--primary-color); /* Borde con el color primario */
+  background-color: transparent; /* Fondo transparente */
+  color: var(--primary-color);
+  box-shadow: 0 0.25rem 0.5rem var(--shadow-color);
+}
+
+.button:hover,
+.inputFile:hover {
+  background-color: var(--primary-color);
+  color: #fff;
+  transform: translateY(-0.25rem);
+  box-shadow: 0 0.5rem 1rem var(--hover-shadow-color);
+}
+
+.button:active,
+.inputFile:active {
+  transform: translateY(0);
+  box-shadow: 0 0.125rem 0.25rem var(--shadow-color);
+}
+
+.buttonSend {
+  background-color: var(--primary-color);
+  color: #fff;
+}
+
+/* Media Queries - mobile-first approach */
+@media (min-width: 576px) { /* Pantallas pequeñas */
+    .imageContainer {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Adaptable a partir de 250px */
+    }
+}
+
+@media (min-width: 768px) {
+  .imageContainer {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1200px) { /* Pantallas grandes */
+  .imageContainer {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.fileIcon {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--lighter-gray);
+  border: 1px solid var(--light-gray);
+  border-radius: var(--border-radius);
+  padding: 0.5rem 1rem;
+  box-shadow: 0 0.125rem 0.25rem var(--shadow-color);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-color);
+  margin: 1rem auto;
+}
+
+.fileIcon a {
+  color: var(--primary-color);
+  transition: color var(--transition-duration) ease;
+}
+
+.fileIcon a:hover {
+  color: darken(var(--primary-color), 10%);
+}
+
+.progressBar {
+  width: 100%;
+  height: 0.5rem;
+  background-color: var(--light-gray);
+  border-radius: 0.25rem;
+  overflow: hidden;
+  box-shadow: inset 0.125rem 0.125rem 0.25rem var(--shadow-color);
+  margin: 1rem 0;
+}

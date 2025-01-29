@@ -1,0 +1,139 @@
+.container {
+    display: flex;
+    /* Cambiamos de grid a flex para una mejor adaptabilidad */
+    flex-direction: column;
+    /* Apilamos los elementos verticalmente */
+    align-items: center;
+    /* Centrado horizontal */
+    justify-content: center;
+    /* Centrado vertical */
+    min-height: 100vh;
+    /* Mínimo de altura para pantallas grandes */
+    width: 100%;
+    /* Aseguramos que ocupe todo el ancho */
+    background-size: cover;
+    /* Imagen de fondo cubre todo el espacio */
+    background-position: center;
+    /* Centrado de la imagen */
+    background-repeat: no-repeat;
+    /* Evitar que se repita */
+    padding: 1rem;
+    /* Espaciado interno */
+    box-sizing: border-box;
+    /* Incluye padding en el cálculo del tamaño */
+}
+
+.navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 800px;
+    /* Máximo ancho */
+    margin-bottom: 2rem;
+    /* Separación con el contenido */
+}
+
+.navButton {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.navButton:hover {
+    transform: scale(1.1);
+    background-color: #e0e0e0;
+}
+
+
+
+.title {
+    font-size: 2rem;
+    color: #333;
+    text-align: center;
+    margin: 0;
+    word-break: break-word;
+    /* Asegura que no se salga del contenedor */
+    text-shadow: 1px 1px rgba(255, 255, 255, 0.261);
+
+}
+
+.profile {
+    width: 100%;
+    max-width: 1200px;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 15px;
+    padding: 1.5rem;
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.645);
+    overflow: auto;
+    margin: 0 auto;
+    /* Centra el contenido en pantallas grandes */
+}
+
+.selectButton {
+    background-color: #95959528;
+    /* Azul claro */
+    color: #fff;
+    /* Texto blanco */
+    border: none;
+    border-radius: 30px;
+    /* Esquinas redondeadas */
+    padding: 0.8rem 1.2rem;
+    /* Espaciado interno */
+    font-size: 1rem;
+    /* Tamaño de fuente */
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.507);
+    /* Sombras */
+    text-shadow: 1px 1px rgba(255, 255, 255, 0.693);
+
+}
+
+.selectButton:hover {
+    background-color: #0056b3;
+    /* Azul más oscuro */
+    transform: translateY(-2px);
+    /* Efecto de flotación */
+}
+
+.selectButton:active {
+    background-color: #003f7f;
+    /* Azul aún más oscuro */
+    transform: translateY(0);
+    /* Reset del efecto de flotación */
+}
+
+
+@media (max-width: 1200px) {
+    .profile {
+        max-width: 95%;
+        /* Ajusta el ancho en pantallas medianas */
+    }
+
+}
+
+@media (max-width: 768px) {
+    .navButton {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
+
+    .title {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .profile {
+        max-width: 90%;
+        /* Reduce el tamaño en pantallas pequeñas */
+        padding: 1rem;
+    }
+}

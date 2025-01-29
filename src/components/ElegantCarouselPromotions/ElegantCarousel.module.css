@@ -1,0 +1,80 @@
+.carouselContainer {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 1rem;
+  text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.802);
+
+}
+
+.carouselWrapper {
+  overflow: hidden;
+}
+
+.carouselContent {
+  display: flex;
+  transition: transform 0.3s ease-in-out;
+}
+
+.carouselItem {
+  flex: 0 0 calc(100% / 5); /* Cada elemento ocupa un tercio del carrusel */
+  box-sizing: border-box;
+  padding: 1rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+}
+.carouselItem:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.36);
+}
+
+.textContent {
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 10%;
+  background-color:rgba(255, 255, 255, 0.622);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.36);
+
+  text-align: center;
+}
+
+.title {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.description {
+  color: rgb(66, 66, 66); /* Tailwind gray-600 equivalent */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.navButton {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  padding: 0.5rem;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.navButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.navButtonLeft {
+  left: 1rem;
+}
+
+.navButtonRight {
+  right: 1rem;
+}
