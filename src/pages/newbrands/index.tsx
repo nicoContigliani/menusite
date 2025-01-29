@@ -1,24 +1,29 @@
 "use client";
 import dynamic from 'next/dynamic';
-import React, { useEffect, useLayoutEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import styles from './newbrands.module.css'
 import { DescriptionsProps, Divider, TabsProps } from 'antd';
 
 import { FormaterDataItems } from '../../services/formaterDataItems.services';
-import { DescriptionComponent } from '@/components/Description/Descriptions';
+// import { DescriptionComponent } from '@/components/Description/Descriptions';
 import { replaceImageUrls } from '../../services/UploadImageUrl.services';
-import Navbar from '@/components/Navbar/Navbar';
-import DownloadFile from '@/components/DownloadFile/DownloadFile';
-import UploadImageToStorage from '@/components/UploadImageToStorage/UploadImageToStorage';
-import Profile from '@/components/Profile/Profile';
-import Licence from '@/components/Licence/Licence';
+// import Navbar from '@/components/Navbar/Navbar';
+// import DownloadFile from '@/components/DownloadFile/DownloadFile';
+// import UploadImageToStorage from '@/components/UploadImageToStorage/UploadImageToStorage';
+// import Profile from '@/components/Profile/Profile';
+// import Licence from '@/components/Licence/Licence';
 
 
-
-
+const DescriptionComponent = dynamic(() => import('@/components/Description/Descriptions'), { ssr: false });
 const StepsComponent = dynamic(() => import('../../components/steps/Steps'), {
   ssr: false // Desactiva el renderizado del lado del servidor si es necesario
 });
+
+const Navbar = dynamic(() => import('@/components/Navbar/Navbar'));
+const DownloadFile = dynamic(() => import('@/components/DownloadFile/DownloadFile'));
+const UploadImageToStorage = dynamic(() => import('@/components/UploadImageToStorage/UploadImageToStorage'));
+const Profile = dynamic(() => import('@/components/Profile/Profile'));
+const Licence = dynamic(() => import('@/components/Licence/Licence'));
 
 interface DescriptionItem {
   key: string;
@@ -149,7 +154,6 @@ const page = () => {
   useEffect(() => {
     if (dataResult !== undefined && dataResult !== null) { // Check for both undefined and null
       const todo = replaceImageUrls(dataResult);
-      console.log("🚀 ~ useEffect ~ todo:", todo)
       setDataURlFirebase(todo)
     }
   }, [dataResult]);
