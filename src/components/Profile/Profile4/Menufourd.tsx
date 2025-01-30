@@ -4,9 +4,6 @@ import styles from './MenuNew.module.css';
 
 interface MenuItem {
     Menu_Title: string;
-    Profile_Type: string;
-    Primary_Color: string;
-    Secondary_color: string;
     Background_Image: string;
     Item_Image: string;
     Section: string;
@@ -73,10 +70,7 @@ const Menufourd: React.FC<MenuProps> = ({ groupedSections, namecompanies, backgr
                                 <div
                                     key={`${item.Item_id}-${itemIndex}`} // Using the index for unique keys
                                     className={styles.card}
-                                    style={{
-                                        borderColor: item.Primary_Color,
-                                        background: `linear-gradient(145deg, ${item.Primary_Color}, ${item.Secondary_color})`,
-                                    }}
+                               
                                 >
                                     <div className={styles.cardImage}>
                                         <Image

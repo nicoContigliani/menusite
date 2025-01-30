@@ -5,10 +5,6 @@ import ElegantCarouselPromotions from '../../ElegantCarouselPromotions/ElegantCa
 
 interface MenuItem {
     Menu_Title?: string;
-    Profile_Type?: string;
-    Primary_Color?: string;
-    Secondary_Color?: string;
-    Background_Image?: string;
     Item_Image?: string;
     Section?: string;
     Item_id?: number;
@@ -50,7 +46,6 @@ const Menuone: React.FC<MenuProps> = ({ groupedSections, namecompanies, backgrou
     const [startTime, setStartTime] = useState<number | null>(null);
     const [carouselTime, setCarouselTime] = useState(0);
     const [carouselStartTime, setCarouselStartTime] = useState<number | null>(null);
-    const [firstProfile, setFirstProfile] = useState<MenuItem | null>(null);
     const [loading, setLoading] = useState(true);  // New loading state
 
     // useEffect(() => {
@@ -67,7 +62,6 @@ const Menuone: React.FC<MenuProps> = ({ groupedSections, namecompanies, backgrou
         if (groupedSections) {
             const firstSection = Object.values(groupedSections)[0];
             if (firstSection && firstSection.length > 0) {
-                setFirstProfile(firstSection[0]);
             }
         }
         setLoading(false); // Set loading to false once preloaded

@@ -16,10 +16,6 @@ const ProfileGrid = dynamic(() => import('../ProfileGridNew/ProfileGrid'), {
         "Hoja1": [
             {
                 "Menu_Title": "Pizza",
-                "Profile_Type": "profile_ten",
-                "Primary_Color": "#33ffff",
-                "Secondary_color": "#d2a700",
-                "Background_Image": "https://firebasestorage.googleapis.com/v0/b/llakascript.firebasestorage.app/o/companiesFolders%2FLlakaScript%2Ffondo.png?alt=media&token=be727240-8458-4f0f-9d40-920d8d8d7301",
                 "Item_Image": "https://firebasestorage.googleapis.com/v0/b/llakascript.firebasestorage.app/o/companiesFolders%2FLlakaScript%2Flasagna.jpg?alt=media&token=4bc1b1e2-4d7b-4a89-9447-de1fdf4febf2",
                 "Section": "primera",
                 "Item_id": 1,
@@ -30,10 +26,6 @@ const ProfileGrid = dynamic(() => import('../ProfileGridNew/ProfileGrid'), {
             },
             {
                 "Menu_Title": "Pizza",
-                "Profile_Type": "profile_three",
-                "Primary_Color": "#9b1c31",
-                "Secondary_color": "#d2a700",
-                "Background_Image": "https://firebasestorage.googleapis.com/v0/b/llakascript.firebasestorage.app/o/companiesFolders%2FLlakaScript%2Fbackground-food.jpg?alt=media&token=df2dce7e-4498-4eeb-90d7-7832690271f7",
                 "Item_Image": "https://firebasestorage.googleapis.com/v0/b/llakascript.firebasestorage.app/o/companiesFolders%2FLlakaScript%2Flasagna.jpg?alt=media&token=4bc1b1e2-4d7b-4a89-9447-de1fdf4febf2",
                 "Section": "primera",
                 "Item_id": 1,
@@ -44,10 +36,6 @@ const ProfileGrid = dynamic(() => import('../ProfileGridNew/ProfileGrid'), {
             },
             {
                 "Menu_Title": "Pizza",
-                "Profile_Type": "profile_three",
-                "Primary_Color": "#9b1c31",
-                "Secondary_color": "#d2a700",
-                "Background_Image": "https://firebasestorage.googleapis.com/v0/b/llakascript.firebasestorage.app/o/companiesFolders%2FLlakaScript%2Fbackground-food.jpg?alt=media&token=df2dce7e-4498-4eeb-90d7-7832690271f7",
                 "Item_Image": "https://firebasestorage.googleapis.com/v0/b/llakascript.firebasestorage.app/o/companiesFolders%2FLlakaScript%2Flasagna.jpg?alt=media&token=4bc1b1e2-4d7b-4a89-9447-de1fdf4febf2",
                 "Section": "primera",
                 "Item_id": 1,
@@ -58,10 +46,6 @@ const ProfileGrid = dynamic(() => import('../ProfileGridNew/ProfileGrid'), {
             },
             {
                 "Menu_Title": "Pizza",
-                "Profile_Type": "profile_three",
-                "Primary_Color": "#9b1c31",
-                "Secondary_color": "#d2a700",
-                "Background_Image": "https://firebasestorage.googleapis.com/v0/b/llakascript.firebasestorage.app/o/companiesFolders%2FLlakaScript%2Fbackground-food.jpg?alt=media&token=df2dce7e-4498-4eeb-90d7-7832690271f7",
                 "Item_Image": "https://firebasestorage.googleapis.com/v0/b/llakascript.firebasestorage.app/o/companiesFolders%2FLlakaScript%2Flasagna.jpg?alt=media&token=4bc1b1e2-4d7b-4a89-9447-de1fdf4febf2",
                 "Section": "segunda",
                 "Item_id": 1,
@@ -72,10 +56,6 @@ const ProfileGrid = dynamic(() => import('../ProfileGridNew/ProfileGrid'), {
             },
             {
                 "Menu_Title": "Pizza",
-                "Profile_Type": "profile_three",
-                "Primary_Color": "#9b1c31",
-                "Secondary_color": "#d2a700",
-                "Background_Image": "https://firebasestorage.googleapis.com/v0/b/llakascript.firebasestorage.app/o/companiesFolders%2FLlakaScript%2Fbackground-food.jpg?alt=media&token=df2dce7e-4498-4eeb-90d7-7832690271f7",
                 "Item_Image": "https://firebasestorage.googleapis.com/v0/b/llakascript.firebasestorage.app/o/companiesFolders%2FLlakaScript%2Flasagna.jpg?alt=media&token=4bc1b1e2-4d7b-4a89-9447-de1fdf4febf2",
                 "Section": "segunda",
                 "Item_id": 1,
@@ -86,10 +66,6 @@ const ProfileGrid = dynamic(() => import('../ProfileGridNew/ProfileGrid'), {
             },
             {
                 "Menu_Title": "Pizza",
-                "Profile_Type": "profile_three",
-                "Primary_Color": "#33ffff",
-                "Secondary_color": "#d2a700",
-                "Background_Image": "https://firebasestorage.googleapis.com/v0/b/llakascript.firebasestorage.app/o/companiesFolders%2FLlakaScript%2Fbackground-food.jpg?alt=media&token=df2dce7e-4498-4eeb-90d7-7832690271f7",
                 "Item_Image": "https://firebasestorage.googleapis.com/v0/b/llakascript.firebasestorage.app/o/companiesFolders%2FLlakaScript%2Flasagna.jpg?alt=media&token=4bc1b1e2-4d7b-4a89-9447-de1fdf4febf2",
                 "Section": "primera",
                 "Item_id": 1,
@@ -100,10 +76,6 @@ const ProfileGrid = dynamic(() => import('../ProfileGridNew/ProfileGrid'), {
             },
             {
                 "Menu_Title": "Cucina Italiana",
-                "Profile_Type": "profile_three",
-                "Primary_Color": "#9b1c31",
-                "Secondary_color": "#d2a700",
-                "Background_Image": "https://firebasestorage.googleapis.com/v0/b/llakascript.firebasestorage.app/o/companiesFolders%2FLlakaScript%2Fbackground-food.jpg?alt=media&token=df2dce7e-4498-4eeb-90d7-7832690271f7",
                 "Item_Image": "https://firebasestorage.googleapis.com/v0/b/llakascript.firebasestorage.app/o/companiesFolders%2FLlakaScript%2Flasagna.jpg?alt=media&token=4bc1b1e2-4d7b-4a89-9447-de1fdf4febf2",
                 "Section": "primera",
                 "Item_id": 1,
@@ -114,10 +86,6 @@ const ProfileGrid = dynamic(() => import('../ProfileGridNew/ProfileGrid'), {
             },
             {
                 "Menu_Title": "Cucina Italiana",
-                "Profile_Type": "profile_three",
-                "Primary_Color": "#9b1c31",
-                "Secondary_color": "#d2a700",
-                "Background_Image": "https://firebasestorage.googleapis.com/v0/b/llakascript.firebasestorage.app/o/companiesFolders%2FLlakaScript%2Fbackground-food.jpg?alt=media&token=df2dce7e-4498-4eeb-90d7-7832690271f7",
                 "Item_Image": "https://firebasestorage.googleapis.com/v0/b/llakascript.firebasestorage.app/o/companiesFolders%2FLlakaScript%2Flasagna.jpg?alt=media&token=4bc1b1e2-4d7b-4a89-9447-de1fdf4febf2",
                 "Section": "primera",
                 "Item_id": 1,
@@ -128,10 +96,6 @@ const ProfileGrid = dynamic(() => import('../ProfileGridNew/ProfileGrid'), {
             },
             {
                 "Menu_Title": "Cucina Italiana",
-                "Profile_Type": "profile_three",
-                "Primary_Color": "#9b1c31",
-                "Secondary_color": "#d2a700",
-                "Background_Image": "https://firebasestorage.googleapis.com/v0/b/llakascript.firebasestorage.app/o/companiesFolders%2FLlakaScript%2Fbackground-food.jpg?alt=media&token=df2dce7e-4498-4eeb-90d7-7832690271f7",
                 "Item_Image": "https://firebasestorage.googleapis.com/v0/b/llakascript.firebasestorage.app/o/companiesFolders%2FLlakaScript%2Flasagna.jpg?alt=media&token=4bc1b1e2-4d7b-4a89-9447-de1fdf4febf2",
                 "Section": "segunda",
                 "Item_id": 1,
@@ -142,10 +106,6 @@ const ProfileGrid = dynamic(() => import('../ProfileGridNew/ProfileGrid'), {
             },
             {
                 "Menu_Title": "Cucina Italiana",
-                "Profile_Type": "profile_three",
-                "Primary_Color": "#9b1c31",
-                "Secondary_color": "#d2a700",
-                "Background_Image": "https://firebasestorage.googleapis.com/v0/b/llakascript.firebasestorage.app/o/companiesFolders%2FLlakaScript%2Fbackground-food.jpg?alt=media&token=df2dce7e-4498-4eeb-90d7-7832690271f7",
                 "Item_Image": "https://firebasestorage.googleapis.com/v0/b/llakascript.firebasestorage.app/o/companiesFolders%2FLlakaScript%2Flasagna.jpg?alt=media&token=4bc1b1e2-4d7b-4a89-9447-de1fdf4febf2",
                 "Section": "segunda",
                 "Item_id": 1,
@@ -156,10 +116,6 @@ const ProfileGrid = dynamic(() => import('../ProfileGridNew/ProfileGrid'), {
             },
             {
                 "Menu_Title": "Pizza",
-                "Profile_Type": "profile_three",
-                "Primary_Color": "#33ffff",
-                "Secondary_color": "#d2a700",
-                "Background_Image": "https://firebasestorage.googleapis.com/v0/b/llakascript.firebasestorage.app/o/companiesFolders%2FLlakaScript%2Fbackground-food.jpg?alt=media&token=df2dce7e-4498-4eeb-90d7-7832690271f7",
                 "Item_Image": "https://firebasestorage.googleapis.com/v0/b/llakascript.firebasestorage.app/o/companiesFolders%2FLlakaScript%2Flasagna.jpg?alt=media&token=4bc1b1e2-4d7b-4a89-9447-de1fdf4febf2",
                 "Section": "primera",
                 "Item_id": 1,
@@ -170,10 +126,6 @@ const ProfileGrid = dynamic(() => import('../ProfileGridNew/ProfileGrid'), {
             },
             {
                 "Menu_Title": "Cucina Italiana",
-                "Profile_Type": "profile_three",
-                "Primary_Color": "#9b1c31",
-                "Secondary_color": "#d2a700",
-                "Background_Image": "https://firebasestorage.googleapis.com/v0/b/llakascript.firebasestorage.app/o/companiesFolders%2FLlakaScript%2Fbackground-food.jpg?alt=media&token=df2dce7e-4498-4eeb-90d7-7832690271f7",
                 "Item_Image": "https://firebasestorage.googleapis.com/v0/b/llakascript.firebasestorage.app/o/companiesFolders%2FLlakaScript%2Flasagna.jpg?alt=media&token=4bc1b1e2-4d7b-4a89-9447-de1fdf4febf2",
                 "Section": "primera",
                 "Item_id": 1,
@@ -184,10 +136,6 @@ const ProfileGrid = dynamic(() => import('../ProfileGridNew/ProfileGrid'), {
             },
             {
                 "Menu_Title": "Cucina Italiana",
-                "Profile_Type": "profile_three",
-                "Primary_Color": "#9b1c31",
-                "Secondary_color": "#d2a700",
-                "Background_Image": "https://firebasestorage.googleapis.com/v0/b/llakascript.firebasestorage.app/o/companiesFolders%2FLlakaScript%2Fbackground-food.jpg?alt=media&token=df2dce7e-4498-4eeb-90d7-7832690271f7",
                 "Item_Image": "https://firebasestorage.googleapis.com/v0/b/llakascript.firebasestorage.app/o/companiesFolders%2FLlakaScript%2Flasagna.jpg?alt=media&token=4bc1b1e2-4d7b-4a89-9447-de1fdf4febf2",
                 "Section": "primera",
                 "Item_id": 1,
@@ -198,10 +146,6 @@ const ProfileGrid = dynamic(() => import('../ProfileGridNew/ProfileGrid'), {
             },
             {
                 "Menu_Title": "Cucina Italiana",
-                "Profile_Type": "profile_three",
-                "Primary_Color": "#9b1c31",
-                "Secondary_color": "#d2a700",
-                "Background_Image": "https://firebasestorage.googleapis.com/v0/b/llakascript.firebasestorage.app/o/companiesFolders%2FLlakaScript%2Fbackground-food.jpg?alt=media&token=df2dce7e-4498-4eeb-90d7-7832690271f7",
                 "Item_Image": "https://firebasestorage.googleapis.com/v0/b/llakascript.firebasestorage.app/o/companiesFolders%2FLlakaScript%2Flasagna.jpg?alt=media&token=4bc1b1e2-4d7b-4a89-9447-de1fdf4febf2",
                 "Section": "segunda",
                 "Item_id": 1,
@@ -212,10 +156,6 @@ const ProfileGrid = dynamic(() => import('../ProfileGridNew/ProfileGrid'), {
             },
             {
                 "Menu_Title": "Cucina Italiana",
-                "Profile_Type": "profile_three",
-                "Primary_Color": "#9b1c31",
-                "Secondary_color": "#d2a700",
-                "Background_Image": "https://firebasestorage.googleapis.com/v0/b/llakascript.firebasestorage.app/o/companiesFolders%2FLlakaScript%2Fbackground-food.jpg?alt=media&token=df2dce7e-4498-4eeb-90d7-7832690271f7",
                 "Item_Image": "https://firebasestorage.googleapis.com/v0/b/llakascript.firebasestorage.app/o/companiesFolders%2FLlakaScript%2Flasagna.jpg?alt=media&token=4bc1b1e2-4d7b-4a89-9447-de1fdf4febf2",
                 "Section": "segunda",
                 "Item_id": 1,
@@ -226,10 +166,6 @@ const ProfileGrid = dynamic(() => import('../ProfileGridNew/ProfileGrid'), {
             },
             {
                 "Menu_Title": "Pizza",
-                "Profile_Type": "profile_three",
-                "Primary_Color": "#33ffff",
-                "Secondary_color": "#d2a700",
-                "Background_Image": "https://firebasestorage.googleapis.com/v0/b/llakascript.firebasestorage.app/o/companiesFolders%2FLlakaScript%2Fbackground-food.jpg?alt=media&token=df2dce7e-4498-4eeb-90d7-7832690271f7",
                 "Item_Image": "https://firebasestorage.googleapis.com/v0/b/llakascript.firebasestorage.app/o/companiesFolders%2FLlakaScript%2Flasagna.jpg?alt=media&token=4bc1b1e2-4d7b-4a89-9447-de1fdf4febf2",
                 "Section": "primera",
                 "Item_id": 1,
@@ -240,10 +176,6 @@ const ProfileGrid = dynamic(() => import('../ProfileGridNew/ProfileGrid'), {
             },
             {
                 "Menu_Title": "Cucina Italiana",
-                "Profile_Type": "profile_three",
-                "Primary_Color": "#9b1c31",
-                "Secondary_color": "#d2a700",
-                "Background_Image": "https://firebasestorage.googleapis.com/v0/b/llakascript.firebasestorage.app/o/companiesFolders%2FLlakaScript%2Fbackground-food.jpg?alt=media&token=df2dce7e-4498-4eeb-90d7-7832690271f7",
                 "Item_Image": "https://firebasestorage.googleapis.com/v0/b/llakascript.firebasestorage.app/o/companiesFolders%2FLlakaScript%2Flasagna.jpg?alt=media&token=4bc1b1e2-4d7b-4a89-9447-de1fdf4febf2",
                 "Section": "primera",
                 "Item_id": 1,
@@ -254,10 +186,6 @@ const ProfileGrid = dynamic(() => import('../ProfileGridNew/ProfileGrid'), {
             },
             {
                 "Menu_Title": "Cucina Italiana",
-                "Profile_Type": "profile_three",
-                "Primary_Color": "#9b1c31",
-                "Secondary_color": "#d2a700",
-                "Background_Image": "https://firebasestorage.googleapis.com/v0/b/llakascript.firebasestorage.app/o/companiesFolders%2FLlakaScript%2Fbackground-food.jpg?alt=media&token=df2dce7e-4498-4eeb-90d7-7832690271f7",
                 "Item_Image": "https://firebasestorage.googleapis.com/v0/b/llakascript.firebasestorage.app/o/companiesFolders%2FLlakaScript%2Flasagna.jpg?alt=media&token=4bc1b1e2-4d7b-4a89-9447-de1fdf4febf2",
                 "Section": "primera",
                 "Item_id": 1,
@@ -268,10 +196,6 @@ const ProfileGrid = dynamic(() => import('../ProfileGridNew/ProfileGrid'), {
             },
             {
                 "Menu_Title": "Cucina Italiana",
-                "Profile_Type": "profile_three",
-                "Primary_Color": "#9b1c31",
-                "Secondary_color": "#d2a700",
-                "Background_Image": "https://firebasestorage.googleapis.com/v0/b/llakascript.firebasestorage.app/o/companiesFolders%2FLlakaScript%2Fbackground-food.jpg?alt=media&token=df2dce7e-4498-4eeb-90d7-7832690271f7",
                 "Item_Image": "https://firebasestorage.googleapis.com/v0/b/llakascript.firebasestorage.app/o/companiesFolders%2FLlakaScript%2Flasagna.jpg?alt=media&token=4bc1b1e2-4d7b-4a89-9447-de1fdf4febf2",
                 "Section": "segunda",
                 "Item_id": 1,
@@ -282,10 +206,6 @@ const ProfileGrid = dynamic(() => import('../ProfileGridNew/ProfileGrid'), {
             },
             {
                 "Menu_Title": "Cucina Italiana",
-                "Profile_Type": "profile_three",
-                "Primary_Color": "#9b1c31",
-                "Secondary_color": "#d2a700",
-                "Background_Image": "https://firebasestorage.googleapis.com/v0/b/llakascript.firebasestorage.app/o/companiesFolders%2FLlakaScript%2Fbackground-food.jpg?alt=media&token=df2dce7e-4498-4eeb-90d7-7832690271f7",
                 "Item_Image": "https://firebasestorage.googleapis.com/v0/b/llakascript.firebasestorage.app/o/companiesFolders%2FLlakaScript%2Flasagna.jpg?alt=media&token=4bc1b1e2-4d7b-4a89-9447-de1fdf4febf2",
                 "Section": "segunda",
                 "Item_id": 1,
@@ -298,10 +218,6 @@ const ProfileGrid = dynamic(() => import('../ProfileGridNew/ProfileGrid'), {
         "Promotion": [
             {
                 "Menu_Title": "Pizza Tropical",
-                "Profile_Type": "profile_ten",
-                "Primary_Color": "#33ffff",
-                "Secondary_color": "#d2a700",
-                "Background_Image": "https://firebasestorage.googleapis.com/v0/b/llakascript.firebasestorage.app/o/companiesFolders%2FLlakaScript%2Ffondo.png?alt=media&token=be727240-8458-4f0f-9d40-920d8d8d7301",
                 "Item_Image": "https://firebasestorage.googleapis.com/v0/b/llakascript.firebasestorage.app/o/companiesFolders%2FLlakaScript%2Flasagna.jpg?alt=media&token=4bc1b1e2-4d7b-4a89-9447-de1fdf4febf2",
                 "Section": "primera",
                 "Item_id": 1,
@@ -312,10 +228,6 @@ const ProfileGrid = dynamic(() => import('../ProfileGridNew/ProfileGrid'), {
             },
             {
                 "Menu_Title": "Pizza Salchipapas",
-                "Profile_Type": "profile_ten",
-                "Primary_Color": "#33ffff",
-                "Secondary_color": "#d2a700",
-                "Background_Image": "https://firebasestorage.googleapis.com/v0/b/llakascript.firebasestorage.app/o/companiesFolders%2FLlakaScript%2Ffondo.png?alt=media&token=be727240-8458-4f0f-9d40-920d8d8d7301",
                 "Item_Image": "https://firebasestorage.googleapis.com/v0/b/llakascript.firebasestorage.app/o/companiesFolders%2FLlakaScript%2Flasagna.jpg?alt=media&token=4bc1b1e2-4d7b-4a89-9447-de1fdf4febf2",
                 "Section": "primera",
                 "Item_id": 1,
@@ -326,10 +238,6 @@ const ProfileGrid = dynamic(() => import('../ProfileGridNew/ProfileGrid'), {
             },
             {
                 "Menu_Title": "Pizza Cuatro Quesos",
-                "Profile_Type": "profile_ten",
-                "Primary_Color": "#33ffff",
-                "Secondary_color": "#d2a700",
-                "Background_Image": "https://firebasestorage.googleapis.com/v0/b/llakascript.firebasestorage.app/o/companiesFolders%2FLlakaScript%2Ffondo.png?alt=media&token=be727240-8458-4f0f-9d40-920d8d8d7301",
                 "Item_Image": "https://firebasestorage.googleapis.com/v0/b/llakascript.firebasestorage.app/o/companiesFolders%2FLlakaScript%2Flasagna.jpg?alt=media&token=4bc1b1e2-4d7b-4a89-9447-de1fdf4febf2",
                 "Section": "primera",
                 "Item_id": 1,
@@ -340,10 +248,6 @@ const ProfileGrid = dynamic(() => import('../ProfileGridNew/ProfileGrid'), {
             },
             {
                 "Menu_Title": "Pizza Cuatro Variada",
-                "Profile_Type": "profile_ten",
-                "Primary_Color": "#33ffff",
-                "Secondary_color": "#d2a700",
-                "Background_Image": "https://firebasestorage.googleapis.com/v0/b/llakascript.firebasestorage.app/o/companiesFolders%2FLlakaScript%2Ffondo.png?alt=media&token=be727240-8458-4f0f-9d40-920d8d8d7301",
                 "Item_Image": "https://firebasestorage.googleapis.com/v0/b/llakascript.firebasestorage.app/o/companiesFolders%2FLlakaScript%2Flasagna.jpg?alt=media&token=4bc1b1e2-4d7b-4a89-9447-de1fdf4febf2",
                 "Section": "primera",
                 "Item_id": 1,
@@ -354,10 +258,6 @@ const ProfileGrid = dynamic(() => import('../ProfileGridNew/ProfileGrid'), {
             },
             {
                 "Menu_Title": "Pizza con Palmitos",
-                "Profile_Type": "profile_ten",
-                "Primary_Color": "#33ffff",
-                "Secondary_color": "#d2a700",
-                "Background_Image": "https://firebasestorage.googleapis.com/v0/b/llakascript.firebasestorage.app/o/companiesFolders%2FLlakaScript%2Ffondo.png?alt=media&token=be727240-8458-4f0f-9d40-920d8d8d7301",
                 "Item_Image": "https://firebasestorage.googleapis.com/v0/b/llakascript.firebasestorage.app/o/companiesFolders%2FLlakaScript%2Flasagna.jpg?alt=media&token=4bc1b1e2-4d7b-4a89-9447-de1fdf4febf2",
                 "Section": "primera",
                 "Item_id": 1,
@@ -366,7 +266,11 @@ const ProfileGrid = dynamic(() => import('../ProfileGridNew/ProfileGrid'), {
                 "Price": "27.50",
                 "profile": 1
             }
-        ]
+        ],
+        "Config": [{
+            "Background_Image": "https://firebasestorage.googleapis.com/v0/b/llakascript.firebasestorage.app/o/companiesFolders%2FLlakaScript%2Ffondo.png?alt=media&token=f9cdc930-26a9-4604-a694-8c6fde0f01cc",
+            "Item_imagen":""
+        }]
     }
 
     return (

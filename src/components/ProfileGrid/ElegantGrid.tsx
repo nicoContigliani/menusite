@@ -7,9 +7,6 @@ import styles from './ElegantGrid.module.css'
 
 interface MenuItem {
   Menu_Title: string;
-  Profile_Type: string;
-  Primary_Color: string;
-  Secondary_color: string;
   Background_Image: string;
   Item_Image: string;
   Section: string;
@@ -62,7 +59,6 @@ const ProfileGrid = ({ menuItems, namecompanies }: MenuProps) => {
     if (menuItems.length) {
       const fetchedData = menuItems;
       setMenuData(fetchedData);
-      setSelectedProfile(fetchedData[0]?.Profile_Type);
     }
   }, [menuItems]);
 

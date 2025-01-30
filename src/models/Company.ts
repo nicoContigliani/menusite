@@ -2,9 +2,6 @@ import mongoose, { Schema, Model } from 'mongoose';
 
 interface Item {
   Menu_Title: string;
-  Profile_Type: string;
-  Primary_Color: string;
-  Secondary_color: string;
   Background_Image: string;
   Item_Image: string;
   Section: string;
@@ -17,9 +14,6 @@ interface Item {
 
 interface PromotionItem {
     Menu_Title: string;
-    Profile_Type: string;
-    Primary_Color: string;
-    Secondary_color: string;
     Background_Image: string;
     Item_Image: string;
     Section: string;
@@ -54,9 +48,6 @@ interface Company {
 
 const itemSchema = new Schema<Item>({
   Menu_Title: { type: String, required: true },
-  Profile_Type: String,
-  Primary_Color: String,
-  Secondary_color: String,
   Background_Image: String,
   Item_Image: String,
   Section: String,
@@ -69,9 +60,6 @@ const itemSchema = new Schema<Item>({
 
 const promotionItemSchema = new Schema<PromotionItem>({
     Menu_Title: { type: String, required: true },
-    Profile_Type: String,
-    Primary_Color: String,
-    Secondary_color: String,
     Background_Image: String,
     Item_Image: String,
     Section: String,

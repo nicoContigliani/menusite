@@ -4,9 +4,6 @@ import styles from './MenuNew.module.css';
 
 interface MenuItem {
     Menu_Title: string;
-    Profile_Type: string;
-    Primary_Color: string;
-    Secondary_color: string;
     Background_Image: string;
     Item_Image: string;
     Section: string;
@@ -78,9 +75,7 @@ const MenuNine: React.FC<MenuProps> = ({ groupedSections, namecompanies, backgro
                                     <div
                                         key={itemIndex}
                                         className={styles.menuItem}
-                                        style={{
-                                            backgroundColor: item.Primary_Color || '#0078D7',
-                                        }}
+
                                     >
                                         <div className={styles.itemImage}>
                                             <Image

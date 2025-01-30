@@ -3,22 +3,13 @@ import dynamic from 'next/dynamic';
 import React, { useEffect, useMemo, useState } from 'react'
 import styles from './newbrands.module.css'
 import { DescriptionsProps, Divider, TabsProps } from 'antd';
-
 import { FormaterDataItems } from '../../services/formaterDataItems.services';
-// import { DescriptionComponent } from '@/components/Description/Descriptions';
 import { replaceImageUrls } from '../../services/UploadImageUrl.services';
-// import Navbar from '@/components/Navbar/Navbar';
-// import DownloadFile from '@/components/DownloadFile/DownloadFile';
-// import UploadImageToStorage from '@/components/UploadImageToStorage/UploadImageToStorage';
-// import Profile from '@/components/Profile/Profile';
-// import Licence from '@/components/Licence/Licence';
-
 
 const DescriptionComponent = dynamic(() => import('@/components/Description/Descriptions'), { ssr: false });
 const StepsComponent = dynamic(() => import('../../components/steps/Steps'), {
-  ssr: false // Desactiva el renderizado del lado del servidor si es necesario
+  ssr: false 
 });
-
 const Navbar = dynamic(() => import('@/components/Navbar/Navbar'));
 const DownloadFile = dynamic(() => import('@/components/DownloadFile/DownloadFile'));
 const UploadImageToStorage = dynamic(() => import('@/components/UploadImageToStorage/UploadImageToStorage'));
@@ -59,9 +50,6 @@ const page = () => {
   const dataHoja1: DescriptionsProps['items'] = useMemo(() => {
     return FormaterDataItems({
       Menu_Title: "Título del menú. Ejemplo: 'Menú de La Trattoria'",
-      Profile_Type: "Tipo de perfil del negocio. Ejemplos: 'Restaurante', 'Bar', 'Cafetería', 'Food Truck'",
-      Primary_Color: "Color primario para la interfaz. Ejemplo: '#007bff' (azul), '#FF0000' (rojo)",
-      Secondary_color: "Color secundario para la interfaz. Ejemplo: '#ffffff' (blanco), '#000000' (negro)",
       Background_Image: "URL de la imagen de fondo del menú. Ejemplo: 'https://ejemplo.com/fondo.jpg'",
       profile: "Nombre del perfil o negocio. Ejemplo: 'Pizzeria Napoli'",
       Section: "Título de una sección del menú. Ejemplo: 'Pastas', 'Ensaladas', 'Bebidas'",
@@ -158,19 +146,14 @@ const page = () => {
     }
   }, [dataResult]);
 
-
-
-
   return (
     <div className={styles.container}>
       <div className={styles.steps}>
         <Divider />
-      
         {
           showProfile ?
             <Navbar />
             : null
-
         }
         <Divider />
 
@@ -179,8 +162,6 @@ const page = () => {
           current={current}
           setCurrent={setCurrent}
         />
-
-
       </div>
       <div className={styles.body}>
 
@@ -235,10 +216,7 @@ const page = () => {
             />
             : null
         }
-
-
       </div>
-
     </div>
   )
 }

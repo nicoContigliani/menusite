@@ -41,7 +41,7 @@
   /* Centra cada elemento en su celda horizontalmente */
   align-items: center;
   /* Centra cada elemento en su celda verticalmente */
-  background-color: red;
+  /* background-color: red; */
 }
 
 /* Contenedor para el texto */

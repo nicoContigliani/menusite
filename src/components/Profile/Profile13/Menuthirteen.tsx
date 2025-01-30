@@ -4,10 +4,6 @@ import styles from './MenuNew.module.css';
 
 interface MenuItem {
     Menu_Title: string;
-    Profile_Type: string;
-    Primary_Color: string;
-    Secondary_color: string;
-    Background_Image: string;
     Item_Image: string;
     Section: string;
     Item_id: number;
@@ -71,9 +67,7 @@ const Menuthirteen: React.FC<MenuProps> = ({ groupedSections, namecompanies, bac
                                 <div
                                     key={`${sectionIndex}-${itemIndex}`} // Clave única combinando índice de sección y elemento
                                     className={styles.menuItem}
-                                    style={{
-                                        backgroundColor: item.Primary_Color || '#0078D7',
-                                    }}
+
                                 >
                                     <div className={styles.itemImage}>
                                         <Image

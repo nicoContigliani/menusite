@@ -4,10 +4,6 @@ import styles from './MenuNew.module.css';
 
 interface MenuItem {
     Menu_Title: string;
-    Profile_Type: string;
-    Primary_Color: string;
-    Secondary_color: string;
-    Background_Image: string;
     Item_Image: string;
     Section: string;
     Item_id: number;
