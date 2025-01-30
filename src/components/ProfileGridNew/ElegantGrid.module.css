@@ -17,7 +17,7 @@
     /* Centrado de la imagen */
     background-repeat: no-repeat;
     /* Evitar que se repita */
-    padding: 1rem;
+    padding: 0.01rem;
     /* Espaciado interno */
     box-sizing: border-box;
     /* Incluye padding en el cálculo del tamaño */
@@ -30,7 +30,7 @@
     width: 100%;
     max-width: 800px;
     /* Máximo ancho */
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     /* Separación con el contenido */
 }
 
@@ -59,7 +59,7 @@
     margin: 0;
     word-break: break-word;
     /* Asegura que no se salga del contenedor */
-    text-shadow: 1px 1px rgba(255, 255, 255, 0.261);
+    text-shadow: 1px 1px rgba(255, 255, 255, 0.153);
 
 }
 
@@ -67,7 +67,7 @@
     width: 100%;
     max-width: 1200px;
     background: rgba(255, 255, 255, 0.4);
-    border-radius: 15px;
+    border-radius: 1px;
     padding: 1.5rem;
     box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.645);
     overflow: auto;

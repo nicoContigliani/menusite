@@ -74,7 +74,7 @@ const ProfileGrid: React.FC<ProfileGridProps> = ({ dataGeneral, namecompanies })
     if (dataGeneral && dataGeneral.Hoja1) {
       const { Hoja1, Promotion, Config } = dataGeneral;
       setMenuData(Hoja1);
-      setBackgroundImageSet(Config?.[0]?.Background_Image ? `url("${Config[0].Background_Image}")` : null);
+      setBackgroundImageSet(Config?.[0]?.Background_Image ? `url("${Config[0].Background_Image}")` : `url("/foldercompanies/LlakaScript/fondo.png")`);
       setIsReady(true);
     }
   }, [dataGeneral]);
@@ -113,9 +113,9 @@ const ProfileGrid: React.FC<ProfileGridProps> = ({ dataGeneral, namecompanies })
     <div className={styles.container} style={{ backgroundImage: backgroundImageSet }}>
       <h1>{name}</h1>
       {/* Controles para cambiar de perfil */}
-      <div className={styles.controls}>
-        <button onClick={handlePreviousProfile}>⬅ Anterior</button>
-        <button onClick={handleNextProfile}>Siguiente ➡</button>
+      <div className={styles.navigation}>
+        <button  onClick={handlePreviousProfile}>⬅ Anterior</button>
+        <button  onClick={handleNextProfile}>Siguiente ➡</button>
       </div>
       <div className={styles.profile}>
         {/* Solo mostramos el perfil cuando esté listo */}

@@ -1,6 +1,6 @@
 .menuContainer {
   min-height: 100vh;
-  background-color: #2a2a2a;
+  background-color: #000000;
   color: white;
   padding: 2rem;
   font-family: 'Segoe UI', system-ui, sans-serif;
@@ -50,7 +50,7 @@
 }
 
 .searchInput::placeholder {
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.76);
 }
 
 .menuWrapper {
@@ -60,6 +60,7 @@
   gap: 3rem;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   position: relative;
+  background-color: #000000a3;
 }
 
 .section {
