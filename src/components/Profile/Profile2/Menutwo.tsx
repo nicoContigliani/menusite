@@ -1,106 +1,185 @@
-import React, { useMemo, useState } from 'react';
-import Image from 'next/image';
-import styles from './MenuNew.module.css';
+import Logo from "@/components/Logo/Logo"
+import type React from "react"
+import { useEffect, useState } from "react"
+import styles from "./MenuNew.module.css"
+import Info from "@/components/Info/Info"
+import Schedules from "@/components/Schedules/Schedules"
+import useSectionTimeTracker from "../../../../hooks/useSectionTimeTracker"
+import Image from "next/image"
 
 interface MenuItem {
-    Menu_Title: string;
-    Background_Image: string;
-    Item_Image: string;
-    Section: string;
-    Item_id: number;
-    Name: string;
-    Description: string;
-    Price: string;
+    Item_id: string
+    Name: string
+    Description: string
+    Price: string | number
+    Menu_Title: string
+    Item_Image: string
 }
 
 interface MenuProps {
-    namecompanies: string;
-    groupedSections: Record<string, MenuItem[]>;
-    menuData: any;
-    backgroundImages: string | null;
+    menuData: any
+    groupedSections: { [key: string]: MenuItem[] }
+    backgroundImages: any
+    namecompanies: string
+    promotions: any
+    info: any
+    schedules: any
+    config: any[]
 }
 
-const Menutwo: React.FC<MenuProps> = ({ groupedSections, namecompanies, backgroundImages }) => {
-    const [searchTerm, setSearchTerm] = useState('');
+interface ConfigType {
+    IconBrand: string
+}
 
-    const memoizedSections = useMemo(() => {
-        return Object.entries(groupedSections);
-    }, [groupedSections]);
+const Menutwo: React.FC<MenuProps> = (props) => {
+    const { backgroundImages, config, groupedSections, info, menuData, namecompanies, promotions, schedules } = props
 
-    // Filter items based on search term
-    const filteredItems = useMemo(() => {
-        if (!searchTerm) return groupedSections;
-        return Object.entries(groupedSections).reduce((acc, [section, items]) => {
-            const filteredItems = items.filter(item =>
-                item.Name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                item.Description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                item.Menu_Title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                item.Price.toLowerCase().includes(searchTerm.toLowerCase())
-            );
-            if (filteredItems.length > 0) {
-                acc[section] = filteredItems;
+    const { sectionTimes, handleSectionEnter } = useSectionTimeTracker()
+    useEffect(() => {
+        console.log("Tiempo en cada sección:", sectionTimes)
+    }, [sectionTimes])
+
+
+    const [searchTerm, setSearchTerm] = useState("")
+    const [loading, setLoading] = useState(true)
+    const [iconURL, setIconURL] = useState<string>("")
+
+    useEffect(() => {
+        if (groupedSections) {
+            const firstSection: any = Object.values(groupedSections)[0]
+            if (firstSection && firstSection.length > 0) {
+                // You can do something with `firstSection` if needed
             }
-            return acc;
-        }, {} as Record<string, MenuItem[]>);
-    }, [searchTerm, groupedSections]);
+        }
+
+        if (config && config.length > 0) {
+            const configData = config[0] as ConfigType
+            setIconURL(configData.IconBrand || "")
+        }
+
+        setLoading(false)
+    }, [groupedSections, config])
+
+    if (loading) {
+        return <div>Loading...</div>
+    }
+
+    const memoizedSections = Object.entries(groupedSections)
+        .map(([sectionName, items]) => {
+            const filteredItems = items.filter(
+                (item) =>
+                    [item.Name, item.Description, item.Menu_Title].some(
+                        (field) => typeof field === "string" && field.toLowerCase().includes(searchTerm.toLowerCase()),
+                    ) ||
+                    (typeof item.Price === "string" && item.Price.toLowerCase().includes(searchTerm.toLowerCase())),
+            )
+            return [sectionName, filteredItems] as [string, MenuItem[]]
+        })
+        .filter(([, items]) => items.length > 0)
 
     return (
-        <div
-            className={styles.menuContainer}
-            style={{
-                backgroundImage: backgroundImages || 'none',
-            }}
-        >
+        <div className={styles.container}>
             <header className={styles.header}>
-                <h1>{namecompanies}</h1>
-                <div className={styles.searchWrapper}>
+                <div className={styles.logo}
+                    onMouseEnter={() => handleSectionEnter("logo")}
+                >
+                    {iconURL ?
+                        <Logo
+                            namecompanies="LlakaScript"
+                            logoUrl={iconURL}
+                            size={120} // Tamaño de la imagen
+                            fontSize="22px" // Tamaño de la fuente
+                            fontWeight="700" // Grosor de la fuente
+                            color="black" // Color del texto
+                            fontFamily="Arial, sans-serif" // Familia de la fuente
+                        />
+                        : null}
+                </div>
+
+                <div className={styles.info}
+                    onMouseEnter={() => handleSectionEnter("info")}
+                >
+                    {info ?
+                        <Info
+                            info={info}
+                            fontSize="14px"
+                            fontWeight="500"
+                            color="blackddd"
+                            fontFamily="Helvetica, sans-serif"
+                            containerClassName={styles.customInfoContainer}
+                            textClassName={styles.customInfoText}
+                        />
+                        : null}
+                </div>
+
+                <div className={styles.searchContainer}
+                    onMouseEnter={() => handleSectionEnter("search")}
+                >
                     <input
                         type="text"
-                        placeholder="Search items..."
                         className={styles.searchInput}
+                        placeholder="Buscar en el menú..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
                 </div>
             </header>
-            {Object.entries(filteredItems).map(([sectionName, items], sectionIndex) => (
-                <section key={`${sectionName}-${sectionIndex}`} className={styles.section}>
-                    <h2 className={styles.sectionTitle}>{sectionName}</h2>
-                    <div className={styles.itemGrid}>
-                        {items.map((item, itemIndex) => (
-                            <div
-                                key={`${item.Item_id}-${itemIndex}`} // Usando el índice para asegurar que la clave sea única
-                                className={styles.card}
+
+            <main className={styles.main}>
+                {memoizedSections?.map(([sectionName, items]) => (
+                    <div key={sectionName} className={styles.section}>
+                        <div className={styles.sectionHeader}>
+                            <div className={styles.sectionTitle}
+                                onMouseEnter={() => handleSectionEnter(`${sectionName}`)}
                             >
-                                <div
-                                    className={styles.cardBackground}
-                                    style={{
-                                        backgroundImage: `url(${item.Background_Image})`,
-                                    }}
-                                ></div>
-                                <div className={styles.cardContent}>
-                                    <div className={styles.cardImage}>
-                                        <Image
-                                            src={`${item.Item_Image}`}
-                                            alt={item.Name}
-                                            width={100}
-                                            height={100}
-                                            priority // Priorizar imágenes visibles
-                                        />
-                                    </div>
-                                    <div className={styles.cardDetails}>
-                                        <h3 className={styles.cardTitle}>{item.Name}</h3>
-                                        <span className={styles.cardDescription}>{item.Description}</span>
-                                        <span className={styles.cardPrice}>{`$${item.Price}`}</span>
+                                {sectionName}
+                            </div>
+                        </div>
+                        <div className={styles.sectionItems}>
+                            {items?.map((item: MenuItem, index: number) => (
+                                <div key={`${sectionName}-${item?.Item_id}-${index}`} className={styles.menuItem}>
+                                    <div className={styles.itemInfo}
+                                        onMouseEnter={() => handleSectionEnter(`${sectionName}-${index}-${item?.Name}`)}
+                                    >
+                                        <div className={styles.cardImage}>
+                                            <Image
+                                                src={`${item.Item_Image}`}
+                                                alt={item.Name}
+                                                width={100}
+                                                height={100}
+                                                priority
+                                            />
+                                        </div>
+                                        <div className={styles.itemDetails}>
+                                            <h2>{item?.Name}</h2>
+                                            <div className={styles.itemDescription}>{item?.Description}</div>
+                                            <div className={styles.price}>{`$${item.Price}`}</div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        ))}
+                            ))}
+                        </div>
                     </div>
-                </section>
-            ))}
+                ))}
+            </main>
+            <div
+                onMouseEnter={() => handleSectionEnter(`${schedules}`)}
+            >
+                <Schedules
+                    Schedules={schedules}
+                    fontSize="14px"
+                    fontWeight="500"
+                    color="black"
+                    fontFamily="Helvetica, sans-serif"
+                    containerClassName={styles.customInfoContainer}
+                    textClassName={styles.customInfoText}
+                />
+            </div>
+            <footer className={styles.footer}>
+                <div>{`© ${new Date().getFullYear()} LlakaScript`}</div>
+            </footer>
         </div>
-    );
-};
+    )
+}
 
-export default Menutwo;
+export default Menutwo

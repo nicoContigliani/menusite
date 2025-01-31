@@ -1,263 +1,199 @@
-/* Contenedor general */
-.menuContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding: 50px;
-    background-color: #1e1e1e;
-    background-size: cover;
-    background-position: center;
-    color: #ffffff;
-    font-family: 'Arial', sans-serif;
-    background-size: cover; /* La imagen cubre todo el área */
-    background-position: center; /* Centrada */
-    background-attachment: fixed; /* Fijada mientras se hace scroll */
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400&display=swap");
 
+/* Contenedor principal */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    font-family: "Roboto", sans-serif;
+    background-color: white;
+    color: #333333; /* Color más oscuro para mejorar la legibilidad */
 }
 
-/* Cabecera */
+/* Encabezado */
 .header {
-    text-align: center;
-    padding: 10px 0;
-    background: linear-gradient(90deg, #ffcc00 0%, #ff9900 100%);
-    border-radius: 10px;
-    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.3);
-}
-
-.header h1 {
-    font-size: 3.5rem;
-    font-weight: bold;
-    color: #1e1e1e;
-    text-shadow: 3px 3px 8px rgba(255, 255, 255, 0.2);
-    letter-spacing: 2px;
-}
-
-/* Sección */
-.section {
-    width: 100%;
-    padding: 0 1px;
-}
-
-.sectionTitle {
-    font-size: 2.4rem;
-    font-weight: 700;
-    color: #ffcc00;
-    margin-bottom: 25px;
-    border-bottom: 3px solid #ff9900;
-    padding-bottom: 12px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-/* Grid de items */
-.itemGrid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 10px;
-    padding: 10px 0;
-}
-
-/* Tarjeta */
-.card {
-    position: relative;
-    overflow: hidden;
-    border: 3px solid transparent;
-    border-radius: 20px;
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
-    cursor: pointer;
-    background: linear-gradient(135deg, #2a2a2a 0%, #1e1e1e 100%);
-}
-
-.card:hover {
-    transform: scale(1.07);
-    box-shadow: 0 10px 40px rgba(255, 204, 0, 0.4);
-    border-color: #ffcc00;
-}
-
-.cardBackground {
-    position: absolute;
-    inset: 0;
-    background-size: cover;
-    background-position: center;
-    filter: blur(10px);
-    opacity: 0.4;
-    z-index: 0;
-}
-
-.cardContent {
-    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 25px;
-    z-index: 1;
-    text-align: center;
-    background: rgba(0, 0, 0, 0.85);
-    border-radius: 20px;
-    backdrop-filter: blur(5px);
+    margin-bottom: 1rem;
 }
 
-.cardImage {
-    width: 140px;
-    height: 140px;
-    border-radius: 50%;
-    overflow: hidden;
-    margin-bottom: 20px;
-    border: 5px solid #fff;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+/* Logo */
+.logoContainer {
+    justify-self: start;
 }
 
-.cardImage img {
+.logo {
+    font-family: "Playfair Display", serif;
+    font-size: 3.8rem;
+    font-weight: 700;
+    color: #000000; /* Usar negro para un contraste más fuerte */
+    margin-bottom: 2rem;
+}
+
+/* Contenedor de búsqueda */
+.searchContainer {
     width: 100%;
-    height: 100%;
+    max-width: 300px;
+    display: flex;
+    justify-content: center;
+}
+
+.searchInput {
+    width: 100%;
+    padding: 0.5rem;
+    border: none;
+    border-bottom: 1px solid #cccccc; /* Gris claro para el borde */
+    font-family: "Roboto", sans-serif;
+    background-color: transparent;
+    color: #333333; /* Gris más oscuro para mayor legibilidad */
+}
+
+.searchInput::placeholder {
+    color: #999999; /* Gris más claro para los placeholders */
+}
+
+/* Sección principal */
+.main {
+    display: grid;
+    gap: 3rem;
+}
+
+/* Estilo de las secciones */
+.section {
+    margin-bottom: 2rem;
+}
+
+/* Títulos de las secciones */
+.sectionHeader {
+    margin-bottom: 1.5rem;
+}
+
+.sectionTitle {
+    font-family: "Playfair Display", serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #000000; /* Color negro para los títulos de las secciones */
+    border-bottom: 1px solid #cccccc; /* Gris para la línea de separación */
+    padding-bottom: 0.5rem;
+}
+
+/* Elementos de la sección */
+.sectionItems {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+/* Estilo de los ítems del menú */
+.menuItem {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.itemInfo {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.119);
+}
+
+/* Estilo de la imagen de cada ítem */
+.cardImage {
+    border-radius: 10%;
+    flex-shrink: 0;
+    width: 100px;
+    height: 100px;
     object-fit: cover;
-    object-position: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.cardDetails {
-    color: #ffffff;
+/* Efecto hover en la imagen */
+.cardImage:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 
-.cardTitle {
-    font-size: 1.8rem;
-    font-weight: bold;
-    margin: 15px 0;
-    color: #ffcc00;
-    text-transform: capitalize;
+/* Detalles del ítem */
+.itemDetails {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
 }
 
-.cardDescription {
-    font-size: 1rem;
-    color: #dddddd;
-    margin: 12px 0;
-    line-height: 1.6;
-    word-wrap: break-word; /* Asegura que las palabras largas se dividan correctamente */
-    overflow-wrap: break-word; /* Garantiza que el texto largo no se desborde */
-    text-align: center; /* Alineación a la izquierda para mayor legibilidad */
+.itemInfo h2 {
+    font-family: "Playfair Display", serif;
+    font-size: 1.3rem;
+    margin: 0 0 0.5rem 0;
+    color: #000000; /* Color negro para los títulos de los ítems */
 }
 
-.cardPrice {
-    font-size: 1.6rem;
-    font-weight: bold;
-    color: #ff9900;
-    margin-top: 15px;
+.itemDescription {
+    font-size: 0.9rem;
+    color: #666666; /* Gris oscuro para la descripción */
+    margin-right: 1rem;
 }
 
-/* Responsive */
+.price {
+    font-weight: 700;
+    color: #e4b23d; /* Un tono dorado para resaltar el precio */
+    white-space: nowrap;
+    margin-top: 0.5rem;
+}
+
+/* Estilo del pie de página */
+.footer {
+    margin-top: 3rem;
+    text-align: center;
+    font-size: 0.8rem;
+    color: #999999; /* Gris suave para el pie de página */
+    border-top: 1px solid #cccccc; /* Gris claro para la línea superior */
+    padding-top: 1rem;
+}
+
+/* Estilos para pantallas pequeñas */
 @media (max-width: 768px) {
-    .menuContainer {
-        padding: 5px;
+    .container {
+        padding: 1rem;
+    }
+
+    .header {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        gap: 1.5rem;
+        align-items: center;
+    }
+
+    .logoContainer,
+    .searchContainer {
+        justify-self: center;
+        width: 100%;
+    }
+
+    .searchContainer {
+        max-width: 90%;
+    }
+
+    .sectionItems {
+        grid-template-columns: 1fr;
     }
 
     .sectionTitle {
         font-size: 1.8rem;
     }
 
-    .cardContent {
-        padding: 5px;
-    }
-
-    .cardTitle {
-        font-size: 1.4rem;
-    }
-
-    .cardDescription {
-        font-size: 0.9rem;
-    }
-
-    .cardPrice {
-        font-size: 1.3rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .itemGrid {
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 15px;
-    }
-
-    .cardContent {
-        flex-direction: row;
-        align-items: flex-start;
-        text-align: left;
-        padding: 15px;
-        gap: 15px;
-        backdrop-filter: none;
-    }
-
-    .cardImage {
-        width: 80px;
-        height: 80px;
-        min-width: 80px;
-        margin-bottom: 0;
-        border-width: 3px;
-    }
-
-    .cardDetails {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-    }
-
-    .cardTitle {
-        margin: 0 0 8px 0;
-        font-size: 1.3rem;
-    }
-
-    .cardDescription {
-        text-align: left;
-        margin: 0 0 8px 0;
-        font-size: 0.85rem;
-        line-height: 1.4;
-        display: -webkit-box;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
-
-    .cardPrice {
-        margin-top: 0;
+    .itemInfo h2 {
         font-size: 1.2rem;
-        align-self: flex-start;
     }
 
-    .card:hover {
-        transform: none;
-        box-shadow: none;
-        border-color: transparent;
+    .itemDescription {
+        font-size: 0.85rem;
     }
-}
 
-/* Search Input Wrapper */
-.searchWrapper {
-    margin-top: 20px;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-}
-
-/* Estilo del input de búsqueda */
-.searchInput {
-    width: 100%;
-    max-width: 400px;
-    padding: 10px;
-    font-size: 1.1rem;
-    border-radius: 10px;
-    border: 2px solid #ffcc00;
-    background-color: #fff;
-    color: #333;
-    outline: none;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.searchInput:focus {
-    border-color: #ff9900;
-    box-shadow: 0 0 8px rgba(255, 204, 0, 0.5);
-}
-
-/* Estilo del placeholder */
-.searchInput::placeholder {
-    color: #888;
-    font-style: italic;
+    .footer {
+        font-size: 0.7rem;
+    }
 }

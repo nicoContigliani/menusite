@@ -4,6 +4,7 @@ import type React from "react"
 import { useEffect, useState } from "react"
 import styles from "./MenuFifteen.module.css"
 import Schedules from "@/components/Schedules/Schedules"
+import useSectionTimeTracker from "../../../../hooks/useSectionTimeTracker"
 
 interface MenuItem {
     Item_id: string
@@ -30,14 +31,17 @@ interface ConfigType {
 }
 
 const MenuFifTeen: React.FC<MenuProps> = (props) => {
-    console.log("🚀 ~ props:", props)
     // const { menuData, groupedSections, backgroundImages, namecompanies, Promotion, info, schedules, config } = props
     const { backgroundImages, config, groupedSections, info, menuData, namecompanies, promotions, schedules } = props
-    console.log("🚀 ~ schedules:", schedules)
+    const { sectionTimes, handleSectionEnter } = useSectionTimeTracker()
 
     const [searchTerm, setSearchTerm] = useState("")
     const [loading, setLoading] = useState(true)
     const [iconURL, setIconURL] = useState<string>("")
+
+    useEffect(() => {
+        console.log("Tiempo en cada sección:", sectionTimes)
+    }, [sectionTimes])
 
     useEffect(() => {
         if (groupedSections) {
@@ -74,7 +78,10 @@ const MenuFifTeen: React.FC<MenuProps> = (props) => {
 
     return (
         <div className={styles.container}>
-            <header className={styles.header}>
+            <header className={styles.header}
+                onMouseEnter={() => handleSectionEnter("header")}
+
+            >
                 <div className={styles.logo}>
                     {iconURL ?
 
@@ -89,7 +96,10 @@ const MenuFifTeen: React.FC<MenuProps> = (props) => {
                         />
                         : null}
                 </div>
-                <div className={styles.info}>
+                <div className={styles.info}
+                    onMouseEnter={() => handleSectionEnter("info")}
+
+                >
                     {
                         info ?
                             <Info
@@ -106,7 +116,10 @@ const MenuFifTeen: React.FC<MenuProps> = (props) => {
 
                 </div>
 
-                <div className={styles.searchContainer}>
+                <div className={styles.searchContainer}
+                    onMouseEnter={() => handleSectionEnter("search")}
+
+                >
                     <input
                         type="text"
                         className={styles.searchInput}
@@ -119,13 +132,18 @@ const MenuFifTeen: React.FC<MenuProps> = (props) => {
 
             <main className={styles.main}>
                 {memoizedSections?.map(([sectionName, items]) => (
-                    <div key={sectionName} className={styles.section}>
+                    <div key={sectionName} className={styles.section}
+                        onMouseEnter={() => handleSectionEnter(`${sectionName}`)}
+                    >
                         <div className={styles.sectionHeader}>
                             <div className={styles.sectionTitle}>{sectionName}</div>
                         </div>
                         <div className={styles.sectionItems}>
                             {items?.map((item: MenuItem, index: number) => (
-                                <div key={`${sectionName}-${item?.Item_id}-${index}`} className={styles.menuItem}>
+                                <div key={`${sectionName}-${item?.Item_id}-${index}`} className={styles.menuItem}
+                                    onMouseEnter={() => handleSectionEnter(`${sectionName}-${index}-${item?.Name}`)}
+
+                                >
                                     <div className={styles.itemInfo}>
                                         <h2>{item?.Name}</h2>
                                         <div className={styles.itemDetails}>
@@ -139,16 +157,19 @@ const MenuFifTeen: React.FC<MenuProps> = (props) => {
                     </div>
                 ))}
             </main>
-            <div>
-            <Schedules
-                Schedules={schedules}
-                fontSize="14px"
-                fontWeight="500"
-                color="#333"
-                fontFamily="Helvetica, sans-serif"
-                containerClassName={styles.customInfoContainer}
-                textClassName={styles.customInfoText}
-            />
+            <div
+                onMouseEnter={() => handleSectionEnter(`${schedules}`)}
+
+            >
+                <Schedules
+                    Schedules={schedules}
+                    fontSize="14px"
+                    fontWeight="500"
+                    color="#333"
+                    fontFamily="Helvetica, sans-serif"
+                    containerClassName={styles.customInfoContainer}
+                    textClassName={styles.customInfoText}
+                />
             </div>
 
             <footer className={styles.footer}>{/* Add footer content if needed */}</footer>

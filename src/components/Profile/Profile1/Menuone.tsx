@@ -1,196 +1,185 @@
-import React, { useEffect, useState } from 'react';
-import Image from 'next/image';
-import styles from './MenuNew.module.css';
-import ElegantCarouselPromotions from '../../ElegantCarouselPromotions/ElegantCarouselPromotions';
+import Logo from "@/components/Logo/Logo"
+import type React from "react"
+import { useEffect, useState } from "react"
+import styles from "./MenuNew.module.css"
+import Info from "@/components/Info/Info"
+import Schedules from "@/components/Schedules/Schedules"
+import useSectionTimeTracker from "../../../../hooks/useSectionTimeTracker"
+import Image from "next/image"
 
 interface MenuItem {
-    Menu_Title?: string;
-    Item_Image?: string;
-    Section?: string;
-    Item_id?: number;
-    Name?: string;
-    Description?: string;
-    Price?: string;
-    hojas?: { Hoja1?: any[] };
-    status_Companies?: true;
-    visits?: 0;
-    licence?: any[];
-    infoVisits?: any[];
-    loyaltyProgram?: any[];
-    delivery?: any[];
-    trafficStats?: any[];
-    marketingCampaigns?: any[];
-    giftCards?: any[];
-    badcustomer?: any[];
-    godcustomer?: any[];
-    raiting?: number;
-    latitude?: string;
-    longitude: string;
-    createAt?: string;
-    updateAt?: string;
+    Item_id: string
+    Name: string
+    Description: string
+    Price: string | number
+    Menu_Title: string
+    Item_Image: string
 }
 
 interface MenuProps {
-    namecompanies: string;
-    groupedSections: Record<string, MenuItem[]>;
-    menuData: any;
-    backgroundImages: string | null;
-    groupedSectionsPromotions: Record<string, MenuItem[]>;
+    menuData: any
+    groupedSections: { [key: string]: MenuItem[] }
+    backgroundImages: any
+    namecompanies: string
+    promotions: any
+    info: any
+    schedules: any
+    config: any[]
 }
 
-const Menuone: React.FC<MenuProps> = ({ groupedSections, namecompanies, backgroundImages, groupedSectionsPromotions }) => {
-    const [searchTerm, setSearchTerm] = useState('');
-    const [menuTime, setMenuTime] = useState(0);
-    const [sectionTimes, setSectionTimes] = useState<Record<string, number>>({});
-    const [currentSection, setCurrentSection] = useState<string | null>(null);
-    const [startTime, setStartTime] = useState<number | null>(null);
-    const [carouselTime, setCarouselTime] = useState(0);
-    const [carouselStartTime, setCarouselStartTime] = useState<number | null>(null);
-    const [loading, setLoading] = useState(true);  // New loading state
+interface ConfigType {
+    IconBrand: string
+}
 
-    // useEffect(() => {
-    //     const start = Date.now();
-    //     const intervalId = setInterval(() => {
-    //         const elapsed = (Date.now() - start) / 1000;
-    //         setMenuTime(elapsed);
-    //     }, 1000);
-    //     return () => clearInterval(intervalId);
-    // }, []);
+const Menuone: React.FC<MenuProps> = (props) => {
+    const { backgroundImages, config, groupedSections, info, menuData, namecompanies, promotions, schedules } = props
 
-    // Preload the first profile
+    const { sectionTimes, handleSectionEnter } = useSectionTimeTracker()
+    useEffect(() => {
+        console.log("Tiempo en cada sección:", sectionTimes)
+    }, [sectionTimes])
+
+
+    const [searchTerm, setSearchTerm] = useState("")
+    const [loading, setLoading] = useState(true)
+    const [iconURL, setIconURL] = useState<string>("")
+
     useEffect(() => {
         if (groupedSections) {
-            const firstSection = Object.values(groupedSections)[0];
+            const firstSection: any = Object.values(groupedSections)[0]
             if (firstSection && firstSection.length > 0) {
+                // You can do something with `firstSection` if needed
             }
         }
-        setLoading(false); // Set loading to false once preloaded
-    }, [groupedSections]);
 
-    // const handleSectionEnter = (sectionName: string) => {
-    //     const now = Date.now();
-    //     if (currentSection && startTime) {
-    //         const duration = (now - startTime) / 1000;
-    //         setSectionTimes((prev) => ({
-    //             ...prev,
-    //             [currentSection]: (prev[currentSection] || 0) + duration,
-    //         }));
-    //     }
-    //     setCurrentSection(sectionName);
-    //     setStartTime(now);
-    // };
+        if (config && config.length > 0) {
+            const configData = config[0] as ConfigType
+            setIconURL(configData.IconBrand || "")
+        }
 
-    // const handleSectionLeave = () => {
-    //     const now = Date.now();
-    //     if (currentSection && startTime) {
-    //         const duration = (now - startTime) / 1000;
-    //         setSectionTimes((prev) => ({
-    //             ...prev,
-    //             [currentSection]: (prev[currentSection] || 0) + duration,
-    //         }));
-    //     }
-    //     setCurrentSection(null);
-    //     setStartTime(null);
-    // };
-
-    // const handleCarouselEnter = () => {
-    //     setCarouselStartTime(Date.now());
-    // };
-
-    // const handleCarouselLeave = () => {
-    //     if (carouselStartTime) {
-    //         const duration = (Date.now() - carouselStartTime) / 1000;
-    //         setCarouselTime((prev) => prev + duration);
-    //         setCarouselStartTime(null);
-    //     }
-    // };
-
-    // const handleButtonClick = (item: MenuItem) => {
-    //     console.log('Item clicked:', item);
-    // };
-
-    const memoizedSections = Object.entries(groupedSections).map(([sectionName, items]) => {
-        const filteredItems = items.filter((item) =>
-            [item.Name, item.Description, item.Price, item.Menu_Title].some(field =>
-                field?.toLowerCase().includes(searchTerm.toLowerCase())
-            )
-        );
-        return [sectionName, filteredItems] as [string, MenuItem[]];
-    }).filter(([, items]) => items.length > 0);
+        setLoading(false)
+    }, [groupedSections, config])
 
     if (loading) {
-        return <div>Loading...</div>; // Show loading spinner or message while preloading
+        return <div>Loading...</div>
     }
 
+    const memoizedSections = Object.entries(groupedSections)
+        .map(([sectionName, items]) => {
+            const filteredItems = items.filter(
+                (item) =>
+                    [item.Name, item.Description, item.Menu_Title].some(
+                        (field) => typeof field === "string" && field.toLowerCase().includes(searchTerm.toLowerCase()),
+                    ) ||
+                    (typeof item.Price === "string" && item.Price.toLowerCase().includes(searchTerm.toLowerCase())),
+            )
+            return [sectionName, filteredItems] as [string, MenuItem[]]
+        })
+        .filter(([, items]) => items.length > 0)
+
     return (
-        <div
-            className={styles.menuWrapper}
-            style={{
-                backgroundImage: backgroundImages || 'none',
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-            }}
-        // onMouseLeave={handleSectionLeave}
-        >
+        <div className={styles.container}>
             <header className={styles.header}>
-                <h1 className={styles.companyName}>{namecompanies}</h1>
-                <input
-                    type="text"
-                    className={styles.searchInput}
-                    placeholder="Buscar en el menú..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                />
-                {/* {groupedSectionsPromotions && (
-                    <div
-                        onMouseEnter={handleCarouselEnter}
-                        onMouseLeave={handleCarouselLeave}
-                    >
-                        <ElegantCarouselPromotions items={groupedSectionsPromotions} />
-                    </div>
-                )} */}
+                <div className={styles.logo}
+                    onMouseEnter={() => handleSectionEnter("logo")}
+                >
+                    {iconURL ?
+                        <Logo
+                            namecompanies="LlakaScript"
+                            logoUrl={iconURL}
+                            size={120} // Tamaño de la imagen
+                            fontSize="22px" // Tamaño de la fuente
+                            fontWeight="700" // Grosor de la fuente
+                            color="black" // Color del texto
+                            fontFamily="Arial, sans-serif" // Familia de la fuente
+                        />
+                        : null}
+                </div>
+
+                <div className={styles.info}
+                    onMouseEnter={() => handleSectionEnter("info")}
+                >
+                    {info ?
+                        <Info
+                            info={info}
+                            fontSize="14px"
+                            fontWeight="500"
+                            color="#dddddd"
+                            fontFamily="Helvetica, sans-serif"
+                            containerClassName={styles.customInfoContainer}
+                            textClassName={styles.customInfoText}
+                        />
+                        : null}
+                </div>
+
+                <div className={styles.searchContainer}
+                    onMouseEnter={() => handleSectionEnter("search")}
+                >
+                    <input
+                        type="text"
+                        className={styles.searchInput}
+                        placeholder="Buscar en el menú..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                </div>
             </header>
 
-            {memoizedSections?.map(([sectionName, items]) => (
-                <div
-                    key={sectionName}
-                    className={styles.section}
-                // onMouseEnter={() => handleSectionEnter(sectionName)}
-                // onMouseLeave={handleSectionLeave}
-                >
-                    <h1 className={styles.sectionTitle}>{sectionName}</h1>
-                    <div className={styles.sectionItems}>
-                        {items?.map((item: MenuItem, index: number) => (
-                            <div
-                                key={`${sectionName}-${item?.Item_id}-${index}`} // Agrega el índice para hacer la clave única
-                                className={styles.menuItem}
-                                style={{
-                                    backgroundImage: `url(${backgroundImages})`,
-                                }}
+            <main className={styles.main}>
+                {memoizedSections?.map(([sectionName, items]) => (
+                    <div key={sectionName} className={styles.section}>
+                        <div className={styles.sectionHeader}>
+                            <div className={styles.sectionTitle}
+                                onMouseEnter={() => handleSectionEnter(`${sectionName}`)}
                             >
-                                <div className={styles.overlay}></div>
-                                    <Image
-                                        src={`${item.Item_Image}`}
-                                        alt={item?.Name || "Image"}
-                                        width={100}
-                                        height={100}
-                                        priority
-                                        className={styles.itemImage}
-                                    />
-                                <div className={styles.itemInfo}>
-                                    <h2>{item?.Name}</h2>
-                                    <span>{item?.Description}</span>
-                                    <span className={styles.price}>{`$${item.Price}`}</span>
-
-                                </div>
-
+                                {sectionName}
                             </div>
-                        ))}
+                        </div>
+                        <div className={styles.sectionItems}>
+                            {items?.map((item: MenuItem, index: number) => (
+                                <div key={`${sectionName}-${item?.Item_id}-${index}`} className={styles.menuItem}>
+                                    <div className={styles.itemInfo}
+                                        onMouseEnter={() => handleSectionEnter(`${sectionName}-${index}-${item?.Name}`)}
+                                    >
+                                        <div className={styles.cardImage}>
+                                            <Image
+                                                src={`${item.Item_Image}`}
+                                                alt={item.Name}
+                                                width={100}
+                                                height={100}
+                                                priority
+                                            />
+                                        </div>
+                                        <div className={styles.itemDetails}>
+                                            <h2>{item?.Name}</h2>
+                                            <div className={styles.itemDescription}>{item?.Description}</div>
+                                            <div className={styles.price}>{`$${item.Price}`}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
                     </div>
-                </div>
-            ))}
+                ))}
+            </main>
+            <div
+                onMouseEnter={() => handleSectionEnter(`${schedules}`)}
+            >
+                <Schedules
+                    Schedules={schedules}
+                    fontSize="14px"
+                    fontWeight="500"
+                    color="#ddd"
+                    fontFamily="Helvetica, sans-serif"
+                    containerClassName={styles.customInfoContainer}
+                    textClassName={styles.customInfoText}
+                />
+            </div>
+            <footer className={styles.footer}>
+                <div>{`© ${new Date().getFullYear()} LlakaScript`}</div>
+            </footer>
         </div>
-    );
-};
+    )
+}
 
-export default Menuone;
+export default Menuone
