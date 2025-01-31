@@ -70,6 +70,7 @@ const MenuFourdTeen: React.FC<MenuProps> = (props) => {
         schedules,
         config,
     } = props
+    console.log("🚀 ~ backgroundImages:", backgroundImages)
 
     const [searchTerm, setSearchTerm] = useState('');
     const [loading, setLoading] = useState(true);  // New loading state
@@ -112,12 +113,13 @@ const MenuFourdTeen: React.FC<MenuProps> = (props) => {
 
     return (
         <div className={styles.container}
-        style={{
-            backgroundImage: `url(${backgroundImages})`,
-            backgroundSize: "cover", // Ensures the image covers the entire area
-            backgroundRepeat: "no-repeat", // Prevents repeating the image
-            backgroundPosition: "center", // Centers the image
-          }}
+            style={{
+
+                // backgroundImage: backgroundImages ?? undefined,
+                // backgroundSize: "cover", // Ensures the image covers the entire area
+                // backgroundRepeat: "no-repeat", // Prevents repeating the image
+                // backgroundPosition: "center", // Centers the image
+            }}
         >
             <header className={styles.header}>
                 <div className={styles.logo}>
@@ -158,6 +160,7 @@ const MenuFourdTeen: React.FC<MenuProps> = (props) => {
                                     key={`${sectionName}-${item?.Item_id}-${index}`}
                                     className={styles.menuItem}
                                   
+
                                 >
                                     {/* <div className={styles.itemImage} >
                                         <Image
@@ -172,7 +175,7 @@ const MenuFourdTeen: React.FC<MenuProps> = (props) => {
                                     <div className={styles.itemInfo}>
                                         <h2>{item?.Name}</h2>
                                         <span>{item?.Description}</span>
-                                        <span className={styles.price}>{`$${item.Price}`}</span>
+                                        <div className={styles.price}>{`$${item.Price}`}</div>
 
                                     </div>
 

@@ -7,9 +7,7 @@ const ProfileGrid = dynamic(() => import('../ProfileGridNew/ProfileGrid'), {
     loading: () => <span>Cargando...</span>, // Opcional: mensaje de carga mientras se carga el componente
     ssr: false, // Desactivar la renderización del lado del servidor (opcional)
 }); const Profile = (props: any) => {
-    const { dataResult, items, dataURlFirebase: { xlsxData } } = props
-    console.log("🚀 ~ ProfileGrid ~ items:", items)
-    console.log("🚀 ~ ProfileGrid ~ dataResult:", dataResult)
+    const { dataResult, items, dataURlFirebase: { xlsxData }, paymentLevel } = props
 
     const dataMocks =
     {
@@ -317,17 +315,12 @@ const ProfileGrid = dynamic(() => import('../ProfileGridNew/ProfileGrid'), {
         ]
     }
 
-
-
-
-
-
     return (
         <div className={styles.container}>
-
             <ProfileGrid
                 dataGeneral={xlsxData || dataMocks}
                 namecompanies={"LLakaScript"}
+                paymentLevel={paymentLevel}
             />
         </div>
     )

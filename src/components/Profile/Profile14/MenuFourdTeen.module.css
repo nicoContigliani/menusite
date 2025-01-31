@@ -6,8 +6,8 @@
   padding: 1.5rem;
   font-family: "Roboto", sans-serif;
   color: #333;
-  /* background-color: #1E1E1E;  */
-  color: #F5F5F5; 
+  background-color: #1E1E1E;
+  color: #F5F5F5;
 }
 
 .header {
@@ -60,7 +60,8 @@
 .sectionItems {
   display: grid;
   gap: 1.2rem;
-  grid-template-columns: repeat(3, 1fr); /* Mantener 3 columnas en todas las resoluciones */
+  grid-template-columns: repeat(3, 1fr);
+  /* Mantener 3 columnas en todas las resoluciones */
 }
 
 .menuItem {
@@ -72,6 +73,20 @@
 
 .itemInfo {
   flex-grow: 1;
+  color: white;
+
+}
+
+.Name {
+  color: #F5F5F5;
+}
+
+.Description {
+  color: #F5F5F5;
+}
+
+.price {
+  color: #F5F5F5;
 }
 
 .itemInfo h2 {
@@ -83,13 +98,13 @@
 .itemInfo span {
   display: block;
   font-size: 0.9rem;
-  color: #666;
+  color: #a9a9a9ec;
   margin-bottom: 0.25rem;
 }
 
 .price {
   font-weight: 700;
-  color: #333;
+  color: #dedede;
 }
 
 .footer {
@@ -122,7 +137,8 @@
   }
 
   .sectionItems {
-    grid-template-columns: repeat(3, 1fr); /* Mantiene 3 columnas en móviles */
+    grid-template-columns: repeat(3, 1fr);
+    /* Mantiene 3 columnas en móviles */
   }
 
   .menuItem {
@@ -137,6 +153,19 @@
 /* ✅ 📺 Mantener el formato en tablets */
 @media (max-width: 1024px) {
   .sectionItems {
-    grid-template-columns: repeat(3, 1fr); /* Mantiene 3 columnas en tablets */
+    grid-template-columns: repeat(3, 1fr);
+    /* Mantiene 3 columnas en tablets */
+  }
+
+  .Name {
+    color: #F5F5F5;
+  }
+
+  .Description {
+    color: #F5F5F5;
+  }
+
+  .price {
+    color: #F5F5F5;
   }
 }

@@ -8,7 +8,7 @@ import { replaceImageUrls } from '../../services/UploadImageUrl.services';
 
 const DescriptionComponent = dynamic(() => import('@/components/Description/Descriptions'), { ssr: false });
 const StepsComponent = dynamic(() => import('../../components/steps/Steps'), {
-  ssr: false 
+  ssr: false
 });
 const Navbar = dynamic(() => import('@/components/Navbar/Navbar'));
 const DownloadFile = dynamic(() => import('@/components/DownloadFile/DownloadFile'));
@@ -28,6 +28,25 @@ const page = () => {
 
   const [current, setCurrent] = useState<number>(0);
 
+  const [showDownload, setShowDownload] = useState(false)
+  const [showUploadImageToStorage, setShowUploadImageToStorage] = useState(false)
+  const [showProfile, setShowProfile] = useState(false)
+  const [showLicence, setShowLicence] = useState(false)
+
+  const [imageFiles, setImageFiles] = useState<File[]>([]);
+  const [xlsxFile, setXlsxFile] = useState<File | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
+  const [progressUpload, setProgressUpload] = useState(0);
+  const [downloadURLs, setDownloadURLs] = useState<string[]>([]);
+  const [dataFileXLSX, setDataFileXLSX] = useState<Record<string, any[]>>({});
+  const [dataResult, setDataResult] = useState<any | any[] | undefined>()
+  const [dataURlFirebase, setDataURlFirebase] = useState<any | any[] | undefined>('')
+
+  const [labelCheck, setLabelCheck] = useState<any>("Confirmar Condiciones")
+  const [checked, setChecked] = useState<boolean>(false);
+  
+  const [paymentLevel, setPaymentLevel] = useState<number>(1)
+  
   const [items, setItems] = useState<any | any[] | undefined>([
     {
       title: 'Descargar Excel con el formato obligatorio',
@@ -46,6 +65,8 @@ const page = () => {
       description: "Step 3",
     },
   ]);
+
+
 
   const dataHoja1: DescriptionsProps['items'] = useMemo(() => {
     return FormaterDataItems({
@@ -76,25 +97,9 @@ const page = () => {
       label: 'Promotions',
       children: <DescriptionComponent items={dataHoja1} />,
     },
-
   ];
 
-  const [showDownload, setShowDownload] = useState(false)
-  const [showUploadImageToStorage, setShowUploadImageToStorage] = useState(false)
-  const [showProfile, setShowProfile] = useState(false)
-  const [showLicence, setShowLicence] = useState(false)
 
-  const [imageFiles, setImageFiles] = useState<File[]>([]);
-  const [xlsxFile, setXlsxFile] = useState<File | null>(null);
-  const [isUploading, setIsUploading] = useState(false);
-  const [progressUpload, setProgressUpload] = useState(0);
-  const [downloadURLs, setDownloadURLs] = useState<string[]>([]);
-  const [dataFileXLSX, setDataFileXLSX] = useState<Record<string, any[]>>({});
-  const [dataResult, setDataResult] = useState<any | any[] | undefined>()
-  const [dataURlFirebase, setDataURlFirebase] = useState<any | any[] | undefined>('')
-
-  const [labelCheck, setLabelCheck] = useState<any>("Confirmar Condiciones")
-  const [checked, setChecked] = useState<boolean>(false);
 
 
   const carouselItems = [
@@ -203,6 +208,7 @@ const page = () => {
               dataResult={dataResult}
               items={carouselItems}
               dataURlFirebase={dataURlFirebase}
+              paymentLevel={paymentLevel}
             />
             : null
         }

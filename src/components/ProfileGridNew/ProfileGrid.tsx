@@ -3,11 +3,13 @@ import { useState, useMemo } from "react"
 import dynamic from "next/dynamic"
 import styles from "./ElegantGrid.module.css"
 import { useMenuData, type MenuItem, type DataGeneral } from "../../../hooks/useMenuData"
-import CollapseComponents from "../CollapseComponent/CollapseComponents"
+import ToggleButtons from "../ToggleButton/ToggleButton"
+
 
 interface ProfileGridProps {
-  dataGeneral: DataGeneral
-  namecompanies: string
+  dataGeneral: DataGeneral;
+  namecompanies: string;
+  paymentLevel: number;
 }
 
 interface DynamicProfile {
@@ -38,7 +40,7 @@ const dynamicProfiles: DynamicProfile[] = profiles.map((profile) => ({
   component: dynamic(() => import(`../../components/Profile/${profile.path}`), { ssr: false }),
 }))
 
-const ProfileGrid: React.FC<ProfileGridProps> = ({ dataGeneral, namecompanies }) => {
+const ProfileGrid: React.FC<ProfileGridProps> = ({ dataGeneral, namecompanies, paymentLevel }) => {
   const { menuData, backgroundImageSet, promotions, info, schedules, config, isReady } = useMenuData(dataGeneral)
 
   const [selectedProfileIndex, setSelectedProfileIndex] = useState(0)
@@ -71,7 +73,12 @@ const ProfileGrid: React.FC<ProfileGridProps> = ({ dataGeneral, namecompanies })
       <h1>{name}</h1>
       <div className={styles.navigation}>
         <button onClick={handlePreviousProfile}>⬅ Anterior</button>
-        <div>hola</div>
+        <div>
+          {paymentLevel !== 0 ?
+            <ToggleButtons />
+            : null
+          }
+        </div>
         <button onClick={handleNextProfile}>Siguiente ➡</button>
       </div>
       <div className={styles.profile}>
