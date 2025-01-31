@@ -5,9 +5,9 @@
   margin: 0 auto;
   padding: 1.5rem;
   font-family: "Roboto", sans-serif;
-  color: #333;
-  background-color: #1E1E1E;
+  background-color: #545454;
   color: #F5F5F5;
+  text-shadow: #9d9d9d;
 }
 
 .header {

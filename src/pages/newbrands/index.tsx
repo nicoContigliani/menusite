@@ -45,7 +45,7 @@ const page = () => {
   const [labelCheck, setLabelCheck] = useState<any>("Confirmar Condiciones")
   const [checked, setChecked] = useState<boolean>(false);
   
-  const [paymentLevel, setPaymentLevel] = useState<number>(1)
+  const [paymentLevel, setPaymentLevel] = useState<number>(0)
   
   const [items, setItems] = useState<any | any[] | undefined>([
     {

@@ -32,6 +32,7 @@ const profiles = [
   { name: "Profile12", path: "Profile12/Menutwelve" },
   { name: "Profile13", path: "Profile13/Menuthirteen" },
   { name: "Profile14", path: "Profile14/MenuFourdTeen" },
+  { name: "Profile15", path: "Profile15/MenuFifteen" },
   { name: "ProfileE1", path: "ProfileE1/Ecomerceone" },
 ]
 

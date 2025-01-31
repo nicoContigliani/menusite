@@ -107,10 +107,6 @@ const MenuFourdTeen: React.FC<MenuProps> = (props) => {
         return [sectionName, filteredItems] as [string, MenuItem[]];
     }).filter(([, items]) => items.length > 0);
 
-    console.log("*********************logoUrl", iconURL, "**********")
-    console.log("🚀 ~ backgroundImages:", backgroundImages)
-
-
     return (
         <div className={styles.container}
             style={{
