@@ -268,7 +268,7 @@ const ProfileGrid = dynamic(() => import('../ProfileGridNew/ProfileGrid'), {
         "Config": [
             {
                 "Background_Image": "https://firebasestorage.googleapis.com/v0/b/llakascript.firebasestorage.app/o/companiesFolders%2FLlakaScript%2Ffondo.png?alt=media&token=ffdb158e-64ee-4a8a-ad4b-1d5afcb44850",
-                "IconBrand": "https://firebasestorage.googleapis.com/v0/b/llakascript.firebasestorage.app/o/companiesFolders%2FLlakaScript%2Ffondo.png?alt=media&token=ffdb158e-64ee-4a8a-ad4b-1d5afcb44850"
+                "IconBrand": "https://firebasestorage.googleapis.com/v0/b/llakascript.firebasestorage.app/o/companiesFolders%2FLlakaScript%2Ficono.png?alt=media&token=cd67074c-c44a-4d8e-9a20-c49ff5e6ab86"
             }
         ],
         "Info": [

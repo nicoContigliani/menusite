@@ -43,6 +43,7 @@ const dynamicProfiles: DynamicProfile[] = profiles.map((profile) => ({
 
 const ProfileGrid: React.FC<ProfileGridProps> = ({ dataGeneral, namecompanies, paymentLevel }) => {
   const { menuData, backgroundImageSet, promotions, info, schedules, config, isReady } = useMenuData(dataGeneral)
+  console.log("🚀 ~ info:***************", info)
 
   const [selectedProfileIndex, setSelectedProfileIndex] = useState(0)
 

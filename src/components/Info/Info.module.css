@@ -1,0 +1,24 @@
+/* Info.module.css */
+
+.infoContainer {
+    display: grid;
+    gap: 1.2rem;
+    grid-template-columns: repeat(1, 1fr); /* Solo una columna por defecto */
+    padding: 5px;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+}
+
+.infoText {
+    display: grid;
+    gap: 0.5rem;
+    grid-template-columns: repeat(3, 1fr);
+    font-size: 16px;
+    font-weight: 400;
+    color: #333;
+    line-height: 1.6;
+}
+
+.infoText div {
+    margin: 4px 0;
+}
