@@ -1,0 +1,33 @@
+.logoContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px; /* Espacio entre el texto y la imagen */
+    padding: 8px;
+    transition: transform 0.3s ease; /* Añadir animación al contenedor */
+}
+
+.logoContainer:hover {
+    transform: scale(1.05); /* Escalar un poco al pasar el mouse */
+}
+
+.companyName {
+    font-size: 18px; /* Tamaño del nombre de la empresa */
+    font-weight: 600; /* Poner el nombre en negrita */
+    color: #333; /* Color oscuro */
+    transition: color 0.3s ease; /* Transición para el color del texto */
+}
+
+.companyName:hover {
+    color: #007bff; /* Cambiar el color del texto al pasar el mouse */
+}
+
+.logo {
+    object-fit: contain;
+    border-radius: 8px;
+    transition: transform 0.3s ease; /* Animación de la imagen */
+}
+
+.logo:hover {
+    transform: scale(1.1); /* Escalar la imagen al pasar el mouse */
+}

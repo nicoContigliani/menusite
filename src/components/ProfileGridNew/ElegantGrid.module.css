@@ -68,7 +68,7 @@
     max-width: 1200px;
     background: rgba(255, 255, 255, 0.4);
     border-radius: 1px;
-    padding: 1.5rem;
+    /* padding: 1.5rem; */
     box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.645);
     overflow: auto;
     margin: 0 auto;
