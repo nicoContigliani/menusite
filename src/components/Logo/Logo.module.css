@@ -2,7 +2,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 12px; /* Espacio entre el texto y la imagen */
+    gap: 10px; /* Espacio entre el texto y la imagen */
     padding: 8px;
     transition: transform 0.3s ease; /* Añadir animación al contenedor */
 }

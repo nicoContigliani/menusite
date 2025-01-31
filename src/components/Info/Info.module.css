@@ -2,23 +2,58 @@
 
 .infoContainer {
     display: grid;
-    gap: 1.2rem;
+    gap: 1rem;
     grid-template-columns: repeat(1, 1fr); /* Solo una columna por defecto */
-    padding: 5px;
-    background-color: #f4f4f4;
     border-radius: 8px;
+    padding: 16px;
+    overflow: hidden; /* Evitar desbordes */
+    max-width: 100%; /* Asegura que no se desborde horizontalmente */
+    box-sizing: border-box; /* Asegura que el padding no cause desbordamiento */
 }
 
 .infoText {
     display: grid;
-    gap: 0.5rem;
-    grid-template-columns: repeat(3, 1fr);
+    gap: 0.2rem;
+    grid-template-columns: repeat(4, 1fr); /* Tres columnas en pantallas grandes */
     font-size: 16px;
     font-weight: 400;
     color: #333;
     line-height: 1.6;
+    word-wrap: break-word; /* Asegura que el texto largo se ajuste */
+    overflow-wrap: break-word; /* Para evitar que el contenido largo desborde */
+    padding-bottom: 5%;
 }
 
 .infoText div {
     margin: 4px 0;
+    display: flex;
+    align-items: center; /* Alinea verticalmente los íconos y el texto */
+    flex-wrap: wrap; /* Permite que los elementos envuelvan si es necesario */
+}
+
+.infoText svg { /* Estilo para los íconos */
+    margin-right: 8px; /* Espacio entre el ícono y el texto */
+    font-size: 18px; /* Tamaño del ícono */
+}
+
+/* Responsividad: tres columnas en pantallas más grandes y tres columnas más pequeñas en pantallas móviles con texto más pequeño */
+@media (max-width: 768px) {
+    .infoText {
+        grid-template-columns: repeat(2, 1fr); /* Mantener tres columnas en pantallas pequeñas */
+        font-size: 14px; /* Reducir el tamaño de la fuente en móviles */
+        word-wrap: break-word; /* Asegura que el texto largo se ajuste */
+        overflow-wrap: break-word; /* Para evitar que el contenido largo desborde */
+    }
+    .infoText div {
+        margin: 4px 0;
+        display: flex;
+        align-items: center; /* Alinea verticalmente los íconos y el texto */
+        flex-wrap: nowrap; /* Permite que los elementos envuelvan si es necesario */
+    }
+    
+    .infoText svg { /* Estilo para los íconos */
+        margin-right: 8px; /* Espacio entre el ícono y el texto */
+        font-size: 18px; /* Tamaño del ícono */
+
+    }
 }

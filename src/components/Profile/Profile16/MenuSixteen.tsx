@@ -1,8 +1,8 @@
 import Logo from "@/components/Logo/Logo"
-import Info from "@/components/Info/Info"
 import type React from "react"
 import { useEffect, useState } from "react"
-import styles from "./MenuFifteen.module.css"
+import styles from "./MenuSixteen.module.css"
+import Info from "@/components/Info/Info"
 import Schedules from "@/components/Schedules/Schedules"
 
 interface MenuItem {
@@ -29,7 +29,7 @@ interface ConfigType {
     // Add other properties as needed
 }
 
-const MenuFifTeen: React.FC<MenuProps> = (props) => {
+const MenuSixTeen: React.FC<MenuProps> = (props) => {
     console.log("🚀 ~ props:", props)
     // const { menuData, groupedSections, backgroundImages, namecompanies, Promotion, info, schedules, config } = props
     const { backgroundImages, config, groupedSections, info, menuData, namecompanies, promotions, schedules } = props
@@ -96,7 +96,7 @@ const MenuFifTeen: React.FC<MenuProps> = (props) => {
                                 info={info}
                                 fontSize="14px"
                                 fontWeight="500"
-                                color="#333"
+                                color="#ddd"
                                 fontFamily="Helvetica, sans-serif"
                                 containerClassName={styles.customInfoContainer}
                                 textClassName={styles.customInfoText}
@@ -144,7 +144,7 @@ const MenuFifTeen: React.FC<MenuProps> = (props) => {
                 Schedules={schedules}
                 fontSize="14px"
                 fontWeight="500"
-                color="#333"
+                color="#ddd"
                 fontFamily="Helvetica, sans-serif"
                 containerClassName={styles.customInfoContainer}
                 textClassName={styles.customInfoText}
@@ -156,5 +156,5 @@ const MenuFifTeen: React.FC<MenuProps> = (props) => {
     )
 }
 
-export default MenuFifTeen
+export default MenuSixTeen
 

@@ -1,0 +1,59 @@
+.infoContainer {
+    margin: 1rem;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(1, 1fr); /* Solo una columna por defecto */
+    border-radius: 8px;
+    padding: 16px;
+    overflow: hidden; /* Evitar desbordes */
+    max-width: 100%; /* Asegura que no se desborde horizontalmente */
+    box-sizing: border-box; /* Asegura que el padding no cause desbordamiento */
+}
+
+.infoText {
+    display: grid;
+    gap: 0.1rem;
+    grid-template-columns: repeat(1, 1fr); /* Ajuste a una columna para alineación correcta */
+    font-size: 16px;
+    font-weight: 400;
+    color: #333;
+    line-height: 1.6;
+    word-wrap: break-word; /* Asegura que el texto largo se ajuste */
+    overflow-wrap: break-word; /* Para evitar que el contenido largo desborde */
+    padding-bottom: 5%;
+}
+
+.scheduleItem {
+    display: flex;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #dddddd62;
+}
+
+.scheduleDay {
+    flex: 2; /* Ocupa un tercio */
+    font-weight: bold;
+    text-align: center;
+}
+
+.scheduleHours {
+    flex: 2; /* Ocupa dos tercios */
+    text-align: center;
+}
+.title {
+    font-weight: 840;
+
+    display: flex;
+    align-items: center; /* Alinea verticalmente los íconos y el texto */
+    justify-content: center; /* Centra horizontalmente */
+    flex-wrap: nowrap;
+}
+
+
+/* Responsividad */
+@media (max-width: 768px) {
+    .infoText {
+        grid-template-columns: repeat(1, 1fr); /* Mantener una sola columna */
+        font-size: 14px; /* Reducir el tamaño de la fuente en móviles */
+    }
+}

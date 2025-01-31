@@ -33,6 +33,7 @@ const profiles = [
   { name: "Profile13", path: "Profile13/Menuthirteen" },
   { name: "Profile14", path: "Profile14/MenuFourdTeen" },
   { name: "Profile15", path: "Profile15/MenuFifteen" },
+  { name: "Profile16", path: "Profile16/MenuSixteen" },
   { name: "ProfileE1", path: "ProfileE1/Ecomerceone" },
 ]
 
@@ -43,7 +44,6 @@ const dynamicProfiles: DynamicProfile[] = profiles.map((profile) => ({
 
 const ProfileGrid: React.FC<ProfileGridProps> = ({ dataGeneral, namecompanies, paymentLevel }) => {
   const { menuData, backgroundImageSet, promotions, info, schedules, config, isReady } = useMenuData(dataGeneral)
-  console.log("🚀 ~ info:***************", info)
 
   const [selectedProfileIndex, setSelectedProfileIndex] = useState(0)
 

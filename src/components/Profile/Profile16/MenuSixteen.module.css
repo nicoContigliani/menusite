@@ -5,8 +5,8 @@
   margin: 0 auto;
   padding: 2rem;
   font-family: "Roboto", sans-serif;
-  background-color: #f5f2e9;
-  color: #333333;
+  background-color: #333333;
+  color: #f5f2e9;
 }
 
 .header {
@@ -24,7 +24,7 @@
   font-family: "Playfair Display", serif;
   font-size: 3.8rem;
   font-weight: 700;
-  color: #000000;
+  color: #ffffff;
   margin-bottom: 2rem;
 }
 
@@ -39,14 +39,14 @@
   width: 100%;
   padding: 0.5rem;
   border: none;
-  border-bottom: 1px solid #333333;
+  border-bottom: 1px solid #f5f2e9;
   font-family: "Roboto", sans-serif;
   background-color: transparent;
-  color: #333333;
+  color: #f5f2e9;
 }
 
 .searchInput::placeholder {
-  color: #999999;
+  color: #cccccc;
 }
 
 .main {
@@ -66,8 +66,8 @@
   font-family: "Playfair Display", serif;
   font-size: 2rem;
   font-weight: 700;
-  color: #333333;
-  border-bottom: 1px solid #333333;
+  color: #f5f2e9;
+  border-bottom: 1px solid #f5f2e9;
   padding-bottom: 0.5rem;
 }
 
@@ -92,7 +92,7 @@
   font-family: "Playfair Display", serif;
   font-size: 1.3rem;
   margin: 0 0 0.5rem 0;
-  color: #333333;
+  color: #f5f2e9;
 }
 
 .itemDetails {
@@ -104,13 +104,13 @@
 .itemDescription {
   flex: 1;
   font-size: 0.9rem;
-  color: #666666;
+  color: #cccccc;
   margin-right: 1rem;
 }
 
 .price {
   font-weight: 700;
-  color: #333333;
+  color: #f5f2e9;
   white-space: nowrap;
 }
 
@@ -118,8 +118,8 @@
   margin-top: 3rem;
   text-align: center;
   font-size: 0.8rem;
-  color: #666666;
-  border-top: 1px solid #333333;
+  color: #cccccc;
+  border-top: 1px solid #f5f2e9;
   padding-top: 1rem;
 }
 
@@ -164,4 +164,3 @@
     font-size: 0.7rem;
   }
 }
-
