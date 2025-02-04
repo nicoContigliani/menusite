@@ -3,7 +3,6 @@ import { Descriptions, DescriptionsProps } from 'antd';
 import styles from './Description.module.css'; // Importa los estilos responsivos
 
 const DescriptionComponent: React.FC<{ items: DescriptionsProps['items'] }> = ({ items }) => {
-    console.log("🚀 ~ items:", items)
     return (
         <div className={styles.descriptionContainer}>
 

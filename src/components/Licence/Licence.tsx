@@ -1,8 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './Licence.module.css'
 import CheckBoxComponents from '../CheckBox/CheckBoxComponents'
 const Licence = (props: any) => {
-    const { labelCheck, setLabelCheck, checked, setChecked }: any = props
+    const { labelCheck, setLabelCheck, checked, setChecked, setCurrent }: any = props
+
+    useEffect(() => {
+        if (checked) setCurrent(4)
+    }, [checked])
 
 
     return (

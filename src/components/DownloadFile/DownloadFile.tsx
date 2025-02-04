@@ -6,6 +6,7 @@ import styles from './DownloadFile.module.css';
 import ButtonDownloadFile from '../ButtonDownloadFile/ButtonDownloadFile';
 import TabsComponent from '../Tabs/Tabs';
 import { TabsProps } from 'antd';
+import ServicesLicense from '../ServicesLisence/ServicesLisence';
 
 interface TabsComponentProps {
   itemsTabs: TabsProps['items'];
@@ -13,10 +14,14 @@ interface TabsComponentProps {
 }
 
 const DownloadFile = (props: any) => {
-  const { itemsTabs, setCurrent } = props;
+  const { itemsTabs, setCurrent, servicesLicencesData } = props;
 
   return (
     <div className={styles?.container}>
+
+
+
+
       <div className={styles?.title}>Descarga</div>
 
       <div className="buttondownload">
@@ -39,6 +44,10 @@ const DownloadFile = (props: any) => {
         <TabsComponent itemsTabs={itemsTabs} />
       </div>
       <br />
+      <div className={styles?.title}>Servicio y  precio de la plataforma</div>
+
+      <ServicesLicense planes={servicesLicencesData} />
+      <hr />
       <button onClick={() => setCurrent(1)} className={styles?.selectButton}>
         Siguiente
       </button>

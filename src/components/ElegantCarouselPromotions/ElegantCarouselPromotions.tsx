@@ -16,7 +16,6 @@ interface HorizontalCarouselProps {
 }
 
 export default function HorizontalCarousel({ items }: any) {
-  console.log("🚀 ~ HorizontalCarousel ~ items:", items)
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isTransitioning, setIsTransitioning] = useState(false)
 

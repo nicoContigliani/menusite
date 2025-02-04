@@ -36,7 +36,6 @@ const Menuone: React.FC<MenuProps> = (props) => {
 
     const { sectionTimes, handleSectionEnter } = useSectionTimeTracker()
     useEffect(() => {
-        console.log("Tiempo en cada sección:", sectionTimes)
     }, [sectionTimes])
 
 

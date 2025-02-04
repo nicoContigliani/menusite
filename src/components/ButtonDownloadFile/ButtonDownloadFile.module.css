@@ -1,9 +1,9 @@
-/* Variables para mantener la consistencia y facilitar cambios */
+/* styles.module.css */
 
-/* Estilo general para todo el fondo */
-
+/* Clase para el enlace */
 .link {
   text-decoration: none;
+  color: inherit;
 }
 
 /* Contenedor principal */
@@ -13,10 +13,12 @@
   justify-items: center;
   width: 100%;
   padding: 20px;
-  background: linear-gradient(135deg, 
-              rgba(26, 26, 26, 0.8) 0%, 
-              rgba(60, 60, 60, 0.6) 50%, 
-              rgba(90, 90, 90, 0.3) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(26, 26, 26, 0.8) 0%,
+    rgba(60, 60, 60, 0.6) 50%,
+    rgba(90, 90, 90, 0.3) 100%
+  );
   color: #e0e0e0;
   text-align: center;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
@@ -70,35 +72,39 @@
 
 /* Estilos para los botones */
 .button {
-  padding: 1rem 2rem;
-  font-size: 1.1rem;
-  border-radius: var(--border-radius);
-  font-weight: 500; /* Peso de fuente más ligero */
-  cursor: pointer;
-  transition: all var(--transition-duration) ease;
-  text-transform: uppercase;
-  border: 1px solid var(--primary-color); /* Borde con el color primario */
-  background-color: transparent; /* Fondo transparente */
-  color: var(--primary-color);
-  box-shadow: 0 0.25rem 0.5rem var(--shadow-color);
+  background-color: #0073e6;
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+    padding: 1rem 5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-shadow: 1px 1px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.4);
 }
 
 /* Efecto al pasar el mouse */
 .button:hover {
-  background-color: var(--primary-color);
+  background-color: #0073e6;
   color: #fff;
   transform: translateY(-0.25rem);
-  box-shadow: 0 0.5rem 1rem var(--hover-shadow-color);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.6);
 }
 
 /* Efecto al hacer clic */
-.button:active,
-.inputFile:active {
+.button:active {
   transform: translateY(0);
-  box-shadow: 0 0.125rem 0.25rem var(--shadow-color);
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.4);
 }
+
+/* Botón con fondo primario */
 .buttonSend {
-  background-color: var(--primary-color);
+  background-color: #0073e6;
   color: #fff;
 }
 

@@ -10,6 +10,8 @@ interface ProfileGridProps {
   dataGeneral: DataGeneral;
   namecompanies: string;
   paymentLevel: number;
+  setSelectedProfile: any;
+  setCurrent: any
 }
 
 interface DynamicProfile {
@@ -42,7 +44,13 @@ const dynamicProfiles: DynamicProfile[] = profiles.map((profile) => ({
   component: dynamic(() => import(`../../components/Profile/${profile.path}`), { ssr: false }),
 }))
 
-const ProfileGrid: React.FC<ProfileGridProps> = ({ dataGeneral, namecompanies, paymentLevel }) => {
+const ProfileGrid: React.FC<ProfileGridProps> = ({
+  dataGeneral,
+  namecompanies,
+  paymentLevel,
+  setSelectedProfile,
+  setCurrent
+}) => {
   const { menuData, backgroundImageSet, promotions, info, schedules, config, isReady } = useMenuData(dataGeneral)
 
   const [selectedProfileIndex, setSelectedProfileIndex] = useState(0)
@@ -57,6 +65,13 @@ const ProfileGrid: React.FC<ProfileGridProps> = ({ dataGeneral, namecompanies, p
       {} as Record<string, MenuItem[]>,
     )
   }, [menuData])
+
+  const catchProfile = (name: string) => {
+    console.log("🚀 ~ catchProfile ~ name:", name)
+    setSelectedProfile(name)
+    setCurrent(3)
+  }
+
 
   const handlePreviousProfile = () => {
     setSelectedProfileIndex((prevIndex) => (prevIndex === 0 ? dynamicProfiles.length - 1 : prevIndex - 1))
@@ -73,6 +88,9 @@ const ProfileGrid: React.FC<ProfileGridProps> = ({ dataGeneral, namecompanies, p
     // style={{ backgroundImage: backgroundImageSet || undefined }}
     >
       <h1>{name}</h1>
+
+      <button onClick={() => catchProfile(name)}>select profieles</button>
+
       <div className={styles.navigation}>
         <button onClick={handlePreviousProfile}>⬅ Anterior</button>
         <div>

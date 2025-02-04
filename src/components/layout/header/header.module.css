@@ -1,72 +1,131 @@
+/* 📌 Header General */
 .header {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 50;
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(229, 231, 235, 0.2);
+  z-index: 100;
+  /* background: rgba(255, 255, 255, 0.95); */
+  background: radial-gradient(circle, transparent 2%,transparent 5%, white 100%);
+
+  /* backdrop-filter: blur(5px); */
+  border-bottom: 1px solid rgba(0, 0, 0, 0.181);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.722);
+  transition: all 0.3s ease-in-out;
 }
 
+/* 📌 Navbar */
 .nav {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 16px;
-  height: 64px;
+  padding: 0 20px;
+  height: 70px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
+/* 📌 Logo */
 .logo {
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 700;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
+  color: #222;
   text-decoration: none;
-  color: #000;
+  transition: transform 0.2s ease;
 }
 
-.links {
+.logo:hover {
+  transform: scale(1.08);
+}
+
+/* 📌 Icono */
+.icon {
+  width: 28px;
+  height: 28px;
+  color: #6366F1;
+}
+
+/* 📌 Menú hamburguesa */
+.menuButton {
   display: none;
+  background: none;
+  border: none;
+  color: #333;
+  cursor: pointer;
+  font-size: 28px;
+  transition: color 0.3s ease;
+}
+
+.menuButton:hover {
+  color: #6366F1;
+}
+
+/* 📌 Contenedor de enlaces */
+.links {
+  display: flex;
   align-items: center;
-  gap: 32px;
+  gap: 28px;
 }
 
 .link {
-  font-size: 14px;
-  font-weight: 500;
-  color: #4B5563;
+  font-size: 15px;
+  font-weight: 600;
+  color: #444;
   text-decoration: none;
-  transition: color 0.2s ease;
+  transition: color 0.3s ease;
 }
 
 .link:hover {
-  color: #111827;
+  color: #6366F1;
 }
 
+/* 📌 Botón */
 .button {
-  padding: 8px 16px;
-  border-radius: 8px;
-  background: linear-gradient(to right, #6366F1, #A855F7);
+  padding: 12px 20px;
+  border-radius: 10px;
+  background: linear-gradient(to right, #4F52DD, #9441E3);
   color: white;
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 15px;
+  font-weight: 600;
   text-decoration: none;
-  transition: all 0.2s ease;
-  box-shadow: 0 4px 6px -1px rgba(99, 102, 241, 0.2);
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 10px rgba(99, 102, 241, 0.3);
 }
 
 .button:hover {
-  background: linear-gradient(to right, #4F52DD, #9441E3);
-  transform: translateY(-1px);
+  background: linear-gradient(to right, #6366F1, #A855F7);
+  transform: translateY(-3px);
 }
 
-@media (min-width: 768px) {
+/* 📌 Responsivo: Modo móvil */
+@media (max-width: 768px) {
+  .menuButton {
+    display: block;
+  }
+
   .links {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 70px;
+    right: 0;
+    background: rgba(255, 255, 255, 0.97);
+    width: 220px;
+    padding: 18px;
+    border-radius: 10px;
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .links.show {
     display: flex;
   }
-}
 
+  .link, .button {
+    width: 100%;
+    text-align: center;
+    padding: 12px;
+  }
+}

@@ -1,239 +1,203 @@
-"use client";
+"use client"
+import Image from "next/image"
+import { useEffect, useState } from "react"
+import { supabase } from "../../../lib/supabaseClient"
+import { Upload, Button } from "antd"
+import { UploadOutlined } from "@ant-design/icons"
+import type { UploadChangeParam } from "antd/es/upload/interface"
 
-import { useState, useRef, useEffect } from "react";
-import { storage } from "../../../firebase/client";
-import {
-  ref,
-  uploadBytesResumable,
-  getDownloadURL,
-  listAll,
-  deleteObject,
-} from "firebase/storage";
-import { ReadExcelFile } from "../../services/readExcelFile";
-import styles from "./UploadImageToStorage.module.css";
+import styles from "./UploadImageToStorage.module.css"
+import { ReadExcelFile } from "@/services/readExcelFile"
+import { replaceImageUrls } from "@/services/UploadImageUrl.services"
 
-const UploadImageToStorage = (props: any) => {
-  const {
-    imageFiles,
-    setImageFiles,
-    xlsxFile,
-    setXlsxFile,
-    isUploading,
-    setIsUploading,
-    progressUpload,
-    setProgressUpload,
-    downloadURLs,
-    setDownloadURLs,
-    dataFileXLSX,
-    setDataFileXLSX,
-    setCurrent,
-    setShowUploadImageToStorage,
-    setDataResult,
-    dataResult
-  } = props;
+export default function UploadImagesToStorage(props:any) {
+  const {setDataResult, setCurrent,uploadedFiles, setUploadedFiles} = props
+  const [files, setFiles] = useState<FileList | null>(null)
+  const [folderName, setFolderName] = useState<string | null>(null)
+  const [uploading, setUploading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  // const [uploadedFiles, setUploadedFiles] = useState<any | any[] | undefined>([])
+  const [uploadProgress, setUploadProgress] = useState(0); // State for progress
 
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  const handleSelectedFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (files) {
-      const imageFilesArray = Array.from(files).filter((file) =>
-        file.type.startsWith("image/")
-      );
-      const xlsxFile = Array.from(files).find((file) => file.name.endsWith(".xlsx"));
+  const [uploadedObjects, setUploadedObjects] = useState<any[]>([])
+  const [excelData, setExcelData] = useState<Record<string, any[]> | null>(null) // New state for Excel data
 
-      setImageFiles(imageFilesArray);
-      setXlsxFile(xlsxFile || null);
-      setDownloadURLs([]);
-      setProgressUpload(0);
+
+
+
+  const handleFileChange = async (info: UploadChangeParam<any>) => {
+    const selectedFiles: any | any[] | undefined = info.fileList.map((file) => file.originFileObj)
+    if (selectedFiles.length === 0) return
+
+    const xlsxFile = selectedFiles.find((file: any) => file.name.endsWith(".xlsx"))
+    if (xlsxFile) {
+      setFolderName(xlsxFile.name.replace(".xlsx", ""))
+      try {
+        // Read the Excel file and store the data in state
+        const data = await ReadExcelFile(xlsxFile)
+        setExcelData(data)  // Store the parsed Excel data
+      } catch (err) {
+        setError("Error al leer el archivo Excel.")
+      }
     }
-  };
 
-  const handleUploadFiles = async () => {
-    if (xlsxFile && imageFiles.length > 0) {
-      setIsUploading(true);
-      const storageFolder = "companiesFolders/";
+    setFiles(selectedFiles)
+  }
 
-      const totalFiles = imageFiles.length + 1;
-      let uploadedFiles = 0;
+  const deleteFolderContents = async (bucketName: string, folderPath: string) => {
+    try {
+      const { data, error } = await supabase.storage.from(bucketName).list(folderPath)
+      if (error) throw error
 
-      let dataImage: { nameFile: string; urlFileFirebase: string, dataKey: string }[] = [];
-      let data: Record<string, any[]> = {};
+      const deletePromises = data?.map((file) => {
+        const filePath = `${folderPath}/${file.name}`
+        return supabase.storage.from(bucketName).remove([filePath])
+      })
+
+      if (deletePromises) {
+        await Promise.all(deletePromises)
+      }
+    } catch (err) {
+      console.error("Error al eliminar los archivos:", err)
+    }
+  }
+
+  const uploadFiles = async () => {
+
+
+    if (!files || !folderName) {
+      setError("Por favor, selecciona un archivo .xlsx y las imágenes.")
+      return
+    }
+
+    setUploading(true)
+    setError(null)
+    setUploadedFiles([])
+
+    const bucketName = "llakaScriptBucket"
+    const basePath = `companiesFolders/${folderName}`
+
+    await deleteFolderContents(bucketName, basePath)
+
+    try {
+      await supabase.storage.from(bucketName).upload(`${basePath}/.keep`, new Blob([]))
+    } catch (error) {
+      // Ignore error if already exists
+    }
+    const totalFiles = files.length;
+
+    for (let i = 0; i < totalFiles; i++) { // Use a loop with index
+      const file = files[i];
+      const filePath = `${basePath}/${file.name}`
 
       try {
-        // Leer el archivo XLSX
-        data = await ReadExcelFile(xlsxFile);
-        setDataFileXLSX(data);
+        const { data, error } = await supabase.storage.from(bucketName).upload(filePath, file, { upsert: true })
 
-        const companyName = xlsxFile.name.replace(".xlsx", "");
-        const folderPath = `${storageFolder}${companyName}`;
-        const folderRef = ref(storage, folderPath);
+        if (error) throw error
 
-        // Borrar la carpeta si ya existe
-        const existingFiles = await listAll(folderRef);
-        const deletePromises = existingFiles.items.map((fileRef) => deleteObject(fileRef));
-        await Promise.all(deletePromises);
+        const { data: urlData } = supabase.storage.from(bucketName).getPublicUrl(filePath)
 
-        // Subir el archivo XLSX
-        const xlsxRef = ref(storage, `${folderPath}/${xlsxFile.name}`);
-        const xlsxUploadTask = uploadBytesResumable(xlsxRef, xlsxFile);
-
-        await new Promise<void>((resolve, reject) => {
-          xlsxUploadTask.on(
-            "state_changed",
-            (snapshot) => {
-              const progress =
-                (snapshot.bytesTransferred / snapshot.totalBytes) / totalFiles;
-              setProgressUpload((prev: any) => prev + progress * 100);
-            },
-            reject,
-            () => {
-              getDownloadURL(xlsxUploadTask.snapshot.ref).then((url) => {
-                setDownloadURLs((prevURLs: any) => [...prevURLs, url]);
-                uploadedFiles++;
-                setProgressUpload((uploadedFiles / totalFiles) * 100);
-                resolve();
-              });
-            }
-          );
-        });
-
-        // Subir las imágenes
-        for (const [index, imageFile] of imageFiles.entries()) {
-          await new Promise<void>((resolve, reject) => {
-            const imageName = imageFile.name;
-            const storageRef = ref(storage, `${folderPath}/${imageName}`);
-            const uploadTask = uploadBytesResumable(storageRef, imageFile);
-
-            uploadTask.on(
-              "state_changed",
-              (snapshot) => {
-                const progress =
-                  (snapshot.bytesTransferred / snapshot.totalBytes) / totalFiles;
-                setProgressUpload((prev: any) => prev + progress * 100);
-              },
-              reject,
-              () => {
-                getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-                  dataImage.push({ nameFile: imageName, urlFileFirebase: url, dataKey: imageName.split('.')[0] });
-                  setDownloadURLs((prevURLs: any) => [...prevURLs, url]);
-                  uploadedFiles++;
-                  setProgressUpload((uploadedFiles / totalFiles) * 100);
-                  resolve();
-
-                  // Log último archivo cargado
-                  if (uploadedFiles === totalFiles) {
-                    setCurrent(2)
-                    // console.log("Último archivo cargado:", {
-                    //   xlsxData: data,
-                    //   imageFiles: dataImage,
-                    // });
-
-                    setDataResult({ xlsxData: data, imageFiles: dataImage })
-
-
-
-
-                  }
-                });
-              }
-            );
-          });
+        if (urlData) {
+          setUploadedFiles((prev: any) => [...prev, { nameFile: file?.name, urlFileSupabase: urlData?.publicUrl }])
         }
-
-
-
-        return { dataFileXLSX: data, dataImage };
-      } catch (error) {
-        alert("Error processing the XLSX file or deleting the folder.");
-        console.error(error);
-      } finally {
-        setIsUploading(false);
+        const currentProgress = Math.round(((i + 1) / totalFiles) * 100);
+        setUploadProgress(currentProgress);
+      } catch (err) {
+        console.error("Error al subir el archivo:", err)
+        setError("Error al subir los archivos. Inténtalo de nuevo.")
+        break
       }
-    } else {
-      alert("Please select an XLSX file and at least one image.");
+
+
     }
-  };
 
-  const handleRemoveFiles = () => {
-    setImageFiles([]);
-    setXlsxFile(null);
-    setDownloadURLs([]);
-    setDataFileXLSX({});
-    setProgressUpload(0);
+    setUploading(false)
+  }
 
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
+
+  useEffect(() => {
+    if (uploadedFiles.length > 0 && excelData && uploadProgress === 100) {
+      const si = replaceImageUrls(excelData, uploadedFiles)
+      setDataResult(si)
+      setCurrent(2)
+
     }
-  };
+  }, [uploadedFiles, excelData, uploadProgress])
 
- 
+
+
+
   return (
-    <div className={styles.container}>
-      <input
-        ref={fileInputRef}
-        type="file"
-        accept="image/*,.xlsx"
-        onChange={handleSelectedFiles}
-        multiple
-        className={styles.inputFile}
-      />
+    <div className={styles.body}>
+      <div className={styles.container}>
+        <h4 className={styles.titleApp}>Subir Archivos a Supabase</h4>
 
-      <div className={styles.buttonContainer}>
-        <button
-          onClick={async () => {
-            const result = await handleUploadFiles();
-            console.log(result);
-          }}
-          className={styles.button}
-          disabled={isUploading}
-        >
-          {isUploading ? "Uploading..." : "Upload Files"}
-        </button>
-        <button
-          onClick={handleRemoveFiles}
-          className={styles.button}
-          disabled={isUploading}
-        >
-          Remove Files
-        </button>
-      </div>
-
-      <div className={styles.progressBar}>
-        <div
-          style={{
-            width: `${Math.min(progressUpload, 100)}%`,
-            backgroundColor: "#000f807c",
-            height: "100%",
-            borderRadius: "5px",
-            transition: "width 0.3s ease",
-          }}
-        />
-      </div>
-      <div>
-        {downloadURLs.length > 0 && (
-          <div className={styles.imageContainer}>
-            {downloadURLs.map((url: any, index: any) => (
-              <div key={index} className={styles.fileItem}>
-                {`Uploaded file ${index + 1}`}
-
-                {url.includes(".xlsx") ? (
-                  <div className={styles.fileIcon}>
-                    📄{" "}
-                    <a href={url} target="_blank" rel="noopener noreferrer">
-                      Download XLSX
-                    </a>
-                  </div>
-                ) : (
-                  <img src={url} alt={`Uploaded file ${index + 1}`} className={styles.image} />
-                )}
-              </div>
-            ))}
+        {folderName && (
+          <div className={styles.textContainer}>
+            <span>
+              Carpeta creada: <strong>{`companiesFolders/${folderName}`}</strong>
+            </span>
           </div>
         )}
+        <Upload
+          className={styles.uploadInput}
+          multiple
+          accept=".xlsx,image/*"
+          beforeUpload={() => false}
+          onChange={handleFileChange}
+        >
+          <Button className={styles.button} icon={<UploadOutlined />}>
+            Seleccionar Archivos
+          </Button>
+        </Upload>
+
+        {uploading && (
+          <div>
+            <div>Subiendo archivos: {uploadProgress}%</div>
+            <progress value={uploadProgress} max="100" /> {/* Progress bar */}
+          </div>
+        )}
+
+        <Button onClick={uploadFiles} disabled={uploading} className={styles.uploadButton}>
+          {uploading ? "Subiendo..." : "Subir Archivos"}
+        </Button>
+
+        {error && <p className={styles.error}>{error}</p>}
+
+        {uploadedFiles.length > 0 && (
+          <div className={styles.uploadedFilesContainer}>
+            <h3>Archivos Subidos:</h3>
+            <div className={styles.uploadedFilesList}>
+              {uploadedFiles.map((url: any, index: any) => (
+                <div key={index} className={styles.uploadedFileItem}>
+                  {url.urlFileSupabase.includes(".xlsx") ? (
+                    <span className={styles.fileIcon}>📄</span>
+                  ) : (
+                    <Image
+                      src={url.urlFileSupabase || "/placeholder.svg"}
+                      width={150}
+                      height={150}
+                      alt={`Imagen subida ${index}`}
+                      className={styles.uploadedImage}
+                    />
+                  )}
+                  <a href={url.urlFileSupabase} target="_blank" rel="noopener noreferrer" className={styles.fileLink}>
+                    {url.urlFileSupabase.split("/").pop()}
+                  </a>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* {excelData && (
+          <div className={styles.excelDataContainer}>
+            <h3>Datos del Excel:</h3>
+            <pre>{JSON.stringify(excelData, null, 2)}</pre>
+          </div>
+        )} */}
       </div>
     </div>
-  );
-};
-
-export default UploadImageToStorage;
+  )
+}

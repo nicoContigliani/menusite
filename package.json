@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@ant-design/icons": "^5.6.0",
+    "@aws-sdk/client-s3": "^3.740.0",
+    "@aws-sdk/s3-request-presigner": "^3.740.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@mui/icons-material": "^6.4.2",
@@ -19,6 +21,8 @@
     "@supabase/ssr": "^0.5.2",
     "@supabase/supabase-js": "^2.48.1",
     "antd": "^5.23.3",
+    "b2-sdk": "^1.7.0",
+    "backblaze-b2": "^1.7.0",
     "firebase": "^11.2.0",
     "lucide-react": "^0.474.0",
     "mongoose": "^8.9.5",

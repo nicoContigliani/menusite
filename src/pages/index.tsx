@@ -40,10 +40,19 @@ export default function Home() {
           prueba de conexión
         </button>
         <Counter /> */}
-        <Header />
+        <Header 
+        
+        imagetodo={{
+          src: "/images/flama.png",
+          alt: "Flama",
+          width: 1600,
+          height: 1200,
+          quality: 100,
+        }}
+        />
         <Hero
           title="Nuevas experiencias digitales"
-          description="MenuAll"
+          description="Ovación constante, soluciones excepcionales."
           btn1="Get Started"
           btn2="Learn More"
           redirections={redirections}

@@ -1,14 +1,15 @@
 import React from 'react';
 import styles from './ButtonDownloadFile.module.css';
 import Link from 'next/link';
+import { Button } from 'antd';
 
 const ButtonDownloadFile = ({ fileurl, label }: { fileurl: string, label: string }) => {
     return (
-        <Link className={styles.link} href={fileurl} download="archivo.xml">
-            <button className={styles.button}>
+        <Button className={styles.button}>
+            <Link className={styles.link} href={fileurl} download="archivo.xml">
                 {label}
-            </button>
-        </Link>
+            </Link>
+        </Button>
     );
 };
 

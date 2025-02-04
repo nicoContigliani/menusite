@@ -51,7 +51,6 @@ const Navbar: React.FC = () => {
     const [current, setCurrent] = useState('navigation'); // Valor inicial corregido
 
     const onClick: MenuProps['onClick'] = (e) => {
-        console.log('click ', e);
         setCurrent(e.key);
     };
 

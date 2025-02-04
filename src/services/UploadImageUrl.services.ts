@@ -22,42 +22,13 @@ interface UpdatedData {
   xlsxData: XLSXData;
 }
 
-// export const replaceImageUrls = (dataInitial: DataInitial): UpdatedData => {
+export const replaceImageUrls = (excelData: any | any[], uploadedFiles: any | any[]) => {
+  const imageMap = new Map<string, string>(uploadedFiles.map((img:any) => [img.nameFile, img.urlFileSupabase]));
 
-
-
-//   const { xlsxData, imageFiles } = dataInitial;
-//   console.log("🚀 ~ replaceImageUrls ~ xlsxData, imageFiles:", xlsxData, imageFiles)
-//   const imageMap = new Map<string, string>(imageFiles.map(img => [img.nameFile, img.urlFileFirebase]));
-
-//   const updatedDataFileXLSX = Object.fromEntries(
-//     Object.entries(xlsxData).map(([key, items]) => [
-//       key,
-//       items.map(item => ({
-//         ...item,
-//         Background_Image: imageMap.get(item.Background_Image) || item.Background_Image,
-//         Item_Image: imageMap.get(item.Item_Image) || item.Item_Image,
-//       })),
-//     ])
-//   );
-
-//   return {
-//     xlsxData: updatedDataFileXLSX,
-//   };
-// };
-
-export const replaceImageUrls = (dataInitial: DataInitial): UpdatedData => {
-  const { xlsxData, imageFiles } = dataInitial;
-  console.log("🚀 ~ replaceImageUrls ~ xlsxData, imageFiles:", xlsxData, imageFiles);
-
-  const imageMap = new Map<string, string>(
-    imageFiles.map(img => [img.nameFile, img.urlFileFirebase])
-  );
-
-  const updatedDataFileXLSX = Object.fromEntries(
-    Object.entries(xlsxData).map(([key, items]) => [
+  const updatedExcelData = Object.fromEntries(
+    Object.entries(excelData).map(([key, items]:any) => [
       key,
-      items.map(item => {
+      items.map((item:any) => {
         const updatedItem = { ...item };
 
         if ("Background_Image" in item) {
@@ -77,7 +48,5 @@ export const replaceImageUrls = (dataInitial: DataInitial): UpdatedData => {
     ])
   );
 
-  return {
-    xlsxData: updatedDataFileXLSX,
-  };
+  return updatedExcelData;
 };

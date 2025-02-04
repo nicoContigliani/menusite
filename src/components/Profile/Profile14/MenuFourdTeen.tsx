@@ -59,7 +59,6 @@ interface MenuProps {
     schedules: Record<string, SchedulesType[]>,
 }
 const MenuFourdTeen: React.FC<MenuProps> = (props) => {
-    console.log("🚀 ~ MenuFourdTeen ~ props:*****************", props)
     const {
         menuData,
         groupedSections,
@@ -70,7 +69,6 @@ const MenuFourdTeen: React.FC<MenuProps> = (props) => {
         schedules,
         config,
     } = props
-    console.log("🚀 ~ backgroundImages:", backgroundImages)
 
     const [searchTerm, setSearchTerm] = useState('');
     const [loading, setLoading] = useState(true);  // New loading state

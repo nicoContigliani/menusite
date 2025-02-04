@@ -28,7 +28,6 @@ const StepsComponent: React.FC<StepsComponentProps> = memo((props) => {
     }, []);
 
     const onChange = (value: number) => {
-        console.log('onChange:', value);
         setCurrent(value);
     };
 
