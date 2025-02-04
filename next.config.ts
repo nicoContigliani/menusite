@@ -25,7 +25,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
-  transpilePackages: ['antd', '@ant-design', 'rc-util', 'lodash-es', 'rc-pagination'],
+  transpilePackages: ['antd', '@ant-design', 'rc-util', 'lodash-es', 'rc-pagination', 'rc-picker'], // Added rc-picker
   experimental: {
     optimizePackageImports: ['antd', '@ant-design/icons'],
   },
@@ -40,6 +40,12 @@ const nextConfig: NextConfig = {
         hostname: "**",
       },
     ],
+  },
+  webpack(config, { isServer }) {
+    if (!isServer) {
+      config.resolve.extensions.push('.js', '.ts', '.tsx');  // Allow .js files in client-side code
+    }
+    return config;
   },
 };
 
