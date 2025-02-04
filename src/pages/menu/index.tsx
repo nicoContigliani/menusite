@@ -4,13 +4,22 @@ import React from 'react'
 
 
 const page = () => {
-    const redirections={
-        btn1:"/newbrands",
-        btn2:"/moreinfo"
-      }
+    const redirections = {
+        btn1: "/newbrands",
+        btn2: "/moreinfo"
+    }
     return (
         <div>
-            <Header />
+            <Header
+                imagetodo={{
+                    src: "/images/flama.png",
+                    alt: "Flama",
+                    width: 1600,
+                    height: 1200,
+                    quality: 100,
+                }}
+
+            />
             <div>
                 <Hero
                     title="Menu y página web simple"
@@ -28,7 +37,7 @@ const page = () => {
                     video={{
                         src: '/videos/menu.mp4',
                         type: 'video/mp4'
-                      }}
+                    }}
                 />
             </div>
         </div>

@@ -6,7 +6,7 @@
   right: 0;
   z-index: 100;
   /* background: rgba(255, 255, 255, 0.95); */
-  background: radial-gradient(circle, transparent 2%,transparent 5%, white 100%);
+  background: radial-gradient(circle, transparent 95%,transparent 35%, white 100%);
 
   /* backdrop-filter: blur(5px); */
   border-bottom: 1px solid rgba(0, 0, 0, 0.181);
@@ -76,6 +76,7 @@
   color: #444;
   text-decoration: none;
   transition: color 0.3s ease;
+  
 }
 
 .link:hover {
@@ -99,9 +100,13 @@
   background: linear-gradient(to right, #6366F1, #A855F7);
   transform: translateY(-3px);
 }
+.header {
+  background: radial-gradient(circle, transparent 45%, white 100%);
+  text-shadow: #ffffffa4 1px 1px  ;
+}
 
 /* 📌 Responsivo: Modo móvil */
-@media (max-width: 768px) {
+@media (max-width: 868px) {
   .menuButton {
     display: block;
   }
@@ -112,13 +117,14 @@
     position: absolute;
     top: 70px;
     right: 0;
-    background: rgba(255, 255, 255, 0.97);
+    background: rgba(255, 255, 255, 0.622);
     width: 220px;
     padding: 18px;
     border-radius: 10px;
     box-shadow: 0 5px 12px rgba(0, 0, 0, 0.1);
   }
 
+  /* Cuando el menú está abierto, mostramos los enlaces */
   .links.show {
     display: flex;
   }
@@ -127,5 +133,8 @@
     width: 100%;
     text-align: center;
     padding: 12px;
+  }
+  .header {
+    background: radial-gradient(circle, transparent 45%, white 100%);
   }
 }
