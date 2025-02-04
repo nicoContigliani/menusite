@@ -21,7 +21,6 @@
 // export default nextConfig;
 
 
-
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
@@ -29,6 +28,7 @@ const nextConfig: NextConfig = {
   transpilePackages: ['antd', '@ant-design', 'rc-util', 'lodash-es', 'rc-pagination', 'rc-picker'],
   experimental: {
     optimizePackageImports: ['antd', '@ant-design/icons'],
+    // Remove optimizeCss: true,
   },
   images: {
     remotePatterns: [
@@ -42,6 +42,7 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  output: 'standalone',
 };
 
 export default nextConfig;
