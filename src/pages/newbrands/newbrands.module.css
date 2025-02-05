@@ -1,6 +1,9 @@
 /* Variables para mantener la consistencia */
 
-
+.header{
+  padding: 2.5%;
+  /* background-color: rgba(102, 0, 255, 0.052); */
+}
 /* Estilos generales */
 .body {
   /* Estilos para el body */

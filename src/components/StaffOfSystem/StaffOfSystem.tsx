@@ -31,10 +31,6 @@ interface StaffOfSystemProps {
 const StaffOfSystem: React.FC<StaffOfSystemProps> = ({ staffData }) => {
   const { staff, Config, Info } = staffData;
 
-  const handleCreate = () => {
-    console.log("Crear botón presionado");
-  };
-
   return (
     <div className={styles.wrapper}>
       <h1 className={styles.title}>Staff Of System</h1>
@@ -73,12 +69,7 @@ const StaffOfSystem: React.FC<StaffOfSystemProps> = ({ staffData }) => {
         </div>
       </div>
 
-      {/* Botón de Crear */}
-      <div className={styles.buttonContainer}>
-        <Button type="primary" size="large" onClick={handleCreate}>
-          Crear
-        </Button>
-      </div>
+
     </div>
   );
 };

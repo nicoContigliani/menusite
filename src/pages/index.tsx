@@ -27,7 +27,7 @@ export default function Home() {
   }
 
   const redirections = {
-    btn1: "/newbrands",
+    btn1: "/products",
     btn2: "/moreinfo"
   }
 
