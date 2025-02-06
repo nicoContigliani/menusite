@@ -8,7 +8,7 @@ import styles from './page.module.css'
 const page = () => {
     const redirections = {
         btn1: "/newbrands",
-        btn2: "/moreinfo"
+        btn2: "https://menusi.netlify.app/companies/LlakaScript"
     }
 
     const servicesLicencesData = {
