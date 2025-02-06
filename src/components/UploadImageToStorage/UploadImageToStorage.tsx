@@ -11,9 +11,9 @@ import { ReadExcelFile } from "@/services/readExcelFile"
 import { replaceImageUrls } from "@/services/UploadImageUrl.services"
 
 export default function UploadImagesToStorage(props:any) {
-  const {setDataResult, setCurrent,uploadedFiles, setUploadedFiles} = props
+  const {setDataResult, setCurrent,uploadedFiles, setUploadedFiles,folderName,setFolderName} = props
   const [files, setFiles] = useState<FileList | null>(null)
-  const [folderName, setFolderName] = useState<string | null>(null)
+  // const [folderName, setFolderName] = useState<string | null>(null)
   const [uploading, setUploading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   // const [uploadedFiles, setUploadedFiles] = useState<any | any[] | undefined>([])

@@ -1,10 +1,13 @@
 // src/store/store.ts
 import { configureStore } from '@reduxjs/toolkit';
 import counterReducer from './counter/counterSlice';
+import chExcelDataReducer from './chExcelDataSlice';
 
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
+    chExcelData: chExcelDataReducer,
+
   },
 });
 

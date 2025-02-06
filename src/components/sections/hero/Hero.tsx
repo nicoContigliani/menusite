@@ -22,6 +22,7 @@ interface HeroProps {
     src: string
     type?: string
   }
+  children?: React.ReactNode
 }
 
 export default function Hero({
@@ -31,56 +32,65 @@ export default function Hero({
   btn2,
   redirections,
   img,
-  video
+  video,
+  children
 }: HeroProps) {
   return (
-    <section className={styles.hero}>
-      {video?.src && (
-        <>
-          <div className={styles.overlay} />
-          <video
-            autoPlay
-            muted
-            playsInline
-            className={styles.videoBackground}
-          >
-            <source src={video.src} type={video.type || 'video/mp4'} />
-            Tu navegador no soporta el tag de video.
-          </video>
-        </>
-      )}
-      <div className={styles.container}>
-        <div className={styles.content}>
-          <h1 className={styles.title}>
-            {title}
-          </h1>
-          <div className={styles.description}>
-            {description}
-          </div>
-          <div className={styles.buttons}>
-            <Link href={redirections.btn1} className={styles.primary}>
-              {btn1}
-            </Link>
-            <Link href={redirections.btn2} className={styles.secondary}>
-              {btn2}
-            </Link>
-          </div>
-        </div>
-        {img && (
-          <div className={styles.image}>
-            <Image
-              src={img.src}
-              alt={img.alt}
-              width={img.width}
-              height={img.height}
-              quality={img.quality}
-              priority
-              className={styles.mockup}
-            />
-          </div>
+    <div className={styles.Herocontainer}>
+
+
+      <section className={styles.hero}>
+        {video?.src && (
+          <>
+            <video
+              autoPlay
+              muted
+              playsInline
+              className={styles.videoBackground}
+            >
+              <source src={video.src} type={video.type || 'video/mp4'} />
+              Tu navegador no soporta el tag de video.
+            </video>
+            <div className={styles.overlay} />
+          </>
         )}
-      </div>
-    </section>
+        <div className={styles.container}>
+          <div className={styles.content}>
+            
+            <h1 className={styles.title}>
+              {title}
+            </h1>
+            <div className={styles.description}>
+              {description}
+            </div>
+            <div className={styles.buttons}>
+              <Link href={redirections.btn1} className={styles.primary}>
+                {btn1}
+              </Link>
+              <Link href={redirections.btn2} className={styles.secondary}>
+                {btn2}
+              </Link>
+            </div>
+          </div>
+          {img && (
+            <div className={styles.image}>
+              <Image
+                src={img.src}
+                alt={img.alt}
+                width={img.width}
+                height={img.height}
+                quality={img.quality}
+                priority
+                className={styles.mockup}
+              />
+            </div>
+          )}
+        </div>
+      </section>
+      {children && <div className={styles.childrenContainer}>{children}</div>}
+
+    </div>
+
   )
 }
 

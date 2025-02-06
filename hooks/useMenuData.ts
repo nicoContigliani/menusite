@@ -81,3 +81,44 @@ export const useMenuData = (dataGeneral: DataGeneral) => {
   }
 }
 
+export const useMenuDataAternative = (dataGeneral: any) => {
+  const [menuData, setMenuData] = useState<MenuItem[]>([])
+  const [backgroundImageSet, setBackgroundImageSet] = useState<string | null>(null)
+  const [promotions, setPromotions] = useState<any | null>(null)
+  const [info, setInfo] = useState<InfoType[] | null>(null)
+  const [schedules, setSchedules] = useState<SchedulesType[] | null>(null)
+  const [config, setConfig] = useState<ConfigType[] | null>(null)
+  const [isReady, setIsReady] = useState(false)
+
+  useEffect(() => {
+    if (dataGeneral && dataGeneral?.hojas?.Hoja1) {
+      const { Hoja1, Promotion, Config, Info, schedules } = dataGeneral?.hojas
+
+      if (Hoja1.length > 0) setMenuData(Hoja1)
+      if (Config?.[0]?.Background_Image) {
+        setBackgroundImageSet(
+          Config[0].Background_Image
+            ? `url("${Config[0].Background_Image}")`
+            : `url("/foldercompanies/LlakaScript/fondo.png")`,
+        )
+      }
+      if (Promotion) setPromotions(Promotion)
+      if (Info) setInfo(Info)
+      if (schedules) setSchedules(schedules)
+      if (Config) setConfig(Config)
+
+      setIsReady(true)
+    }
+  }, [dataGeneral])
+
+  return {
+    menuData,
+    backgroundImageSet,
+    promotions,
+    info,
+    schedules,
+    config,
+    isReady,
+  }
+}
+

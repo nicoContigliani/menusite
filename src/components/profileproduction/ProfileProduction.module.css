@@ -1,0 +1,19 @@
+/* ProfileProduction.module.css */
+.container {
+    padding: 20px;
+    background-color: #f5f5f5;
+}
+
+.loading, .error {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.loading {
+    color: #888;
+}
+
+.error {
+    color: red;
+}

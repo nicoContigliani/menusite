@@ -14,7 +14,7 @@ interface TabsComponentProps {
 }
 
 const DownloadFile = (props: any) => {
-  const { itemsTabs, setCurrent, servicesLicencesData } = props;
+  const { itemsTabs, setCurrent } = props;
 
   return (
     <div className={styles?.container}>
@@ -40,13 +40,12 @@ const DownloadFile = (props: any) => {
       <span style={{ color: 'white' }}>Los datos cargados en el excel modifican el comportamiento de la plataforma</span>
       <span style={{ color: 'white' }}>Información de los datos agregados a la hoja de calculo</span>
 
-      <div className={styles?.tabsContainer}>
+      {/* <div className={styles?.tabsContainer}>
         <TabsComponent itemsTabs={itemsTabs} />
-      </div>
+      </div> */}
       <br />
-      <div className={styles?.title}>Servicio y  precio de la plataforma</div>
 
-      <ServicesLicense planes={servicesLicencesData} />
+      
       <hr />
       <button onClick={() => setCurrent(1)} className={styles?.selectButton}>
         Siguiente
