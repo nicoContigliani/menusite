@@ -4,6 +4,7 @@ import dynamic from "next/dynamic"
 import styles from "./ElegantGrid.module.css"
 import { useMenuData, type MenuItem, type DataGeneral } from "../../../hooks/useMenuData"
 import ToggleButtons from "../ToggleButton/ToggleButton"
+import { Button } from "antd"
 
 
 interface ProfileGridProps {
@@ -89,17 +90,26 @@ const ProfileGrid: React.FC<ProfileGridProps> = ({
     >
       <h1>{name}</h1>
 
-      <button onClick={() => catchProfile(name)}>select profieles</button>
+      <Button onClick={() => catchProfile(name)}
+        type="primary"
+        variant="outlined"
+      >select profieles</Button>
 
       <div className={styles.navigation}>
-        <button onClick={handlePreviousProfile}>⬅ Anterior</button>
+        <Button onClick={handlePreviousProfile}
+          type="primary"
+          variant="outlined"
+        >⬅ Anterior</Button>
         <div>
           {paymentLevel !== 0 ?
             <ToggleButtons />
             : null
           }
         </div>
-        <button onClick={handleNextProfile}>Siguiente ➡</button>
+        <Button onClick={handleNextProfile}
+          type="primary"
+          variant="outlined"
+        >Siguiente ➡</Button>
       </div>
       <div className={styles.profile}>
         {isReady && (

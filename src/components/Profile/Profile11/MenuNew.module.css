@@ -1,8 +1,9 @@
+/* General Container */
 .menuContainer {
   min-height: 100vh;
   background-color: #000000;
   color: white;
-  padding: 2rem;
+  padding: 1.5rem; /* Más espacio en escritorio */
   font-family: 'Segoe UI', system-ui, sans-serif;
   background-image: 
     radial-gradient(circle, transparent 20%, #2a2a2a 20%, #2a2a2a 80%, transparent 80%, transparent),
@@ -14,12 +15,11 @@
 
 .header {
   text-align: center;
-  margin-bottom: 3rem;
-  position: relative;
+  margin-bottom: 2rem; 
 }
 
 .mainTitle {
-  font-size: 3.5rem;
+  font-size: 3rem; /* Mayor tamaño para PC */
   font-weight: 600;
   margin-bottom: 1.5rem;
   font-family: 'Segoe Script', cursive;
@@ -39,14 +39,15 @@
 }
 
 .searchInput {
-  max-width: 300px;
+  width: 50%; /* En PC será más pequeño */
   margin: 0 auto;
-  padding: 0.75rem 1rem;
+  padding: 1rem;
   background: rgba(255, 255, 255, 0.1);
   border: 2px solid rgba(255, 255, 255, 0.3);
   color: white;
   border-radius: 4px;
-  width: 100%;
+  font-size: 1rem;
+  margin-bottom: 2rem;
 }
 
 .searchInput::placeholder {
@@ -54,11 +55,9 @@
 }
 
 .menuWrapper {
-  max-width: 1000px;
-  margin: 0 auto;
   display: grid;
-  gap: 3rem;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem; /* Espacio más grande en PC */
+  grid-template-columns: 1fr 1fr 1fr; /* Tres columnas en PC */
   position: relative;
   background-color: #000000a3;
 }
@@ -71,10 +70,10 @@
 .section::before {
   content: '';
   position: absolute;
-  top: -10px;
-  left: -10px;
-  right: -10px;
-  bottom: -10px;
+  top: -8px;
+  left: -8px;
+  right: -8px;
+  bottom: -8px;
   border: 2px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
   pointer-events: none;
@@ -82,10 +81,11 @@
 
 .sectionTitle {
   font-size: 2rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   font-family: 'Segoe Script', cursive;
   position: relative;
   padding-left: 1rem;
+  font-weight: 700;
 }
 
 .sectionTitle::after {
@@ -100,7 +100,7 @@
 
 .sectionItems {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap; /* Permite que los items se distribuyan mejor */
   gap: 1rem;
   padding: 1rem;
 }
@@ -109,12 +109,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5rem 0;
-  border-bottom: 1px dashed rgba(255, 255, 255, 0.2);
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
 }
 
 .itemImage {
-  display: none;
+  display: block;
 }
 
 .itemInfo {
@@ -125,18 +126,18 @@
 }
 
 .itemName {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-weight: 500;
 }
 
 .itemDescription {
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: rgba(255, 255, 255, 0.7);
   font-style: italic;
 }
 
 .price {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-weight: 600;
   margin-left: 1rem;
   white-space: nowrap;
@@ -149,27 +150,88 @@
   font-style: italic;
 }
 
-/* Decorative elements */
-.section::after {
-  content: '☕';
-  position: absolute;
-  top: -15px;
-  right: -15px;
-  font-size: 1.5rem;
-  transform: rotate(15deg);
-}
-
+/* PARA MÓVIL (pantallas pequeñas) */
 @media (max-width: 768px) {
   .menuContainer {
-    padding: 1rem;
+    padding: 1rem; /* Menos espacio en móvil */
   }
-  
+
   .mainTitle {
-    font-size: 2.5rem;
+    font-size: 2rem; /* Más pequeño en móvil */
   }
-  
+
+  .searchInput {
+    width: 90%; /* Más ancho en móvil */
+    padding: 0.75rem;
+  }
+
+  .menuWrapper {
+    grid-template-columns: 1fr; /* Una sola columna en móvil */
+    gap: 1.5rem;
+  }
+
   .sectionTitle {
-    font-size: 1.75rem;
+    font-size: 1.5rem; /* Más pequeño para pantallas pequeñas */
+    padding-left: 1rem;
+  }
+
+  .sectionItems {
+    display: flex;
+    flex-direction: column; /* Los items estarán en columna */
+    gap: 1rem;
+    padding: 0.5rem;
+  }
+
+  .menuItem {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    padding: 0.75rem;
+  }
+
+  .itemName {
+    font-size: 1rem;
+  }
+
+  .price {
+    font-size: 1rem;
+    margin-left: 0;
+    margin-top: 0.5rem;
   }
 }
 
+/* Para pantallas muy pequeñas (como móviles muy compactos) */
+@media (max-width: 480px) {
+  .mainTitle {
+    font-size: 1.5rem; /* Aún más pequeño */
+  }
+
+  .sectionTitle {
+    font-size: 1.25rem; /* Reducido para pantallas ultra pequeñas */
+  }
+
+  .searchInput {
+    font-size: 14px; /* Fuente más pequeña */
+    padding: 0.5rem;
+  }
+
+  .menuWrapper {
+    gap: 1rem; /* Menos espacio entre los items */
+  }
+
+  .menuItem {
+    padding: 0.5rem;
+  }
+
+  .itemName {
+    font-size: 0.9rem;
+  }
+
+  .price {
+    font-size: 0.9rem;
+  }
+
+  .sectionItems {
+    padding: 0.5rem;
+  }
+}

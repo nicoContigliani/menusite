@@ -1,51 +1,59 @@
-/* Fondo limpio inspirado en Apple */
+/* Estilo General: Sofisticado y Elegante */
 .menuWrapper {
     display: flex;
     flex-direction: column;
     gap: 40px;
-    padding: 20px;
-    background: linear-gradient(180deg, #f9f9f96e 0%, #ffffff21 50%, #ffffff85 100%);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #000000;
+    padding: 40px;
+    background: #1a1a1a; /* Fondo oscuro elegante */
+    font-family: 'Playfair Display', serif;
+    color: #f5f5f5;
 }
 
-/* Filtro */
+/* Filtro de búsqueda con un diseño más refinado */
 .filterWrapper {
     display: flex;
     justify-content: center;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 .filterInput {
-    padding: 10px;
-    width: 300px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 1rem;
-    color: #333;
-    transition: border 0.3s ease;
+    padding: 12px;
+    width: 350px;
+    border: 2px solid #b59a66;
+    border-radius: 25px;
+    font-size: 1.1rem;
+    color: #f5f5f5;
+    background: #2c2c2c;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.filterInput::placeholder {
+    color: #b59a66;
+    font-style: italic;
 }
 
 .filterInput:focus {
     outline: none;
-    border-color: #0078d7;
+    border-color: #e6c27a;
+    background: #252525;
 }
 
-/* Cabecera */
+/* Cabecera con un toque clásico y lujoso */
 .header {
     text-align: center;
-    padding: 30px 0;
-    border-bottom: 3px solid #ffffff;
+    padding: 50px 0;
+    border-bottom: 4px solid #b59a66;
 }
 
 .header h1 {
-    font-size: 4rem;
-    font-weight: 700;
-    color: #e1e1e1;
-    text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.8);
+    font-size: 3.7rem;
+    font-weight: bold;
+    color: #e6c27a;
+    text-shadow: 2px 2px 12px rgba(230, 194, 122, 0.6);
 }
 
-/* Sección */
+/* Sección general */
 .section {
     width: 100%;
 }
@@ -53,50 +61,52 @@
 .sectionTitle {
     font-size: 2rem;
     font-weight: bold;
-    color: #333333;
+    color: #e6c27a;
     margin-bottom: 20px;
     text-transform: uppercase;
-    border-left: 5px solid #0078d7; /* Color azul de Windows */
-    padding-left: 10px;
+    border-left: 5px solid #b59a66;
+    padding-left: 15px;
 }
 
-/* Diseño de los bloques tipo "Live Tiles" */
+/* Estilo de los elementos del menú */
 .sectionItems {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 15px;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
 }
 
-/* Estilo para cada elemento del menú */
+/* Cada elemento del menú con efecto de lujo */
 .menuItem {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    padding: 20px;
-    border-radius: 10px;
-    color: white;
+    gap: 15px;
+    padding: 25px;
+    border-radius: 15px;
+    background: #2c2c2c;
+    border: 1px solid #b59a66;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     cursor: pointer;
 }
 
 .menuItem:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(230, 194, 122, 0.5);
 }
 
-/* Imagen del elemento */
+/* Imagen del plato con un borde dorado */
 .itemImage {
-    width: 60px;
-    height: 60px;
-    background: rgba(255, 255, 255, 0.2);
+    width: 80px;
+    height: 80px;
+    background: #1a1a1a;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    border: 2px solid #b59a66;
 }
 
 .itemImage img {
@@ -105,47 +115,52 @@
     object-fit: cover;
 }
 
-/* Información del elemento */
+/* Información del menú */
 .itemInfo {
     text-align: center;
 }
 
 .itemInfo h2 {
     margin: 0;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     font-weight: bold;
-    color: white;
+    color: #e6c27a;
 }
 
 .itemInfo p {
-    font-size: 0.9rem;
+    font-size: 1rem;
     margin: 5px 0;
-    color: #f0f0f0;
+    color: #d8d8d8;
 }
 
 .itemInfo .price {
-    font-size: 1rem;
+    font-size: 1.2rem;
     font-weight: bold;
-    color: #f0f0f0;
+    color: #f5f5f5;
 }
 
 /* Responsividad */
 @media (max-width: 768px) {
     .sectionItems {
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     }
 }
+
 /* Estilo para el campo de búsqueda */
 .searchInput {
     width: 50%;
-    padding: 10px;
-    margin: 20px 0;
-    font-size: 1rem;
-    border: 2px solid #909090;
-    border-radius: 5px;
+    padding: 12px;
+    margin: 30px 0;
+    font-size: 1.1rem;
+    border: 2px solid #b59a66;
+    border-radius: 25px;
     outline: none;
+    background: #2c2c2c;
+    color: #f5f5f5;
+    text-align: center;
 }
 
 .searchInput::placeholder {
-    color: #888;
+    color: #b59a66;
+    font-style: italic;
 }

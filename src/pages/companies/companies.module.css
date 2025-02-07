@@ -1,0 +1,37 @@
+.body {
+    width: 100%;
+    min-height: 100vh;
+    overflow-y: auto; /* Permite el scroll vertical */
+    background-attachment: fixed; /* Fija el fondo */
+    background-position: center;
+    background-size: cover;
+  }
+  
+  .container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1px;
+    padding: 1%;
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 100vh; /* Asegura que el contenedor cubra toda la pantalla */
+    overflow-x: hidden; /* Evita el scroll horizontal */
+    justify-content: center;
+    align-content: start; /* Importante: Permite que el contenido crezca hacia abajo */
+    justify-items: center;
+    align-items: start; /* Asegura que los elementos se posicionen arriba */
+    background-color: rgba(255, 255, 255, 0.003);
+  }
+  
+  @media (min-width: 768px) {
+    .container {
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 10px;
+      padding: 20px;
+      max-width: 100%;
+      overflow-x: hidden;
+      justify-content: space-around;
+      align-content: start; /* Permite expansión vertical */
+    }
+  }
+  

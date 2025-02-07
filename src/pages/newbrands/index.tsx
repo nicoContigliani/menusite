@@ -527,7 +527,6 @@ const page = () => {
     setDataURlSupabase(dataResult)
   }, [dataResult])
 
-  console.log("🚀 ~ useEffect ~ dataResult:", dataResult)
 
   const [fullUrl, setFullUrl] = useState("");
 
@@ -557,13 +556,14 @@ const page = () => {
     // Datos que quieres enviar a la API
     const data = {
       filePath: `/foldercompanies/${folderName}`,
-      companyName:`${folderName}`,
+      companyName: `${folderName}`,
       folderName: `${folderName}`,
       hojas: dataResult,
       selectedProfile: selectedProfile,
       status_Companies: true
 
     };
+    console.log("🚀 ~ handleCreate ~ data.selectedProfile:", data.selectedProfile)
     console.log("🚀 ~ handleCreate ~ data:", data)
 
     try {
@@ -625,7 +625,7 @@ const page = () => {
         </div>
         <div className={styles.body}>
           {showDownload ? (
-            <DownloadFile itemsTabs={itemsTabs} setCurrent={setCurrent}  />
+            <DownloadFile itemsTabs={itemsTabs} setCurrent={setCurrent} />
           ) : null}
 
           {showUploadImageToStorage ? (
@@ -640,6 +640,7 @@ const page = () => {
           ) : null}
           {showProfile ? (
             <Profile
+              folderName={folderName}
               dataResult={dataResult}
               items={carouselItems}
               paymentLevel={paymentLevel}
@@ -663,9 +664,12 @@ const page = () => {
           <div>
             {/* Botón de Crear */}
             <div className={styles.buttonContainer}>
-              <Button type="primary" size="large" onClick={handleCreate}>
-                Crear
-              </Button>
+              {
+                (dataResult && checked && folderName && selectedProfile) &&
+                <Button type="primary" size="large" onClick={handleCreate}>
+                  Crear
+                </Button>
+              }
             </div>
           </div>
         </div>

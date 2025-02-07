@@ -1,111 +1,189 @@
-import React, { useState, useCallback } from 'react';
-import Image from 'next/image';
-import styles from './MenuNew.module.css';
+import Logo from "@/components/Logo/Logo"
+import type React from "react"
+import { useEffect, useState } from "react"
+import styles from "./MenuNew.module.css"
+import Info from "@/components/Info/Info"
+import Schedules from "@/components/Schedules/Schedules"
+import useSectionTimeTracker from "../../../../hooks/useSectionTimeTracker"
+import Image from "next/image"
 
 interface MenuItem {
-    Menu_Title: string;
-    Item_Image: string;
-    Section: string;
-    Item_id: number;
-    Name: string;
-    Description: string;
-    Price: string;
+    Item_id: string
+    Name: string
+    Description: string
+    Price: string | number
+    Menu_Title: string
+    Item_Image: string
 }
 
 interface MenuProps {
-    namecompanies: string;
-    groupedSections: Record<string, MenuItem[]>;
-    menuData: any;
-    backgroundImages?: string;
+    menuData: any
+    groupedSections: { [key: string]: MenuItem[] }
+    backgroundImages: any
+    namecompanies: string
+    promotions: any
+    info: any
+    schedules: any
+    config: any[]
 }
 
-const Menuten: React.FC<MenuProps> = ({ groupedSections, namecompanies, backgroundImages }) => {
-    const [searchTerm, setSearchTerm] = useState<string>('');
-    const [debouncedSearchTerm, setDebouncedSearchTerm] = useState<string>(searchTerm);
+interface ConfigType {
+    IconBrand: string
+}
 
-    // UseEffect for debounce behavior
-    const debounceSearch = useCallback(() => {
-        const timer = setTimeout(() => {
-            setDebouncedSearchTerm(searchTerm);
-        }, 300); // 300ms debounce delay
+const Menuten: React.FC<MenuProps> = (props) => {
+    const { backgroundImages, config, groupedSections, info, menuData, namecompanies, promotions, schedules } = props
 
-        return () => clearTimeout(timer);
-    }, [searchTerm]);
+    const { sectionTimes, handleSectionEnter } = useSectionTimeTracker()
+    console.log("🚀 ~ sectionTimes:", sectionTimes)
+    useEffect(() => {
+    }, [sectionTimes])
 
-    React.useEffect(() => {
-        debounceSearch();
-    }, [debounceSearch]);
 
-    const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchTerm(event.target.value);
-    };
+    const [searchTerm, setSearchTerm] = useState("")
+    const [loading, setLoading] = useState(true)
+    const [iconURL, setIconURL] = useState<string>("")
 
-    // Filter sections only if necessary and return early if there's no search term
-    const filteredSections = Object.entries(groupedSections).filter(([sectionName, items]) => {
-        return items.some(item =>
-            [item.Name, item.Menu_Title, item.Description, item.Price]
-                .some(field => field.toLowerCase().includes(debouncedSearchTerm.toLowerCase()))
-        );
-    });
+    useEffect(() => {
+        if (groupedSections) {
+            const firstSection: any = Object.values(groupedSections)[0]
+            if (firstSection && firstSection.length > 0) {
+                // You can do something with `firstSection` if needed
+            }
+        }
+
+        if (config && config.length > 0) {
+            const configData = config[0] as ConfigType
+            setIconURL(configData.IconBrand || "")
+        }
+
+        setLoading(false)
+    }, [groupedSections, config])
+
+    if (loading) {
+        return <div>Loading...</div>
+    }
+
+    const memoizedSections = Object.entries(groupedSections)
+        .map(([sectionName, items]) => {
+            const filteredItems = items.filter(
+                (item) =>
+                    [item.Name, item.Description, item.Menu_Title].some(
+                        (field) => typeof field === "string" && field.toLowerCase().includes(searchTerm.toLowerCase()),
+                    ) ||
+                    (typeof item.Price === "string" && item.Price.toLowerCase().includes(searchTerm.toLowerCase())),
+            )
+            return [sectionName, filteredItems] as [string, MenuItem[]]
+        })
+        .filter(([, items]) => items.length > 0)
 
     return (
-        <div
-            className={styles.menuContainer}
+        <div className={styles.container}
             style={{
                 backgroundImage: backgroundImages || 'none',
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                backgroundAttachment: 'fixed',
             }}
         >
             <header className={styles.header}>
-                <h1 className={styles.mainTitle}>{namecompanies}</h1>
-                <input
-                    type="text"
-                    placeholder="Search menu..."
-                    value={searchTerm}
-                    onChange={handleSearchChange}
-                    className={styles.searchInput}
-                    aria-label="Search menu items"
-                />
+                <div className={styles.logo}
+                    onMouseEnter={() => handleSectionEnter("logo")}
+                >
+                    {iconURL ?
+                        <Logo
+                            namecompanies="LlakaScript"
+                            logoUrl={iconURL}
+                            size={120} // Tamaño de la imagen
+                            fontSize="22px" // Tamaño de la fuente
+                            fontWeight="700" // Grosor de la fuente
+                            color="white" // Color del texto
+                            fontFamily="Arial, sans-serif" // Familia de la fuente
+                        />
+                        : null}
+                </div>
+
+                <div className={styles.info}
+                    onMouseEnter={() => handleSectionEnter("info")}
+                >
+                    {info ?
+                        <Info
+                            info={info}
+                            fontSize="14px"
+                            fontWeight="500"
+                            color="#dddddd"
+                            fontFamily="Helvetica, sans-serif"
+                            containerClassName={styles.customInfoContainer}
+                            textClassName={styles.customInfoText}
+                        />
+                        : null}
+                </div>
+
+                <div className={styles.searchContainer}
+                    onMouseEnter={() => handleSectionEnter("search")}
+                >
+                    <input
+                        type="text"
+                        className={styles.searchInput}
+                        placeholder="Buscar en el menú..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                </div>
             </header>
 
-            <div className={styles.menuWrapper}>
-                {filteredSections.length > 0 ? (
-                    filteredSections.map(([sectionName, items], sectionIndex) => (
-                        <div key={sectionIndex} className={styles.section}>
-                            <h2 className={styles.sectionTitle}>{sectionName}</h2>
-                            <div className={styles.sectionItems}>
-                                {items.map((item, itemIndex) => (
-                                    <div
-                                        key={`${sectionIndex}-${itemIndex}`} // Clave única combinando índice de sección y elemento
-                                        className={styles.menuItem}
+            <main className={styles.main}>
+                {memoizedSections?.map(([sectionName, items]) => (
+                    <div key={sectionName} className={styles.section}>
+                        <div className={styles.sectionHeader}>
+                            <div className={styles.sectionTitle}
+                                onMouseEnter={() => handleSectionEnter(`${sectionName}`)}
+                            >
+                                {sectionName}
+                            </div>
+                        </div>
+                        <div className={styles.sectionItems}>
+                            {items?.map((item: MenuItem, index: number) => (
+                                <div key={`${sectionName}-${item?.Item_id}-${index}`} className={styles.menuItem}>
+                                    <div className={styles.itemInfo}
+                                        onMouseEnter={() => handleSectionEnter(`${sectionName}-${index}-${item?.Name}`)}
                                     >
-                                        <div className={styles.itemImage}>
+                                        <div className={styles.cardImage}>
                                             <Image
                                                 src={`${item.Item_Image}`}
                                                 alt={item.Name}
-                                                width={50}
-                                                height={50}
-                                                className={styles.image}
+                                                width={100}
+                                                height={100}
+                                                priority
                                             />
                                         </div>
-                                        <div className={styles.itemInfo}>
-                                            <h3 className={styles.itemName}>{item.Name}</h3>
-                                            <span className={styles.itemDescription}>{item.Description}</span>
-                                            <span className={styles.price}>${item.Price}</span>
+                                        <div className={styles.itemDetails}>
+                                            <h2>{item?.Name}</h2>
+                                            <div className={styles.itemDescription}>{item?.Description}</div>
+                                            <div className={styles.price}>{`$${item.Price}`}</div>
                                         </div>
                                     </div>
-                                ))}
-                            </div>
+                                </div>
+                            ))}
                         </div>
-                    ))
-                ) : (
-                    <span className={styles.noResults}>No results found for "{searchTerm}"</span>
-                )}
+                    </div>
+                ))}
+            </main>
+            <div
+                onMouseEnter={() => handleSectionEnter(`${schedules}`)}
+            >
+                <Schedules
+                    Schedules={schedules}
+                    fontSize="14px"
+                    fontWeight="500"
+                    color="#ddd"
+                    fontFamily="Helvetica, sans-serif"
+                    containerClassName={styles.customInfoContainer}
+                    textClassName={styles.customInfoText}
+                />
             </div>
+            <footer className={styles.footer}>
+                <div>{`© ${new Date().getFullYear()} LlakaScript`}</div>
+            </footer>
         </div>
-    );
-};
+    )
+}
 
-export default Menuten;
+export default Menuten

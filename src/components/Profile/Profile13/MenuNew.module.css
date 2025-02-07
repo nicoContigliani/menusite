@@ -1,3 +1,6 @@
+/* Carga de la fuente desde Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500&display=swap');
+
 /* Contenedor del menú */
 .menuContainer {
     display: flex;
@@ -9,7 +12,8 @@
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.6) 80%);
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    color:#f8f8f8;
+    color: #f8f8f8;
+    font-family: 'Orbitron', sans-serif;
 }
 
 /* Fondo limpio inspirado en Apple */
@@ -19,13 +23,12 @@
     gap: 20px;
     padding: 20px;
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.412) 0%, rgba(255, 255, 255, 0.5) 60%, rgba(255, 255, 255, 0.3) 100%);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Orbitron', sans-serif;
     color: #333;
     border-radius: 3%;
     margin-bottom: 5%;
     width: 100%;
 }
-
 
 /* Filtro */
 .filterWrapper {
@@ -64,6 +67,7 @@
     font-weight: 600;
     color: #222;
     text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
+    letter-spacing: 3px; /* Aumenta el espaciado entre letras */
 }
 
 /* Sección */
@@ -79,6 +83,7 @@
     text-transform: uppercase;
     border-left: 6px solid #0078d7; /* Color azul elegante */
     padding-left: 15px;
+    letter-spacing: 1.5px; /* Espaciado entre letras */
 }
 
 /* Diseño de los bloques tipo "Live Tiles" */
@@ -103,6 +108,7 @@
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
     color: #333;
+    position: relative;
 }
 
 .menuItem:hover {
@@ -153,6 +159,7 @@
     font-size: 1.4rem;
     font-weight: 600;
     color: #000000;
+    letter-spacing: 1px;
 }
 
 .itemInfo p {
@@ -185,6 +192,7 @@
     outline: none;
     background-color: #f8f8f8;
     transition: all 0.3s ease;
+    font-family: 'Orbitron', sans-serif;
 }
 
 .searchInput::placeholder {

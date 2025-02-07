@@ -1,46 +1,80 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import Image from 'next/image';
 import styles from './MenuNew.module.css';
+import Info from '@/components/Info/Info';
+import Logo from '@/components/Logo/Logo';
+import useSectionTimeTracker from '../../../../hooks/useSectionTimeTracker';
+import Schedules from '@/components/Schedules/Schedules';
 
 interface MenuItem {
-    Menu_Title: string;
-    Background_Image: string;
-    Item_Image: string;
-    Section: string;
-    Item_id: number;
-    Name: string;
-    Description: string;
-    Price: string;
+    Item_id: string
+    Name: string
+    Description: string
+    Price: string | number
+    Menu_Title: string
+    Item_Image: string
 }
 
 interface MenuProps {
-    namecompanies: string;
-    groupedSections: Record<string, MenuItem[]>;
-    menuData: any;
-    backgroundImages: string | null;
+    menuData: any
+    groupedSections: { [key: string]: MenuItem[] }
+    backgroundImages: any
+    namecompanies: string
+    promotions: any
+    info: any
+    schedules: any
+    config: any[]
 }
 
-const Menufourd: React.FC<MenuProps> = ({ groupedSections, namecompanies, backgroundImages }) => {
-    const [searchTerm, setSearchTerm] = useState('');
+interface ConfigType {
+    IconBrand: string
+}
 
-    // Memoize filteredSections to only re-calculate when searchTerm or groupedSections change
-    const filteredSections = useMemo(() => {
-        return Object.entries(groupedSections).map(([sectionName, items]) => {
-            // Filter the items by search term
-            const filteredItems = items.filter((item) =>
-                item.Name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                item.Description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                item.Menu_Title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                item.Price.toLowerCase().includes(searchTerm.toLowerCase())
-            );
-            return [sectionName, filteredItems] as [string, MenuItem[]];
-        });
-    }, [searchTerm, groupedSections]); // Only re-run when searchTerm or groupedSections change
+const Menufourd: React.FC<MenuProps> = (props) => {
+    const { backgroundImages, config, groupedSections, info, menuData, namecompanies, promotions, schedules } = props
 
-    // Use callback to memoize the setSearchTerm handler and avoid re-creating it on each render
-    const handleSearchChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchTerm(e.target.value);
-    }, []); // Empty dependency array, as this function doesn't depend on any external state
+    const { sectionTimes, handleSectionEnter } = useSectionTimeTracker()
+    console.log("🚀 ~ sectionTimes:", sectionTimes)
+    useEffect(() => {
+    }, [sectionTimes])
+
+
+    const [searchTerm, setSearchTerm] = useState("")
+    const [loading, setLoading] = useState(true)
+    const [iconURL, setIconURL] = useState<string>("")
+
+    useEffect(() => {
+        if (groupedSections) {
+            const firstSection: any = Object.values(groupedSections)[0]
+            if (firstSection && firstSection.length > 0) {
+                // You can do something with `firstSection` if needed
+            }
+        }
+
+        if (config && config.length > 0) {
+            const configData = config[0] as ConfigType
+            setIconURL(configData.IconBrand || "")
+        }
+
+        setLoading(false)
+    }, [groupedSections, config])
+
+    if (loading) {
+        return <div>Loading...</div>
+    }
+
+    const memoizedSections = Object.entries(groupedSections)
+        .map(([sectionName, items]) => {
+            const filteredItems = items.filter(
+                (item) =>
+                    [item.Name, item.Description, item.Menu_Title].some(
+                        (field) => typeof field === "string" && field.toLowerCase().includes(searchTerm.toLowerCase()),
+                    ) ||
+                    (typeof item.Price === "string" && item.Price.toLowerCase().includes(searchTerm.toLowerCase())),
+            )
+            return [sectionName, filteredItems] as [string, MenuItem[]]
+        })
+        .filter(([, items]) => items.length > 0)
 
     return (
         <div
@@ -51,49 +85,104 @@ const Menufourd: React.FC<MenuProps> = ({ groupedSections, namecompanies, backgr
         >
             <header className={styles.header}>
                 <h1>{namecompanies}</h1>
-                {/* Search input */}
-                <input
-                    type="text"
-                    placeholder="Buscar artículo..."
-                    className={styles.searchInput}
-                    value={searchTerm}
-                    onChange={handleSearchChange} // Using the memoized callback
-                />
+                <div className={styles.logo}
+                    onMouseEnter={() => handleSectionEnter("logo")}
+                >
+                    {iconURL ?
+                        <Logo
+                            namecompanies="LlakaScript"
+                            logoUrl={iconURL}
+                            size={120} // Tamaño de la imagen
+                            fontSize="22px" // Tamaño de la fuente
+                            fontWeight="700" // Grosor de la fuente
+                            color="black" // Color del texto
+                            fontFamily="Arial, sans-serif" // Familia de la fuente
+                        />
+                        : null}
+                </div>
+
+                <div className={styles.info}
+                    onMouseEnter={() => handleSectionEnter("info")}
+                >
+                    {info ?
+                        <Info
+                            info={info}
+                            fontSize="14px"
+                            fontWeight="500"
+                            color="#dddddd"
+                            fontFamily="Helvetica, sans-serif"
+                            containerClassName={styles.customInfoContainer}
+                            textClassName={styles.customInfoText}
+                        />
+                        : null}
+                </div>
+
+                <div className={styles.searchContainer}
+                    onMouseEnter={() => handleSectionEnter("search")}
+                >
+                    <input
+                        type="text"
+                        className={styles.searchInput}
+                        placeholder="Buscar en el menú..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                </div>
             </header>
 
-            {filteredSections.map(([sectionName, items], sectionIndex) => (
-                <section key={`${sectionName}-${sectionIndex}`} className={styles.section}>
-                    <h2 className={styles.sectionTitle}>{sectionName}</h2>
-                    <div className={styles.grid}>
-                        {items.length > 0 ? (
-                            items.map((item, itemIndex) => (
-                                <div
-                                    key={`${item.Item_id}-${itemIndex}`} // Using the index for unique keys
-                                    className={styles.card}
-                               
-                                >
-                                    <div className={styles.cardImage}>
-                                        <Image
-                                            src={`${item.Item_Image}`}
-                                            alt={item.Name}
-                                            width={200}
-                                            height={200}
-                                            priority
-                                        />
-                                    </div>
-                                    <div className={styles.cardContent}>
-                                        <h3 className={styles.cardTitle}>{item.Name}</h3>
-                                        <span className={styles.cardDescription}>{item.Description}</span>
-                                        <span className={styles.cardPrice}>{`$${item.Price}`}</span>
+            <main className={styles.main}>
+                {memoizedSections?.map(([sectionName, items]) => (
+                    <div key={sectionName} className={styles.section}>
+                        <div className={styles.sectionHeader}>
+                            <div className={styles.sectionTitle}
+                                onMouseEnter={() => handleSectionEnter(`${sectionName}`)}
+                            >
+                                {sectionName}
+                            </div>
+                        </div>
+                        <div className={styles.sectionItems}>
+                            {items?.map((item: MenuItem, index: number) => (
+                                <div key={`${sectionName}-${item?.Item_id}-${index}`} className={styles.menuItem}>
+                                    <div className={styles.itemInfo}
+                                        onMouseEnter={() => handleSectionEnter(`${sectionName}-${index}-${item?.Name}`)}
+                                    >
+                                        <div className={styles.cardImage}>
+                                            <Image
+                                                src={`${item.Item_Image}`}
+                                                alt={item.Name}
+                                                width={100}
+                                                height={100}
+                                                priority
+                                            />
+                                        </div>
+                                        <div className={styles.itemDetails}>
+                                            <h2>{item?.Name}</h2>
+                                            <div className={styles.itemDescription}>{item?.Description}</div>
+                                            <div className={styles.price}>{`$${item.Price}`}</div>
+                                        </div>
                                     </div>
                                 </div>
-                            ))
-                        ) : (
-                            <span>No se encontraron artículos</span>
-                        )}
+                            ))}
+                        </div>
                     </div>
-                </section>
-            ))}
+                ))}
+            </main>
+            <div
+                onMouseEnter={() => handleSectionEnter(`${schedules}`)}
+            >
+                <Schedules
+                    Schedules={schedules}
+                    fontSize="14px"
+                    fontWeight="500"
+                    color="#ddd"
+                    fontFamily="Helvetica, sans-serif"
+                    containerClassName={styles.customInfoContainer}
+                    textClassName={styles.customInfoText}
+                />
+            </div>
+             <footer className={styles.footer}>
+                <div>{`© ${new Date().getFullYear()} LlakaScript`}</div>
+            </footer>
         </div>
     );
 };

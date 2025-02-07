@@ -35,6 +35,7 @@ const Menuone: React.FC<MenuProps> = (props) => {
     const { backgroundImages, config, groupedSections, info, menuData, namecompanies, promotions, schedules } = props
 
     const { sectionTimes, handleSectionEnter } = useSectionTimeTracker()
+    console.log("🚀 ~ sectionTimes:", sectionTimes)
     useEffect(() => {
     }, [sectionTimes])
 

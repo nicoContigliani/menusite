@@ -24,6 +24,7 @@ export async function readAndInsertExcelData(todo: any) {
         $set: {
           folderName,
           hojas,
+          selectedProfile,
           updateAt: new Date(),
         },
       }

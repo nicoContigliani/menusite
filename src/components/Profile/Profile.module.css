@@ -1,95 +1,40 @@
+.body {
+  width: 100%;
+  min-height: 100vh; /* Se ajusta a la altura mínima de la pantalla */
+  overflow-y: auto; /* Permite el scroll vertical */
+  overflow-x: hidden; /* Evita el desplazamiento horizontal */
+  background-attachment: fixed; /* Mantiene el fondo fijo */
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+}
+
 .container {
+  color:white;
   display: grid;
   grid-template-columns: 1fr;
-  /* Por defecto, una columna */
-  gap: 1px;
-  /* Espacio entre elementos */
-  padding: 1%;
-  /* Padding para evitar que el contenido toque los bordes */
+  gap: 0.5px;
+  padding: 0.1%;
   box-sizing: border-box;
-  /* Incluye padding y borde dentro del ancho/alto */
-  max-width: 100%;
-  /* Evita que el contenedor sea más ancho que su padre */
-  overflow-x: auto;
-  /* Permite desplazamiento horizontal si es necesario */
-  word-wrap: break-word;
-  /* Rompe palabras largas para evitar desbordamientos */
-  
-  justify-content: center; /* Centra las columnas horizontalmente dentro del contenedor */
-  align-content: center;   /* Centra el contenido en el eje vertical */
-  
-  justify-items: center;   /* Centra cada elemento en su celda horizontalmente */
-  align-items: center;     /* Centra cada elemento en su celda verticalmente */
+  width: 100%;
+  min-height: 100vh; /* Asegura que el contenedor cubra toda la pantalla */
+  overflow-x: hidden;
+  justify-content: center;
+  align-content: start; /* Permite que el contenido crezca verticalmente */
+  justify-items: center;
+  align-items: start;
+  background-color: rgb(0, 0, 0);
 }
 
 @media (min-width: 768px) {
   .container {
-    grid-template-columns: repeat(1, 1fr);
-    align-items: center;
-    justify-items: center;
-    background-color: rgba(255, 255, 255, 0.003);
-    padding: 4px;
-    /* Aumenta el padding en pantallas grandes */
-    gap: 5px;
-    /* Espacio entre elementos */
-    box-sizing: border-box;
-    /* Incluye padding y borde dentro del ancho/alto */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 10px;
+    padding: 20px;
     max-width: 100%;
-    /* Evita que el contenedor sea más ancho que su padre */
-    overflow-x: auto;
-    /* Permite desplazamiento horizontal si es necesario */
-    word-wrap: break-word;
-    /* Rompe palabras largas para evitar desbordamientos */
-    justify-content: space-around; /* Centra las columnas horizontalmente dentro del contenedor */
-    align-content: center;   /* Centra el contenido en el eje vertical */
-    
+    overflow-x: hidden;
+    justify-content: space-around;
+    align-content: start; /* Asegura que el contenido crezca verticalmente */
   }
-
-  .images {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 0.9;
-    padding-bottom: 0;
-    /* Elimina el padding inferior en pantallas grandes */
-  }
-
-  .textContainer {
-    justify-self: center;
-  }
-
-  .title {
-    font-size: 2em;
-    color: #ffffff;
-  }
-
-  .titleApp {
-    font-size: 2em;
-    color: #d0d0d0;
-  }
-
-  .image {
-    justify-content: start;
-    padding-right: 50px;
-    align-self: center;
-  }
-
-  .image img {
-    max-width: 50%;
-  }
-
-  .steps {
-    box-shadow: 5px 4px 8px 5px var(--gray-shadow);
-    border-radius: var(--border-radius-small);
-    width: 300px;
-    margin: 1%;
-    padding: 5%;
-    
-  }
-
-  .body {
-    width: 100%;
-    overflow: hidden;
-  }
-
 }

@@ -1,82 +1,85 @@
-/* Fondo limpio inspirado en Apple */
+/* Estilo general con fondo elegante y urbano */
 .menuWrapper {
     display: flex;
     flex-direction: column;
-    gap: 60px;
-    padding: 40px;
+    gap: 40px;
+    padding: 40px 20px;
     align-items: center;
-    background: linear-gradient(180deg, #f9f9f908 0%, #ffffff30 100%);
+    background: linear-gradient(180deg, #0d0d0d 0%, #1a1a1a 100%);
     color: #e1e1e1;
-    font-family: -apple-system, BlinkMacSystemFont, 'San Francisco', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-
+    font-family: 'Poppins', sans-serif;
     background-size: cover;
-    /* La imagen cubre todo el área */
     background-position: center;
-    /* Centrada */
     background-attachment: fixed;
-    /* Fijada mientras se hace scroll */}
+    min-height: 100vh;
+}
 
-/* Cabecera */
+/* Cabecera con estilo más llamativo */
 .header {
     text-align: center;
-    padding: 30px 0;
-    border-bottom: 3px solid #ffffff;
+    padding: 20px 0;
+    border-bottom: 2px solid #444;
 }
 
 .header h1 {
-    font-size: 4rem;
+    font-size: 3.5rem;
     font-weight: 700;
-    color: #e1e1e1;
-    text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.8);
-    padding-bottom: 10px;
+    text-transform: uppercase;
+    color: #f8f8f8;
+    text-shadow: 3px 3px 12px rgba(255, 255, 255, 0.2);
+    letter-spacing: 2px;
 }
 
-/* Estilo para las secciones */
+/* Estilos para las secciones */
 .section {
     width: 100%;
-    padding: 0 30px;
+    padding: 0 20px;
     text-align: center;
 }
 
 .sectionTitle {
-    font-size: 2.5rem;
-    font-weight: 600;
-    color: #dedede;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #f8f8f8;
     margin-bottom: 20px;
-    text-transform: capitalize;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-/* Estilo para los items del menú */
+/* Contenedor de los ítems del menú */
 .sectionItems {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 15px;
+    padding-bottom: 40px;
 }
 
+/* Estilos para cada ítem */
 .menuItem {
     display: flex;
     align-items: center;
-    gap: 20px;
-    padding: 20px;
-    border-radius: 20px;
-    background: #ffffff;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    gap: 15px;
+    padding: 15px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    backdrop-filter: blur(8px);
     cursor: pointer;
 }
 
 .menuItem:hover {
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-    transform: translateY(-5px);
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(255, 255, 255, 0.2);
 }
 
-/* Imagen de cada item */
+/* Imagen del ítem */
 .itemImage {
-    width: 80px;
-    height: 80px;
+    width: 70px;
+    height: 70px;
     border-radius: 50%;
     overflow: hidden;
-    border: 2px solid #eaeaea;
+    border: 2px solid #f8f8f8;
     flex-shrink: 0;
 }
 
@@ -86,7 +89,7 @@
     object-fit: cover;
 }
 
-/* Información del item */
+/* Información de los ítems */
 .itemInfo {
     text-align: left;
     flex-grow: 1;
@@ -94,50 +97,117 @@
 
 .itemInfo h2 {
     margin: 0;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     font-weight: 600;
-    color: #333;
+    color: #f8f8f8;
 }
 
 .itemInfo p {
     margin: 5px 0;
-    font-size: 1rem;
-    color: #777;
+    font-size: 0.9rem;
+    color: #ccc;
 }
 
 .itemInfo .price {
     font-size: 1.2rem;
     font-weight: bold;
-    color: #0071e3; /* Azul icónico de Apple */
+    color: #ffcc00;
 }
 
-/* Estilos de búsqueda */
+/* Estilos del input de búsqueda */
 .searchInput {
-    padding: 10px;
+    padding: 12px;
     font-size: 1rem;
-    width: 250px;
-    border: 2px solid #eaeaea;
-    border-radius: 5px;
+    width: 90%;
+    max-width: 300px;
+    border: 2px solid #555;
+    border-radius: 8px;
     outline: none;
-    transition: border 0.3s ease;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    transition: border 0.3s ease, background 0.3s ease;
 }
 
 .searchInput:focus {
-    border-color: #00ffcc;
+    border-color: #ffcc00;
+    background: rgba(255, 255, 255, 0.2);
 }
 
-/* Diseño responsivo */
+/* Diseño responsivo mejorado */
 @media (max-width: 768px) {
-    .sectionItems {
-        grid-template-columns: 1fr;
+    .menuWrapper {
+        gap: 30px;
+        padding: 30px 15px;
     }
 
-    .menuItem {
+    .header h1 {
+        font-size: 2.5rem;
+        letter-spacing: 1px;
+    }
+
+    .section {
+        padding: 0 10px;
+    }
+
+    .sectionTitle {
+        font-size: 1.8rem;
+    }
+
+    .sectionItems {
+        display: flex;
         flex-direction: column;
         align-items: center;
     }
 
+    .menuItem {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+        width: 90%;
+    }
+
+    .itemImage {
+        width: 90px;
+        height: 90px;
+    }
+
     .itemInfo {
         text-align: center;
+    }
+
+    .searchInput {
+        width: 100%;
+        max-width: 90%;
+    }
+}
+
+@media (max-width: 480px) {
+    .header h1 {
+        font-size: 2rem;
+    }
+
+    .sectionTitle {
+        font-size: 1.5rem;
+    }
+
+    .menuItem {
+        padding: 12px;
+    }
+
+    .itemImage {
+        width: 80px;
+        height: 80px;
+    }
+
+    .itemInfo h2 {
+        font-size: 1.2rem;
+    }
+
+    .itemInfo p {
+        font-size: 0.85rem;
+    }
+
+    .itemInfo .price {
+        font-size: 1.1rem;
     }
 }

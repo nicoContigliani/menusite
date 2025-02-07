@@ -5,20 +5,20 @@ import { useDispatch } from 'react-redux';
 import { fetchData } from '@/services/fetch.services';
 import { setChExcelData } from '../../../store/chExcelDataSlice';
 import { Skeleton } from 'antd'; // Importa el Skeleton de Ant Design
-
+import styles from './companies.module.css'
 // Importación dinámica de MenuNew con una imagen de fondo mientras se carga
 const MenuNew = dynamic(() => import('../../components/profileproduction/ProfileProduction'), {
     loading: () => (
         <div
-            // style={{
-            //     height: '20vh',
-            //     display: 'flex',
-            //     justifyContent: 'center',
-            //     alignItems: 'center',
-            //     backgroundImage: `url('/images/flama.png')`,
-            //     backgroundSize: 'cover',
-            //     backgroundPosition: 'center',
-            // }}
+        // style={{
+        //     height: '20vh',
+        //     display: 'flex',
+        //     justifyContent: 'center',
+        //     alignItems: 'center',
+        //     backgroundImage: `url('/images/flama.png')`,
+        //     backgroundSize: 'cover',
+        //     backgroundPosition: 'center',
+        // }}
         >
             {/* <p style={{ color: 'white', fontSize: '1.5rem', fontWeight: 'bold' }}>Cargando...</p> */}
             <Skeleton active />
@@ -88,12 +88,11 @@ export default function EmpresaPage({ nombre }: { nombre: string }) {
     }, [nombre, data, dispatch, router]);
 
     return (
-        <div className={isLoaded ? 'fade-in' : ''}>
-            {!isLoaded ? (
-                null
-            ) : (
-                <MenuNew menuItems={data} namecompanies={nombre} />
-            )}
+        <div className={styles.body}> {/* Contenedor del fondo fijo */}
+          <div className={styles.container}>
+            {isLoaded ? <MenuNew menuItems={data} namecompanies={nombre} /> : null}
+          </div>
         </div>
-    );
+      );
+      
 }

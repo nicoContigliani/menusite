@@ -53,7 +53,7 @@
 .profile {
     width: 100%;
     max-width: 1200px;
-    background: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.098);
     border-radius: 1px;
     box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.645);
     overflow: auto;
@@ -62,7 +62,7 @@
 
 .selectButton {
     background-color: #95959528;
-    color: #fff;
+    color: #000000;
     border: none;
     border-radius: 30px;
     padding: 0.8rem 1.2rem;
@@ -95,7 +95,8 @@
         height: 50px;
         font-size: 1.2rem;
         margin: 0 8px; /* Reducir el margen entre botones en pantallas más pequeñas */
-    }
+         
+ }
 
     .title {
         font-size: 1.5rem;
@@ -125,8 +126,9 @@
     }
 
     .navigation {
-        padding: 0 0.5rem; /* Ajustar el padding en pantallas muy pequeñas */
-        justify-content: space-between; /* Dar un poco de espacio entre los botones */
-
+        justify-content: space-evenly; /* Dar un poco de espacio entre los botones */
+        padding-left: 10%;
+        padding-right: 10%;  
+        padding-top: 2%;
     }
 }
