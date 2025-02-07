@@ -43,7 +43,7 @@ const Menueleven: React.FC<MenuProps> = ({ groupedSections, namecompanies, backg
             }}
         >
             <header className={styles.header}>
-                <h1 className={styles.mainTitle}>{namecompanies}</h1>
+                <h2 className={styles.mainTitle}>{namecompanies}</h2>
                 <input
                     type="text"
                     placeholder="Search our menu..."

@@ -57,17 +57,33 @@
 /* Cabecera */
 .header {
     text-align: center;
-    padding: 40px 0;
+    padding: 40px 20px; /* Asegura que haya suficiente espacio alrededor del título */
     border-bottom: 3px solid #e0e0e0;
     margin-bottom: 20px;
+    max-width: 100%; /* Para evitar que se desborde */
+    box-sizing: border-box; /* Asegura que el padding se tome en cuenta */
 }
 
 .header h1 {
-    font-size: 3.5rem;
     font-weight: 600;
     color: #222;
     text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
     letter-spacing: 3px; /* Aumenta el espaciado entre letras */
+    font-size: 3.5rem; /* Asegúrate de que el tamaño sea adecuado */
+    word-wrap: break-word; /* Permite que el texto se ajuste si es largo */
+    overflow: hidden; /* Oculta el desbordamiento */
+    white-space: normal; /* Permite que el texto haga salto de línea si es necesario */
+    margin: 0; /* Elimina márgenes adicionales */
+    line-height: 1.2; /* Ajusta el espacio entre las líneas */
+}
+
+/* Título principal con ajuste de longitud */
+.mainTitle {
+    font-size: 3.5rem; /* Asegúrate de que se ajuste bien */
+    white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+    overflow: hidden; /* Oculta cualquier texto que se desborde */
+    text-overflow: ellipsis; /* Añade '...' si el texto es demasiado largo */
+    width: 100%; /* Asegura que ocupe todo el ancho disponible */
 }
 
 /* Sección */
