@@ -12,9 +12,9 @@ const ModalComponents: React.FC<ModalComponentsProps> = ({
   children,
   title = "Modal responsive width",
   openResponsive = false,
-  setOpenResponsive = () => {},
+  setOpenResponsive = () => { },
 }) => {
-  
+
   return (
     <Flex vertical gap="middle" align="flex-start">
       {/* <Button type="primary" onClick={() => setOpenResponsive(true)}>
@@ -37,9 +37,7 @@ const ModalComponents: React.FC<ModalComponentsProps> = ({
       >
         {children || (
           <>
-            <p>Some contents...</p>
-            <p>Some contents...</p>
-            <p>Some contents...</p>
+            <div>Loading...</div>
           </>
         )}
       </Modal>

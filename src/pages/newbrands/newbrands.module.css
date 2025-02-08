@@ -226,3 +226,13 @@
   }
 
 }
+.result{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 2%;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Sombra de texto: desplazamiento y difuso */
+  box-shadow: 1px 4px 8px var(--gray-shadow);
+  border-radius: var(--border-radius-small);
+}

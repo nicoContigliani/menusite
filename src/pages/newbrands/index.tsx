@@ -9,6 +9,8 @@ import Header from "@/components/layout/header/Header"
 import { getLocalhostStorage } from "@/services/localstorage.services"
 import ModalComponents from "@/components/ModalComponents/ModalComponents"
 import Login from "@/components/Login/Login"
+import QrComponents from "@/components/QrComponents/QrComponents"
+import ResultComponents from "@/components/ResultComponents/ResultComponents"
 
 const DescriptionComponent = dynamic(() => import("@/components/Description/Descriptions"), { ssr: false })
 const StepsComponent = dynamic(() => import("../../components/steps/Steps"), {
@@ -37,8 +39,8 @@ const page = () => {
   const [showProfile, setShowProfile] = useState(false)
   const [showLicence, setShowLicence] = useState(false)
   const [showStaff, setShowStaff] = useState(false)
-
   const [dataResult, setDataResult] = useState<any | any[] | undefined>()
+
   const [dataURlSupabase, setDataURlSupabase] = useState<any | any[] | undefined>("")
 
   const [uploadedFiles, setUploadedFiles] = useState<any | any[] | undefined>([])
@@ -74,6 +76,10 @@ const page = () => {
       description: "Step 4",
     },
   ])
+  const [abilityButtonSend, setAbilityButtonSend] = useState<boolean>(false) // [buttonSend]
+
+  const [iconsUrl, setIconsUrl] = useState<any | any[] | undefined>("/images/flama.png")
+  const [finishit, setFinishit] = useState<boolean>(false)
 
   const dataHoja1: DescriptionsProps["items"] = useMemo(() => {
     return FormaterDataItems({
@@ -538,17 +544,25 @@ const page = () => {
 
   //TODO activar esto para produccion
 
-  // useEffect(() => {
-  //   if ([2, 3, 4].includes(current) && (!dataResult?.Hoja1 || !dataResult?.Config)) {
-  //     setCurrent(1);
+  useEffect(() => {
+    if ([2, 3, 4].includes(current) && (!dataResult?.Hoja1 || !dataResult?.Config)) {
+      setCurrent(1);
 
-  //     setShowDownload(false);
-  //     setShowUploadImageToStorage(true);
-  //     setShowProfile(false);
-  //     setShowLicence(false);
-  //     setShowStaff(false);
-  //   }
-  // }, [current, dataResult]);
+      setShowDownload(false);
+      setShowUploadImageToStorage(true);
+      setShowProfile(false);
+      setShowLicence(false);
+      setShowStaff(false);
+    }
+  }, [current, dataResult]);
+
+
+  useEffect(() => {
+    if (dataResult && checked && folderName && selectedProfile) {
+      setAbilityButtonSend(true)
+    }
+  }, [dataResult && checked && folderName && selectedProfile])
+
 
   const handleCreate = async () => {
     console.log("Crear botón presionado");
@@ -563,8 +577,7 @@ const page = () => {
       status_Companies: true
 
     };
-    console.log("🚀 ~ handleCreate ~ data.selectedProfile:", data.selectedProfile)
-    console.log("🚀 ~ handleCreate ~ data:", data)
+
 
     try {
       const response = await fetch('/api/companies', {
@@ -578,6 +591,10 @@ const page = () => {
       // Verificar si la solicitud fue exitosa
       if (response.ok) {
         const result = await response.json();
+        setFinishit(true)
+        //TODO en caso de haer falta con modal
+        // setOpenResponsive(true)
+
         console.log('Respuesta de la API:', result);
         // Aquí puedes hacer algo con la respuesta de la API, como mostrar un mensaje o redirigir
       } else {
@@ -593,15 +610,25 @@ const page = () => {
     <div className={styles.main}>
       <div className={styles.header}>
 
+
+
         <ModalComponents
           openResponsive={openResponsive}
           setOpenResponsive={setOpenResponsive}>
-          <Login
-            redirections={true}
-            setOpenResponsive={setOpenResponsive}
-            fullUrl={fullUrl}
+          {
+            isLogin ?
+              <div>
+                si
+              </div>
+              :
+              <Login
+                redirections={true}
+                setOpenResponsive={setOpenResponsive}
+                fullUrl={fullUrl}
+              />
 
-          />
+
+          }
         </ModalComponents>
 
         <Header
@@ -615,64 +642,98 @@ const page = () => {
         />
       </div>
 
+      {
+        finishit ?
+          <div className={styles.result}>
+            < ResultComponents
+              operationStatus="success"
+              title="Successfully"
+              subTitle="Company created successfully"
+            >
+
+              <QrComponents
+                errorLevel="H"
+                value={`https://menusi.netlify.app/companies/${folderName}`}
+                icon={"/images/flama.png"}
+              />
+              <Button
+                type="primary"
+                block
+                style={{ marginTop: "16px" }}
+                onClick={() => window.location.href = `https://menusi.netlify.app/companies/${folderName || "LlakaScript"}`}
+              >
+                Go to {folderName}
+              </Button>
+            </ResultComponents>
+
+          </div> :
+          null
+      }
       <div className={styles.container}>
-        <div className={styles.steps}>
-          <Divider />
-          {showProfile ? <Navbar /> : null}
-          <Divider />
+        {
+          finishit ? "" :
+            <div className={styles.steps}>
+              <Divider />
+              {showProfile ? <Navbar /> : null}
+              <Divider />
 
-          <StepsComponent items={items} current={current} setCurrent={setCurrent} />
-        </div>
-        <div className={styles.body}>
-          {showDownload ? (
-            <DownloadFile itemsTabs={itemsTabs} setCurrent={setCurrent} />
-          ) : null}
-
-          {showUploadImageToStorage ? (
-            <UploadImageToStorage
-              uploadedFiles={uploadedFiles}
-              setUploadedFiles={setUploadedFiles}
-              setCurrent={setCurrent}
-              setDataResult={setDataResult}
-              folderName={folderName}
-              setFolderName={setFolderName}
-            />
-          ) : null}
-          {showProfile ? (
-            <Profile
-              folderName={folderName}
-              dataResult={dataResult}
-              items={carouselItems}
-              paymentLevel={paymentLevel}
-              setSelectedProfile={setSelectedProfile}
-              setCurrent={setCurrent}
-              dataMocks={dataMocks}
-            />
-          ) : null}
-          {showLicence ? (
-            <Licence
-              labelCheck={labelCheck}
-              setLabelCheck={setLabelCheck}
-              checked={checked}
-              setChecked={setChecked}
-              setCurrent={setCurrent}
-            />
-          ) : null}
-
-          {showStaff ? <StaffOfSystem staffData={dataResult || dataMocks} /> : null}
-
-          <div>
-            {/* Botón de Crear */}
-            <div className={styles.buttonContainer}>
-              {
-                (dataResult && checked && folderName && selectedProfile) &&
-                <Button type="primary" size="large" onClick={handleCreate}>
-                  Crear
-                </Button>
-              }
+              <StepsComponent items={items} current={current} setCurrent={setCurrent} />
             </div>
-          </div>
-        </div>
+        }
+        {
+          finishit ? "" :
+            <div className={styles.body}>
+              {showDownload ? (
+                <DownloadFile itemsTabs={itemsTabs} setCurrent={setCurrent} />
+              ) : null}
+
+              {showUploadImageToStorage ? (
+                <UploadImageToStorage
+                  uploadedFiles={uploadedFiles}
+                  setUploadedFiles={setUploadedFiles}
+                  setCurrent={setCurrent}
+                  setDataResult={setDataResult}
+                  folderName={folderName}
+                  setFolderName={setFolderName}
+                />
+              ) : null}
+              {showProfile ? (
+                <Profile
+                  folderName={folderName}
+                  dataResult={dataResult}
+                  items={carouselItems}
+                  paymentLevel={paymentLevel}
+                  setSelectedProfile={setSelectedProfile}
+                  setCurrent={setCurrent}
+                  dataMocks={dataMocks}
+                />
+              ) : null}
+              {showLicence ? (
+                <Licence
+                  labelCheck={labelCheck}
+                  setLabelCheck={setLabelCheck}
+                  checked={checked}
+                  setChecked={setChecked}
+                  setCurrent={setCurrent}
+                />
+              ) : null}
+
+              {showStaff ? <StaffOfSystem staffData={dataResult || dataMocks} /> : null}
+
+
+              <div>
+                {/* Botón de Crear */}
+                <div className={styles.buttonContainer}>
+                  {
+                    (abilityButtonSend) &&
+                    <Button type="primary" block size="large" onClick={handleCreate}>
+                      Crear
+                    </Button>
+                  }
+                </div>
+              </div>
+            </div>
+        }
       </div>
     </div>
   )
