@@ -3,7 +3,6 @@ import dynamic from "next/dynamic"
 import { useEffect, useLayoutEffect, useMemo, useState } from "react"
 import styles from "./newbrands.module.css"
 import { Button, type DescriptionsProps, Divider } from "antd"
-import { FormaterDataItems } from "../../services/formaterDataItems.services"
 import StaffOfSystem from "@/components/StaffOfSystem/StaffOfSystem"
 import Header from "@/components/layout/header/Header"
 import { getLocalhostStorage } from "@/services/localstorage.services"
@@ -11,6 +10,7 @@ import ModalComponents from "@/components/ModalComponents/ModalComponents"
 import Login from "@/components/Login/Login"
 import QrComponents from "@/components/QrComponents/QrComponents"
 import ResultComponents from "@/components/ResultComponents/ResultComponents"
+import useStepVisibility from "../../../hooks/useStepVisibility"
 
 const DescriptionComponent = dynamic(() => import("@/components/Description/Descriptions"), { ssr: false })
 const StepsComponent = dynamic(() => import("../../components/steps/Steps"), {
@@ -29,31 +29,31 @@ interface DescriptionItem {
 }
 
 const page = () => {
-  const [isLogin, setIsLogin] = useState(false)
-  const [openResponsive, setOpenResponsive] = useState(false)
 
-  const [current, setCurrent] = useState<number>(0)
+  const [isLogin, setIsLogin] = useState(false);
+  const [openResponsive, setOpenResponsive] = useState(false);
 
-  const [showDownload, setShowDownload] = useState(false)
-  const [showUploadImageToStorage, setShowUploadImageToStorage] = useState(false)
-  const [showProfile, setShowProfile] = useState(false)
-  const [showLicence, setShowLicence] = useState(false)
-  const [showStaff, setShowStaff] = useState(false)
-  const [dataResult, setDataResult] = useState<any | any[] | undefined>()
+  // Estados relacionados con los pasos del proceso
+  const [current, setCurrent] = useState<number>(0);
+  const [showDownload, setShowDownload] = useState(false);
+  const [showUploadImageToStorage, setShowUploadImageToStorage] = useState(false);
+  const [showProfile, setShowProfile] = useState(false);
+  const [showLicence, setShowLicence] = useState(false);
+  const [showStaff, setShowStaff] = useState(false);
 
-  const [dataURlSupabase, setDataURlSupabase] = useState<any | any[] | undefined>("")
+  // Estados relacionados con los datos y archivos
+  const [dataResult, setDataResult] = useState<any | any[] | undefined>();
+  const [dataURlSupabase, setDataURlSupabase] = useState<any | any[] | undefined>("");
+  const [uploadedFiles, setUploadedFiles] = useState<any | any[] | undefined>([]);
+  const [selectedProfile, setSelectedProfile] = useState<string>("");
+  const [folderName, setFolderName] = useState<string | null>(null);
 
-  const [uploadedFiles, setUploadedFiles] = useState<any | any[] | undefined>([])
+  // Estados relacionados con la confirmación y el pago
+  const [labelCheck, setLabelCheck] = useState<any>("Confirmar Condiciones");
+  const [checked, setChecked] = useState<boolean>(false);
+  const [paymentLevel, setPaymentLevel] = useState<number>(0);
 
-  const [selectedProfile, setSelectedProfile] = useState<string>("")
-
-  const [folderName, setFolderName] = useState<string | null>(null)
-
-  const [labelCheck, setLabelCheck] = useState<any>("Confirmar Condiciones")
-  const [checked, setChecked] = useState<boolean>(false)
-
-  const [paymentLevel, setPaymentLevel] = useState<number>(0)
-
+  // Estados relacionados con los ítems y botones
   const [items, setItems] = useState<any | any[] | undefined>([
     {
       title: "Descargar Excel con el formato obligatorio",
@@ -75,50 +75,14 @@ const page = () => {
       title: "Confirmación de usuarios y Creación",
       description: "Step 4",
     },
-  ])
-  const [abilityButtonSend, setAbilityButtonSend] = useState<boolean>(false) // [buttonSend]
+  ]);
+  const [abilityButtonSend, setAbilityButtonSend] = useState<boolean>(false);
 
-  const [iconsUrl, setIconsUrl] = useState<any | any[] | undefined>("/images/flama.png")
-  const [finishit, setFinishit] = useState<boolean>(false)
+  // Estados relacionados con la URL y el icono
+  const [iconsUrl, setIconsUrl] = useState<any | any[] | undefined>("/images/flama.png");
+  const [finishit, setFinishit] = useState<boolean>(false);
+  const [fullUrl, setFullUrl] = useState("");
 
-  const dataHoja1: DescriptionsProps["items"] = useMemo(() => {
-    return FormaterDataItems({
-      Menu_Title: "Título del menú. Ejemplo: 'Menú de La Trattoria'",
-      Background_Image: "URL de la imagen de fondo del menú. Ejemplo: 'https://ejemplo.com/fondo.jpg'",
-      profile: "Nombre del perfil o negocio. Ejemplo: 'Pizzeria Napoli'",
-      Section: "Título de una sección del menú. Ejemplo: 'Pastas', 'Ensaladas', 'Bebidas'",
-      Item_id: "ID único del ítem del menú. Ejemplo: 'a1b2c3d4-e5f6-7890-1234-567890abcdef'",
-      Name: "Nombre del ítem del menú. Ejemplo: 'Espagueti a la Boloñesa'",
-      Description:
-        "Descripción del ítem del menú. Ejemplo: 'Espagueti con salsa boloñesa hecha en casa con carne de res y cerdo.'",
-      Price: "Precio del ítem del menú. Ejemplo: '12.50', '9.99'",
-      Item_Image: "URL de la imagen del ítem del menú. Ejemplo: 'https://ejemplo.com/espagueti.jpg'",
-      highlight: "Indica si el ítem está destacado. Ejemplos: 'true' (sí), 'false' (no)",
-      status:
-        "Estado del ítem o del perfil. Ejemplos (para un ítem): 'disponible', 'no disponible', 'temporal'. Ejemplos (para un perfil): 'activo', 'inactivo', 'pendiente'",
-    })
-  }, []) // El array vacío de dependencias asegura que solo se ejecute una vez al montar el componente
-
-  const itemsTabs: any = [
-    {
-      key: "1",
-      label: "Hoja 1",
-      children: <DescriptionComponent items={dataHoja1} />,
-    },
-    {
-      key: "2",
-      label: "Promotions",
-      children: <DescriptionComponent items={dataHoja1} />,
-    },
-  ]
-
-  const carouselItems = [
-    { id: 1, imageUrl: "/resto/pancho.png?height=200&width=300", title: "Slide 1" },
-    { id: 2, imageUrl: "/resto/estacionpalero.png?height=200&width=300", title: "Slide 2" },
-    { id: 3, imageUrl: "/resto/blacksheep.png?height=200&width=200", title: "Slide 3" },
-    { id: 4, imageUrl: "/resto/pancho.png?height=200&width=300", title: "Slide 4" },
-    { id: 5, imageUrl: "/resto/estacionpalero.png?height=200&width=300", title: "Slide 5" },
-  ]
 
   const dataMocks = {
     Hoja1: [
@@ -483,58 +447,20 @@ const page = () => {
     }
   }, [])
 
-  useEffect(() => {
-    switch (current) {
-      case 0:
-        setShowDownload(true)
-        setShowProfile(false)
-        setShowUploadImageToStorage(false)
-        setShowLicence(false)
-        setShowStaff(false)
-        break
-      case 1:
-        setShowDownload(false)
-        setShowUploadImageToStorage(true)
-        setShowProfile(false)
-        setShowLicence(false)
-        setShowStaff(false)
+  const { setCurrent: updateStep } = useStepVisibility({
+    current,
+    setCurrent,
+    setShowDownload,
+    setShowUploadImageToStorage,
+    setShowProfile,
+    setShowLicence,
+    setShowStaff
+  });
 
-        break
-      case 2:
-        setShowDownload(false)
-        setShowUploadImageToStorage(false)
-        setShowProfile(true)
-        setShowLicence(false)
-        setShowStaff(false)
-
-        break
-      case 3:
-        setShowDownload(false)
-        setShowUploadImageToStorage(false)
-        setShowProfile(false)
-        setShowLicence(true)
-        setShowStaff(false)
-
-        break
-      case 4:
-        setShowDownload(false)
-        setShowUploadImageToStorage(false)
-        setShowProfile(false)
-        setShowLicence(false)
-        setShowStaff(true)
-
-        break
-      default:
-        break
-    }
-  }, [current])
 
   useEffect(() => {
     setDataURlSupabase(dataResult)
   }, [dataResult])
-
-
-  const [fullUrl, setFullUrl] = useState("");
 
   useLayoutEffect(() => {
     if (typeof window !== "undefined") {
@@ -557,6 +483,7 @@ const page = () => {
   }, [current, dataResult]);
 
 
+
   useEffect(() => {
     if (dataResult && checked && folderName && selectedProfile) {
       setAbilityButtonSend(true)
@@ -565,9 +492,6 @@ const page = () => {
 
 
   const handleCreate = async () => {
-    console.log("Crear botón presionado");
-
-    // Datos que quieres enviar a la API
     const data = {
       filePath: `/foldercompanies/${folderName}`,
       companyName: `${folderName}`,
@@ -583,20 +507,15 @@ const page = () => {
       const response = await fetch('/api/companies', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json', // Especifica que el cuerpo es JSON
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data), // Convierte los datos a JSON
+        body: JSON.stringify(data),
       });
 
-      // Verificar si la solicitud fue exitosa
       if (response.ok) {
         const result = await response.json();
         setFinishit(true)
-        //TODO en caso de haer falta con modal
-        // setOpenResponsive(true)
 
-        console.log('Respuesta de la API:', result);
-        // Aquí puedes hacer algo con la respuesta de la API, como mostrar un mensaje o redirigir
       } else {
         console.error('Error en la solicitud:', response.statusText);
       }
@@ -605,13 +524,9 @@ const page = () => {
     }
   };
 
-
   return (
     <div className={styles.main}>
       <div className={styles.header}>
-
-
-
         <ModalComponents
           openResponsive={openResponsive}
           setOpenResponsive={setOpenResponsive}>
@@ -625,10 +540,8 @@ const page = () => {
                 redirections={true}
                 setOpenResponsive={setOpenResponsive}
                 fullUrl={fullUrl}
-              />
-
-
-          }
+             />
+         }
         </ModalComponents>
 
         <Header
@@ -641,7 +554,6 @@ const page = () => {
           }}
         />
       </div>
-
       {
         finishit ?
           <div className={styles.result}>
@@ -650,12 +562,12 @@ const page = () => {
               title="Successfully"
               subTitle="Company created successfully"
             >
-
               <QrComponents
                 errorLevel="H"
                 value={`https://menusi.netlify.app/companies/${folderName}`}
                 icon={"/images/flama.png"}
               />
+              
               <Button
                 type="primary"
                 block
@@ -665,7 +577,6 @@ const page = () => {
                 Go to {folderName}
               </Button>
             </ResultComponents>
-
           </div> :
           null
       }
@@ -676,7 +587,6 @@ const page = () => {
               <Divider />
               {showProfile ? <Navbar /> : null}
               <Divider />
-
               <StepsComponent items={items} current={current} setCurrent={setCurrent} />
             </div>
         }
@@ -684,9 +594,8 @@ const page = () => {
           finishit ? "" :
             <div className={styles.body}>
               {showDownload ? (
-                <DownloadFile itemsTabs={itemsTabs} setCurrent={setCurrent} />
+                <DownloadFile setCurrent={setCurrent} />
               ) : null}
-
               {showUploadImageToStorage ? (
                 <UploadImageToStorage
                   uploadedFiles={uploadedFiles}
@@ -701,7 +610,6 @@ const page = () => {
                 <Profile
                   folderName={folderName}
                   dataResult={dataResult}
-                  items={carouselItems}
                   paymentLevel={paymentLevel}
                   setSelectedProfile={setSelectedProfile}
                   setCurrent={setCurrent}
@@ -719,7 +627,6 @@ const page = () => {
               ) : null}
 
               {showStaff ? <StaffOfSystem staffData={dataResult || dataMocks} /> : null}
-
 
               <div>
                 {/* Botón de Crear */}

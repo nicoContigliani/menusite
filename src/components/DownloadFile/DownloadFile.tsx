@@ -1,20 +1,11 @@
 'use client';
 
 import React, { useEffect, useState, useMemo, useLayoutEffect } from 'react';
-import dynamic from 'next/dynamic';
 import styles from './DownloadFile.module.css';
 import ButtonDownloadFile from '../ButtonDownloadFile/ButtonDownloadFile';
-import TabsComponent from '../Tabs/Tabs';
-import { TabsProps } from 'antd';
-import ServicesLicense from '../ServicesLisence/ServicesLisence';
-
-interface TabsComponentProps {
-  itemsTabs: TabsProps['items'];
-
-}
 
 const DownloadFile = (props: any) => {
-  const { itemsTabs, setCurrent } = props;
+  const { setCurrent } = props;
 
   return (
     <div className={styles?.container}>
@@ -40,12 +31,9 @@ const DownloadFile = (props: any) => {
       <span style={{ color: 'white' }}>Los datos cargados en el excel modifican el comportamiento de la plataforma</span>
       <span style={{ color: 'white' }}>Información de los datos agregados a la hoja de calculo</span>
 
-      {/* <div className={styles?.tabsContainer}>
-        <TabsComponent itemsTabs={itemsTabs} />
-      </div> */}
       <br />
 
-      
+
       <hr />
       <button onClick={() => setCurrent(1)} className={styles?.selectButton}>
         Siguiente
