@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import styles from './MenuNew.module.css';
+import SelectComponent from '@/components/SelectComponent/SelectComponent';
 
 interface MenuItem {
     Menu_Title: string;
@@ -36,6 +37,9 @@ const MenuNine: React.FC<MenuProps> = ({ groupedSections, namecompanies, backgro
         setSearchTerm(event.target.value);
     };
 
+    const handleChange = (value: { inputValue: string; clarification: string }) => {
+        console.log("Order Info:", value);
+    };
     return (
         <div
             className={styles.menuContainer}
@@ -89,6 +93,18 @@ const MenuNine: React.FC<MenuProps> = ({ groupedSections, namecompanies, backgro
                                             <h2>{item.Name}</h2>
                                             <span>{item.Description}</span>
                                             <span className={styles.price}>{`$${item.Price}`}</span>
+                                        </div>
+                                        <div > {/* Esta es la clase CSS del padre */}
+                                            <SelectComponent
+                                                orderdescription={[]}
+                                                delivery={true}
+                                                takeaway={false}
+                                                Dinein={false}
+                                                onChange={handleChange}
+                                                value="someValue"
+                                                className="no"
+                                                color="white"
+                                            />
                                         </div>
                                     </div>
                                 ))}

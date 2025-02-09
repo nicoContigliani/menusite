@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import Image from 'next/image';
 import styles from './MenuNew.module.css';
+import SelectComponent from '@/components/SelectComponent/SelectComponent';
 
 interface MenuItem {
     Menu_Title: string;
@@ -27,6 +28,10 @@ const Menufive: React.FC<MenuProps> = ({ groupedSections, namecompanies, backgro
     const handleSearchChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchTerm(e.target.value);
     }, []);
+
+    const handleChange = (value: { inputValue: string; clarification: string }) => {
+        console.log("Order Info:", value);
+    };
 
     return (
         <div
@@ -66,7 +71,7 @@ const Menufive: React.FC<MenuProps> = ({ groupedSections, namecompanies, backgro
                                 <div
                                     key={itemIndex}
                                     className={styles.card}
-                      
+
                                 >
                                     <div className={styles.cardImage}>
                                         <Image
@@ -81,6 +86,18 @@ const Menufive: React.FC<MenuProps> = ({ groupedSections, namecompanies, backgro
                                         <h3 className={styles.cardTitle}>{item.Name}</h3>
                                         <span className={styles.cardDescription}>{item.Description}</span>
                                         <span className={styles.cardPrice}>{`$${item.Price}`}</span>
+                                    </div>
+                                    <div > {/* Esta es la clase CSS del padre */}
+                                        <SelectComponent
+                                            orderdescription={[]}
+                                            delivery={true}
+                                            takeaway={false}
+                                            Dinein={false}
+                                            onChange={handleChange}
+                                            value="someValue"
+                                            className="no"
+                                            color="black"
+                                        />
                                     </div>
                                 </div>
                             ))

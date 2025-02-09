@@ -2,6 +2,7 @@ import Logo from '@/components/Logo/Logo';
 import React, { useEffect, useState } from 'react'
 import styles from './MenuFourdTeen.module.css'
 import Image from 'next/image';
+import SelectComponent from '@/components/SelectComponent/SelectComponent';
 interface MenuItem {
     Menu_Title?: string;
     Item_Image?: string;
@@ -104,7 +105,9 @@ const MenuFourdTeen: React.FC<MenuProps> = (props) => {
         );
         return [sectionName, filteredItems] as [string, MenuItem[]];
     }).filter(([, items]) => items.length > 0);
-
+    const handleChange = (value: { inputValue: string; clarification: string }) => {
+        console.log("Order Info:", value);
+    };
     return (
         <div className={styles.container}
             style={{
@@ -153,7 +156,7 @@ const MenuFourdTeen: React.FC<MenuProps> = (props) => {
                                 <div
                                     key={`${sectionName}-${item?.Item_id}-${index}`}
                                     className={styles.menuItem}
-                                  
+
 
                                 >
                                     {/* <div className={styles.itemImage} >
@@ -170,9 +173,19 @@ const MenuFourdTeen: React.FC<MenuProps> = (props) => {
                                         <h2>{item?.Name}</h2>
                                         <span>{item?.Description}</span>
                                         <div className={styles.price}>{`$${item.Price}`}</div>
-
                                     </div>
-
+                                    <div > {/* Esta es la clase CSS del padre */}
+                                        <SelectComponent
+                                            orderdescription={[]}
+                                            delivery={true}
+                                            takeaway={false}
+                                            Dinein={false}
+                                            onChange={handleChange}
+                                            value="someValue"
+                                            className="no"
+                                            color="white"
+                                        />
+                                    </div>
                                 </div>
                             ))}
                         </div>

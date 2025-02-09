@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import styles from './MenuNew.module.css';
+import SelectComponent from '@/components/SelectComponent/SelectComponent';
 
 interface MenuItem {
     Menu_Title: string;
@@ -31,6 +32,11 @@ const Menueleven: React.FC<MenuProps> = ({ groupedSections, namecompanies, backg
                 .some(field => field.toLowerCase().includes(searchTerm.toLowerCase()))
         );
     });
+
+    const handleChange = (value: { inputValue: string; clarification: string }) => {
+        console.log("Order Info:", value);
+    };
+
 
     return (
         <div
@@ -73,6 +79,18 @@ const Menueleven: React.FC<MenuProps> = ({ groupedSections, namecompanies, backg
                                                 )}
                                             </div>
                                             <span className={styles.price}>${item.Price}</span>
+                                        </div>
+                                        <div > {/* Esta es la clase CSS del padre */}
+                                            <SelectComponent
+                                                orderdescription={[]}
+                                                delivery={true}
+                                                takeaway={false}
+                                                Dinein={false}
+                                                onChange={handleChange}
+                                                value="someValue"
+                                                className="no"
+                                                color="white"
+                                            />
                                         </div>
                                     </div>
                                 ))}

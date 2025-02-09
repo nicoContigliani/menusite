@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import styles from './MenuNew.module.css';
+import SelectComponent from '@/components/SelectComponent/SelectComponent';
 
 interface MenuItem {
     Menu_Title: string;
@@ -32,6 +33,11 @@ const MenuEight: React.FC<MenuProps> = ({ groupedSections, namecompanies, backgr
 
         return () => clearTimeout(timer); // Cleanup on effect re-run
     }, [searchTerm]);
+
+    const handleChange = (value: { inputValue: string; clarification: string }) => {
+        console.log("Order Info:", value);
+    };
+
 
     return (
         <div
@@ -82,6 +88,18 @@ const MenuEight: React.FC<MenuProps> = ({ groupedSections, namecompanies, backgr
                                             <span>{item.Description}</span>
                                             <span className={styles.price}>{`$${item.Price}`}</span>
                                         </div>
+                                        <div > {/* Esta es la clase CSS del padre */}
+                                        <SelectComponent
+                                            orderdescription={[]}
+                                            delivery={true}
+                                            takeaway={false}
+                                            Dinein={false}
+                                            onChange={handleChange}
+                                            value="someValue"
+                                            className="no"
+                                            color="white"
+                                        />
+                                    </div>
                                     </div>
                                 ))}
                             </div>
