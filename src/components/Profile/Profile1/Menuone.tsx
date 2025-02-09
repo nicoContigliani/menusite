@@ -6,6 +6,7 @@ import Info from "@/components/Info/Info"
 import Schedules from "@/components/Schedules/Schedules"
 import useSectionTimeTracker from "../../../../hooks/useSectionTimeTracker"
 import Image from "next/image"
+import SelectComponent from "@/components/SelectComponent/SelectComponent"
 
 interface MenuItem {
     Item_id: string
@@ -34,10 +35,17 @@ interface ConfigType {
 const Menuone: React.FC<MenuProps> = (props) => {
     const { backgroundImages, config, groupedSections, info, menuData, namecompanies, promotions, schedules } = props
 
-    const { sectionTimes, handleSectionEnter } = useSectionTimeTracker()
-    console.log("🚀 ~ sectionTimes:", sectionTimes)
+    // const { sectionTimes, handleSectionEnter } = useSectionTimeTracker()
+    // useEffect(() => {
+    // }, [sectionTimes])
+
+    const { sectionTimes, totalTime, history, handleSectionEnter } = useSectionTimeTracker();
+
+
     useEffect(() => {
-    }, [sectionTimes])
+        console.log("📊 Estadísticas Generales:", { sectionTimes, totalTime });
+        console.log("📜 Historial de Navegación:", history);
+    }, []);
 
 
     const [searchTerm, setSearchTerm] = useState("")
@@ -76,6 +84,11 @@ const Menuone: React.FC<MenuProps> = (props) => {
             return [sectionName, filteredItems] as [string, MenuItem[]]
         })
         .filter(([, items]) => items.length > 0)
+
+
+    const handleChange = (value: { inputValue: string; clarification: string }) => {
+        console.log("Order Info:", value);
+    };
 
     return (
         <div className={styles.container}>
@@ -155,6 +168,18 @@ const Menuone: React.FC<MenuProps> = (props) => {
                                             <div className={styles.itemDescription}>{item?.Description}</div>
                                             <div className={styles.price}>{`$${item.Price}`}</div>
                                         </div>
+                                    </div>
+                                    <div > {/* Esta es la clase CSS del padre */}
+                                        <SelectComponent
+                                            orderdescription={[]}
+                                            delivery={true}
+                                            takeaway={false}
+                                            Dinein={false}
+                                            onChange={handleChange}
+                                            value="someValue"
+                                            className="no"
+                                            color="white"
+                                        />
                                     </div>
                                 </div>
                             ))}

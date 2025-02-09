@@ -5,6 +5,7 @@ import Info from '@/components/Info/Info';
 import Logo from '@/components/Logo/Logo';
 import useSectionTimeTracker from '../../../../hooks/useSectionTimeTracker';
 import Schedules from '@/components/Schedules/Schedules';
+import SelectComponent from '@/components/SelectComponent/SelectComponent';
 
 interface MenuItem {
     Item_id: string
@@ -75,6 +76,10 @@ const Menufourd: React.FC<MenuProps> = (props) => {
             return [sectionName, filteredItems] as [string, MenuItem[]]
         })
         .filter(([, items]) => items.length > 0)
+
+    const handleChange = (value: { inputValue: string; clarification: string }) => {
+        console.log("Order Info:", value);
+    };
 
     return (
         <div
@@ -161,6 +166,19 @@ const Menufourd: React.FC<MenuProps> = (props) => {
                                             <div className={styles.price}>{`$${item.Price}`}</div>
                                         </div>
                                     </div>
+                                    <div > {/* Esta es la clase CSS del padre */}
+                                        <SelectComponent
+                                            orderdescription={[]}
+                                            delivery={true}
+                                            takeaway={false}
+                                            Dinein={false}
+                                            onChange={handleChange}
+                                            value="someValue"
+                                            className="no"
+                                            color="white"
+                                            type="default"
+                                        />
+                                    </div>
                                 </div>
                             ))}
                         </div>
@@ -180,7 +198,7 @@ const Menufourd: React.FC<MenuProps> = (props) => {
                     textClassName={styles.customInfoText}
                 />
             </div>
-             <footer className={styles.footer}>
+            <footer className={styles.footer}>
                 <div>{`© ${new Date().getFullYear()} LlakaScript`}</div>
             </footer>
         </div>

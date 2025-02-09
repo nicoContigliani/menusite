@@ -25,6 +25,10 @@ export interface InfoType {
   web?: string
   whatsapp?: string
   x?: string
+  delivery?: string
+  reservation?: string
+  pay?: string
+  chatboot: string
 }
 
 export interface SchedulesType {

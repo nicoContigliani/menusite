@@ -6,6 +6,7 @@ import Info from "@/components/Info/Info"
 import Schedules from "@/components/Schedules/Schedules"
 import useSectionTimeTracker from "../../../../hooks/useSectionTimeTracker"
 import Image from "next/image"
+import SelectComponent from "@/components/SelectComponent/SelectComponent"
 
 interface MenuItem {
     Item_id: string
@@ -76,6 +77,10 @@ const Menutwo: React.FC<MenuProps> = (props) => {
             return [sectionName, filteredItems] as [string, MenuItem[]]
         })
         .filter(([, items]) => items.length > 0)
+
+    const handleChange = (value: { inputValue: string; clarification: string }) => {
+        console.log("Order Info:", value);
+    };
 
     return (
         <div className={styles.container}>
@@ -155,6 +160,19 @@ const Menutwo: React.FC<MenuProps> = (props) => {
                                             <div className={styles.itemDescription}>{item?.Description}</div>
                                             <div className={styles.price}>{`$${item.Price}`}</div>
                                         </div>
+                                    </div>
+                                    <div > {/* Esta es la clase CSS del padre */}
+                                        <SelectComponent
+                                            orderdescription={[]}
+                                            delivery={true}
+                                            takeaway={false}
+                                            Dinein={false}
+                                            onChange={handleChange}
+                                            value="someValue"
+                                            className="no"
+                                            color="black"
+
+                                        />
                                     </div>
                                 </div>
                             ))}
