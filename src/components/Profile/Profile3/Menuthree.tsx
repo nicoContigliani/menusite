@@ -36,7 +36,7 @@ interface ConfigType {
 const Menuone: React.FC<MenuProps> = (props) => {
     const { backgroundImages, config, groupedSections, info, menuData, namecompanies, promotions, schedules } = props
 
-    const { sectionTimes, handleSectionEnter } = useSectionTimeTracker()
+    const { sectionTimes, handleSectionEnter } = useSectionTimeTracker("nico")
     useEffect(() => {
         console.log("Tiempo en cada sección:", sectionTimes)
     }, [sectionTimes])

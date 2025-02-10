@@ -34,7 +34,7 @@ interface ConfigType {
 const MenuFifTeen: React.FC<MenuProps> = (props) => {
     // const { menuData, groupedSections, backgroundImages, namecompanies, Promotion, info, schedules, config } = props
     const { backgroundImages, config, groupedSections, info, menuData, namecompanies, promotions, schedules } = props
-    const { sectionTimes, handleSectionEnter } = useSectionTimeTracker()
+    const { sectionTimes, handleSectionEnter } = useSectionTimeTracker("nico")
 
     const [searchTerm, setSearchTerm] = useState("")
     const [loading, setLoading] = useState(true)

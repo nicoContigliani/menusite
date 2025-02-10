@@ -39,7 +39,7 @@ const Menuone: React.FC<MenuProps> = (props) => {
     // useEffect(() => {
     // }, [sectionTimes])
 
-    const { sectionTimes, totalTime, history, handleSectionEnter } = useSectionTimeTracker();
+    const { sectionTimes, totalTime, history, handleSectionEnter } = useSectionTimeTracker("nico");
 
 
     useEffect(() => {

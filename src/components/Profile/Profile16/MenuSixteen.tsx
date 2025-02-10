@@ -35,7 +35,7 @@ const MenuSixTeen: React.FC<MenuProps> = (props) => {
     // const { menuData, groupedSections, backgroundImages, namecompanies, Promotion, info, schedules, config } = props
     const { backgroundImages, config, groupedSections, info, menuData, namecompanies, promotions, schedules } = props
 
-    const { sectionTimes, handleSectionEnter } = useSectionTimeTracker()
+    const { sectionTimes, handleSectionEnter } = useSectionTimeTracker("nico")
     useEffect(() => {
         console.log("Tiempo en cada sección:", sectionTimes)
     }, [sectionTimes])

@@ -21,7 +21,7 @@ interface Props {
 }
 
 const SelectComponent = (props: Props) => {
-    const { delivery, takeaway, Dinein, className, onChange, color,type="default" } = props;
+    const { delivery, takeaway, Dinein, className, onChange, color, type = "default" } = props;
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [orderType, setOrderType] = useState<string | null>(null);
     const [inputValue, setInputValue] = useState<string>("");
@@ -51,7 +51,7 @@ const SelectComponent = (props: Props) => {
             {delivery && (
                 <Button
                     type={type}
-                    variant="outlined" 
+                    variant="outlined"
                     block
                     style={{ color: `${color}`, margin: "10px", backgroundColor: 'transparent' }}
                     onClick={() => showModal("delivery")}>
@@ -75,7 +75,7 @@ const SelectComponent = (props: Props) => {
 
             <Modal
                 title={`Order Details - ${orderType}`}
-                visible={isModalVisible}
+                open={isModalVisible}  // <---- Aquí el cambio
                 onCancel={handleCancel}
                 footer={[
                     <Button key="submit"
