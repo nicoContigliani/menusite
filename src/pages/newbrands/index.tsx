@@ -163,7 +163,7 @@ const page = () => {
   return (
     <div className={styles.main}>
       <div className={styles.header}>
-        <ModalComponents
+        {/* <ModalComponents
           openResponsive={openResponsive}
           setOpenResponsive={setOpenResponsive}>
           {
@@ -178,7 +178,7 @@ const page = () => {
                 fullUrl={fullUrl}
               />
           }
-        </ModalComponents>
+        </ModalComponents> */}
 
         <Header
           imagetodo={{
