@@ -56,7 +56,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     score_user: 0,
     benefits:false,
     status_user: true,
-    verificationCode, // Almacena el código en la base de datos
+    // verificationCode, // Almacena el código en la base de datos
     createAt: new Date(),
     updateAt: new Date(),
   });
