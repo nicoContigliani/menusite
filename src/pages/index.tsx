@@ -82,8 +82,11 @@ export default function Home() {
 
 
         <button
-          onClick={() => LoginUser({ "email": "nico.contiglinai@gmail.com", "password": "Jesus6388" })}
+          onClick={() => LoginUser({ "email": "nico.contigliani@gmail.com", "password": "Jesus6388" })}
         >hola</button>
+     
+        
+
 
 
 
