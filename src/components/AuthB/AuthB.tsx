@@ -9,7 +9,7 @@ const AuthB = () => {
     return (
         <div >
             {activeForm === 'register' && (
-                "si"   // <RegisterAuthB />
+                <RegisterAuthB />
             )}
             {activeForm === 'login' && (
                 <LoginAuthB />
