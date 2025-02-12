@@ -8,6 +8,7 @@ import Features from "@/components/sections/features/Features";
 import Contact from "@/components/sections/contact/Contact";
 import AuthB from "@/components/AuthB/AuthB";
 import { Button } from "antd";
+import LoginB from "@/components/Login/LoginB";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -84,8 +85,8 @@ export default function Home() {
         <button
           onClick={() => LoginUser({ "email": "nico.contigliani@gmail.com", "password": "Jesus6388" })}
         >hola</button>
-     
-        
+
+        <LoginB />
 
 
 
