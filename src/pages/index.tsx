@@ -9,6 +9,7 @@ import Contact from "@/components/sections/contact/Contact";
 import AuthB from "@/components/AuthB/AuthB";
 import { Button } from "antd";
 import LoginB from "@/components/Login/LoginB";
+import RegisterB from "@/components/Register/RegisterB";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -87,6 +88,7 @@ export default function Home() {
         >hola</button>
 
         <LoginB />
+        <RegisterB />
 
 
 
