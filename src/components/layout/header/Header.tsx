@@ -194,6 +194,7 @@ import { useEffect, useLayoutEffect, useState } from "react";
 import ModalComponents from "@/components/ModalComponents/ModalComponents";
 import { Button } from "antd";
 import Auth from "@/components/Auth/Auth";
+import AuthB from "@/components/AuthB/AuthB";
 
 export default function Header(props: any) {
   const { imagetodo } = props;
@@ -211,6 +212,9 @@ export default function Header(props: any) {
   const handleCloseModal = () => {
     setOpenResponsive(false); // Close the modal correctly
   };
+  const handleAuth = () => {
+    setOpenResponsive(true)
+  }
 
   const handleLogout = () => {
     // Reset login state and do any necessary cleanup, like clearing tokens or local storage
@@ -246,12 +250,14 @@ export default function Header(props: any) {
           <Link href="#contact" className={styles.link}>
             Contact
           </Link>
-          {
+          <Button type="primary" onClick={handleAuth}>Register/Login</Button>
+
+          {/* {
             isLogin ?
               <Button type="primary" onClick={handleLogout}>LogOut</Button> // Show LogOut button when logged in
               :
               <Button type="link" onClick={() => setOpenResponsive(true)}>Login / Register</Button> // Show Login/Register button when logged out
-          }
+          } */}
         </div>
         {/* <ModalComponents openResponsive={openResponsive} setOpenResponsive={setOpenResponsive} onClose={handleCloseModal}>
           <Auth
@@ -261,6 +267,14 @@ export default function Header(props: any) {
             setIsLogin={setIsLogin}
           />
         </ModalComponents> */}
+        {
+          isLogin ?
+            <ModalComponents openResponsive={openResponsive} setOpenResponsive={setOpenResponsive} onClose={handleCloseModal}>
+              <AuthB />
+            </ModalComponents> :
+            null
+        }
+
       </nav>
     </header>
   );
