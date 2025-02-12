@@ -30,7 +30,16 @@ export default function Home() {
     btn1: "/products",
     btn2: "/moreinfo"
   }
-
+  const LoginUser = (data: any) => {
+    console.log("🚀 ~ LoginUser ~ data:", data)
+    fetch('/api/registerdata', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+  }
 
   return (
     <>
@@ -39,15 +48,15 @@ export default function Home() {
           prueba de conexión
         </button>
         <Counter /> */}
-        <Header 
-        
-        imagetodo={{
-          src: "/images/flama.png",
-          alt: "Flama",
-          width: 1600,
-          height: 1200,
-          quality: 100,
-        }}
+        <Header
+
+          imagetodo={{
+            src: "/images/flama.png",
+            alt: "Flama",
+            width: 1600,
+            height: 1200,
+            quality: 100,
+          }}
         />
         <Hero
           title="Nuevas experiencias digitales"
@@ -70,7 +79,14 @@ export default function Home() {
         {/* <Projects/> */}
         <Features />
         <Contact />
-    
+
+
+        <button
+          onClick={() => LoginUser({ "email": "nico.contiglinai@gmail.com", "password": "Jesus6388" })}
+        >hola</button>
+
+
+
       </div>
     </>
   );

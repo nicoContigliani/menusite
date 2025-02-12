@@ -223,6 +223,7 @@ export default function Header(props: any) {
     console.log("Logged out");
   };
 
+ 
   return (
     <header className={styles.header}>
       <nav className={styles.nav}>
@@ -252,23 +253,22 @@ export default function Header(props: any) {
           </Link>
           <Button type="primary" onClick={handleAuth}>Register/Login</Button>
 
-          {
+          {/* {
             isLogin ?
               <Button type="primary" onClick={handleLogout}>LogOut</Button> // Show LogOut button when logged in
               :
               <Button type="link" onClick={() => setOpenResponsive(true)}>Login / Register</Button> // Show Login/Register button when logged out
-          }
+          } */}
         </div>
-        <ModalComponents openResponsive={openResponsive} setOpenResponsive={setOpenResponsive} onClose={handleCloseModal}>
-          <AuthB
+        {/* <ModalComponents openResponsive={openResponsive} setOpenResponsive={setOpenResponsive} onClose={handleCloseModal}>
+          <Auth
             redirections={true}
             setOpenResponsive={setOpenResponsive}
             fullUrl={fullUrl}
             setIsLogin={setIsLogin}
           />
-        </ModalComponents>
-    
-
+        </ModalComponents> */}
+       
       </nav>
     </header>
   );
