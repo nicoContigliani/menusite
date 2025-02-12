@@ -26,26 +26,26 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const hashedPassword = await bcrypt.hash(password, 10);
   const verificationCode = generateCode(6); // Genera un código de 6 dígitos
 
-  try {
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.NEXT_PUBLIC_EMAIL_USER,
-        pass: process.env.NEXT_PUBLIC_EMAIL_PASS,
-      },
-    });
+  // try {
+  //   const transporter = nodemailer.createTransport({
+  //     service: "gmail",
+  //     auth: {
+  //       user: process.env.NEXT_PUBLIC_EMAIL_USER,
+  //       pass: process.env.NEXT_PUBLIC_EMAIL_PASS,
+  //     },
+  //   });
 
-    const mailOptions = {
-      from: process.env.NEXT_PUBLIC_EMAIL_USER,
-      to: email,
-      subject: "Código de verificación",
-      text: `Tu código de verificación es: ${verificationCode}`,
-    };
+  //   const mailOptions = {
+  //     from: process.env.NEXT_PUBLIC_EMAIL_USER,
+  //     to: email,
+  //     subject: "Código de verificación",
+  //     text: `Tu código de verificación es: ${verificationCode}`,
+  //   };
 
-    await transporter.sendMail(mailOptions);
-  } catch (error) {
-    return res.status(500).json({ error: "Error sending verification email" });
-  }
+  //   await transporter.sendMail(mailOptions);
+  // } catch (error) {
+  //   return res.status(500).json({ error: "Error sending verification email" });
+  // }
 
   const todo = await users.insertOne({
     email,
@@ -56,7 +56,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     score_user: 0,
     benefits:false,
     status_user: true,
-    verificationCode, // Almacena el código en la base de datos
+    // verificationCode, // Almacena el código en la base de datos
     createAt: new Date(),
     updateAt: new Date(),
   });
