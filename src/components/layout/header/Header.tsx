@@ -221,7 +221,7 @@ export default function Header(props: any) {
 
   return (
     <header className={styles.header}>
-      {/* <nav className={styles.nav}>
+      <nav className={styles.nav}>
         <Link href="/" className={styles.logo}>
           <Image
             src={imagetodo.src || "/placeholder.svg"}
@@ -253,15 +253,15 @@ export default function Header(props: any) {
               <Button type="link" onClick={() => setOpenResponsive(true)}>Login / Register</Button> // Show Login/Register button when logged out
           }
         </div>
-        <ModalComponents openResponsive={openResponsive} setOpenResponsive={setOpenResponsive} onClose={handleCloseModal}>
+        {/* <ModalComponents openResponsive={openResponsive} setOpenResponsive={setOpenResponsive} onClose={handleCloseModal}>
           <Auth
             redirections={true}
             setOpenResponsive={setOpenResponsive}
             fullUrl={fullUrl}
             setIsLogin={setIsLogin}
           />
-        </ModalComponents>
-      </nav> */}
+        </ModalComponents> */}
+      </nav>
     </header>
   );
 }
