@@ -31,9 +31,6 @@ export default function Home() {
     btn2: "/moreinfo"
   }
 
- const handleClick = () => {
-  fetch('/api/todoregister').then(res => res.json()).then(data => console.log(data))
- }
 
   return (
     <>
@@ -73,9 +70,7 @@ export default function Home() {
         {/* <Projects/> */}
         <Features />
         <Contact />
-      <Button type="primary" onClick={handleClick}>
-        si
-      </Button>
+    
       </div>
     </>
   );
