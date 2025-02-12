@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import bcrypt from "bcryptjs";
 import nodemailer from "nodemailer";
 import clientPromise from "../../../lib/mongoose";
+import { generateToken } from "../../../tools/auth";
 
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -20,7 +21,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   let existingUser: any = await users.findOne({ email });
   console.log("🚀 ~ handler ~ existingUser:", existingUser)
+ if (!existingUser) {
+    return res.status(400).json({ error: "User not found" });
+  }
+  console.log("🚀 ~ handler ~ existingUser:", existingUser)
 
+  const isPasswordCorrect = await bcrypt.compare(password, existingUser.password);
+  if (!isPasswordCorrect) {
+    return res.status(400).json({ error: "Incorrect password" });
+  }
 
-  return res.status(200).json({ message: "User created successfully, verification code sent to email" });
+  delete existingUser?.password;
+
+  const token = generateToken({ existingUser });
+
+  return res.status(200).json({ token, ...existingUser, message: "Login successful" });
 }
