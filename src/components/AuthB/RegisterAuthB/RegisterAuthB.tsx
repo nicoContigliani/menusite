@@ -16,7 +16,7 @@ const RegisterAuthB = () => {
     setMessage("");
 
     try {
-      const response = await axios.post("/api/registerdata", { email, password, fullname, birthday, phone });
+      const response = await axios.post("/api/todoregister", { email, password, fullname, birthday, phone });
       if (response.status === 200) {
         console.log("🚀 ~ handleSubmit ~ response:", response)
         // setVerifications(true);
