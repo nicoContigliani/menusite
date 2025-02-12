@@ -4,7 +4,7 @@ import RegisterAuthB from './RegisterAuthB/RegisterAuthB';
 import LoginAuthB from './LoginAuthB/LoginAuthB';
 import ValidateCodeAuthB from './ValidateCodeAuthB/ValidateCodeAuthB';
 
-const AuthB = () => {
+const AuthB = (props: any) => {
     const [activeForm, setActiveForm] = useState<'login' | 'register' | 'validateCode'>('login');
     return (
         <div >
