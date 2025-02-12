@@ -74,7 +74,7 @@ const page = () => {
   useEffect(() => {
     const storedData = getLocalhostStorage()
     console.log("🚀 ~ useEffect ~ storedData:", storedData)
-    if (storedData.aud != null) {
+    if (storedData?.aud != null) {
       const { aud, email, access_token, expires_at, userid } = storedData
       console.log("🚀 ~ useEffect ~ aud:", aud)
       setIsLogin(true)
