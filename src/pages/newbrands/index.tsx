@@ -22,6 +22,11 @@ const UploadImageToStorage = dynamic(() => import("@/components/UploadImageToSto
 const Profile = dynamic(() => import("@/components/Profile/Profile"))
 const Licence = dynamic(() => import("@/components/Licence/Licence"))
 
+import stepsData from "../../../dataJSON/stepsDataSet.json"
+import dataMocks from "../../../dataJSON/dataMocks.json"
+
+
+
 interface DescriptionItem {
   key: string
   label: string
@@ -54,28 +59,9 @@ const page = () => {
   const [paymentLevel, setPaymentLevel] = useState<number>(0);
 
   // Estados relacionados con los ítems y botones
-  const [items, setItems] = useState<any | any[] | undefined>([
-    {
-      title: "Descargar Excel con el formato obligatorio",
-      description: "Es obligatorio ",
-    },
-    {
-      title: "Ingreso de Archivo Excel e imagenes",
-      description: "Es obligatorio ",
-    },
-    {
-      title: "Selección de perfil",
-      description: "El pefil ocupa la información del Excel",
-    },
-    {
-      title: "Licncia de uso",
-      description: "Step 3",
-    },
-    {
-      title: "Confirmación de usuarios y Creación",
-      description: "Step 4",
-    },
-  ]);
+  const [items, setItems] = useState<any | any[] | undefined>(
+    stepsData
+  );
   const [abilityButtonSend, setAbilityButtonSend] = useState<boolean>(false);
 
   // Estados relacionados con la URL y el icono
@@ -84,356 +70,6 @@ const page = () => {
   const [fullUrl, setFullUrl] = useState("");
 
 
-  const dataMocks = {
-    Hoja1: [
-      {
-        Menu_Title: "Pizza",
-        Item_Image:
-          "https://bvzjttzvsriwmdokdupp.supabase.co/storage/v1/object/public/llakaScriptBucket/companiesFolders/LlakaScript/lasagna.jpg",
-        Section: "primera",
-        Item_id: 1,
-        Name: "Lasagna Nico",
-        Description: "asaña clásica con carne y salsa bechamel",
-        Price: "17.50",
-      },
-      {
-        Menu_Title: "Pizza",
-        Item_Image:
-          "https://bvzjttzvsriwmdokdupp.supabase.co/storage/v1/object/public/llakaScriptBucket/companiesFolders/LlakaScript/lasagna.jpg",
-        Section: "primera",
-        Item_id: 1,
-        Name: "Lasagna",
-        Description: "asaña clásica con carne y salsa bechamel",
-        Price: "17.50",
-      },
-      {
-        Menu_Title: "Pizza",
-        Item_Image:
-          "https://bvzjttzvsriwmdokdupp.supabase.co/storage/v1/object/public/llakaScriptBucket/companiesFolders/LlakaScript/lasagna.jpg",
-        Section: "primera",
-        Item_id: 1,
-        Name: "Lasagna",
-        Description: "asaña clásica con carne y salsa bechamel",
-        Price: "17.50",
-      },
-      {
-        Menu_Title: "Pizza",
-        Item_Image:
-          "https://bvzjttzvsriwmdokdupp.supabase.co/storage/v1/object/public/llakaScriptBucket/companiesFolders/LlakaScript/lasagna.jpg",
-        Section: "segunda",
-        Item_id: 1,
-        Name: "Lasagna",
-        Description: "asaña clásica con carne y salsa bechamel",
-        Price: "17.50",
-      },
-      {
-        Menu_Title: "Pizza",
-        Item_Image:
-          "https://bvzjttzvsriwmdokdupp.supabase.co/storage/v1/object/public/llakaScriptBucket/companiesFolders/LlakaScript/lasagna.jpg",
-        Section: "segunda",
-        Item_id: 1,
-        Name: "Lasagna",
-        Description: "asaña clásica con carne y salsa bechamel",
-        Price: "17.50",
-      },
-      {
-        Menu_Title: "Pizza",
-        Item_Image:
-          "https://bvzjttzvsriwmdokdupp.supabase.co/storage/v1/object/public/llakaScriptBucket/companiesFolders/LlakaScript/lasagna.jpg",
-        Section: "primera",
-        Item_id: 1,
-        Name: "Lasagna",
-        Description: "asaña clásica con carne y salsa bechamel",
-        Price: "17.50",
-      },
-      {
-        Menu_Title: "Cucina Italiana",
-        Item_Image:
-          "https://bvzjttzvsriwmdokdupp.supabase.co/storage/v1/object/public/llakaScriptBucket/companiesFolders/LlakaScript/lasagna.jpg",
-        Section: "primera",
-        Item_id: 1,
-        Name: "Lasagna",
-        Description: "asaña clásica con carne y salsa bechamel",
-        Price: "17.50",
-      },
-      {
-        Menu_Title: "Cucina Italiana",
-        Item_Image:
-          "https://bvzjttzvsriwmdokdupp.supabase.co/storage/v1/object/public/llakaScriptBucket/companiesFolders/LlakaScript/lasagna.jpg",
-        Section: "primera",
-        Item_id: 1,
-        Name: "Lasagna",
-        Description: "asaña clásica con carne y salsa bechamel",
-        Price: "17.50",
-      },
-      {
-        Menu_Title: "Cucina Italiana",
-        Item_Image:
-          "https://bvzjttzvsriwmdokdupp.supabase.co/storage/v1/object/public/llakaScriptBucket/companiesFolders/LlakaScript/lasagna.jpg",
-        Section: "segunda",
-        Item_id: 1,
-        Name: "Lasagna",
-        Description: "asaña clásica con carne y salsa bechamel",
-        Price: "17.50",
-      },
-      {
-        Menu_Title: "Cucina Italiana",
-        Item_Image:
-          "https://bvzjttzvsriwmdokdupp.supabase.co/storage/v1/object/public/llakaScriptBucket/companiesFolders/LlakaScript/lasagna.jpg",
-        Section: "segunda",
-        Item_id: 1,
-        Name: "Lasagna",
-        Description: "asaña clásica con carne y salsa bechamel",
-        Price: "17.50",
-      },
-      {
-        Menu_Title: "Pizza",
-        Item_Image:
-          "https://bvzjttzvsriwmdokdupp.supabase.co/storage/v1/object/public/llakaScriptBucket/companiesFolders/LlakaScript/lasagna.jpg",
-        Section: "primera",
-        Item_id: 1,
-        Name: "Lasagna",
-        Description: "asaña clásica con carne y salsa bechamel",
-        Price: "17.50",
-      },
-      {
-        Menu_Title: "Cucina Italiana",
-        Item_Image:
-          "https://bvzjttzvsriwmdokdupp.supabase.co/storage/v1/object/public/llakaScriptBucket/companiesFolders/LlakaScript/lasagna.jpg",
-        Section: "primera",
-        Item_id: 1,
-        Name: "Lasagna",
-        Description: "asaña clásica con carne y salsa bechamel",
-        Price: "17.50",
-      },
-      {
-        Menu_Title: "Cucina Italiana",
-        Item_Image:
-          "https://bvzjttzvsriwmdokdupp.supabase.co/storage/v1/object/public/llakaScriptBucket/companiesFolders/LlakaScript/lasagna.jpg",
-        Section: "primera",
-        Item_id: 1,
-        Name: "Lasagna",
-        Description: "asaña clásica con carne y salsa bechamel",
-        Price: "17.50",
-      },
-      {
-        Menu_Title: "Cucina Italiana",
-        Item_Image:
-          "https://bvzjttzvsriwmdokdupp.supabase.co/storage/v1/object/public/llakaScriptBucket/companiesFolders/LlakaScript/lasagna.jpg",
-        Section: "segunda",
-        Item_id: 1,
-        Name: "Lasagna",
-        Description: "asaña clásica con carne y salsa bechamel",
-        Price: "17.50",
-      },
-      {
-        Menu_Title: "Cucina Italiana",
-        Item_Image:
-          "https://bvzjttzvsriwmdokdupp.supabase.co/storage/v1/object/public/llakaScriptBucket/companiesFolders/LlakaScript/lasagna.jpg",
-        Section: "segunda",
-        Item_id: 1,
-        Name: "Lasagna",
-        Description: "asaña clásica con carne y salsa bechamel",
-        Price: "17.50",
-      },
-      {
-        Menu_Title: "Pizza",
-        Item_Image:
-          "https://bvzjttzvsriwmdokdupp.supabase.co/storage/v1/object/public/llakaScriptBucket/companiesFolders/LlakaScript/lasagna.jpg",
-        Section: "primera",
-        Item_id: 1,
-        Name: "Lasagna",
-        Description: "asaña clásica con carne y salsa bechamel",
-        Price: "17.50",
-      },
-      {
-        Menu_Title: "Cucina Italiana",
-        Item_Image:
-          "https://bvzjttzvsriwmdokdupp.supabase.co/storage/v1/object/public/llakaScriptBucket/companiesFolders/LlakaScript/lasagna.jpg",
-        Section: "primera",
-        Item_id: 1,
-        Name: "Lasagna",
-        Description: "asaña clásica con carne y salsa bechamel",
-        Price: "17.50",
-      },
-      {
-        Menu_Title: "Cucina Italiana",
-        Item_Image:
-          "https://bvzjttzvsriwmdokdupp.supabase.co/storage/v1/object/public/llakaScriptBucket/companiesFolders/LlakaScript/lasagna.jpg",
-        Section: "primera",
-        Item_id: 1,
-        Name: "Lasagna",
-        Description: "asaña clásica con carne y salsa bechamel",
-        Price: "17.50",
-      },
-      {
-        Menu_Title: "Cucina Italiana",
-        Item_Image:
-          "https://bvzjttzvsriwmdokdupp.supabase.co/storage/v1/object/public/llakaScriptBucket/companiesFolders/LlakaScript/lasagna.jpg",
-        Section: "segunda",
-        Item_id: 1,
-        Name: "Lasagna",
-        Description: "asaña clásica con carne y salsa bechamel",
-        Price: "17.50",
-      },
-      {
-        Menu_Title: "Cucina Italiana",
-        Item_Image:
-          "https://bvzjttzvsriwmdokdupp.supabase.co/storage/v1/object/public/llakaScriptBucket/companiesFolders/LlakaScript/lasagna.jpg",
-        Section: "segunda",
-        Item_id: 1,
-        Name: "Lasagna",
-        Description: "asaña clásica con carne y salsa bechamel",
-        Price: "17.50",
-      },
-    ],
-    Promotion: [
-      {
-        Menu_Title: "Pizza Tropical",
-        Profile_Type: "profile_ten",
-        Primary_Color: "#33ffff",
-        Secondary_color: "#d2a700",
-        Background_Image:
-          "https://bvzjttzvsriwmdokdupp.supabase.co/storage/v1/object/public/llakaScriptBucket/companiesFolders/LlakaScript/fondo.png",
-        Item_Image:
-          "https://bvzjttzvsriwmdokdupp.supabase.co/storage/v1/object/public/llakaScriptBucket/companiesFolders/LlakaScript/lasagna.jpg",
-        Section: "primera",
-        Item_id: 1,
-        Name: "Lasagna",
-        Description: "asaña clásica con carne y salsa bechamel",
-        Price: "27.50",
-        profile: 1,
-      },
-      {
-        Menu_Title: "Pizza Salchipapas",
-        Profile_Type: "profile_ten",
-        Primary_Color: "#33ffff",
-        Secondary_color: "#d2a700",
-        Background_Image:
-          "https://bvzjttzvsriwmdokdupp.supabase.co/storage/v1/object/public/llakaScriptBucket/companiesFolders/LlakaScript/fondo.png",
-        Item_Image:
-          "https://bvzjttzvsriwmdokdupp.supabase.co/storage/v1/object/public/llakaScriptBucket/companiesFolders/LlakaScript/lasagna.jpg",
-        Section: "primera",
-        Item_id: 1,
-        Name: "Lasagna",
-        Description: "asaña clásica con carne y salsa bechamel",
-        Price: "27.50",
-        profile: 1,
-      },
-      {
-        Menu_Title: "Pizza Cuatro Quesos",
-        Profile_Type: "profile_ten",
-        Primary_Color: "#33ffff",
-        Secondary_color: "#d2a700",
-        Background_Image:
-          "https://bvzjttzvsriwmdokdupp.supabase.co/storage/v1/object/public/llakaScriptBucket/companiesFolders/LlakaScript/fondo.png",
-        Item_Image:
-          "https://bvzjttzvsriwmdokdupp.supabase.co/storage/v1/object/public/llakaScriptBucket/companiesFolders/LlakaScript/lasagna.jpg",
-        Section: "primera",
-        Item_id: 1,
-        Name: "Lasagna",
-        Description: "asaña clásica con carne y salsa bechamel",
-        Price: "27.50",
-        profile: 1,
-      },
-      {
-        Menu_Title: "Pizza Cuatro Variada",
-        Profile_Type: "profile_ten",
-        Primary_Color: "#33ffff",
-        Secondary_color: "#d2a700",
-        Background_Image:
-          "https://bvzjttzvsriwmdokdupp.supabase.co/storage/v1/object/public/llakaScriptBucket/companiesFolders/LlakaScript/fondo.png",
-        Item_Image:
-          "https://bvzjttzvsriwmdokdupp.supabase.co/storage/v1/object/public/llakaScriptBucket/companiesFolders/LlakaScript/lasagna.jpg",
-        Section: "primera",
-        Item_id: 1,
-        Name: "Lasagna",
-        Description: "asaña clásica con carne y salsa bechamel",
-        Price: "27.50",
-        profile: 1,
-      },
-      {
-        Menu_Title: "Pizza con Palmitos",
-        Profile_Type: "profile_ten",
-        Primary_Color: "#33ffff",
-        Secondary_color: "#d2a700",
-        Background_Image:
-          "https://bvzjttzvsriwmdokdupp.supabase.co/storage/v1/object/public/llakaScriptBucket/companiesFolders/LlakaScript/fondo.png",
-        Item_Image:
-          "https://bvzjttzvsriwmdokdupp.supabase.co/storage/v1/object/public/llakaScriptBucket/companiesFolders/LlakaScript/lasagna.jpg",
-        Section: "primera",
-        Item_id: 1,
-        Name: "Lasagna",
-        Description: "asaña clásica con carne y salsa bechamel",
-        Price: "27.50",
-        profile: 1,
-      },
-    ],
-    Config: [
-      {
-        Background_Image:
-          "https://bvzjttzvsriwmdokdupp.supabase.co/storage/v1/object/public/llakaScriptBucket/companiesFolders/LlakaScript/italia.jpg",
-        IconBrand:
-          "https://bvzjttzvsriwmdokdupp.supabase.co/storage/v1/object/public/llakaScriptBucket/companiesFolders/LlakaScript/icono.png",
-      },
-    ],
-    Info: [
-      {
-        phone: 54900000,
-        mail: "todo@gmail,com",
-        x: "http:algo.com",
-        instagram: "http:algo.com",
-        facebook: "http:algo.com",
-        web: "http:algo.com",
-        whatsapp: 5492222222,
-        ubication: "calle libertad 17",
-      },
-    ],
-    schedules: [
-      {
-        day: "lunes",
-        servicehours: "8:00hs a 12:30 hs, 20:00hs a 00:30 hs  ",
-      },
-      {
-        day: "martes",
-        servicehours: "9:00hs a 12:30 hs, 20:00hs a 00:30 hs  ",
-      },
-      {
-        day: "miércoles",
-        servicehours: "9:00hs a 12:30 hs, 20:00hs a 00:30 hs  ",
-      },
-      {
-        day: "jueves",
-        servicehours: "9:00hs a 12:30 hs, 20:00hs a 00:30 hs  ",
-      },
-      {
-        day: "viernes",
-        servicehours: "9:00hs a 12:30 hs, 20:00hs a 00:30 hs  ",
-      },
-      {
-        day: "sábado",
-        servicehours: "9:00hs a 12:30 hs, 20:00hs a 00:30 hs  ",
-      },
-      {
-        day: "domingo",
-        servicehours: "9:00hs a 12:30 hs, 20:00hs a 00:30 hs  ",
-      },
-    ],
-    staff: [
-      {
-        role: "owner",
-        email: "nico.contigliani@gmail.com",
-      },
-      {
-        role: "admin",
-        email: "pedro.contigliani@gmail.com",
-      },
-      {
-        role: "employees",
-        email: "macarena.contigliani@gmail.com",
-      },
-    ],
-  }
 
   useEffect(() => {
     const storedData = getLocalhostStorage()
@@ -540,8 +176,8 @@ const page = () => {
                 redirections={true}
                 setOpenResponsive={setOpenResponsive}
                 fullUrl={fullUrl}
-             />
-         }
+              />
+          }
         </ModalComponents>
 
         <Header
@@ -567,7 +203,7 @@ const page = () => {
                 value={`https://menusi.netlify.app/companies/${folderName}`}
                 icon={"/images/flama.png"}
               />
-              
+
               <Button
                 type="primary"
                 block
