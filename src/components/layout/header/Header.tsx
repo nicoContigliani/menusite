@@ -221,7 +221,7 @@ export default function Header(props: any) {
 
   return (
     <header className={styles.header}>
-      <nav className={styles.nav}>
+      {/* <nav className={styles.nav}>
         <Link href="/" className={styles.logo}>
           <Image
             src={imagetodo.src || "/placeholder.svg"}
@@ -261,7 +261,7 @@ export default function Header(props: any) {
             setIsLogin={setIsLogin}
           />
         </ModalComponents>
-      </nav>
+      </nav> */}
     </header>
   );
 }
