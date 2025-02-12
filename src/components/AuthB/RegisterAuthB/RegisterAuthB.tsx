@@ -34,9 +34,10 @@ const RegisterAuthB = () => {
 
   return (
     <div className={styles.authContainer}>
-      {verifications ? (
+      {/* {verifications ? (
         <VerifyCodeForm email={email} setOpenResponsive={setOpenResponsive} />
       ) : (
+      )} */}
         <form onSubmit={handleSubmit} className={styles.form}>
           <Input placeholder="Fullname" value={fullname} onChange={(e) => setFullname(e.target.value)} required />
           <Input placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
@@ -46,7 +47,6 @@ const RegisterAuthB = () => {
           <Button type="primary" htmlType="submit" block>Register</Button>
           {message && <p className={styles.error}>{message}</p>}
         </form>
-      )}
     </div>
   )
 }
