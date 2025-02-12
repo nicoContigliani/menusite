@@ -23,6 +23,7 @@
     "antd": "^5.23.3",
     "b2-sdk": "^1.7.0",
     "backblaze-b2": "^1.7.0",
+    "bcryptjs": "^2.4.3",
     "critters": "^0.0.23",
     "firebase": "^11.2.0",
     "jsonwebtoken": "^9.0.2",
@@ -39,6 +40,7 @@
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
     "@types/jsonwebtoken": "^9.0.8",
     "@types/node": "^20",
     "@types/nodemailer": "^6.4.17",

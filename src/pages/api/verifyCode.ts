@@ -32,6 +32,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         projection: { password: 0 } // Excluye la contraseña del resultado
       }
     );
+    console.log("🚀 ~ handler ~ updatedUser:", updatedUser)
 
     const token = generateToken({ updatedUser });
 

@@ -53,7 +53,7 @@ import { Input, Button, message as antdMessage } from "antd";
 import { localhostStorage } from "@/services/localstorage.services";
 
 const VerifyCodeForm = (props: any) => {
-  const { email, setOpenResponsive } = props;
+  const { email, setOpenResponsive,setVerifications } = props;
   const [code, setCode] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -68,6 +68,7 @@ const VerifyCodeForm = (props: any) => {
       if (response.status === 200) {
         localStorage.setItem("isLogin", "true");
         setOpenResponsive(false);
+        setVerifications(false)
         antdMessage.success(response.data.message);
       } else {
         antdMessage.error(response.data.message || "Verification failed");

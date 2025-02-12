@@ -101,34 +101,26 @@ const user = [
 ]
 export const localhostStorage = (data: any) => {
 
-    if (data && data.session?.access_token) {
-        const { 
-            session: { access_token, expires_at, refresh_token }, 
-            user: { id: userid, email,aud } 
-        } = data;
-        
-        // Guardar en localStorage
-        localStorage.setItem("access_token", access_token);
-        localStorage.setItem("expires_at", expires_at.toString()); // Asegurar que sea string
-        localStorage.setItem("refresh_token", refresh_token);
-        localStorage.setItem("userid", userid);
-        localStorage.setItem("email", email);
-        localStorage.setItem("aud", aud);
-
-    }
+    Object.entries(data).forEach(([key, value]) => {
+        localStorage.setItem(key, JSON.stringify(value));
+    });
 };
 
 
 export const getLocalhostStorage = () => {
-    return {
-        access_token: localStorage.getItem("access_token"),
-        expires_at: localStorage.getItem("expires_at"), // Si necesitas convertirlo en número: Number(localStorage.getItem("expires_at"))
-        refresh_token: localStorage.getItem("refresh_token"),
-        userid: localStorage.getItem("userid"),
-        email: localStorage.getItem("email"),
-        aud: localStorage.getItem("aud"),
-    };
+    const data: Record<string, any> = {}; // Objeto para almacenar los valores
+    
+    Object.keys(localStorage).forEach((key) => {
+        try {
+            data[key] = JSON.parse(localStorage.getItem(key) as string); // Intenta parsear JSON
+        } catch {
+            data[key] = localStorage.getItem(key); // Si falla, almacena como string
+        }
+    });
+
+    return data;
 };
+
 
 
 export const clearLocalhostStorage = () => {
@@ -138,4 +130,5 @@ export const clearLocalhostStorage = () => {
     localStorage.removeItem("userid");
     localStorage.removeItem("email");
     localStorage.removeItem("aud");
+    localStorage.removeItem("isLogin");
 };
