@@ -72,7 +72,6 @@ export default function Home() {
         {/* <Projects/> */}
         <Features />
         <Contact />
-        <AuthB />
 
       </div>
     </>
