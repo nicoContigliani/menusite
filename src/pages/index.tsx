@@ -8,6 +8,7 @@ import Header from "@/components/layout/header/Header";
 import Hero from "@/components/sections/hero/Hero";
 import Features from "@/components/sections/features/Features";
 import Contact from "@/components/sections/contact/Contact";
+import AuthB from "@/components/AuthB/AuthB";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -71,6 +72,8 @@ export default function Home() {
         {/* <Projects/> */}
         <Features />
         <Contact />
+        <AuthB />
+
       </div>
     </>
   );

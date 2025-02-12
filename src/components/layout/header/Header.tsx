@@ -270,7 +270,6 @@ export default function Header(props: any) {
         {
           isLogin ?
             <ModalComponents openResponsive={openResponsive} setOpenResponsive={setOpenResponsive} onClose={handleCloseModal}>
-              <AuthB />
             </ModalComponents> :
             null
         }
