@@ -9,14 +9,14 @@ const AuthB = () => {
     return (
         <div >
             {activeForm === 'register' && (
-                <RegisterAuthB />
+                "si"   // <RegisterAuthB />
             )}
             {activeForm === 'login' && (
                 <LoginAuthB />
             )}
 
             {activeForm === 'validateCode' && (
-                <ValidateCodeAuthB/>
+                <ValidateCodeAuthB />
             )}
             <hr /><br />
             <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', marginBottom: '20px' }}>
