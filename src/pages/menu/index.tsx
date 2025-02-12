@@ -95,7 +95,7 @@ const page = () => {
 
             />
             <div>
-                <Hero
+                {/* <Hero
                     title="Menu y página web simple"
                     description="Tenés tu pime y querés hacer cambios de menú seguido y es tediodo la interacción con una web y si lo haes con una hoja de cálculo?"
                     btn1="Generar Menu y Página"
@@ -116,7 +116,7 @@ const page = () => {
                     <h3 className={styles?.title}>Servicio y  precio de la plataforma</h3>
 
                     <ServicesLicense planes={servicesLicencesData} />
-                </Hero>
+                </Hero> */}
             </div>
             <Footer />
         </div>
