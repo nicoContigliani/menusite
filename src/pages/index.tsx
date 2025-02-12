@@ -32,7 +32,7 @@ export default function Home() {
   }
   const LoginUser = (data: any) => {
     console.log("🚀 ~ LoginUser ~ data:", data)
-    fetch('/api/registerdata', {
+    fetch('/api/loginuser', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
