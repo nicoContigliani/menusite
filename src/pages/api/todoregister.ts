@@ -10,9 +10,8 @@ export const config = {
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    if (req.method === "POST") {
-        const data = req.body;
-        console.log("🚀 ~ handler ~ data:", data);
+    if (req.method === "GET") {
 
     }
+    return res.status(200).json({ message: "User created successfully, verification code sent to email" });
 }

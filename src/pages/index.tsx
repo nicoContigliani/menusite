@@ -1,7 +1,5 @@
 import Head from "next/head";
-import Image from "next/image";
 import { Geist, Geist_Mono } from "next/font/google";
-import styles from "@/styles/Home.module.css";
 import Counter from "@/components/TestReduxCounter/Counter";
 import { useMongoDbConnection } from "../../hooks/useMongoDbConnection";
 import Header from "@/components/layout/header/Header";
@@ -9,6 +7,7 @@ import Hero from "@/components/sections/hero/Hero";
 import Features from "@/components/sections/features/Features";
 import Contact from "@/components/sections/contact/Contact";
 import AuthB from "@/components/AuthB/AuthB";
+import { Button } from "antd";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,7 +31,9 @@ export default function Home() {
     btn2: "/moreinfo"
   }
 
-
+ const handleClick = () => {
+  fetch('/api/todoregister').then(res => res.json()).then(data => console.log(data))
+ }
 
   return (
     <>
@@ -72,7 +73,9 @@ export default function Home() {
         {/* <Projects/> */}
         <Features />
         <Contact />
-
+      <Button type="primary" onClick={handleClick}>
+        si
+      </Button>
       </div>
     </>
   );
