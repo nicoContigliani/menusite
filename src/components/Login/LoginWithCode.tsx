@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import styles from '@/styles/auth.module.css';
-import { localhostStorage } from '@/services/localstorage.services';
-import VerifyCodeForm from '../Register/RegisterValidate';
-import LoginVerifyCodeForm from './LoginValidate';
+// import { localhostStorage } from '@/services/localstorage.services';
+// import VerifyCodeForm from '../Register/RegisterValidate';
+// import LoginVerifyCodeForm from './LoginValidate';
 
 const LoginWithCode = () => {
     const [email, setEmail] = useState("")
@@ -39,7 +39,7 @@ const LoginWithCode = () => {
 
     return (
         <div>
-            {
+            {/* {
                 createNotValidate ?
                     <div className={styles.authContainer
                     } >
@@ -47,7 +47,7 @@ const LoginWithCode = () => {
                             email={email}
                         />
                     </div >
-                    :
+                    : */}
                     <div className={styles.authContainer}>
                         <div className={styles.header}>
                             <h1 className={styles.title}>Welcome back</h1>
@@ -75,7 +75,7 @@ const LoginWithCode = () => {
                             </button>
                         </form>
                     </div>
-            }
+            {/* } */}
         </div>
     )
 }
