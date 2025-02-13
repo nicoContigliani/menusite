@@ -20,11 +20,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const users = db.collection("users");
 
   let existingUser: any = await users.findOne({ email });
-  console.log("🚀 ~ handler ~ existingUser:", existingUser)
  if (!existingUser) {
     return res.status(400).json({ error: "User not found" });
   }
-  console.log("🚀 ~ handler ~ existingUser:", existingUser)
 
   const isPasswordCorrect = await bcrypt.compare(password, existingUser.password);
   if (!isPasswordCorrect) {
@@ -34,6 +32,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   delete existingUser?.password;
 
   const token = generateToken({ existingUser });
-
+  console.log("🚀 ~ handler ~ existingUser:", existingUser)
+  
   return res.status(200).json({ token, ...existingUser, message: "Login successful" });
 }

@@ -28,6 +28,7 @@ const Register = (props: any) => {
     return (
 
         <div className={styles.authContainer}>
+
             <div className={styles.header}>
                 <h1 className={styles.title}>Create an account</h1>
                 <span className={styles.subtitle}>Start your journey with us today</span>
@@ -70,6 +71,9 @@ const Register = (props: any) => {
                     Create account
                 </button>
             </form>
+
+
+
         </div>
     );
 };

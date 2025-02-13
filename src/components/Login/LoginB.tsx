@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import styles from '@/styles/auth.module.css';
+import { localhostStorage } from '@/services/localstorage.services';
 
 const LoginB = () => {
     const [email, setEmail] = useState("")
@@ -13,13 +14,17 @@ const LoginB = () => {
         }
         console.log("🚀 ~ handleLogin ~ data:", data)
         try {
-            fetch('/api/loginuser', {
+            const getData = fetch('/api/loginuser', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
             })
+            console.log("🚀 ~ handleLogin ~ getData:",await getData)
+            if ((await getData).status === 200) {
+               await localhostStorage(getData);
+            }
         } catch (error) {
             alert("Error al iniciar sesión: " + (error as Error).message)
         }

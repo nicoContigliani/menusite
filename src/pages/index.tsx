@@ -10,6 +10,7 @@ import AuthB from "@/components/AuthB/AuthB";
 import { Button } from "antd";
 import LoginB from "@/components/Login/LoginB";
 import RegisterB from "@/components/Register/RegisterB";
+import LoginWithCode from "@/components/Login/LoginWithCode";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -86,7 +87,7 @@ export default function Home() {
         <button
           onClick={() => LoginUser({ "email": "nico.contigliani@gmail.com", "password": "Jesus6388" })}
         >hola</button>
-
+        <LoginWithCode/>
         <LoginB />
         <RegisterB />
 
