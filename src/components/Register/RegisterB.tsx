@@ -49,7 +49,7 @@ const RegisterB = () => {
 
     return (
         <div>
-
+{/* 
             {
                 createNotValidate &&
                 <div className={styles.authContainer}>
@@ -57,7 +57,7 @@ const RegisterB = () => {
                         email={formData.email}
                     />
                 </div>
-            }
+            } */}
 
             {/* {
                 createNotValidate ?

@@ -31,7 +31,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // codeMailGenerator(email, verificationCode);
+    codeMailGenerator(email, verificationCode);
     let todo = await users.insertOne({
       email,
       password: hashedPassword,
