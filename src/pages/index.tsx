@@ -89,7 +89,7 @@ export default function Home() {
         >hola</button>
         {/* <LoginWithCode/> */}
         <LoginB />
-        {/* <RegisterB /> */}
+        <RegisterB />
 
 
 
