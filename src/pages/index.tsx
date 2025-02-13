@@ -87,9 +87,9 @@ export default function Home() {
         <button
           onClick={() => LoginUser({ "email": "nico.contigliani@gmail.com", "password": "Jesus6388" })}
         >hola</button>
-        <LoginWithCode/>
-        {/* <LoginB />
-        <RegisterB /> */}
+        {/* <LoginWithCode/> */}
+        {/* <LoginB /> */}
+        <RegisterB />
 
 
 
