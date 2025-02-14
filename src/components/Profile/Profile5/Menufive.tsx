@@ -114,12 +114,13 @@
 // export default Menufive;
 
 
-import React, { useState, useCallback, useEffect, useMemo } from 'react';
+import React, { useState, useCallback, useEffect, useMemo, useLayoutEffect } from 'react';
 import Image from 'next/image';
 import styles from './MenuNew.module.css';
 import SelectComponent from '@/components/SelectComponent/SelectComponent';
 import useSectionTimeTracker from '../../../../hooks/useSectionTimeTracker';
 import Logo from '@/components/Logo/Logo';
+import { extractLastSegment } from '../../../../tools/urlService';
 
 interface MenuItem {
     Menu_Title: string;
@@ -148,7 +149,17 @@ interface ConfigType {
 }
 
 const Menufive: React.FC<MenuProps> = (props) => {
-    const { backgroundImages, config, groupedSections, namecompanies } = props;
+    const { backgroundImages, config, groupedSections } = props;
+
+
+    const [namecompanies, setNamecompanies] = useState<string>('')
+    useLayoutEffect(() => {
+        if (typeof window !== "undefined") {
+            // setFullUrl(window.location.href);
+            const data = window.location.href;
+            setNamecompanies(extractLastSegment(data))
+        }
+    }, []);
 
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [loading, setLoading] = useState(true);

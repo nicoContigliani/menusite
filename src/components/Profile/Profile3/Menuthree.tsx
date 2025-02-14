@@ -209,7 +209,7 @@
 
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useLayoutEffect, useState } from "react"
 import Image from "next/image"
 import Logo from "@/components/Logo/Logo"
 import Info from "@/components/Info/Info"
@@ -218,6 +218,7 @@ import SelectComponent from "@/components/SelectComponent/SelectComponent"
 import { Divider } from "antd"
 import styles from "./MenuNew.module.css"
 import useSectionTimeTracker from "../../../../hooks/useSectionTimeTracker"
+import { extractLastSegment } from "../../../../tools/urlService"
 
 interface MenuItem {
     Item_id: string
@@ -243,12 +244,22 @@ interface ConfigType {
     IconBrand: string
 }
 
-const Menuone: React.FC<MenuProps> = ({ backgroundImages, config, groupedSections, info, schedules, namecompanies }) => {
-    const { sectionTimes, handleSectionEnter } = useSectionTimeTracker(namecompanies)
-
+const Menuone: React.FC<MenuProps> = (props) => {
+    const { backgroundImages, config, groupedSections, info, menuData, promotions, schedules } = props
     const [searchTerm, setSearchTerm] = useState("")
     const [iconURL, setIconURL] = useState<string>("")
+    
+    const [namecompanies, setNamecompanies] = useState<string>('')
+    useLayoutEffect(() => {
+        if (typeof window !== "undefined") {
+            // setFullUrl(window.location.href);
+            const data = window.location.href;
+            setNamecompanies(extractLastSegment(data))
+        }
+    }, []);
 
+
+    const { sectionTimes, handleSectionEnter } = useSectionTimeTracker(namecompanies)
     useEffect(() => {
         if (config?.length) {
             setIconURL(config[0].IconBrand || "")

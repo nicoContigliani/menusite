@@ -1,10 +1,11 @@
 import Logo from '@/components/Logo/Logo';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import styles from './MenuFourdTeen.module.css'
 import Image from 'next/image';
 import SelectComponent from '@/components/SelectComponent/SelectComponent';
 import useSectionTimeTracker from '../../../../hooks/useSectionTimeTracker';
 import Info from '@/components/Info/Info';
+import { extractLastSegment } from '../../../../tools/urlService';
 interface MenuItem {
     Menu_Title?: string;
     Item_Image?: string;
@@ -66,7 +67,6 @@ const MenuFourdTeen: React.FC<MenuProps> = (props) => {
         menuData,
         groupedSections,
         backgroundImages,
-        namecompanies,
         Promotion,
         info,
         schedules,
@@ -76,6 +76,15 @@ const MenuFourdTeen: React.FC<MenuProps> = (props) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [loading, setLoading] = useState(true);  // New loading state
     const [iconURL, setIconURL] = useState<any>('');
+    const [namecompanies, setNamecompanies] = useState<string>('')
+    useLayoutEffect(() => {
+        if (typeof window !== "undefined") {
+            // setFullUrl(window.location.href);
+            const data = window.location.href;
+            setNamecompanies(extractLastSegment(data))
+        }
+    }, []);
+
     const { sectionTimes, handleSectionEnter } = useSectionTimeTracker(namecompanies)
 
     useEffect(() => {

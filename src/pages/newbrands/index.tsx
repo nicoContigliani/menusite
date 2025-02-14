@@ -5,7 +5,7 @@ import styles from "./newbrands.module.css"
 import { Button, type DescriptionsProps, Divider } from "antd"
 import StaffOfSystem from "@/components/StaffOfSystem/StaffOfSystem"
 import Header from "@/components/layout/header/Header"
-import { getLocalhostStorage } from "@/services/localstorage.services"
+import { getLocalhostStorage, localhostStorage } from "@/services/localstorage.services"
 import ModalComponents from "@/components/ModalComponents/ModalComponents"
 import Login from "@/components/Login/Login"
 import QrComponents from "@/components/QrComponents/QrComponents"
@@ -69,14 +69,14 @@ const page = () => {
   const [finishit, setFinishit] = useState<boolean>(false);
   const [fullUrl, setFullUrl] = useState("");
 
-
+  localhostStorage({
+    demo: true
+  })
 
   useEffect(() => {
     const storedData = getLocalhostStorage()
-    console.log("🚀 ~ useEffect ~ storedData:", storedData)
     if (storedData?.aud != null) {
       const { aud, email, _id, access_token, expires_at, userid } = storedData
-      console.log("🚀 ~ useEffect ~ aud:", aud)
       setIsLogin(true)
     } else {
       setOpenResponsive(true)
@@ -151,7 +151,7 @@ const page = () => {
       if (response.ok) {
         const result = await response.json();
         setFinishit(true)
-         //userId
+        //userId
         //email(owner)
         //companyId
         //folderName(namecompoanies)

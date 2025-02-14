@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useLayoutEffect } from 'react';
 import Image from 'next/image';
 import styles from './MenuNew.module.css';
 import SelectComponent from '@/components/SelectComponent/SelectComponent';
 import useSectionTimeTracker from '../../../../hooks/useSectionTimeTracker';
+import { extractLastSegment } from '../../../../tools/urlService';
 
 interface MenuItem {
     Item_id: string
@@ -29,7 +30,17 @@ interface ConfigType {
 }
 
 const MenuEight: React.FC<MenuProps> = (props) => {
-    const { backgroundImages, config, groupedSections, info, menuData, namecompanies, promotions, schedules } = props
+    const { backgroundImages, config, groupedSections, info, menuData, promotions, schedules } = props
+    
+        const [namecompanies, setNamecompanies] = useState<string>('')
+        useLayoutEffect(() => {
+            if (typeof window !== "undefined") {
+                // setFullUrl(window.location.href);
+                const data = window.location.href;
+                setNamecompanies(extractLastSegment(data))
+            }
+        }, []);
+    
     const { sectionTimes, handleSectionEnter } = useSectionTimeTracker(namecompanies)
 
     const [searchTerm, setSearchTerm] = useState<string>(''); // State for search query

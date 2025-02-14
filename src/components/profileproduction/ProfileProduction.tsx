@@ -56,10 +56,8 @@ const ProfileProduction = (props: any) => {
     }, [props?.menuItems]);
 
     const { menuData, backgroundImageSet, promotions, info, schedules, config, isReady } = useMenuDataAternative(dataGeneral ?? { hoja: {} });
-    console.log("🚀 ~ ProfileProduction ~ menuData:", menuData)
-    console.log("🚀 ~ ProfileProduction ~ selectedProfile:", selectedProfile)
 
-    const groupedSections = useMemo(() => {
+   const groupedSections = useMemo(() => {
         return menuData.reduce(
             (acc: any, item: any) => {
                 acc[item.Section] = acc[item.Section] || [];

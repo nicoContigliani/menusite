@@ -1,11 +1,12 @@
 import Logo from "@/components/Logo/Logo"
 import Info from "@/components/Info/Info"
 import type React from "react"
-import { useEffect, useState } from "react"
+import { useEffect, useLayoutEffect, useState } from "react"
 import styles from "./MenuFifteen.module.css"
 import Schedules from "@/components/Schedules/Schedules"
 import useSectionTimeTracker from "../../../../hooks/useSectionTimeTracker"
 import SelectComponent from "@/components/SelectComponent/SelectComponent"
+import { extractLastSegment } from "../../../../tools/urlService"
 
 interface MenuItem {
     Item_id: string
@@ -33,7 +34,16 @@ interface ConfigType {
 
 const MenuFifTeen: React.FC<MenuProps> = (props) => {
     // const { menuData, groupedSections, backgroundImages, namecompanies, Promotion, info, schedules, config } = props
-    const { backgroundImages, config, groupedSections, info, menuData, namecompanies, promotions, schedules } = props
+    const { backgroundImages, config, groupedSections, info, menuData,
+        promotions, schedules } = props
+    const [namecompanies, setNamecompanies] = useState<string>('')
+    useLayoutEffect(() => {
+        if (typeof window !== "undefined") {
+            // setFullUrl(window.location.href);
+            const data = window.location.href;
+            setNamecompanies(extractLastSegment(data))
+        }
+    }, []);
     const { sectionTimes, handleSectionEnter } = useSectionTimeTracker(namecompanies)
 
     const [searchTerm, setSearchTerm] = useState("")

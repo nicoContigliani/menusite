@@ -1,11 +1,12 @@
 "use client"
 
 import type React from "react"
-import { useState, useCallback } from "react"
+import { useState, useCallback, useLayoutEffect } from "react"
 import styles from "./MenuNew.module.css"
 import SelectComponent from "@/components/SelectComponent/SelectComponent"
 import useSectionTimeTracker from "../../../../hooks/useSectionTimeTracker"
 import Logo from "@/components/Logo/Logo"
+import { extractLastSegment } from "../../../../tools/urlService"
 
 interface MenuItem {
     Item_id: string
@@ -28,11 +29,19 @@ interface MenuProps {
 }
 
 const Menueleven: React.FC<MenuProps> = (props: MenuProps) => {
-    const { backgroundImages, config, groupedSections, info, menuData, namecompanies, promotions, schedules } = props
+    const { backgroundImages, config, groupedSections, info, menuData, promotions, schedules } = props
 
     const [searchTerm, setSearchTerm] = useState<string>("")
     const [loading, setLoading] = useState(true)
     const [iconURL, setIconURL] = useState<string>("")
+       const [namecompanies, setNamecompanies] = useState<string>('')
+       useLayoutEffect(() => {
+           if (typeof window !== "undefined") {
+               // setFullUrl(window.location.href);
+               const data = window.location.href;
+               setNamecompanies(extractLastSegment(data))
+           }
+       }, []);
     const { sectionTimes, handleSectionEnter } = useSectionTimeTracker(namecompanies)
 
     const handleSearchChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {

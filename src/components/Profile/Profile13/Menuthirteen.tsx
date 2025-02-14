@@ -1,9 +1,10 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useLayoutEffect } from 'react';
 import Image from 'next/image';
 import styles from './MenuNew.module.css';
 import SelectComponent from '@/components/SelectComponent/SelectComponent';
 import useSectionTimeTracker from '../../../../hooks/useSectionTimeTracker';
 import Logo from '@/components/Logo/Logo';
+import { extractLastSegment } from '../../../../tools/urlService';
 
 interface MenuItem {
     Item_id: string
@@ -29,8 +30,16 @@ interface ConfigType {
     IconBrand: string
 }
 const Menuthirteen: React.FC<MenuProps> = (props) => {
-    const { backgroundImages, config, groupedSections, info, menuData, namecompanies, promotions, schedules } = props
+    const { backgroundImages, config, groupedSections, info, menuData,  promotions, schedules } = props
     const [searchTerm, setSearchTerm] = useState<string>('');
+        const [namecompanies, setNamecompanies] = useState<string>('')
+        useLayoutEffect(() => {
+            if (typeof window !== "undefined") {
+                // setFullUrl(window.location.href);
+                const data = window.location.href;
+                setNamecompanies(extractLastSegment(data))
+            }
+        }, []);
     const { sectionTimes, handleSectionEnter } = useSectionTimeTracker(namecompanies)
 
 

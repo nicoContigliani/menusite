@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback, useEffect } from 'react';
+import React, { useState, useMemo, useCallback, useEffect, useLayoutEffect } from 'react';
 import Image from 'next/image';
 import styles from './MenuNew.module.css';
 import Info from '@/components/Info/Info';
@@ -6,6 +6,7 @@ import Logo from '@/components/Logo/Logo';
 import useSectionTimeTracker from '../../../../hooks/useSectionTimeTracker';
 import Schedules from '@/components/Schedules/Schedules';
 import SelectComponent from '@/components/SelectComponent/SelectComponent';
+import { extractLastSegment } from '../../../../tools/urlService';
 
 interface MenuItem {
     Item_id: string
@@ -32,8 +33,16 @@ interface ConfigType {
 }
 
 const Menufourd: React.FC<MenuProps> = (props) => {
-    const { backgroundImages, config, groupedSections, info, menuData, namecompanies, promotions, schedules } = props
+    const { backgroundImages, config, groupedSections, info, menuData,  promotions, schedules } = props
 
+        const [namecompanies, setNamecompanies] = useState<string>('')
+        useLayoutEffect(() => {
+            if (typeof window !== "undefined") {
+                // setFullUrl(window.location.href);
+                const data = window.location.href;
+                setNamecompanies(extractLastSegment(data))
+            }
+        }, []);
     const { sectionTimes, handleSectionEnter } = useSectionTimeTracker(namecompanies)
     console.log("🚀 ~ sectionTimes:", sectionTimes)
     useEffect(() => {

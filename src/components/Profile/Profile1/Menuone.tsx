@@ -1,12 +1,13 @@
 import Logo from "@/components/Logo/Logo"
 import type React from "react"
-import { useEffect, useState } from "react"
+import { useEffect, useLayoutEffect, useState } from "react"
 import styles from "./MenuNew.module.css"
 import Info from "@/components/Info/Info"
 import Schedules from "@/components/Schedules/Schedules"
 import useSectionTimeTracker from "../../../../hooks/useSectionTimeTracker"
 import Image from "next/image"
 import SelectComponent from "@/components/SelectComponent/SelectComponent"
+import { extractLastSegment } from "../../../../tools/urlService"
 
 interface MenuItem {
     Item_id: string
@@ -33,13 +34,20 @@ interface ConfigType {
 }
 
 const Menuone: React.FC<MenuProps> = (props) => {
-    const { backgroundImages, config, groupedSections, info, menuData, namecompanies, promotions, schedules } = props
+    const { backgroundImages, config, groupedSections, info, menuData, promotions, schedules } = props
 
     // const { sectionTimes, handleSectionEnter } = useSectionTimeTracker()
     // useEffect(() => {
     // }, [sectionTimes])
 
-
+    const [namecompanies, setNamecompanies] = useState<string>('')
+    useLayoutEffect(() => {
+        if (typeof window !== "undefined") {
+            // setFullUrl(window.location.href);
+            const data = window.location.href;
+            setNamecompanies(extractLastSegment(data))
+        }
+    }, []);
 
     const { sectionTimes, totalTime, history, handleSectionEnter } = useSectionTimeTracker(namecompanies);
 

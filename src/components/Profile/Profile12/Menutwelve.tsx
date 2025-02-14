@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import Image from 'next/image';
 import styles from './MenuNew.module.css';
 import SelectComponent from '@/components/SelectComponent/SelectComponent';
 import useSectionTimeTracker from '../../../../hooks/useSectionTimeTracker';
+import { extractLastSegment } from '../../../../tools/urlService';
 
 interface MenuItem {
     Item_id: string
@@ -29,13 +30,20 @@ interface ConfigType {
 }
 
 const Menutwelve: React.FC<MenuProps> = (props) => {
-    const { backgroundImages, config, groupedSections, info, menuData, namecompanies, promotions, schedules } = props
-    const { sectionTimes, handleSectionEnter } = useSectionTimeTracker(namecompanies)
+    const { backgroundImages, config, groupedSections, info, menuData,  promotions, schedules } = props
     const [searchTerm, setSearchTerm] = useState("")
     const [loading, setLoading] = useState(true)
     const [iconURL, setIconURL] = useState<string>("")
-
-
+        const [namecompanies, setNamecompanies] = useState<string>('')
+        useLayoutEffect(() => {
+            if (typeof window !== "undefined") {
+                // setFullUrl(window.location.href);
+                const data = window.location.href;
+                setNamecompanies(extractLastSegment(data))
+            }
+        }, []);
+    
+    const { sectionTimes, handleSectionEnter } = useSectionTimeTracker(namecompanies)
   useEffect(() => {
         if (groupedSections) {
             const firstSection: any = Object.values(groupedSections)[0]

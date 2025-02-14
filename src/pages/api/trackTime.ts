@@ -7,12 +7,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         try {
             const { userId, history, totalTime } = req.body;
             const data = req.body
-            console.log(req.body, "******************************************************")
-            console.log("📥 Recibiendo datos:", { userId, history, totalTime });
+            console.log(req.body, "📥 Recibiendo datos:")
 
             const client = await clientPromise;
             const db = client.db("menuDB");
-            const analytics = db.collection("analytics");
+            // const analytics = db.collection("analytics");
+            const analytics = db.collection("tracktimes");
+
             try {
                 const si = await analytics.insertOne({
                     ...data,

@@ -100,10 +100,13 @@ const user = [
     }
 ]
 export const localhostStorage = (data: any) => {
-
-    Object.entries(data).forEach(([key, value]) => {
-        localStorage.setItem(key, JSON.stringify(value));
-    });
+    if (typeof window !== "undefined") { // Verifica si estamos en el cliente
+        Object.entries(data).forEach(([key, value]) => {
+            localStorage.setItem(key, JSON.stringify(value));
+        });
+    } else {
+        console.warn("localStorage no está disponible en el servidor.");
+    }
 };
 
 
