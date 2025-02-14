@@ -7,28 +7,30 @@ const LoginB = () => {
     const [password, setPassword] = useState("")
 
     const handleLogin = async (e: React.FormEvent) => {
-        e.preventDefault()
-        const data = {
-            email,
-            password
-        }
-        console.log("🚀 ~ handleLogin ~ data:", data)
+        e.preventDefault();
+        const data = { email, password };
+    
         try {
-            const getData = fetch('/api/loginuser', {
+            const response = await fetch('/api/loginuser', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
-            })
-            console.log("🚀 ~ handleLogin ~ getData:",await getData)
-            if ((await getData).status === 200) {
-               await localhostStorage(getData);
+            });
+    
+            if (!response.ok) {
+                throw new Error(`Error: ${response.status} ${response.statusText}`);
+            }
+    
+            const result = await response.json(); // Convierte la respuesta a JSON
+            if (response.status === 200) {
+                await localhostStorage(result); // Guarda el resultado correctamente
             }
         } catch (error) {
-            alert("Error al iniciar sesión: " + (error as Error).message)
+            alert("Error al iniciar sesión: " + (error as Error).message);
         }
-    }
+    };
 
 
     return (

@@ -9,7 +9,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
   }
-  console.log(req.body)
+  
+  console.log(req.body);
   const { email, password } = req.body;
   if (!email || !password) {
     return res.status(400).json({ error: "Email and password are required" });
@@ -20,7 +21,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const users = db.collection("users");
 
   let existingUser: any = await users.findOne({ email });
- if (!existingUser) {
+  if (!existingUser) {
     return res.status(400).json({ error: "User not found" });
   }
 
@@ -29,10 +30,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(400).json({ error: "Incorrect password" });
   }
 
-  delete existingUser?.password;
+  // Eliminamos el password correctamente
+  const { password: _, ...userWithoutPassword } = existingUser;
 
-  const token = generateToken({ existingUser });
-  console.log("🚀 ~ handler ~ existingUser:", existingUser)
+  const token = generateToken({ existingUser: userWithoutPassword });
+
+  console.log("🚀 ~ handler ~ userWithoutPassword:", userWithoutPassword);
   
-  return res.status(200).json({ token, ...existingUser, message: "Login successful" });
+  return res.status(200).json({ token, ...userWithoutPassword, message: "Login successful" });
 }
+

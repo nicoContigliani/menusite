@@ -7,7 +7,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   const { companyname } = req.query;
-  console.log("🚀 ~ handler ~ companyname:", companyname)
   const namecompanie = companyname
 
   if (!companyname || typeof companyname !== 'string') {

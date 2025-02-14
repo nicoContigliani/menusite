@@ -285,8 +285,10 @@ const Menuone: React.FC<MenuProps> = (props) => {
 
     return (
         <div
+        
             className={styles.container}
             style={{ backgroundImage: backgroundImages || "none" }}
+            // onMouseEnter={() => handleSectionEnter("body")}
         >
             <header className={styles.header}>
                 <div className={styles.logo} onMouseEnter={() => handleSectionEnter("logo")}>
