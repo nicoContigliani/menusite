@@ -34,7 +34,7 @@ interface ConfigType {
 const Menufourd: React.FC<MenuProps> = (props) => {
     const { backgroundImages, config, groupedSections, info, menuData, namecompanies, promotions, schedules } = props
 
-    const { sectionTimes, handleSectionEnter } = useSectionTimeTracker("nico")
+    const { sectionTimes, handleSectionEnter } = useSectionTimeTracker(namecompanies)
     console.log("🚀 ~ sectionTimes:", sectionTimes)
     useEffect(() => {
     }, [sectionTimes])
@@ -166,7 +166,7 @@ const Menufourd: React.FC<MenuProps> = (props) => {
                                             <div className={styles.price}>{`$${item.Price}`}</div>
                                         </div>
                                     </div>
-                                    <div > {/* Esta es la clase CSS del padre */}
+                                    <div onMouseEnter={() => handleSectionEnter(`Button-${item.Name}`)}>
                                         <SelectComponent
                                             orderdescription={[]}
                                             delivery={true}

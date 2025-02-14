@@ -1,7 +1,10 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import Image from 'next/image';
 import styles from './MenuNew.module.css';
 import SelectComponent from '@/components/SelectComponent/SelectComponent';
+import useSectionTimeTracker from '../../../../hooks/useSectionTimeTracker';
+import Logo from '@/components/Logo/Logo';
+import Info from '@/components/Info/Info';
 
 interface MenuItem {
     Menu_Title: string;
@@ -21,16 +24,46 @@ interface MenuProps {
     backgroundImages: string | null;
 }
 
-const Menufive: React.FC<MenuProps> = ({ groupedSections, namecompanies, backgroundImages }) => {
+interface ConfigType {
+    IconBrand: string
+}
+
+
+const Menufive: React.FC<MenuProps> = (props: any) => {
+    const { backgroundImages, config, groupedSections, info, menuData, namecompanies, promotions, schedules } = props
+
     const [searchTerm, setSearchTerm] = useState<string>('');
-    
+    const { sectionTimes, handleSectionEnter } = useSectionTimeTracker(namecompanies)
+
+
+    const [loading, setLoading] = useState(true)
+    const [iconURL, setIconURL] = useState<string>("")
+
+    useEffect(() => {
+        if (groupedSections) {
+            const firstSection: any = Object.values(groupedSections)[0]
+            if (firstSection && firstSection.length > 0) {
+                // You can do something with `firstSection` if needed
+            }
+        }
+
+        if (config && config.length > 0) {
+            const configData = config[0] as ConfigType
+            setIconURL(configData.IconBrand || "")
+        }
+
+        setLoading(false)
+    }, [groupedSections, config])
+
+
+
     const handleSearchChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchTerm(e.target.value.toLowerCase());
     }, []);
 
     const filteredSections = useMemo(() => {
         return Object.entries(groupedSections).map(([sectionName, items]) => {
-            const filteredItems = items.filter(item =>
+            const filteredItems = (items as MenuItem[]).filter(item =>
                 item.Name.toLowerCase().includes(searchTerm) ||
                 item.Description.toLowerCase().includes(searchTerm) ||
                 item.Menu_Title.toLowerCase().includes(searchTerm) ||
@@ -40,25 +73,68 @@ const Menufive: React.FC<MenuProps> = ({ groupedSections, namecompanies, backgro
         });
     }, [groupedSections, searchTerm]);
 
+
     const handleChange = (value: { inputValue: string; clarification: string }) => {
         console.log("Order Info:", value);
     };
 
     return (
         <div className={styles.menuContainer} style={{ backgroundImage: backgroundImages || 'none' }}>
-            <header className={styles.header}>
+            <header className={styles.header}
+
+            >
                 <h1 className={styles.mainTitle}>{namecompanies}</h1>
-                <input
-                    type="text"
-                    placeholder="Buscar artículo..."
-                    className={styles.searchInput}
-                    value={searchTerm}
-                    onChange={handleSearchChange}
-                />
+
+
+                <div className={styles.logo}
+                    onMouseEnter={() => handleSectionEnter("logo")}
+                >
+                    {iconURL ?
+                        <Logo
+                            namecompanies="LlakaScript"
+                            logoUrl={iconURL}
+                            size={120} // Tamaño de la imagen
+                            fontSize="22px" // Tamaño de la fuente
+                            fontWeight="700" // Grosor de la fuente
+                            color="black" // Color del texto
+                            fontFamily="Arial, sans-serif" // Familia de la fuente
+                        />
+                        : null}
+                </div>
+
+                <div className={styles.info}
+                    onMouseEnter={() => handleSectionEnter("info")}
+                >
+                    {info ?
+                        <Info
+                            info={info}
+                            fontSize="14px"
+                            fontWeight="500"
+                            color="#dddddd"
+                            fontFamily="Helvetica, sans-serif"
+                            containerClassName={styles.customInfoContainer}
+                            textClassName={styles.customInfoText}
+                        />
+                        : null}
+                </div>
+
+                <div className={styles.searchContainer}
+                    onMouseEnter={() => handleSectionEnter("search")}
+                >
+                    <input
+                        type="text"
+                        placeholder="Buscar artículo..."
+                        className={styles.searchInput}
+                        value={searchTerm}
+                        onChange={handleSearchChange}
+                    />
+                </div>
             </header>
 
             {filteredSections.map(({ sectionName, filteredItems }, index) => (
-                <section key={index} className={styles.section}>
+                <section key={index} className={styles.section}
+                    onMouseEnter={() => handleSectionEnter(`${sectionName}`)}
+                >
                     <h2 className={styles.sectionTitle}>{sectionName}</h2>
                     <div className={styles.masonryGrid}>
                         {filteredItems.length > 0 ? (
@@ -74,12 +150,15 @@ const Menufive: React.FC<MenuProps> = ({ groupedSections, namecompanies, backgro
                                             priority
                                         />
                                     </div>
-                                    <div className={styles.cardContent}>
+                                    <div className={styles.cardContent}
+                                        onMouseEnter={() => handleSectionEnter(`${sectionName}-${index}-${item?.Name}`)}
+
+                                    >
                                         <h3 className={styles.cardTitle}>{item.Name}</h3>
                                         <p className={styles.cardDescription}>{item.Description}</p>
                                         <span className={styles.cardPrice}>{`$${item.Price}`}</span>
                                     </div>
-                                    <div > {/* Esta es la clase CSS del padre */}
+                                    <div onMouseEnter={() => handleSectionEnter(`Button-${item.Name}`)}>
                                         <SelectComponent
                                             orderdescription={[]}
                                             delivery={true}
@@ -96,7 +175,7 @@ const Menufive: React.FC<MenuProps> = ({ groupedSections, namecompanies, backgro
                         ) : (
                             <span className={styles.noResults}>No se encontraron artículos</span>
                         )}
-                        
+
                     </div>
                 </section>
             ))}

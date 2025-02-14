@@ -161,7 +161,7 @@ const Menutwo: React.FC<MenuProps> = (props) => {
                                             <div className={styles.price}>{`$${item.Price}`}</div>
                                         </div>
                                     </div>
-                                    <div > {/* Esta es la clase CSS del padre */}
+                                    <div onMouseEnter={() => handleSectionEnter(`Button-${item.Name}`)}>
                                         <SelectComponent
                                             orderdescription={[]}
                                             delivery={true}

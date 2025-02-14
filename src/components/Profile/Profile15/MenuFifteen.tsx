@@ -34,7 +34,7 @@ interface ConfigType {
 const MenuFifTeen: React.FC<MenuProps> = (props) => {
     // const { menuData, groupedSections, backgroundImages, namecompanies, Promotion, info, schedules, config } = props
     const { backgroundImages, config, groupedSections, info, menuData, namecompanies, promotions, schedules } = props
-    const { sectionTimes, handleSectionEnter } = useSectionTimeTracker("nico")
+    const { sectionTimes, handleSectionEnter } = useSectionTimeTracker(namecompanies)
 
     const [searchTerm, setSearchTerm] = useState("")
     const [loading, setLoading] = useState(true)
@@ -87,7 +87,9 @@ const MenuFifTeen: React.FC<MenuProps> = (props) => {
                 onMouseEnter={() => handleSectionEnter("header")}
 
             >
-                <div className={styles.logo}>
+                <div className={styles.logo}
+                    onMouseEnter={() => handleSectionEnter("logo")}
+                >
                     {iconURL ?
 
                         <Logo
@@ -155,7 +157,7 @@ const MenuFifTeen: React.FC<MenuProps> = (props) => {
                                             <div className={styles.itemDescription}>{item?.Description}</div>
                                             <div className={styles.price}>{`$${item.Price}`}</div>
                                         </div>
-                                        <div > {/* Esta es la clase CSS del padre */}
+                                        <div onMouseEnter={() => handleSectionEnter(`Button-${item.Name}`)}>
                                             <SelectComponent
                                                 orderdescription={[]}
                                                 delivery={true}

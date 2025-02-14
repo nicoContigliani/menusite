@@ -39,7 +39,9 @@ const Menuone: React.FC<MenuProps> = (props) => {
     // useEffect(() => {
     // }, [sectionTimes])
 
-    const { sectionTimes, totalTime, history, handleSectionEnter } = useSectionTimeTracker("nico");
+
+
+    const { sectionTimes, totalTime, history, handleSectionEnter } = useSectionTimeTracker(namecompanies);
 
 
     useEffect(() => {
@@ -169,16 +171,14 @@ const Menuone: React.FC<MenuProps> = (props) => {
                                             <div className={styles.price}>{`$${item.Price}`}</div>
                                         </div>
                                     </div>
-                                    <div > {/* Esta es la clase CSS del padre */}
+                                    <div onMouseEnter={() => handleSectionEnter(`Button-${item.Name}`)}>
                                         <SelectComponent
                                             orderdescription={[]}
-                                            delivery={true}
+                                            delivery
                                             takeaway={false}
                                             Dinein={false}
                                             onChange={handleChange}
                                             value="someValue"
-                                            className="no"
-                                            color="white"
                                         />
                                     </div>
                                 </div>

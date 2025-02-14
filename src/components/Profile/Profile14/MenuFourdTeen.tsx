@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react'
 import styles from './MenuFourdTeen.module.css'
 import Image from 'next/image';
 import SelectComponent from '@/components/SelectComponent/SelectComponent';
+import useSectionTimeTracker from '../../../../hooks/useSectionTimeTracker';
+import Info from '@/components/Info/Info';
 interface MenuItem {
     Menu_Title?: string;
     Item_Image?: string;
@@ -55,7 +57,7 @@ interface MenuProps {
     menuData: any;
     backgroundImages: string | null;
     config: Record<string, ConfigType[]>;
-    Info: Record<string, Infoype[]>,
+    info: Record<string, Infoype[]>,
     Promotion: Record<string, MenuItem[]>,
     schedules: Record<string, SchedulesType[]>,
 }
@@ -66,7 +68,7 @@ const MenuFourdTeen: React.FC<MenuProps> = (props) => {
         backgroundImages,
         namecompanies,
         Promotion,
-        Info,
+        info,
         schedules,
         config,
     } = props
@@ -74,6 +76,7 @@ const MenuFourdTeen: React.FC<MenuProps> = (props) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [loading, setLoading] = useState(true);  // New loading state
     const [iconURL, setIconURL] = useState<any>('');
+    const { sectionTimes, handleSectionEnter } = useSectionTimeTracker(namecompanies)
 
     useEffect(() => {
         if (groupedSections) {
@@ -119,7 +122,9 @@ const MenuFourdTeen: React.FC<MenuProps> = (props) => {
             }}
         >
             <header className={styles.header}>
-                <div className={styles.logo}>
+                <div className={styles.logo}
+                    onMouseEnter={() => handleSectionEnter("logo")}
+                >
                     {iconURL ? (
                         <Logo
                             logoUrl={iconURL}
@@ -129,7 +134,27 @@ const MenuFourdTeen: React.FC<MenuProps> = (props) => {
                         <div>No logo available</div>  // Puedes mostrar un mensaje si no hay logo
                     )}
                 </div>
-                <div className={styles.searchContainer}>
+
+
+                <div className={styles.info}
+                    onMouseEnter={() => handleSectionEnter("info")}
+                >
+                    {info ?
+                        <Info
+                            info={info}
+                            fontSize="14px"
+                            fontWeight="500"
+                            color="#dddddd"
+                            fontFamily="Helvetica, sans-serif"
+                            containerClassName={styles.customInfoContainer}
+                            textClassName={styles.customInfoText}
+                        />
+                        : null}
+                </div>
+
+                <div className={styles.searchContainer}
+                    onMouseEnter={() => handleSectionEnter("search")}
+                >
                     <input
                         type="text"
                         className={styles.searchInput}
@@ -145,6 +170,7 @@ const MenuFourdTeen: React.FC<MenuProps> = (props) => {
                     <div
                         key={sectionName}
                         className={styles.section}
+                        onMouseEnter={() => handleSectionEnter(`${sectionName}`)}
                     // onMouseEnter={() => handleSectionEnter(sectionName)}
                     // onMouseLeave={handleSectionLeave}
                     >
@@ -156,6 +182,7 @@ const MenuFourdTeen: React.FC<MenuProps> = (props) => {
                                 <div
                                     key={`${sectionName}-${item?.Item_id}-${index}`}
                                     className={styles.menuItem}
+                                    onMouseEnter={() => handleSectionEnter(`${sectionName}-${index}-${item?.Name}`)}
 
 
                                 >
@@ -174,7 +201,7 @@ const MenuFourdTeen: React.FC<MenuProps> = (props) => {
                                         <span>{item?.Description}</span>
                                         <div className={styles.price}>{`$${item.Price}`}</div>
                                     </div>
-                                    <div > {/* Esta es la clase CSS del padre */}
+                                    <div onMouseEnter={() => handleSectionEnter(`Button-${item.Name}`)}>
                                         <SelectComponent
                                             orderdescription={[]}
                                             delivery={true}

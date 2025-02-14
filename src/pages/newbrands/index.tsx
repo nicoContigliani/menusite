@@ -75,7 +75,7 @@ const page = () => {
     const storedData = getLocalhostStorage()
     console.log("🚀 ~ useEffect ~ storedData:", storedData)
     if (storedData?.aud != null) {
-      const { aud, email, access_token, expires_at, userid } = storedData
+      const { aud, email, _id, access_token, expires_at, userid } = storedData
       console.log("🚀 ~ useEffect ~ aud:", aud)
       setIsLogin(true)
     } else {
@@ -151,6 +151,14 @@ const page = () => {
       if (response.ok) {
         const result = await response.json();
         setFinishit(true)
+         //userId
+        //email(owner)
+        //companyId
+        //folderName(namecompoanies)
+        //status_Companies
+
+
+
 
       } else {
         console.error('Error en la solicitud:', response.statusText);

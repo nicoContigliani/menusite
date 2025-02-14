@@ -1,26 +1,58 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import Image from 'next/image';
 import styles from './MenuNew.module.css';
 import SelectComponent from '@/components/SelectComponent/SelectComponent';
+import useSectionTimeTracker from '../../../../hooks/useSectionTimeTracker';
+import Logo from '@/components/Logo/Logo';
 
 interface MenuItem {
-    Menu_Title: string;
-    Item_Image: string;
-    Section: string;
-    Item_id: number;
-    Name: string;
-    Description: string;
-    Price: string;
+    Item_id: string
+    Name: string
+    Description: string
+    Price: string | number | any
+    Menu_Title: string
+    Item_Image: string
 }
 
 interface MenuProps {
-    namecompanies: string;
-    groupedSections: Record<string, MenuItem[]>;
-    backgroundImages?: string;
+    menuData: any
+    groupedSections: { [key: string]: MenuItem[] }
+    backgroundImages: any
+    namecompanies: string
+    promotions: any
+    info: any
+    schedules: any
+    config: any[]
 }
 
-const Menuthirteen: React.FC<MenuProps> = ({ groupedSections, namecompanies, backgroundImages }) => {
+interface ConfigType {
+    IconBrand: string
+}
+const Menuthirteen: React.FC<MenuProps> = (props) => {
+    const { backgroundImages, config, groupedSections, info, menuData, namecompanies, promotions, schedules } = props
     const [searchTerm, setSearchTerm] = useState<string>('');
+    const { sectionTimes, handleSectionEnter } = useSectionTimeTracker(namecompanies)
+
+
+    const [loading, setLoading] = useState(true)
+    const [iconURL, setIconURL] = useState<string>("")
+
+    useEffect(() => {
+        if (groupedSections) {
+            const firstSection: any = Object.values(groupedSections)[0]
+            if (firstSection && firstSection.length > 0) {
+                // You can do something with `firstSection` if needed
+            }
+        }
+
+        if (config && config.length > 0) {
+            const configData = config[0] as ConfigType
+            setIconURL(configData.IconBrand || "")
+        }
+
+        setLoading(false)
+    }, [groupedSections, config])
+
 
     // Debounce to optimize search handling
     const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,7 +60,7 @@ const Menuthirteen: React.FC<MenuProps> = ({ groupedSections, namecompanies, bac
     };
 
     const filteredItems = useMemo(() => {
-        const searchLower = searchTerm.toLowerCase();
+        const searchLower: any = searchTerm.toLowerCase();
         return (items: MenuItem[]) => {
             return items.filter(item =>
                 item.Name.toLowerCase().includes(searchLower) ||
@@ -56,22 +88,45 @@ const Menuthirteen: React.FC<MenuProps> = ({ groupedSections, namecompanies, bac
             <div className={styles.menuWrapper}>
                 <header className={styles.header}>
                     <h1 className={styles.mainTitle}>{namecompanies}</h1>
-                    <input
-                        type="text"
-                        placeholder="Buscar..."
-                        value={searchTerm}
-                        onChange={handleSearchChange}
-                        className={styles.searchInput}
-                    />
+
+                    <div className={styles.logo}
+                        onMouseEnter={() => handleSectionEnter("logo")}
+                    >
+                        {iconURL ?
+                            <Logo
+                                namecompanies="LlakaScript"
+                                logoUrl={iconURL}
+                                size={120} // Tamaño de la imagen
+                                fontSize="22px" // Tamaño de la fuente
+                                fontWeight="700" // Grosor de la fuente
+                                color="black" // Color del texto
+                                fontFamily="Arial, sans-serif" // Familia de la fuente
+                            />
+                            : null}
+                    </div>
+                    <div className={styles.searchContainer}
+                        onMouseEnter={() => handleSectionEnter("search")}
+                    >
+                        <input
+                            type="text"
+                            placeholder="Buscar..."
+                            value={searchTerm}
+                            onChange={handleSearchChange}
+                            className={styles.searchInput}
+                        />
+                    </div>
                 </header>
                 {Object.entries(groupedSections)?.map(([sectionName, items], sectionIndex) => (
-                    <div key={sectionIndex} className={styles.section}>
+                    <div key={sectionIndex} className={styles.section}
+                        onMouseEnter={() => handleSectionEnter(`${sectionName}`)}
+                    >
                         <h1 className={styles.sectionTitle}>{sectionName}</h1>
                         <div className={styles.sectionItems}>
                             {filteredItems(items)?.map((item, itemIndex) => (
                                 <div
                                     key={`${sectionIndex}-${itemIndex}`} // Clave única combinando índice de sección y elemento
                                     className={styles.menuItem}
+                                    onMouseEnter={() => handleSectionEnter(`${sectionName}-${itemIndex}-${item?.Name}`)}
 
                                 >
                                     <div className={styles.itemImage}>
@@ -88,7 +143,7 @@ const Menuthirteen: React.FC<MenuProps> = ({ groupedSections, namecompanies, bac
                                         <span>{item.Description}</span>
                                         <span className={styles.price}>{`$${item.Price}`}</span>
                                     </div>
-                                    <div > {/* Esta es la clase CSS del padre */}
+                                    <div onMouseEnter={() => handleSectionEnter(`Button-${item.Name}`)}>
                                         <SelectComponent
                                             orderdescription={[]}
                                             delivery={true}

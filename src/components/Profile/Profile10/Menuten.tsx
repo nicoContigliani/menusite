@@ -35,7 +35,7 @@ interface ConfigType {
 const Menuten: React.FC<MenuProps> = (props) => {
     const { backgroundImages, config, groupedSections, info, menuData, namecompanies, promotions, schedules } = props
 
-    const { sectionTimes, handleSectionEnter } = useSectionTimeTracker("nico")
+    const { sectionTimes, handleSectionEnter } = useSectionTimeTracker(namecompanies)
     console.log("🚀 ~ sectionTimes:", sectionTimes)
     useEffect(() => {
     }, [sectionTimes])
@@ -159,7 +159,9 @@ const Menuten: React.FC<MenuProps> = (props) => {
                                                 priority
                                             />
                                         </div>
-                                        <div className={styles.itemDetails}>
+                                        <div className={styles.itemDetails}
+                                            onMouseEnter={() => handleSectionEnter(`Button-${item.Name}`)}
+                                        >
                                             <hr />
                                             <h2>{item?.Name}</h2>
                                             <div className={styles.itemDescription}>{item?.Description}</div>

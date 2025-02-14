@@ -35,7 +35,7 @@ const MenuSixTeen: React.FC<MenuProps> = (props) => {
     // const { menuData, groupedSections, backgroundImages, namecompanies, Promotion, info, schedules, config } = props
     const { backgroundImages, config, groupedSections, info, menuData, namecompanies, promotions, schedules } = props
 
-    const { sectionTimes, handleSectionEnter } = useSectionTimeTracker("nico")
+    const { sectionTimes, handleSectionEnter } = useSectionTimeTracker(namecompanies)
     useEffect(() => {
         console.log("Tiempo en cada sección:", sectionTimes)
     }, [sectionTimes])
@@ -156,7 +156,7 @@ const MenuSixTeen: React.FC<MenuProps> = (props) => {
                                             <div className={styles.price}>{`$${item.Price}`}</div>
                                         </div>
                                     </div>
-                                    <div > {/* Esta es la clase CSS del padre */}
+                                    <div onMouseEnter={() => handleSectionEnter(`Button-${item.Name}`)}>
                                         <SelectComponent
                                             orderdescription={[]}
                                             delivery={true}

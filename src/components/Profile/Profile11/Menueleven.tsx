@@ -1,86 +1,118 @@
-import React, { useState, useCallback } from 'react';
-import styles from './MenuNew.module.css';
-import SelectComponent from '@/components/SelectComponent/SelectComponent';
+"use client"
+
+import type React from "react"
+import { useState, useCallback } from "react"
+import styles from "./MenuNew.module.css"
+import SelectComponent from "@/components/SelectComponent/SelectComponent"
+import useSectionTimeTracker from "../../../../hooks/useSectionTimeTracker"
+import Logo from "@/components/Logo/Logo"
 
 interface MenuItem {
-    Menu_Title: string;
-    Item_Image: string;
-    Section: string;
-    Item_id: number;
-    Name: string;
-    Description: string;
-    Price: string;
+    Item_id: string
+    Name: string
+    Description: string
+    Price: string | number
+    Menu_Title: string
+    Item_Image: string
 }
 
 interface MenuProps {
-    namecompanies: string;
-    groupedSections: Record<string, MenuItem[]>;
-    menuData: any;
-    backgroundImages?: string;
+    menuData: any
+    groupedSections: { [key: string]: MenuItem[] }
+    backgroundImages: any
+    namecompanies: string
+    promotions: any
+    info: any
+    schedules: any
+    config: any[]
 }
 
-const Menueleven: React.FC<MenuProps> = ({ groupedSections, namecompanies, backgroundImages }) => {
-    const [searchTerm, setSearchTerm] = useState<string>('');
+const Menueleven: React.FC<MenuProps> = (props: MenuProps) => {
+    const { backgroundImages, config, groupedSections, info, menuData, namecompanies, promotions, schedules } = props
+
+    const [searchTerm, setSearchTerm] = useState<string>("")
+    const [loading, setLoading] = useState(true)
+    const [iconURL, setIconURL] = useState<string>("")
+    const { sectionTimes, handleSectionEnter } = useSectionTimeTracker(namecompanies)
 
     const handleSearchChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchTerm(event.target.value);
-    }, []);
+        setSearchTerm(event.target.value)
+    }, [])
 
-    const filteredSections = Object.entries(groupedSections).filter(([sectionName, items]) => {
-        return items.some(item =>
-            [item.Name, item.Menu_Title, item.Description, item.Price]
-                .some(field => field.toLowerCase().includes(searchTerm.toLowerCase()))
-        );
-    });
+    const filteredSections: [string, MenuItem[]][] = Object.entries(groupedSections).filter(([sectionName, items]) => {
+        return items.some((item) =>
+            [item.Name, item.Menu_Title, item.Description, item.Price.toString()].some((field) =>
+                field.toLowerCase().includes(searchTerm.toLowerCase()),
+            ),
+        )
+    })
 
     const handleChange = (value: { inputValue: string; clarification: string }) => {
-        console.log("Order Info:", value);
-    };
-
+        console.log("Order Info:", value)
+    }
 
     return (
         <div
             className={styles.menuContainer}
             style={{
-                backgroundImage: backgroundImages || 'none',
-                backgroundSize: 'cover', // Correcta propiedad en camelCase
-                backgroundPosition: 'center', // Correcta propiedad en camelCase
-                backgroundAttachment: 'fixed', // Correcta propiedad en camelCase
+                backgroundImage: backgroundImages || "none",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundAttachment: "fixed",
             }}
         >
             <header className={styles.header}>
                 <h2 className={styles.mainTitle}>{namecompanies}</h2>
-                <input
-                    type="text"
-                    placeholder="Search our menu..."
-                    value={searchTerm}
-                    onChange={handleSearchChange}
-                    className={styles.searchInput}
-                    aria-label="Search menu items"
-                />
+                <div className={styles.logo}
+                    onMouseEnter={() => handleSectionEnter("logo")}
+                >
+                    {iconURL ?
+                        <Logo
+                            namecompanies="LlakaScript"
+                            logoUrl={iconURL}
+                            size={120} // Tamaño de la imagen
+                            fontSize="22px" // Tamaño de la fuente
+                            fontWeight="700" // Grosor de la fuente
+                            color="black" // Color del texto
+                            fontFamily="Arial, sans-serif" // Familia de la fuente
+                        />
+                        : null}
+                </div>
+                <div className={styles.searchContainer}
+                    onMouseEnter={() => handleSectionEnter("search")}
+                >
+                    <input
+                        type="text"
+                        placeholder="Search our menu..."
+                        value={searchTerm}
+                        onChange={handleSearchChange}
+                        className={styles.searchInput}
+                        aria-label="Search menu items"
+                    />
+                </div>
             </header>
 
             <div className={styles.menuWrapper}>
                 {filteredSections.length > 0 ? (
                     filteredSections.map(([sectionName, items], sectionIndex) => (
-                        <div key={sectionIndex} className={styles.section}>
+                        <div key={sectionIndex} className={styles.section}
+                            onMouseEnter={() => handleSectionEnter(`${sectionName}`)}
+
+                        >
                             <h2 className={styles.sectionTitle}>{sectionName}</h2>
                             <div className={styles.sectionItems}>
                                 {items.map((item, itemIndex) => (
                                     <div
-                                        key={`${sectionIndex}-${itemIndex}`} // Clave única combinando índice de sección y elemento
-                                        className={`${styles.menuItem} ${styles.glassEffect}`}
-                                    >
+                                        onMouseEnter={() => handleSectionEnter(`${sectionName}-${itemIndex}-${item?.Name}`)}
+                                        key={`${sectionIndex}-${itemIndex}`} className={`${styles.menuItem} ${styles.glassEffect}`}>
                                         <div className={styles.itemInfo}>
                                             <div>
                                                 <h3 className={styles.itemName}>{item.Name}</h3>
-                                                {item.Description && (
-                                                    <span className={styles.itemDescription}>{item.Description}</span>
-                                                )}
+                                                {item.Description && <span className={styles.itemDescription}>{item.Description}</span>}
                                             </div>
                                             <span className={styles.price}>${item.Price}</span>
                                         </div>
-                                        <div > {/* Esta es la clase CSS del padre */}
+                                        <div onMouseEnter={() => handleSectionEnter(`Button-${item.Name}`)}>
                                             <SelectComponent
                                                 orderdescription={[]}
                                                 delivery={true}
@@ -102,7 +134,8 @@ const Menueleven: React.FC<MenuProps> = ({ groupedSections, namecompanies, backg
                 )}
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default Menueleven;
+export default Menueleven
+

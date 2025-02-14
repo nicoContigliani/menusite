@@ -2,25 +2,36 @@ import React, { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import styles from './MenuNew.module.css';
 import SelectComponent from '@/components/SelectComponent/SelectComponent';
+import useSectionTimeTracker from '../../../../hooks/useSectionTimeTracker';
 
 interface MenuItem {
-    Menu_Title: string;
-    Background_Image: string;
-    Item_Image: string;
-    Section: string;
-    Item_id: number;
-    Name: string;
-    Description: string;
-    Price: string;
+    Item_id: string
+    Name: string
+    Description: string
+    Price: string | number
+    Menu_Title: string
+    Item_Image: string
 }
 
 interface MenuProps {
-    namecompanies: string;
-    groupedSections: Record<string, MenuItem[]>;
-    backgroundImages: any;
+    menuData: any
+    groupedSections: { [key: string]: MenuItem[] }
+    backgroundImages: any
+    namecompanies: string
+    promotions: any
+    info: any
+    schedules: any
+    config: any[]
 }
 
-const MenuEight: React.FC<MenuProps> = ({ groupedSections, namecompanies, backgroundImages }) => {
+interface ConfigType {
+    IconBrand: string
+}
+
+const MenuEight: React.FC<MenuProps> = (props) => {
+    const { backgroundImages, config, groupedSections, info, menuData, namecompanies, promotions, schedules } = props
+    const { sectionTimes, handleSectionEnter } = useSectionTimeTracker(namecompanies)
+
     const [searchTerm, setSearchTerm] = useState<string>(''); // State for search query
 
     // Debounced search term to optimize performance
@@ -49,17 +60,23 @@ const MenuEight: React.FC<MenuProps> = ({ groupedSections, namecompanies, backgr
                 backgroundAttachment: 'fixed',
             }}
         >
-            <header className={styles.header}>
+            <header className={styles.header}
+                onMouseEnter={() => handleSectionEnter("logo")}
+            >
                 <h1 className={styles.mainTitle}>{namecompanies}</h1>
 
                 {/* Add search input */}
-                <input
-                    type="text"
-                    placeholder="Search items..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className={styles.searchInput}
-                />
+                <div className={styles.info}
+                    onMouseEnter={() => handleSectionEnter("info")}
+                >
+                    <input
+                        type="text"
+                        placeholder="Search items..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className={styles.searchInput}
+                    />
+                </div>
             </header>
 
             <div className={styles.menuWrapper}>
@@ -70,11 +87,15 @@ const MenuEight: React.FC<MenuProps> = ({ groupedSections, namecompanies, backgr
                     );
 
                     return filteredSectionItems.length > 0 ? (
-                        <div key={sectionIndex} className={styles.section}>
+                        <div key={sectionIndex} className={styles.section}
+                            onMouseEnter={() => handleSectionEnter(`${sectionName}`)}
+                        >
                             <h1 className={styles.sectionTitle}>{sectionName}</h1>
                             <div className={styles.sectionItems}>
                                 {filteredSectionItems.map((item, itemIndex) => (
-                                    <div key={itemIndex} className={styles.menuItem}>
+                                    <div key={itemIndex} className={styles.menuItem}
+                                    onMouseEnter={() => handleSectionEnter(`${sectionName}-${itemIndex}-${item?.Name}`)}
+                                    >
                                         <div className={styles.itemImage}>
                                             <Image
                                                 src={`${item.Item_Image}`}
@@ -88,18 +109,18 @@ const MenuEight: React.FC<MenuProps> = ({ groupedSections, namecompanies, backgr
                                             <span>{item.Description}</span>
                                             <span className={styles.price}>{`$${item.Price}`}</span>
                                         </div>
-                                        <div > {/* Esta es la clase CSS del padre */}
-                                        <SelectComponent
-                                            orderdescription={[]}
-                                            delivery={true}
-                                            takeaway={false}
-                                            Dinein={false}
-                                            onChange={handleChange}
-                                            value="someValue"
-                                            className="no"
-                                            color="white"
-                                        />
-                                    </div>
+                                        <div onMouseEnter={() => handleSectionEnter(`Button-${item.Name}`)}>
+                                            <SelectComponent
+                                                orderdescription={[]}
+                                                delivery={true}
+                                                takeaway={false}
+                                                Dinein={false}
+                                                onChange={handleChange}
+                                                value="someValue"
+                                                className="no"
+                                                color="white"
+                                            />
+                                        </div>
                                     </div>
                                 ))}
                             </div>

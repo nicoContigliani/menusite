@@ -1,27 +1,69 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import styles from './MenuNew.module.css';
 import SelectComponent from '@/components/SelectComponent/SelectComponent';
+import useSectionTimeTracker from '../../../../hooks/useSectionTimeTracker';
 
 interface MenuItem {
-    Menu_Title: string;
-    Background_Image: string;
-    Item_Image: string;
-    Section: string;
-    Item_id: number;
-    Name: string;
-    Description: string;
-    Price: string;
+    Item_id: string
+    Name: string
+    Description: string
+    Price: string | number
+    Menu_Title: string
+    Item_Image: string
 }
 
 interface MenuProps {
-    namecompanies: string;
-    groupedSections: Record<string, MenuItem[]>;
-    menuData: any;
-    backgroundImages?: string;
+    menuData: any
+    groupedSections: { [key: string]: MenuItem[] }
+    backgroundImages: any
+    namecompanies: string
+    promotions: any
+    info: any
+    schedules: any
+    config: any[]
 }
 
-const Menutwelve: React.FC<MenuProps> = ({ groupedSections, namecompanies, backgroundImages }) => {
+interface ConfigType {
+    IconBrand: string
+}
+
+const Menutwelve: React.FC<MenuProps> = (props) => {
+    const { backgroundImages, config, groupedSections, info, menuData, namecompanies, promotions, schedules } = props
+    const { sectionTimes, handleSectionEnter } = useSectionTimeTracker(namecompanies)
+    const [searchTerm, setSearchTerm] = useState("")
+    const [loading, setLoading] = useState(true)
+    const [iconURL, setIconURL] = useState<string>("")
+
+
+  useEffect(() => {
+        if (groupedSections) {
+            const firstSection: any = Object.values(groupedSections)[0]
+            if (firstSection && firstSection.length > 0) {
+                // You can do something with `firstSection` if needed
+            }
+        }
+
+        if (config && config.length > 0) {
+            const configData = config[0] as ConfigType
+            setIconURL(configData.IconBrand || "")
+        }
+
+        setLoading(false)
+    }, [groupedSections, config])
+
+    const memoizedSections = Object.entries(groupedSections)
+    .map(([sectionName, items]) => {
+        const filteredItems = items.filter(
+            (item) =>
+                [item.Name, item.Description, item.Menu_Title].some(
+                    (field) => typeof field === "string" && field.toLowerCase().includes(searchTerm.toLowerCase()),
+                ) ||
+                (typeof item.Price === "string" && item.Price.toLowerCase().includes(searchTerm.toLowerCase())),
+        )
+        return [sectionName, filteredItems] as [string, MenuItem[]]
+    })
+    .filter(([, items]) => items.length > 0)
     const handleChange = (value: { inputValue: string; clarification: string }) => {
         console.log("Order Info:", value);
     };
@@ -41,21 +83,25 @@ const Menutwelve: React.FC<MenuProps> = ({ groupedSections, namecompanies, backg
             </header>
 
             <div className={styles.menuWrapper}>
-                {Object.entries(groupedSections).map(([sectionName, items], sectionIndex) => (
-                    <div key={sectionIndex} className={styles.section}>
+                {memoizedSections.map(([sectionName, items], sectionIndex) => (
+                    <div key={sectionIndex} className={styles.section}
+                    onMouseEnter={() => handleSectionEnter(`${sectionName}`)}
+
+                    >
                         <h2 className={styles.sectionTitle}>{sectionName}</h2>
                         <div className={styles.sectionItems}>
                             {items.map((item, itemIndex) => (
                                 <div
                                     key={`${sectionIndex}-${itemIndex}`} // Clave única combinando índice de sección y elemento
                                     className={styles.menuItem}
+                                    onMouseEnter={() => handleSectionEnter(`${sectionName}-${itemIndex}-${item?.Name}`)}
                                 >
                                     <div className={styles.itemInfo}>
                                         <h3 className={styles.itemName}>{item.Name}</h3>
                                         <span className={styles.itemDescription}>{item.Description}</span>
                                         <span className={styles.price}>${item.Price}</span>
                                     </div>
-                                    <div > {/* Esta es la clase CSS del padre */}
+                                    <div onMouseEnter={() => handleSectionEnter(`Button-${item.Name}`)}>
                                         <SelectComponent
                                             orderdescription={[]}
                                             delivery={true}

@@ -2,27 +2,41 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import styles from './MenuNew.module.css';
 import SelectComponent from '@/components/SelectComponent/SelectComponent';
+import useSectionTimeTracker from '../../../../hooks/useSectionTimeTracker';
+import Logo from '@/components/Logo/Logo';
+import Info from '@/components/Info/Info';
 
 interface MenuItem {
-    Menu_Title: string;
-    Background_Image: string;
-    Item_Image: string;
-    Section: string;
-    Item_id: number;
-    Name: string;
-    Description: string;
-    Price: string;
+    Item_id: string
+    Name: string
+    Description: string
+    Price: string | number
+    Menu_Title: string
+    Item_Image: string
 }
 
 interface MenuProps {
-    namecompanies: string;
-    groupedSections: Record<string, MenuItem[]>;
-    backgroundImages: any;
+    menuData: any
+    groupedSections: { [key: string]: MenuItem[] }
+    backgroundImages: any
+    namecompanies: string
+    promotions: any
+    info: any
+    schedules: any
+    config: any[]
 }
 
-const MenuNine: React.FC<MenuProps> = ({ groupedSections, namecompanies, backgroundImages }) => {
+interface ConfigType {
+    IconBrand: string
+}
+
+const MenuNine: React.FC<MenuProps> = (props) => {
+    const { backgroundImages, config, groupedSections, info, menuData, namecompanies, promotions, schedules } = props
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [debouncedSearchTerm, setDebouncedSearchTerm] = useState<string>('');
+    const [loading, setLoading] = useState(true)
+    const [iconURL, setIconURL] = useState<string>("")
+    const { sectionTimes, handleSectionEnter } = useSectionTimeTracker(namecompanies)
 
     // Debounced search term to optimize performance
     useEffect(() => {
@@ -52,19 +66,52 @@ const MenuNine: React.FC<MenuProps> = ({ groupedSections, namecompanies, backgro
         >
             <header className={styles.header}>
                 <h1 className={styles.mainTitle}>{namecompanies}</h1>
-                {/* Search input */}
-                <input
-                    type="text"
-                    placeholder="Buscar..."
-                    value={searchTerm}
-                    onChange={handleSearchChange}
-                    className={styles.searchInput}
-                />
+                <div className={styles.logo}
+                    onMouseEnter={() => handleSectionEnter("logo")}
+                >
+                    {iconURL ?
+                        <Logo
+                            namecompanies="LlakaScript"
+                            logoUrl={iconURL}
+                            size={120} // Tamaño de la imagen
+                            fontSize="22px" // Tamaño de la fuente
+                            fontWeight="700" // Grosor de la fuente
+                            color="black" // Color del texto
+                            fontFamily="Arial, sans-serif" // Familia de la fuente
+                        />
+                        : null}
+                </div>
+                <div className={styles.info}
+                    onMouseEnter={() => handleSectionEnter("info")}
+                >
+                    {info ?
+                        <Info
+                            info={info}
+                            fontSize="14px"
+                            fontWeight="500"
+                            color="#dddddd"
+                            fontFamily="Helvetica, sans-serif"
+                            containerClassName={styles.customInfoContainer}
+                            textClassName={styles.customInfoText}
+                        />
+                        : null}
+                </div>
+                <div className={styles.searchContainer}
+                    onMouseEnter={() => handleSectionEnter("search")}
+                >
+                    <input
+                        type="text"
+                        placeholder="Buscar..."
+                        value={searchTerm}
+                        onChange={handleSearchChange}
+                        className={styles.searchInput}
+                    />
+                </div>
             </header>
             <div className={styles.menuWrapper}>
                 {Object.entries(groupedSections).map(([sectionName, items], sectionIndex) => {
                     // Filter items based on search term
-                    const filteredSectionItems = items.filter(item =>
+                    const filteredSectionItems = items.filter((item: any) =>
                         item.Name.toLowerCase().includes(debouncedSearchTerm.toLowerCase()) ||
                         item.Menu_Title.toLowerCase().includes(debouncedSearchTerm.toLowerCase()) ||
                         item.Description.toLowerCase().includes(debouncedSearchTerm.toLowerCase()) ||
@@ -72,13 +119,16 @@ const MenuNine: React.FC<MenuProps> = ({ groupedSections, namecompanies, backgro
                     );
 
                     return filteredSectionItems.length > 0 ? (
-                        <div key={sectionIndex} className={styles.section}>
+                        <div key={sectionIndex} className={styles.section}
+                            onMouseEnter={() => handleSectionEnter(`${sectionName}`)}
+                        >
                             <h1 className={styles.sectionTitle}>{sectionName}</h1>
                             <div className={styles.sectionItems}>
                                 {filteredSectionItems.map((item: MenuItem, itemIndex) => (
                                     <div
                                         key={itemIndex}
                                         className={styles.menuItem}
+                                        onMouseEnter={() => handleSectionEnter(`${sectionName}-${itemIndex}-${item?.Name}`)}
 
                                     >
                                         <div className={styles.itemImage}>
@@ -94,7 +144,7 @@ const MenuNine: React.FC<MenuProps> = ({ groupedSections, namecompanies, backgro
                                             <span>{item.Description}</span>
                                             <span className={styles.price}>{`$${item.Price}`}</span>
                                         </div>
-                                        <div > {/* Esta es la clase CSS del padre */}
+                                        <div onMouseEnter={() => handleSectionEnter(`Button-${item.Name}`)}>
                                             <SelectComponent
                                                 orderdescription={[]}
                                                 delivery={true}
