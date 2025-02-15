@@ -19,7 +19,7 @@ const ModalComponents: React.FC<ModalComponentsProps> = ({
   return (
   
       <Modal
-        title={title}
+        // title={title}
         centered
         open={openResponsive}
         onOk={() => setOpenResponsive(false)}
