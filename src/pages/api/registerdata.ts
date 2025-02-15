@@ -1,38 +1,35 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import bcrypt from "bcryptjs";
-import nodemailer from "nodemailer";
 import clientPromise from "../../../lib/mongoose";
 import { generateCode } from "@/services/generateCode";
 import { codeMailGenerator } from "@/services/codeMailGenerator";
-
+import { generateToken } from "../../../tools/auth";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const { email, password, fullname, birthday, phone } = req.body;
-
-  if (!email) {
-    return res.status(400).json({ error: "Email, password and companyName are required" });
-  }
-
-  const verificationCode: any = generateCode(6); // Genera un código de 6 dígitos
-
-  const client = await clientPromise;
-  const db = client.db("menuDB");
-  const users = db.collection("users");
-
-
-  const existingUser = await users.findOne({ email });
-  if (existingUser) {
-    return res.status(400).json({ error: "User already exists" });
-  }
   try {
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const { email, password, fullname, birthday, phone } = req.body;
 
-    codeMailGenerator(email, verificationCode);
-    let todo = await users.insertOne({
+    if (!email || !password || !fullname || !birthday || !phone) {
+      return res.status(400).json({ error: "All fields are required" });
+    }
+
+    const client = await clientPromise;
+    const db = client.db("menuDB");
+    const users = db.collection("users");
+
+    const existingUser = await users.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ error: "User already exists" });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const verificationCode = generateCode(6);
+
+    const newUser = {
       email,
       password: hashedPassword,
       fullname,
@@ -41,20 +38,34 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       score_user: 0,
       benefits: false,
       status_user: true,
-      verigicationCodeMail: false,
-      verigicationCodePhone: false,
-      verigicationCodePattern: false,
-      verificationCode, // Almacena el código en la base de datos
-      createAt: new Date(),
-      updateAt: new Date(),
-      aud:"isLogin"
-    });
+      verificationCodeMail: false,
+      verificationCodePhone: false,
+      verificationCodePattern: false,
+      verificationCode,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      aud: "isLogin",
+    };
 
+    await users.insertOne(newUser);
+
+    // // Enviar código de verificación por correo
+    // await codeMailGenerator(email, verificationCode);
+
+    // Buscar el usuario sin exponer la contraseña
+    const savedUser = await users.findOne(
+      { email },
+      { projection: { password: 0, _id: 1 } } // Asegurar que _id sea incluido
+    );
+    if (!savedUser) {
+      throw new Error("User creation failed");
+    }
+
+    const token = generateToken({ user: savedUser });
+
+    return res.status(201).json({ token, ...savedUser, message: "User created successfully, verification code sent to email" });
   } catch (error) {
-    console.log("🚀 ~ handler ~ error:", error)
-
+    console.error("Error in user registration:", error);
+    return res.status(500).json({ error: "Internal server error" });
   }
-
-
-  return res.status(200).json({ message: "User created successfully, verification code sent to email" });
 }

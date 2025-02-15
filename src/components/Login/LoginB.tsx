@@ -1,15 +1,25 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from '@/styles/auth.module.css';
 import { localhostStorage } from '@/services/localstorage.services';
 
-const LoginB = () => {
+const LoginB = (props: any) => {
+
+
+    const {
+        redirections,
+        setOpenResponsive,
+        fullUrl,
+        setIsLogin
+    } = props
+
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
         const data = { email, password };
-    
+
         try {
             const response = await fetch('/api/loginuser', {
                 method: 'POST',
@@ -18,14 +28,16 @@ const LoginB = () => {
                 },
                 body: JSON.stringify(data)
             });
-    
+
             if (!response.ok) {
                 throw new Error(`Error: ${response.status} ${response.statusText}`);
             }
-    
+
             const result = await response.json(); // Convierte la respuesta a JSON
             if (response.status === 200) {
                 await localhostStorage(result); // Guarda el resultado correctamente
+                await setOpenResponsive(false)
+                await setIsLogin(true)
             }
         } catch (error) {
             alert("Error al iniciar sesión: " + (error as Error).message);

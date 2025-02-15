@@ -193,8 +193,8 @@ import Image from "next/image";
 import { useEffect, useLayoutEffect, useState } from "react";
 import ModalComponents from "@/components/ModalComponents/ModalComponents";
 import { Button } from "antd";
-import Auth from "@/components/Auth/Auth";
 import AuthB from "@/components/AuthB/AuthB";
+import { clearLocalhostStorage } from "@/services/localstorage.services";
 
 export default function Header(props: any) {
   const { imagetodo } = props;
@@ -212,18 +212,15 @@ export default function Header(props: any) {
   const handleCloseModal = () => {
     setOpenResponsive(false); // Close the modal correctly
   };
-  const handleAuth = () => {
-    setOpenResponsive(true)
-  }
+
 
   const handleLogout = () => {
-    // Reset login state and do any necessary cleanup, like clearing tokens or local storage
-    setIsLogin(false); // Ensure isLogin is set to false when logging out
-    // Optional: Add more logout logic (clear user data, etc.)
+    clearLocalhostStorage();
+    setIsLogin(false);
     console.log("Logged out");
   };
 
- 
+
   return (
     <header className={styles.header}>
       <nav className={styles.nav}>
@@ -251,24 +248,23 @@ export default function Header(props: any) {
           <Link href="#contact" className={styles.link}>
             Contact
           </Link>
-          <Button type="primary" onClick={handleAuth}>Register/Login</Button>
 
-          {/* {
+          {
             isLogin ?
               <Button type="primary" onClick={handleLogout}>LogOut</Button> // Show LogOut button when logged in
               :
               <Button type="link" onClick={() => setOpenResponsive(true)}>Login / Register</Button> // Show Login/Register button when logged out
-          } */}
+          }
         </div>
-        {/* <ModalComponents openResponsive={openResponsive} setOpenResponsive={setOpenResponsive} onClose={handleCloseModal}>
-          <Auth
+        <ModalComponents openResponsive={openResponsive} setOpenResponsive={setOpenResponsive} onClose={handleCloseModal}>
+          <AuthB
             redirections={true}
             setOpenResponsive={setOpenResponsive}
             fullUrl={fullUrl}
             setIsLogin={setIsLogin}
           />
-        </ModalComponents> */}
-       
+        </ModalComponents>
+
       </nav>
     </header>
   );
