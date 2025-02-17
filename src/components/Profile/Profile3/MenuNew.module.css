@@ -153,6 +153,7 @@
     justify-content: space-between;
     padding: 20px 40px;
   }
+ 
 
   .topHeader {
     width: auto;
@@ -189,7 +190,10 @@
     margin-bottom: 20px;
     text-align: center;
   }
-
+  .sectionHeader {
+    margin-left: 12%;
+    margin-bottom: 20px;
+  }
   .searchContainer {
     margin-left: 0;
     max-width: none;
@@ -208,27 +212,10 @@
     margin: 0 auto;
   }
   .cardImage {
-    height: 250px; /* Fijar una altura consistente */
-    width: 100%;   /* Asegurar que ocupe todo el ancho disponible */
+    height: auto;
     overflow: hidden;
-    display: flex;
-    justify-content: center; /* Centrar la imagen */
-    align-items: center;     /* Centrar la imagen */
   }
-
-  /* Imagen dentro del contenedor */
-  .cardImage img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Ajuste para cubrir el área sin distorsionar la imagen */
-  }
-
-  /* Asegurarse de que las tarjetas también estén centradas y tengan un tamaño consistente */
-  .menuItem {
-    width: 100%;
-    max-width: 400px; /* Ajuste para que las tarjetas no sean más anchas de lo necesario */
-    margin: 0 auto;  /* Centrar las tarjetas */
-  }
+  
 }
 
 @media (max-width: 480px) {
@@ -260,7 +247,7 @@
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 1rem;
   font-family: "Roboto", sans-serif;
   background-color: #f5f2e9;
   color: #ffffff;
@@ -270,7 +257,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 1rem;
 }
 
 .logoContainer {
