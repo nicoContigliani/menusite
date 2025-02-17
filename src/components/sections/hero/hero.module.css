@@ -1,3 +1,7 @@
+/* 📌 Importar fuente */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+/* 📌 Hero Section */
 .hero {
   position: relative;
   min-height: 100vh;
@@ -7,7 +11,7 @@
   padding-top: 64px;
   overflow: hidden;
   color: white;
-
+  font-family: "Inter", sans-serif; /* Aplicar la fuente Inter */
 }
 
 .videoBackground {
@@ -18,7 +22,6 @@
   height: 100%;
   object-fit: cover;
   z-index: -2;
-  /* filter: blur(2px); */
   background-color: black;
 }
 
@@ -54,6 +57,7 @@
   font-weight: 700;
   line-height: 1.2;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.493);
+  font-family: "Inter", sans-serif; /* Aplicar la fuente Inter */
 }
 
 .description {
@@ -61,6 +65,7 @@
   font-size: 18px;
   max-width: 672px;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.557);
+  font-family: "Inter", sans-serif; /* Aplicar la fuente Inter */
 }
 
 .buttons {
@@ -80,6 +85,7 @@
   text-decoration: none;
   transition: all 0.2s ease;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+  font-family: "Inter", sans-serif; /* Aplicar la fuente Inter */
 }
 
 .primary:hover {
@@ -97,6 +103,7 @@
   font-weight: 500;
   text-decoration: none;
   transition: all 0.2s ease;
+  font-family: "Inter", sans-serif; /* Aplicar la fuente Inter */
 }
 
 .secondary:hover {
@@ -138,3 +145,99 @@
   }
 }
 
+/* 📌 Footer Section */
+.footer {
+  background: radial-gradient(circle, transparent 45%, rgb(255, 255, 255) 100%);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+  padding: 20px 0 10px;
+  color: #444;
+  font-size: 14px;
+  font-family: "Inter", sans-serif; /* Aplicar la fuente Inter */
+}
+
+.footerContent {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logoSection {
+  flex: 0 1 auto;
+}
+
+.logo {
+  font-size: 18px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #222;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+}
+
+.logo:hover {
+  transform: scale(1.05);
+}
+
+.icon {
+  font-size: 20px;
+  color: #6366f1;
+}
+
+.linksSection {
+  display: flex;
+  gap: 20px;
+}
+
+.link {
+  color: #444;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.link:hover {
+  color: #6366f1;
+}
+
+.socialSection {
+  display: flex;
+  gap: 12px;
+}
+
+.socialLink {
+  color: #444;
+  transition: color 0.3s ease;
+}
+
+.socialLink:hover {
+  color: #6366f1;
+}
+
+.bottomBar {
+  margin-top: 15px;
+  padding: 10px 20px;
+  text-align: center;
+  font-size: 12px;
+  color: #666;
+}
+
+@media (max-width: 768px) {
+  .footerContent {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .linksSection {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .socialSection {
+    margin-top: 10px;
+  }
+}
