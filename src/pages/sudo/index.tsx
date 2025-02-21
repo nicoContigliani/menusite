@@ -1,5 +1,3 @@
-// pages/index.tsx
-
 import * as React from 'react';
 import { extendTheme } from '@mui/material/styles';
 import DashboardIcon from '@mui/icons-material/Dashboard';
