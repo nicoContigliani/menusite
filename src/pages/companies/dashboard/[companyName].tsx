@@ -1,4 +1,3 @@
-// pages/[companyName].tsx
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
@@ -15,10 +14,21 @@ export default function CompanyAnalytics() {
 
     const fetchData = async () => {
       try {
+        // First, fetch the data (GET)
         const res = await fetch(`/api/analytics?companyname=${companyName}`);
         if (!res.ok) throw new Error('Error fetching data');
         const result = await res.json();
-        console.log("🚀 ~ fetchData ~ result:", result)
+        
+        // Then, you can perform the DELETE request if needed
+        const deleteRes = await fetch(`/api/analytics?companyname=${companyName}`, {
+          method: "DELETE",
+        });
+        if (!deleteRes.ok) throw new Error('Error deleting data');
+        const deleteResult = await deleteRes.json();
+
+        console.log("🚀 ~ fetchData ~ result:", result);
+        console.log("🚀 ~ fetchData ~ deleteResult:", deleteResult);
+
         setData(result);
       } catch (err) {
         setError('Failed to load data');

@@ -70,6 +70,26 @@ export async function getCompanyByName(companyName: any) {
   }
 }
 
+export async function getAllCompanies() {
+  try {
+    const client = await clientPromise;
+    const db = client.db("menuDB");
+    const companies = db.collection("companies");
+  
+    const existingCompany = await companies.findOne();
+
+    // const existingCompany = await companies.findOne();  
+
+    console.log("🚀 ~ getCompanyByName ~ existingCompany:", existingCompany)
+    return existingCompany || null; // Retornar null en lugar de undefined
+  } catch (error) {
+    console.log("🚀 ~ getCompanyByName ~ error:", error)
+
+  }
+}
+
+
+
 
 // Datos de la empresa
 // contactInfo: Detalles de contacto de la empresa.

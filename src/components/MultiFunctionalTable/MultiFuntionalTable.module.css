@@ -1,0 +1,60 @@
+/* Contenedor de la tabla */
+.content {
+    padding-right: auto;
+    padding-left: auto;
+  }
+  
+  /* Contenedor con scroll horizontal */
+  .table-container {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; /* Mejora la experiencia en dispositivos táctiles */
+    position: relative; /* Para asegurar visibilidad */
+  }
+  
+  /* Asegura que la tabla no se deforme en dispositivos pequeños */
+  .anttable {
+    min-width: 1000px; /* Mantener un ancho mínimo */
+    width: 100%; /* Ocupar todo el ancho disponible */
+    table-layout: auto; /* Mejor distribución de columnas */
+  }
+  
+  /* Evitar el corte de texto en celdas */
+  .anttable thead tr th,
+  .anttable tbody tr td {
+    white-space: nowrap; /* Evitar saltos de línea */
+    overflow: hidden; /* Ocultar el desbordamiento de texto */
+    text-overflow: ellipsis; /* Usar puntos suspensivos si hay desbordamiento */
+    padding: 8px;
+  }
+  
+  /* Ajustes para pantallas móviles */
+  @media (max-width: 768px) {
+    .content {
+        padding-right: 5%;
+        padding-left: 0%;
+      }
+      
+    .table-container {
+      overflow-x: auto;
+      max-width: 100%;
+    }
+  
+    .anttable {
+      font-size: 12px; /* Ajustar el tamaño de la fuente */
+      min-width: 800px; /* Evitar que la tabla se encoja demasiado */
+    }
+  
+    /* Asegurarse que las celdas tengan suficiente espacio */
+    .anttable thead tr th,
+    .anttable tbody tr td {
+      padding: 6px; /* Menos padding en pantallas pequeñas */
+    }
+  
+    /* Ajustes para la visualización de columnas */
+    .anttable th,
+    .anttable td {
+      padding: 10px; /* Asegura un buen espacio entre las celdas */
+    }
+  }
+  

@@ -1,34 +1,3 @@
-// import { NextApiRequest, NextApiResponse } from "next";
-// import { readAndInsertExcelData } from "@/services/excelService";
-
-// export const config = {
-//   api: {
-//     bodyParser: true, // Enable body parsing
-//   },
-// };
-
-// export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-//   if (req.method !== "POST") {
-//     return res.status(405).json({ message: "Method Not Allowed" });
-//   }
-
-//   try {
-//     const data = req.body; // Access the parsed body directly
-//     console.log("🚀 ~ handler ~ data:", data);
-
-//     const { companyName, hojas } = await readAndInsertExcelData(data);
-
-//     res.status(200).json({
-//       namecompaines: companyName,
-//       hojas,
-//     });
-//   } catch (error: any) {
-//     console.error(error);
-//     res.status(500).json({ message: "Internal Server Error", error: error.message });
-//   }
-// }
-
-
 
 import { NextApiRequest, NextApiResponse } from "next";
 import { readAndInsertExcelData, getCompanyByName } from "@/services/excelService";

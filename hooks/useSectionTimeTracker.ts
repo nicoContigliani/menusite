@@ -102,9 +102,11 @@ const useSectionTimeTracker = (namecompanies: string) => {
         })
 
         if (response.ok) {
+          console.log("🚀 ~ response.ok:", response.ok)
           lastSentTimeRef.current = now
         } else {
-          throw new Error("Error en el envío")
+          console.log("🚀 ~ !response.ok:", !response.ok)
+          // throw new Error("Error en el envío")
         }
       } catch (error) {
         console.error("❌ Error al enviar datos:", error)
