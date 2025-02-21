@@ -33,16 +33,16 @@ export default function Home() {
     btn1: "/products",
     btn2: "/moreinfo"
   }
-  const LoginUser = (data: any) => {
-    console.log("🚀 ~ LoginUser ~ data:", data)
-    fetch('/api/loginuser', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    })
-  }
+  // const LoginUser = (data: any) => {
+  //   console.log("🚀 ~ LoginUser ~ data:", data)
+  //   fetch('/api/loginuser', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: JSON.stringify(data)
+  //   })
+  // }
 
   return (
     <>
@@ -84,9 +84,9 @@ export default function Home() {
         <Contact />
 
 
-        <button
+        {/* <button
           onClick={() => LoginUser({ "email": "nico.contigliani@gmail.com", "password": "Jesus6388" })}
-        >hola</button>
+        >hola</button> */}
         {/* <LoginWithCode/> */}
         <LoginB />
         <RegisterB />
