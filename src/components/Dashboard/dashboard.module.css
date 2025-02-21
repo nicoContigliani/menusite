@@ -1,14 +1,3 @@
-:root {
-  --glass-bg: rgba(255, 255, 255, 0.7);
-  --glass-border: rgba(255, 255, 255, 0.3);
-  --text-color: #333;
-  --hover-color: rgba(255, 255, 255, 0.9);
-  --sidebar-bg: rgba(245, 245, 247, 0.8);
-  --main-bg: #f0f0f3;
-  --menu-item-size: 50px;
-  --card-gap: 20px;
-}
-
 /* CONTAINER GENERAL */
 .container {
   min-height: 100vh;
@@ -264,4 +253,131 @@
   .card {
     flex-basis: calc(33.333% - var(--card-gap));
   }
+}
+
+/* ESTILOS PARA EL MODAL */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1001;
+}
+
+.modalContent {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.modalTitle {
+  font-size: 1.5em;
+  color: #333;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  font-size: 1.5em;
+  cursor: pointer;
+}
+
+.modalBody {
+  margin-bottom: 20px;
+}
+
+/* FORMULARIOS */
+.formGroup {
+  margin-bottom: 15px;
+}
+
+.formLabel {
+  display: block;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.formInput,
+.formSelect,
+.formTextarea {
+  width: calc(100% - 12px);
+  padding: 6px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.formButton {
+  background-color: #1890ff;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.formButton:hover {
+  background-color: #40a9ff;
+}
+
+/* ESTILOS DE LOS MENSAJES DE ERROR */
+.error {
+  color: red;
+  font-size: 0.9em;
+  margin-top: 5px;
+}
+
+/* ESTILOS PARA LOS CARGANDO */
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+}
+
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #1890ff;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ESTILOS PARA LOS MENSAJES DE ÉXITO */
+.successMessage {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+}
+
+/* ESTILOS PARA LOS MENSAJES DE ERROR GENERALES */
+.errorMessage {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 15px;
 }
