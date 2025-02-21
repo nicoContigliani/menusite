@@ -20,6 +20,7 @@
     "@reduxjs/toolkit": "^2.5.1",
     "@supabase/ssr": "^0.5.2",
     "@supabase/supabase-js": "^2.48.1",
+    "@toolpad/core": "^0.12.0",
     "antd": "^5.23.3",
     "b2-sdk": "^1.7.0",
     "backblaze-b2": "^1.7.0",
