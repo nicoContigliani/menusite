@@ -435,6 +435,237 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const analytics = db.collection("analytics");
 
     // Manejo de la solicitud GET
+
+    // if (req.method === 'GET') {
+    //   const companyData = await trackes.aggregate([
+    //     { $match: { namecompanie: companyname } },
+    //     { $unwind: "$history" },
+    //     {
+    //       $addFields: {
+    //         "history.createAt": {
+    //           $cond: {
+    //             if: { $eq: [{ $type: "$history.createAt" }, "date"] },
+    //             then: "$history.createAt",
+    //             else: new Date()
+    //           }
+    //         }
+    //       }
+    //     },
+    //     { $sort: { userId: 1, "history.createAt": 1 } },
+    //     {
+    //       $group: {
+    //         _id: "$userId",
+    //         email: { $first: "$email" },
+    //         companyName: { $first: "$namecompanie" },
+    //         history: { $push: "$history" },
+    //         clicks: { $first: "$clicks" } // Agregar los clicks al grupo
+    //       }
+    //     }
+    //   ]).toArray();
+
+    //   // Verificar si se encontraron datos de la empresa
+    //   if (!companyData || companyData.length === 0) {
+    //     return res.status(404).json({ error: 'Company not found' });
+    //   }
+
+    //   // Procesar los datos históricos para cada usuario
+    //   for (const data of companyData) {
+    //     let historicalData = data.history || [];
+    //     if (historicalData.length === 0) {
+    //       const defaultHistory = [{
+    //         createAt: new Date(),
+    //         section: "default",
+    //         timeSpent: 0
+    //       }];
+    //       historicalData.push(...defaultHistory);
+    //     }
+
+    //     const validHistoricalData = historicalData.filter((record:any) => record.createAt != null);
+
+    //     if (validHistoricalData.length === 0) continue;
+
+    //     validHistoricalData.sort((a:any, b:any) => a.createAt - b.createAt);
+
+    //     const lots = [];
+    //     let currentLot = [];
+    //     let lastTimestamp = validHistoricalData[0].createAt;
+
+    //     // Agrupar los datos históricos en lotes
+    //     for (const record of validHistoricalData) {
+    //       const timeDifference = (record.createAt - lastTimestamp) / (1000 * 60 * 60); // Diferencia en horas
+    //       if (timeDifference > 3) {
+    //         lots.push(currentLot);
+    //         currentLot = [];
+    //       }
+    //       currentLot.push(record);
+    //       lastTimestamp = record.createAt;
+    //     }
+
+    //     if (currentLot.length > 0) {
+    //       lots.push(currentLot);
+    //     }
+
+    //     // Insertar los lotes en la colección de 'analytics'
+    //     for (const lot of lots) {
+    //       const startTime = lot[0]?.createAt ?? null;
+    //       const endTime = lot[lot.length - 1]?.createAt ?? null;
+
+    //       // Contar los clicks por sección y elemento
+    //       const clickCounts:any = {};
+    //       for (const click of data.clicks) {
+    //         const key = `${click.section}-${click.element}`;
+    //         if (!clickCounts[key]) {
+    //           clickCounts[key] = 0;
+    //         }
+    //         clickCounts[key]++;
+    //       }
+
+    //       const lotData = {
+    //         startTime,
+    //         endTime,
+    //         historical: lot,
+    //         sections: lot.map((h) => ({
+    //           section: h.section,
+    //           timeSpent: h.timeSpent
+    //         })),
+    //         clicks: clickCounts // Agregar los clicks al lote
+    //       };
+
+    //       const updateOperation:any = {
+    //         $push: { lots: lotData }
+    //       };
+
+    //       await analytics.updateOne(
+    //         { userId: data._id, companyName: data.companyName, email: data.email },
+    //         updateOperation,
+    //         { upsert: true }
+    //       );
+    //     }
+    //   }
+
+    //   return res.status(200).json({ message: "Data inserted into analytics successfully", companyData });
+    // }
+
+
+
+
+
+
+
+
+    // if (req.method === 'GET') {
+    //   const companyData = await trackes.aggregate([
+    //     { $match: { namecompanie: companyname } },
+    //     { $unwind: "$history" },
+    //     {
+    //       $addFields: {
+    //         "history.createAt": {
+    //           $cond: {
+    //             if: { $eq: [{ $type: "$history.createAt" }, "date"] },
+    //             then: "$history.createAt",
+    //             else: new Date()
+    //           }
+    //         }
+    //       }
+    //     },
+    //     { $sort: { userId: 1, "history.createAt": 1 } },
+    //     {
+    //       $group: {
+    //         _id: "$userId",
+    //         email: { $first: "$email" },
+    //         companyName: { $first: "$namecompanie" },
+    //         history: { $push: "$history" },
+    //         clicks: { $first: "$clicks" } // Agregar los clicks al grupo
+    //       }
+    //     }
+    //   ]).toArray();
+
+    //   // Verificar si se encontraron datos de la empresa
+    //   if (!companyData || companyData.length === 0) {
+    //     return res.status(404).json({ error: 'Company not found' });
+    //   }
+
+    //   // Procesar los datos históricos para cada usuario
+    //   for (const data of companyData) {
+    //     let historicalData = data.history || [];
+    //     if (historicalData.length === 0) {
+    //       const defaultHistory = [{
+    //         createAt: new Date(),
+    //         section: "default",
+    //         timeSpent: 0
+    //       }];
+    //       historicalData.push(...defaultHistory);
+    //     }
+
+    //     const validHistoricalData = historicalData.filter((record:any) => record.createAt != null);
+
+    //     if (validHistoricalData.length === 0) continue;
+
+    //     validHistoricalData.sort((a:any, b:any) => a.createAt - b.createAt);
+
+    //     const lots = [];
+    //     let currentLot = [];
+    //     let firstTimestamp = validHistoricalData[0].createAt;
+
+    //     // Agrupar los datos históricos en lotes
+    //     for (const record of validHistoricalData) {
+    //       const timeDifference = (record.createAt - firstTimestamp) / (1000 * 60 * 60); // Diferencia en horas
+    //       if (timeDifference > 3) {
+    //         lots.push(currentLot);
+    //         currentLot = [];
+    //         firstTimestamp = record.createAt; // Actualizar el primer timestamp del nuevo lote
+    //       }
+    //       currentLot.push(record);
+    //     }
+
+    //     if (currentLot.length > 0) {
+    //       lots.push(currentLot);
+    //     }
+
+    //     // Insertar los lotes en la colección de 'analytics'
+    //     for (const lot of lots) {
+    //       const startTime = lot[0]?.createAt ?? null;
+    //       const endTime = lot[lot.length - 1]?.createAt ?? null;
+
+    //       // Contar los clicks por sección y elemento
+    //       const clickCounts:any = {};
+    //       for (const click of data.clicks) {
+    //         const key = `${click.section}-${click.element}`;
+    //         if (!clickCounts[key]) {
+    //           clickCounts[key] = 0;
+    //         }
+    //         clickCounts[key]++;
+    //       }
+
+    //       const lotData = {
+    //         startTime,
+    //         endTime,
+    //         historical: lot,
+    //         sections: lot.map((h) => ({
+    //           section: h.section,
+    //           timeSpent: h.timeSpent
+    //         })),
+    //         clicks: clickCounts // Agregar los clicks al lote
+    //       };
+
+    //       const updateOperation:any = {
+    //         $push: { lots: lotData }
+    //       };
+
+    //       await analytics.updateOne(
+    //         { userId: data._id, companyName: data.companyName, email: data.email },
+    //         updateOperation,
+    //         { upsert: true }
+    //       );
+    //     }
+    //   }
+
+    //   return res.status(200).json({ message: "Data inserted into analytics successfully", companyData });
+    // }
+
+
+
+
     if (req.method === 'GET') {
       const companyData = await trackes.aggregate([
         { $match: { namecompanie: companyname } },
@@ -456,7 +687,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             _id: "$userId",
             email: { $first: "$email" },
             companyName: { $first: "$namecompanie" },
-            history: { $push: "$history" }
+            history: { $push: "$history" },
+            clicks: { $first: "$clicks" } // Agregar los clicks al grupo
           }
         }
       ]).toArray();
@@ -469,6 +701,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       // Procesar los datos históricos para cada usuario
       for (const data of companyData) {
         let historicalData = data.history || [];
+
         if (historicalData.length === 0) {
           const defaultHistory = [{
             createAt: new Date(),
@@ -478,35 +711,53 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           historicalData.push(...defaultHistory);
         }
 
+        // Filtrar datos válidos
         const validHistoricalData = historicalData.filter((record: any) => record.createAt != null);
 
         if (validHistoricalData.length === 0) continue;
 
-        validHistoricalData.sort((a: { createAt: number }, b: { createAt: number }) => a.createAt - b.createAt);
+        // Ordenar los datos por fecha
+        validHistoricalData.sort((a: any, b: any) => a.createAt - b.createAt);
 
+        // Agrupación en lotes de registros con menos de 3 horas de diferencia
         const lots = [];
         let currentLot = [];
-        let lastTimestamp = validHistoricalData[0].createAt;
+        let firstTimestamp = validHistoricalData[0].createAt; // Primer timestamp del lote actual
 
-        // Agrupar los datos históricos en lotes
         for (const record of validHistoricalData) {
-          const timeDifference = (record.createAt - lastTimestamp) / (1000 * 60 * 60); // Diferencia en horas
+          const timeDifference = (record.createAt - firstTimestamp) / (1000 * 60 * 60); // Diferencia en horas
+
           if (timeDifference > 3) {
-            lots.push(currentLot);
-            currentLot = [];
+            // Si la diferencia es mayor a 3 horas, cerramos el lote actual y empezamos uno nuevo
+            if (currentLot.length > 0) {
+              lots.push([...currentLot]); // Guardar el lote antes de vaciarlo
+            }
+            currentLot = []; // Reiniciar el lote
+            firstTimestamp = record.createAt; // Actualizar el primer timestamp del nuevo lote
           }
+
+          // Agregar el registro al lote actual
           currentLot.push(record);
-          lastTimestamp = record.createAt;
         }
 
+        // Agregar el último lote si tiene datos
         if (currentLot.length > 0) {
-          lots.push(currentLot);
+          lots.push([...currentLot]);
         }
 
         // Insertar los lotes en la colección de 'analytics'
         for (const lot of lots) {
           const startTime = lot[0]?.createAt ?? null;
           const endTime = lot[lot.length - 1]?.createAt ?? null;
+
+          // Contar los clicks por sección y elemento
+          const clickCounts: any = {};
+          if (Array.isArray(data.clicks)) {
+            for (const click of data.clicks) {
+              const key = `${click.section}-${click.element}`;
+              clickCounts[key] = (clickCounts[key] || 0) + 1;
+            }
+          }
 
           const lotData = {
             startTime,
@@ -515,7 +766,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             sections: lot.map((h) => ({
               section: h.section,
               timeSpent: h.timeSpent
-            }))
+            })),
+            clicks: clickCounts // Agregar los clicks al lote
           };
 
           const updateOperation: any = {
@@ -532,6 +784,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
       return res.status(200).json({ message: "Data inserted into analytics successfully", companyData });
     }
+
+
+
+
+
+
 
     // Manejo de la solicitud DELETE
     if (req.method === "DELETE") {

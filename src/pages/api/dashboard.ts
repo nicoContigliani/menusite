@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import clientPromise from "../../../lib/mongoose";
-import { askDashboardanalytics } from "@/services/askDashboardanalytics.services";
+import { askDashboardAnalytics } from "@/services/askDashboardanalytics.services";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 
@@ -25,8 +25,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 .find({ companyName: new RegExp(`^${companyname}$`, "i") })
                 .toArray(); // Convierte el cursor en un array
 
-            const retunrDAta = await askDashboardanalytics(companyAnalytics)
-            console.log("🚀 ~ handler ~ retunrDAta:", retunrDAta)
+            const retunrDAta = await askDashboardAnalytics(companyAnalytics)
 
             if (!company) {
                 return res.status(404).json({ message: "Company not found" });
@@ -40,7 +39,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
 
 
-            return res.status(200).json(company);
+            return res.status(200).json(retunrDAta);
         }
 
         // Obtener todas las empresas si no se pasó `companyname`
