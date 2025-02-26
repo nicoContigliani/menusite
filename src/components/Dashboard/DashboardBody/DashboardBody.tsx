@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Box, Typography } from '@mui/material';
+import { Grid, Box } from '@mui/material';
 
 interface DashboardBodyProps {
   children: React.ReactNode;  // Permitimos que se pase cualquier contenido como hijo
@@ -13,32 +13,30 @@ const DashboardBody: React.FC<DashboardBodyProps> = ({ children }) => {
         backgroundColor: 'background.default',
         minHeight: '100vh',  // Asegura que el Box ocupe al menos el 100% de la altura de la ventana
         display: 'flex',
-        flexDirection: 'row',  // Coloca los elementos en columna
-        justifyContent: 'space-between', // Alinea los elementos al inicio
+        flexDirection: 'row',  // Coloca los elementos en fila
+        justifyContent: 'space-between', // Distribuye los elementos de manera uniforme
         overflow: 'hidden', // Evita que haya desbordamiento
+        gap: 2, // Espaciado entre elementos
       }}
     >
-      <Grid container spacing={4} sx={{ flexGrow: 3 }}>
-        <Grid item xs={12}>
-          <Box
-            sx={{
-              borderRadius: 2,
-              boxShadow: 3,
-              backgroundColor: 'background.paper',
-              padding: 3,
-              height: '100%',  // Asegura que el Box ocupe el 100% de la altura del contenedor
-              marginTop: 0,
-              transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-              '&:hover': {
-                transform: 'scale(1.02)',
-                boxShadow: 6,
-              },
-            }}
-          >
-            {children}  {/* Aquí se renderiza el contenido hijo */}
-          </Box>
-        </Grid>
-      </Grid>
+      {React.Children.map(children, (child, index) => (
+        <Box
+          key={index}
+          sx={{
+            borderRadius: 2,
+            boxShadow: 3,
+            backgroundColor: 'background.paper',
+            padding: 2,
+            transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+            '&:hover': {
+              transform: 'scale(1.02)',
+              boxShadow: 1,
+            },
+          }}
+        >
+          {child}  {/* Renderiza cada hijo dentro de su propio Box */}
+        </Box>
+      ))}
     </Box>
   );
 };

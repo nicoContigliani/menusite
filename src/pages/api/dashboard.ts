@@ -22,9 +22,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 .toArray(); // Convierte el cursor en un array
 
             const companyAnalytics:any[]|null = await analytics
-                .find({ companyName: new RegExp(`^${companyname}$`, "i") })
-                .toArray(); // Convierte el cursor en un array
-
+            .find({ companyName: new RegExp(`^${companyname}$`, "i") })
+            .toArray(); // Convierte el cursor en un array
+            
             const retunrDAta = await askDashboardAnalytics(companyAnalytics)
 
             if (!company) {

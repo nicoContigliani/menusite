@@ -232,6 +232,7 @@
 // };
 
 // export default IndexPage;
+"use client"
 import * as React from 'react';
 import { extendTheme } from '@mui/material/styles';
 import DashboardIcon from '@mui/icons-material/Dashboard';
@@ -244,6 +245,8 @@ import DashboardBody from '@/components/Dashboard/DashboardBody/DashboardBody';
 import { Button, ButtonGroup, Typography } from '@mui/material';
 import { useFetchMultiple } from '../../../hooks/useFetchMultiple';
 import DashboardCard from '@/components/Dashboard/DashboardCard/DashboardCard';
+import styles from '@/styles/Dashboard.module.css'
+
 
 // Theme configuration
 const demoTheme = extendTheme({
@@ -284,7 +287,7 @@ const IndexPage = () => {
             trakestime: trackTimeData,
             uniqueCompanies: uniqueCompaniesData,
         });
-    }, [results,refreshTrigger]);
+    }, [results, refreshTrigger]);
 
     const handleButtonClick = React.useCallback(async (companyName: string) => {
         try {
@@ -364,18 +367,16 @@ const IndexPage = () => {
             title: 'Dashboard',
             icon: <DashboardIcon />,
             component: () => (
-                <DashboardBody>
-                    <DashboardCard title="trake">
-
-                        <div>
-
+                <div className={styles.container}>
+                    <div className={styles.grid}>
+                        <div className={styles.card}>
                             <div>
                                 <strong>Formater Trake : </strong>
                                 <span>{data.trakestime?.length} </span>
                             </div>
                             <hr />
                             <div>
-                            <strong>Trake each company: </strong>
+                                <strong>Trake each company: </strong>
 
                                 <ButtonGroup variant="outlined" size="small" aria-label="Basic button group">
                                     {
@@ -407,72 +408,13 @@ const IndexPage = () => {
                                     <Button onClick={handleCreate}>All Companies</Button>
                                 </ButtonGroup>
                             </div>
+
                         </div>
 
-                    </DashboardCard>
-                    <DashboardCard title="trake">
-
-                        <div>
-
-                            <div>
-                                <strong>Formater Trake : </strong>
-                                <span>{data.trakestime?.length} </span>
-                            </div>
-                            <hr />
-                            <div>
-                                <strong>Trake each company: </strong>
-                                <ButtonGroup variant="outlined" size="small" aria-label="Basic button group">
-                                    {
-                                        data.uniqueCompanies &&
-                                        data.uniqueCompanies.map((company: any, index: number) => (
-                                            <Button key={index} onClick={() => handleButtonClick(company)}>{company}</Button>
-                                        ))
-                                    }
-                                </ButtonGroup>
-                            </div>
-                            <hr />
-                            <div>
-                                <strong>Trake each company: </strong>
-                                <ButtonGroup variant="contained" size="small" aria-label="Basic button group">
-                                    <Button onClick={handleCreate}>All Companies</Button>
-                                </ButtonGroup>
-                            </div>
-                        </div>
-
-                    </DashboardCard>
-                    <DashboardCard title="trake">
-
-                        <div>
-
-                            <div>
-                                <strong>Formater Trake : </strong>
-                                <span>{data.trakestime?.length} </span>
-                            </div>
-                            <hr />
-                            <div>
-                                <strong>Trake each company: </strong>
-                                <ButtonGroup variant="outlined" size="small" aria-label="Basic button group">
-                                    {
-                                        data.uniqueCompanies &&
-                                        data.uniqueCompanies.map((company: any, index: number) => (
-                                            <Button key={index} onClick={() => handleButtonClick(company)}>{company}</Button>
-                                        ))
-                                    }
-                                </ButtonGroup>
-                            </div>
-                            <hr />
-                            <div>
-                                <strong>Trake each company: </strong>
-                                <ButtonGroup variant="contained" size="small" aria-label="Basic button group">
-                                    <Button onClick={handleCreate}>All Companies</Button>
-                                </ButtonGroup>
-                            </div>
-                        </div>
-
-                    </DashboardCard>
+                    </div>
 
 
-                </DashboardBody>
+                </div>
 
 
             ),
