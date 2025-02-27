@@ -49,14 +49,11 @@ const Menuone: React.FC<MenuProps> = (props) => {
         }
     }, []);
 
-    const { sectionTimes, totalTime, history, handleSectionEnter } = useSectionTimeTracker(namecompanies);
+    const { sectionTimes, handleSectionEnter, handleSectionLeave, handleClick } = useSectionTimeTracker(namecompanies)
 
-
-    useEffect(() => {
-        console.log("📊 Estadísticas Generales:", { sectionTimes, totalTime });
-        console.log("📜 Historial de Navegación:", history);
-    }, []);
-
+    const getElementId = (sectionName: string, index: number, itemName: string) => {
+        return `${sectionName}-${index}-${itemName}`;
+    };
 
     const [searchTerm, setSearchTerm] = useState("")
     const [loading, setLoading] = useState(true)
@@ -121,6 +118,7 @@ const Menuone: React.FC<MenuProps> = (props) => {
 
                 <div className={styles.info}
                     onMouseEnter={() => handleSectionEnter("info")}
+                    onMouseLeave={() => handleSectionLeave("info")}
                 >
                     {info ?
                         <Info
@@ -137,6 +135,7 @@ const Menuone: React.FC<MenuProps> = (props) => {
 
                 <div className={styles.searchContainer}
                     onMouseEnter={() => handleSectionEnter("search")}
+                    onMouseLeave={() => handleSectionLeave("search")}
                 >
                     <input
                         type="text"
@@ -154,6 +153,8 @@ const Menuone: React.FC<MenuProps> = (props) => {
                         <div className={styles.sectionHeader}>
                             <div className={styles.sectionTitle}
                                 onMouseEnter={() => handleSectionEnter(`${sectionName}`)}
+                                onMouseLeave={() => handleSectionLeave(`${sectionName}`)}
+
                             >
                                 {sectionName}
                             </div>
@@ -162,7 +163,8 @@ const Menuone: React.FC<MenuProps> = (props) => {
                             {items?.map((item: MenuItem, index: number) => (
                                 <div key={`${sectionName}-${item?.Item_id}-${index}`} className={styles.menuItem}>
                                     <div className={styles.itemInfo}
-                                        onMouseEnter={() => handleSectionEnter(`${sectionName}-${index}-${item?.Name}`)}
+                                        onMouseEnter={() => handleSectionEnter(getElementId(sectionName, index, item.Name))}
+                                        onClick={() => handleClick(getElementId(sectionName, index, item.Name), "menuItem")}
                                     >
                                         <div className={styles.cardImage}>
                                             <Image

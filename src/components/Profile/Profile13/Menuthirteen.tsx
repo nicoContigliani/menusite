@@ -30,17 +30,20 @@ interface ConfigType {
     IconBrand: string
 }
 const Menuthirteen: React.FC<MenuProps> = (props) => {
-    const { backgroundImages, config, groupedSections, info, menuData,  promotions, schedules } = props
+    const { backgroundImages, config, groupedSections, info, menuData, promotions, schedules } = props
     const [searchTerm, setSearchTerm] = useState<string>('');
-        const [namecompanies, setNamecompanies] = useState<string>('')
-        useLayoutEffect(() => {
-            if (typeof window !== "undefined") {
-                // setFullUrl(window.location.href);
-                const data = window.location.href;
-                setNamecompanies(extractLastSegment(data))
-            }
-        }, []);
-    const { sectionTimes, handleSectionEnter } = useSectionTimeTracker(namecompanies)
+    const [namecompanies, setNamecompanies] = useState<string>('')
+    useLayoutEffect(() => {
+        if (typeof window !== "undefined") {
+            // setFullUrl(window.location.href);
+            const data = window.location.href;
+            setNamecompanies(extractLastSegment(data))
+        }
+    }, []);
+    const { sectionTimes, handleSectionEnter, handleSectionLeave, handleClick } = useSectionTimeTracker(namecompanies)
+    const getElementId = (sectionName: string, index: number, itemName: string) => {
+        return `${sectionName}-${index}-${itemName}`;
+    };
 
 
     const [loading, setLoading] = useState(true)
@@ -127,7 +130,8 @@ const Menuthirteen: React.FC<MenuProps> = (props) => {
                 </header>
                 {Object.entries(groupedSections)?.map(([sectionName, items], sectionIndex) => (
                     <div key={sectionIndex} className={styles.section}
-                        onMouseEnter={() => handleSectionEnter(`${sectionName}`)}
+                        onMouseEnter={() => handleSectionEnter(sectionName)}
+                        onMouseLeave={() => handleSectionLeave(sectionName)}
                     >
                         <h1 className={styles.sectionTitle}>{sectionName}</h1>
                         <div className={styles.sectionItems}>
@@ -135,8 +139,8 @@ const Menuthirteen: React.FC<MenuProps> = (props) => {
                                 <div
                                     key={`${sectionIndex}-${itemIndex}`} // Clave única combinando índice de sección y elemento
                                     className={styles.menuItem}
-                                    onMouseEnter={() => handleSectionEnter(`${sectionName}-${itemIndex}-${item?.Name}`)}
-
+                                    onMouseEnter={() => handleSectionEnter(getElementId(sectionName, itemIndex, item.Name))}
+                                    onClick={() => handleClick(getElementId(sectionName, itemIndex, item.Name), "menuItem")}
                                 >
                                     <div className={styles.itemImage}>
                                         <Image

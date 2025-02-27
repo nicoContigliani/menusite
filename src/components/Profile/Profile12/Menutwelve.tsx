@@ -30,21 +30,24 @@ interface ConfigType {
 }
 
 const Menutwelve: React.FC<MenuProps> = (props) => {
-    const { backgroundImages, config, groupedSections, info, menuData,  promotions, schedules } = props
+    const { backgroundImages, config, groupedSections, info, menuData, promotions, schedules } = props
     const [searchTerm, setSearchTerm] = useState("")
     const [loading, setLoading] = useState(true)
     const [iconURL, setIconURL] = useState<string>("")
-        const [namecompanies, setNamecompanies] = useState<string>('')
-        useLayoutEffect(() => {
-            if (typeof window !== "undefined") {
-                // setFullUrl(window.location.href);
-                const data = window.location.href;
-                setNamecompanies(extractLastSegment(data))
-            }
-        }, []);
-    
-    const { sectionTimes, handleSectionEnter } = useSectionTimeTracker(namecompanies)
-  useEffect(() => {
+    const [namecompanies, setNamecompanies] = useState<string>('')
+    useLayoutEffect(() => {
+        if (typeof window !== "undefined") {
+            // setFullUrl(window.location.href);
+            const data = window.location.href;
+            setNamecompanies(extractLastSegment(data))
+        }
+    }, []);
+
+    const { sectionTimes, handleSectionEnter, handleSectionLeave, handleClick } = useSectionTimeTracker(namecompanies)
+    const getElementId = (sectionName: string, index: number, itemName: string) => {
+        return `${sectionName}-${index}-${itemName}`;
+    };
+    useEffect(() => {
         if (groupedSections) {
             const firstSection: any = Object.values(groupedSections)[0]
             if (firstSection && firstSection.length > 0) {
@@ -61,17 +64,17 @@ const Menutwelve: React.FC<MenuProps> = (props) => {
     }, [groupedSections, config])
 
     const memoizedSections = Object.entries(groupedSections)
-    .map(([sectionName, items]) => {
-        const filteredItems = items.filter(
-            (item) =>
-                [item.Name, item.Description, item.Menu_Title].some(
-                    (field) => typeof field === "string" && field.toLowerCase().includes(searchTerm.toLowerCase()),
-                ) ||
-                (typeof item.Price === "string" && item.Price.toLowerCase().includes(searchTerm.toLowerCase())),
-        )
-        return [sectionName, filteredItems] as [string, MenuItem[]]
-    })
-    .filter(([, items]) => items.length > 0)
+        .map(([sectionName, items]) => {
+            const filteredItems = items.filter(
+                (item) =>
+                    [item.Name, item.Description, item.Menu_Title].some(
+                        (field) => typeof field === "string" && field.toLowerCase().includes(searchTerm.toLowerCase()),
+                    ) ||
+                    (typeof item.Price === "string" && item.Price.toLowerCase().includes(searchTerm.toLowerCase())),
+            )
+            return [sectionName, filteredItems] as [string, MenuItem[]]
+        })
+        .filter(([, items]) => items.length > 0)
     const handleChange = (value: { inputValue: string; clarification: string }) => {
         console.log("Order Info:", value);
     };
@@ -93,8 +96,8 @@ const Menutwelve: React.FC<MenuProps> = (props) => {
             <div className={styles.menuWrapper}>
                 {memoizedSections.map(([sectionName, items], sectionIndex) => (
                     <div key={sectionIndex} className={styles.section}
-                    onMouseEnter={() => handleSectionEnter(`${sectionName}`)}
-
+                        onMouseEnter={() => handleSectionEnter(sectionName)}
+                        onMouseLeave={() => handleSectionLeave(sectionName)}
                     >
                         <h2 className={styles.sectionTitle}>{sectionName}</h2>
                         <div className={styles.sectionItems}>
@@ -102,7 +105,8 @@ const Menutwelve: React.FC<MenuProps> = (props) => {
                                 <div
                                     key={`${sectionIndex}-${itemIndex}`} // Clave única combinando índice de sección y elemento
                                     className={styles.menuItem}
-                                    onMouseEnter={() => handleSectionEnter(`${sectionName}-${itemIndex}-${item?.Name}`)}
+                                    onMouseEnter={() => handleSectionEnter(getElementId(sectionName, itemIndex, item.Name))}
+                                    onClick={() => handleClick(getElementId(sectionName, itemIndex, item.Name), "menuItem")}
                                 >
                                     <div className={styles.itemInfo}>
                                         <h3 className={styles.itemName}>{item.Name}</h3>

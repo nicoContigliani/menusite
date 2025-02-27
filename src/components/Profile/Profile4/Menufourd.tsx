@@ -33,20 +33,18 @@ interface ConfigType {
 }
 
 const Menufourd: React.FC<MenuProps> = (props) => {
-    const { backgroundImages, config, groupedSections, info, menuData,  promotions, schedules } = props
+    const { backgroundImages, config, groupedSections, info, menuData, promotions, schedules } = props
 
-        const [namecompanies, setNamecompanies] = useState<string>('')
-        useLayoutEffect(() => {
-            if (typeof window !== "undefined") {
-                // setFullUrl(window.location.href);
-                const data = window.location.href;
-                setNamecompanies(extractLastSegment(data))
-            }
-        }, []);
-    const { sectionTimes, handleSectionEnter } = useSectionTimeTracker(namecompanies)
-    console.log("🚀 ~ sectionTimes:", sectionTimes)
-    useEffect(() => {
-    }, [sectionTimes])
+    const [namecompanies, setNamecompanies] = useState<string>('')
+    useLayoutEffect(() => {
+        if (typeof window !== "undefined") {
+            // setFullUrl(window.location.href);
+            const data = window.location.href;
+            setNamecompanies(extractLastSegment(data))
+        }
+    }, []);
+    const { sectionTimes, handleSectionEnter, handleSectionLeave, handleClick } = useSectionTimeTracker(namecompanies)
+
 
 
     const [searchTerm, setSearchTerm] = useState("")
@@ -88,6 +86,10 @@ const Menufourd: React.FC<MenuProps> = (props) => {
 
     const handleChange = (value: { inputValue: string; clarification: string }) => {
         console.log("Order Info:", value);
+    };
+
+    const getElementId = (sectionName: string, index: number, itemName: string) => {
+        return `${sectionName}-${index}-${itemName}`;
     };
 
     return (
@@ -149,7 +151,8 @@ const Menufourd: React.FC<MenuProps> = (props) => {
                     <div key={sectionName} className={styles.section}>
                         <div className={styles.sectionHeader}>
                             <div className={styles.sectionTitle}
-                                onMouseEnter={() => handleSectionEnter(`${sectionName}`)}
+                                onMouseEnter={() => handleSectionEnter(sectionName)}
+                                onMouseLeave={() => handleSectionLeave(sectionName)}
                             >
                                 {sectionName}
                             </div>
@@ -158,8 +161,9 @@ const Menufourd: React.FC<MenuProps> = (props) => {
                             {items?.map((item: MenuItem, index: number) => (
                                 <div key={`${sectionName}-${item?.Item_id}-${index}`} className={styles.menuItem}>
                                     <div className={styles.itemInfo}
-                                        onMouseEnter={() => handleSectionEnter(`${sectionName}-${index}-${item?.Name}`)}
-                                    >
+                                     onMouseEnter={() => handleSectionEnter(getElementId(sectionName, index, item.Name))}
+                                     onClick={() => handleClick(getElementId(sectionName, index, item.Name), "menuItem")}
+                                >
                                         <div className={styles.cardImage}>
                                             <Image
                                                 src={`${item.Item_Image}`}
@@ -195,7 +199,7 @@ const Menufourd: React.FC<MenuProps> = (props) => {
                 ))}
             </main>
             <div
-                onMouseEnter={() => handleSectionEnter(`${schedules}`)}
+                onMouseEnter={() => handleSectionEnter(`Button-${schedules}`)}
             >
                 <Schedules
                     Schedules={schedules}

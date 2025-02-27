@@ -44,7 +44,12 @@ const MenuFifTeen: React.FC<MenuProps> = (props) => {
             setNamecompanies(extractLastSegment(data))
         }
     }, []);
-    const { sectionTimes, handleSectionEnter } = useSectionTimeTracker(namecompanies)
+    const { sectionTimes, handleSectionEnter, handleSectionLeave, handleClick } = useSectionTimeTracker(namecompanies)
+    const getElementId = (sectionName: string, index: number, itemName: string) => {
+        return `${sectionName}-${index}-${itemName}`;
+    };
+
+
 
     const [searchTerm, setSearchTerm] = useState("")
     const [loading, setLoading] = useState(true)
@@ -150,7 +155,8 @@ const MenuFifTeen: React.FC<MenuProps> = (props) => {
             <main className={styles.main}>
                 {memoizedSections?.map(([sectionName, items]) => (
                     <div key={sectionName} className={styles.section}
-                        onMouseEnter={() => handleSectionEnter(`${sectionName}`)}
+                        onMouseEnter={() => handleSectionEnter(sectionName)}
+                        onMouseLeave={() => handleSectionLeave(sectionName)}
                     >
                         <div className={styles.sectionHeader}>
                             <div className={styles.sectionTitle}>{sectionName}</div>
@@ -158,7 +164,8 @@ const MenuFifTeen: React.FC<MenuProps> = (props) => {
                         <div className={styles.sectionItems}>
                             {items?.map((item: MenuItem, index: number) => (
                                 <div key={`${sectionName}-${item?.Item_id}-${index}`} className={styles.menuItem}
-                                    onMouseEnter={() => handleSectionEnter(`${sectionName}-${index}-${item?.Name}`)}
+                                    onMouseEnter={() => handleSectionEnter(getElementId(sectionName, index, item.Name))}
+                                    onClick={() => handleClick(getElementId(sectionName, index, item.Name), "menuItem")}
 
                                 >
                                     <div className={styles.itemInfo}>

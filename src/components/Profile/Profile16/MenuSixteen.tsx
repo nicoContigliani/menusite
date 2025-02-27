@@ -36,19 +36,20 @@ const MenuSixTeen: React.FC<MenuProps> = (props) => {
     // const { menuData, groupedSections, backgroundImages, namecompanies, Promotion, info, schedules, config } = props
     const { backgroundImages, config, groupedSections, info, menuData, promotions, schedules } = props
 
-        const [namecompanies, setNamecompanies] = useState<string>('')
-        useLayoutEffect(() => {
-            if (typeof window !== "undefined") {
-                // setFullUrl(window.location.href);
-                const data = window.location.href;
-                setNamecompanies(extractLastSegment(data))
-            }
-        }, []);
+    const [namecompanies, setNamecompanies] = useState<string>('')
+    useLayoutEffect(() => {
+        if (typeof window !== "undefined") {
+            // setFullUrl(window.location.href);
+            const data = window.location.href;
+            setNamecompanies(extractLastSegment(data))
+        }
+    }, []);
 
-    const { sectionTimes, handleSectionEnter } = useSectionTimeTracker(namecompanies)
-    useEffect(() => {
-        console.log("Tiempo en cada sección:", sectionTimes)
-    }, [sectionTimes])
+    const { sectionTimes, handleSectionEnter, handleSectionLeave, handleClick } = useSectionTimeTracker(namecompanies)
+    const getElementId = (sectionName: string, index: number, itemName: string) => {
+        return `${sectionName}-${index}-${itemName}`;
+    };
+
 
 
     const [searchTerm, setSearchTerm] = useState("")
@@ -148,7 +149,8 @@ const MenuSixTeen: React.FC<MenuProps> = (props) => {
                     <div key={sectionName} className={styles.section}>
                         <div className={styles.sectionHeader}>
                             <div className={styles.sectionTitle}
-                                onMouseEnter={() => handleSectionEnter(`${sectionName}`)}
+                                onMouseEnter={() => handleSectionEnter(sectionName)}
+                                onMouseLeave={() => handleSectionLeave(sectionName)}
                             >
                                 {sectionName}
                             </div>
@@ -157,8 +159,9 @@ const MenuSixTeen: React.FC<MenuProps> = (props) => {
                             {items?.map((item: MenuItem, index: number) => (
                                 <div key={`${sectionName}-${item?.Item_id}-${index}`} className={styles.menuItem}>
                                     <div className={styles.itemInfo}
-                                        onMouseEnter={() => handleSectionEnter(`${sectionName}-${index}-${item?.Name}`)}
-
+                                        onMouseEnter={() => handleSectionEnter(getElementId(sectionName, index, item.Name))}
+                                        onClick={() => handleClick(getElementId(sectionName, index, item.Name), "menuItem")}
+    
                                     >
                                         <h2>{item?.Name}</h2>
                                         <div className={styles.itemDetails}>

@@ -34,7 +34,7 @@ interface ConfigType {
 }
 
 const Menuten: React.FC<MenuProps> = (props) => {
-    const { backgroundImages, config, groupedSections, info, menuData,promotions, schedules } = props
+    const { backgroundImages, config, groupedSections, info, menuData, promotions, schedules } = props
 
     const [namecompanies, setNamecompanies] = useState<string>('')
     useLayoutEffect(() => {
@@ -46,10 +46,10 @@ const Menuten: React.FC<MenuProps> = (props) => {
     }, []);
 
 
-    const { sectionTimes, handleSectionEnter } = useSectionTimeTracker(namecompanies)
-    console.log("🚀 ~ sectionTimes:", sectionTimes)
-    useEffect(() => {
-    }, [sectionTimes])
+    const { sectionTimes, handleSectionEnter, handleSectionLeave, handleClick } = useSectionTimeTracker(namecompanies)
+    const getElementId = (sectionName: string, index: number, itemName: string) => {
+        return `${sectionName}-${index}-${itemName}`;
+    };
 
 
     const [searchTerm, setSearchTerm] = useState("")
@@ -150,7 +150,8 @@ const Menuten: React.FC<MenuProps> = (props) => {
                     <div key={sectionName} className={styles.section}>
                         <div className={styles.sectionHeader}>
                             <div className={styles.sectionTitle}
-                                onMouseEnter={() => handleSectionEnter(`${sectionName}`)}
+                                onMouseEnter={() => handleSectionEnter(sectionName)}
+                                onMouseLeave={() => handleSectionLeave(sectionName)}
                             >
                                 {sectionName}
                             </div>
@@ -159,7 +160,8 @@ const Menuten: React.FC<MenuProps> = (props) => {
                             {items?.map((item: MenuItem, index: number) => (
                                 <div key={`${sectionName}-${item?.Item_id}-${index}`} className={styles.menuItem}>
                                     <div className={styles.itemInfo}
-                                        onMouseEnter={() => handleSectionEnter(`${sectionName}-${index}-${item?.Name}`)}
+                                        onMouseEnter={() => handleSectionEnter(getElementId(sectionName, index, item.Name))}
+                                        onClick={() => handleClick(getElementId(sectionName, index, item.Name), "menuItem")}
                                     >
                                         <div className={styles.cardImage}>
                                             <Image

@@ -36,19 +36,21 @@ interface ConfigType {
 const Menuone: React.FC<MenuProps> = (props) => {
     const { backgroundImages, config, groupedSections, info, menuData, promotions, schedules } = props
 
-       const [namecompanies, setNamecompanies] = useState<string>('')
-       useLayoutEffect(() => {
-           if (typeof window !== "undefined") {
-               // setFullUrl(window.location.href);
-               const data = window.location.href;
-               setNamecompanies(extractLastSegment(data))
-           }
-       }, []);
-   
-    const { sectionTimes, handleSectionEnter } = useSectionTimeTracker(namecompanies)
-    console.log("🚀 ~ sectionTimes:", sectionTimes)
-    useEffect(() => {
-    }, [sectionTimes])
+    const getElementId = (sectionName: string, index: number, itemName: string) => {
+        return `${sectionName}-${index}-${itemName}`;
+    };
+
+    const [namecompanies, setNamecompanies] = useState<string>('')
+    useLayoutEffect(() => {
+        if (typeof window !== "undefined") {
+            // setFullUrl(window.location.href);
+            const data = window.location.href;
+            setNamecompanies(extractLastSegment(data))
+        }
+    }, []);
+
+    const { sectionTimes, handleSectionEnter, handleSectionLeave, handleClick } = useSectionTimeTracker(namecompanies)
+
 
 
     const [searchTerm, setSearchTerm] = useState("")
@@ -87,12 +89,13 @@ const Menuone: React.FC<MenuProps> = (props) => {
             return [sectionName, filteredItems] as [string, MenuItem[]]
         })
         .filter(([, items]) => items.length > 0)
-        const handleChange = (value: { inputValue: string; clarification: string }) => {
-            console.log("Order Info:", value);
-        };
+    const handleChange = (value: { inputValue: string; clarification: string }) => {
+        console.log("Order Info:", value);
+    };
 
     return (
         <div className={styles.container}
+
             style={{
                 backgroundImage: backgroundImages || 'none',
             }}
@@ -148,7 +151,8 @@ const Menuone: React.FC<MenuProps> = (props) => {
                     <div key={sectionName} className={styles.section}>
                         <div className={styles.sectionHeader}>
                             <div className={styles.sectionTitle}
-                                onMouseEnter={() => handleSectionEnter(`${sectionName}`)}
+                                onMouseEnter={() => handleSectionEnter(sectionName)}
+                                onMouseLeave={() => handleSectionLeave(sectionName)}
                             >
                                 {sectionName}
                             </div>
@@ -157,8 +161,8 @@ const Menuone: React.FC<MenuProps> = (props) => {
                             {items?.map((item: MenuItem, index: number) => (
                                 <div key={`${sectionName}-${item?.Item_id}-${index}`} className={styles.menuItem}>
                                     <div className={styles.itemInfo}
-                                        onMouseEnter={() => handleSectionEnter(`${sectionName}-${index}-${item?.Name}`)}
-                                    >
+                                        onMouseEnter={() => handleSectionEnter(getElementId(sectionName, index, item.Name))}
+                                        onClick={() => handleClick(getElementId(sectionName, index, item.Name), "menuItem")}                                    >
                                         <div className={styles.cardImage}>
                                             <Image
                                                 src={`${item.Item_Image}`}
@@ -174,17 +178,17 @@ const Menuone: React.FC<MenuProps> = (props) => {
                                             <div className={styles.price}>{`$${item.Price}`}</div>
                                         </div>
                                         <div onMouseEnter={() => handleSectionEnter(`Button-${item.Name}`)}>
-                                        <SelectComponent
-                                            orderdescription={[]}
-                                            delivery={true}
-                                            takeaway={false}
-                                            Dinein={false}
-                                            onChange={handleChange}
-                                            value="someValue"
-                                            className="no"
-                                            color="white"
-                                        />
-                                    </div>
+                                            <SelectComponent
+                                                orderdescription={[]}
+                                                delivery={true}
+                                                takeaway={false}
+                                                Dinein={false}
+                                                onChange={handleChange}
+                                                value="someValue"
+                                                className="no"
+                                                color="white"
+                                            />
+                                        </div>
                                     </div>
                                 </div>
                             ))}

@@ -43,7 +43,7 @@ const Menufive: React.FC<MenuProps> = (props: any) => {
             setNamecompanies(extractLastSegment(data))
         }
     }, []);
-    const { sectionTimes, handleSectionEnter } = useSectionTimeTracker(namecompanies)
+    const { sectionTimes, handleSectionEnter, handleSectionLeave, handleClick } = useSectionTimeTracker(namecompanies)
 
 
     const [loading, setLoading] = useState(true)
@@ -88,10 +88,14 @@ const Menufive: React.FC<MenuProps> = (props: any) => {
         console.log("Order Info:", value);
     };
 
+    const getElementId = (sectionName: string, index: number, itemName: string) => {
+        return `${sectionName}-${index}-${itemName}`;
+    };
+
     return (
         <div className={styles.menuContainer} style={{ backgroundImage: backgroundImages || 'none' }}>
             <header className={styles.header}
-
+                onMouseEnter={() => handleSectionEnter('header')}
             >
                 <h1 className={styles.mainTitle}>{namecompanies}</h1>
 
@@ -143,7 +147,8 @@ const Menufive: React.FC<MenuProps> = (props: any) => {
 
             {filteredSections.map(({ sectionName, filteredItems }, index) => (
                 <section key={index} className={styles.section}
-                    onMouseEnter={() => handleSectionEnter(`${sectionName}`)}
+                    onMouseEnter={() => handleSectionEnter(sectionName)}
+                    onMouseLeave={() => handleSectionLeave(sectionName)}
                 >
                     <h2 className={styles.sectionTitle}>{sectionName}</h2>
                     <div className={styles.masonryGrid}>
@@ -161,8 +166,8 @@ const Menufive: React.FC<MenuProps> = (props: any) => {
                                         />
                                     </div>
                                     <div className={styles.cardContent}
-                                        onMouseEnter={() => handleSectionEnter(`${sectionName}-${index}-${item?.Name}`)}
-
+                                        onMouseEnter={() => handleSectionEnter(getElementId(sectionName, index, item.Name))}
+                                        onClick={() => handleClick(getElementId(sectionName, index, item.Name), "menuItem")}
                                     >
                                         <h3 className={styles.cardTitle}>{item.Name}</h3>
                                         <p className={styles.cardDescription}>{item.Description}</p>

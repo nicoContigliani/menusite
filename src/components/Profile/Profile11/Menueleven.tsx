@@ -34,15 +34,19 @@ const Menueleven: React.FC<MenuProps> = (props: MenuProps) => {
     const [searchTerm, setSearchTerm] = useState<string>("")
     const [loading, setLoading] = useState(true)
     const [iconURL, setIconURL] = useState<string>("")
-       const [namecompanies, setNamecompanies] = useState<string>('')
-       useLayoutEffect(() => {
-           if (typeof window !== "undefined") {
-               // setFullUrl(window.location.href);
-               const data = window.location.href;
-               setNamecompanies(extractLastSegment(data))
-           }
-       }, []);
-    const { sectionTimes, handleSectionEnter } = useSectionTimeTracker(namecompanies)
+    const [namecompanies, setNamecompanies] = useState<string>('')
+    useLayoutEffect(() => {
+        if (typeof window !== "undefined") {
+            // setFullUrl(window.location.href);
+            const data = window.location.href;
+            setNamecompanies(extractLastSegment(data))
+        }
+    }, []);
+    const { sectionTimes, handleSectionEnter, handleSectionLeave, handleClick } = useSectionTimeTracker(namecompanies)
+    const getElementId = (sectionName: string, index: number, itemName: string) => {
+        return `${sectionName}-${index}-${itemName}`;
+    };
+
 
     const handleSearchChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchTerm(event.target.value)
@@ -105,14 +109,15 @@ const Menueleven: React.FC<MenuProps> = (props: MenuProps) => {
                 {filteredSections.length > 0 ? (
                     filteredSections.map(([sectionName, items], sectionIndex) => (
                         <div key={sectionIndex} className={styles.section}
-                            onMouseEnter={() => handleSectionEnter(`${sectionName}`)}
-
+                            onMouseEnter={() => handleSectionEnter(sectionName)}
+                            onMouseLeave={() => handleSectionLeave(sectionName)}
                         >
                             <h2 className={styles.sectionTitle}>{sectionName}</h2>
                             <div className={styles.sectionItems}>
                                 {items.map((item, itemIndex) => (
                                     <div
-                                        onMouseEnter={() => handleSectionEnter(`${sectionName}-${itemIndex}-${item?.Name}`)}
+                                        onMouseEnter={() => handleSectionEnter(getElementId(sectionName, itemIndex, item.Name))}
+                                        onClick={() => handleClick(getElementId(sectionName, itemIndex, item.Name), "menuItem")}
                                         key={`${sectionIndex}-${itemIndex}`} className={`${styles.menuItem} ${styles.glassEffect}`}>
                                         <div className={styles.itemInfo}>
                                             <div>

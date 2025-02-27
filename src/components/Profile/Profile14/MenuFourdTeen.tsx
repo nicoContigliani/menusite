@@ -85,7 +85,12 @@ const MenuFourdTeen: React.FC<MenuProps> = (props) => {
         }
     }, []);
 
-    const { sectionTimes, handleSectionEnter } = useSectionTimeTracker(namecompanies)
+    const { sectionTimes, handleSectionEnter, handleSectionLeave, handleClick } = useSectionTimeTracker(namecompanies)
+    const getElementId = (sectionName: string, index: number, itemName: string) => {
+        return `${sectionName}-${index}-${itemName}`;
+    };
+
+
 
     useEffect(() => {
         if (groupedSections) {
@@ -179,7 +184,8 @@ const MenuFourdTeen: React.FC<MenuProps> = (props) => {
                     <div
                         key={sectionName}
                         className={styles.section}
-                        onMouseEnter={() => handleSectionEnter(`${sectionName}`)}
+                        onMouseEnter={() => handleSectionEnter(sectionName)}
+                        onMouseLeave={() => handleSectionLeave(sectionName)}
                     // onMouseEnter={() => handleSectionEnter(sectionName)}
                     // onMouseLeave={handleSectionLeave}
                     >
@@ -187,11 +193,12 @@ const MenuFourdTeen: React.FC<MenuProps> = (props) => {
                             <div className={styles.sectionTitle}>{sectionName}</div>
                         </div>
                         <div className={styles.sectionItems}>
-                            {items?.map((item: MenuItem, index: number) => (
+                            {items?.map((item: MenuItem | any, index: number) => (
                                 <div
                                     key={`${sectionName}-${item?.Item_id}-${index}`}
                                     className={styles.menuItem}
-                                    onMouseEnter={() => handleSectionEnter(`${sectionName}-${index}-${item?.Name}`)}
+                                    onMouseEnter={() => handleSectionEnter(getElementId(sectionName, index, item?.Name))}
+                                    onClick={() => handleClick(getElementId(sectionName, index, item?.Name), "menuItem")}
 
 
                                 >
