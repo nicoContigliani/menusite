@@ -1,4 +1,5 @@
 export const localhostStorage = (data: any) => {
+    console.log("🚀 ~ localhostStorage ~ data:", data)
     if (typeof window !== "undefined") { // Verifica si estamos en el cliente
         Object.entries(data).forEach(([key, value]) => {
             localStorage.setItem(key, JSON.stringify(value));

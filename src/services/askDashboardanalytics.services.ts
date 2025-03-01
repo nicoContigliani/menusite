@@ -469,3 +469,23 @@ export const askDashboardAnalytics = (data: RawClientData[]): ClientData => {
   }
 }
 
+
+
+
+
+
+// GET /api/trackTime 304 in 2278ms
+// Database error: MongoServerError: BSONObj size: 17993394 (0x1128EB2) is invalid. Size must be between 0 and 16793600(16MB) First element: _id: ObjectId('67c07d70bbe3ef03ff38af09')
+//     at async handler (src/pages/api/analytics.ts:777:10)
+//   775 |           };
+//   776 |
+// > 777 |           await analytics.updateOne(
+//       |          ^
+//   778 |             { userId: data._id, companyName: data.companyName, email: data.email },
+//   779 |             updateOperation,
+//   780 |             { upsert: true } {
+//   errorResponse: [Object],
+//   index: 0,
+//   code: 10334
+// }
+//  GET /api/analytics?companyname=LlakaScript 500 in 3033ms

@@ -1,237 +1,3 @@
-// import * as React from 'react';
-// import { extendTheme } from '@mui/material/styles';
-// import DashboardIcon from '@mui/icons-material/Dashboard';
-// import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-// import BarChartIcon from '@mui/icons-material/BarChart';
-// import DescriptionIcon from '@mui/icons-material/Description';
-// import LayersIcon from '@mui/icons-material/Layers';
-// import Dashboard from '@/components/Dashboard/Dashboard';
-// import DashboardBody from '@/components/Dashboard/DashboardBody/DashboardBody';
-// import { Button, ButtonGroup, Typography } from '@mui/material';
-// import { useFetchMultiple } from '../../../hooks/useFetchMultiple';
-
-// // Theme configuration
-// const demoTheme = extendTheme({
-//     colorSchemes: { light: true, dark: true },
-//     colorSchemeSelector: 'class',
-//     breakpoints: {
-//         values: {
-//             xs: 0,
-//             sm: 600,
-//             md: 600,
-//             lg: 1200,
-//             xl: 1536,
-//         },
-//     },
-// });
-
-
-
-// const IndexPage = () => {
-//     const [pathname, setPathname] = React.useState('/dashboard');
-
-//     const [refreshTrigger, setRefreshTrigger] = React.useState<number>(0);
-//     const [trakestime, setTrakestime] = React.useState<any | any[] | undefined>()
-//     const [companies, setCompanies] = React.useState<any | any[] | undefined>()
-//     const [uniqueCompanies, setUniqueCompanies] = React.useState<any | any[] | undefined>()
-
-//     const { results, loading, fetchMultiple } = useFetchMultiple();
-//     React.useEffect(() => {
-//         fetchMultiple([{ url: "/api/trackTime" }, { url: "/api/companiesdashboard" }]);
-//     }, [fetchMultiple, refreshTrigger]);
-//     console.log("🚀 ~ IndexPage ~ results:", results)
-
-//     React.useEffect(() => {
-
-//         const companiesData: any = results?.apicompaniesdashboard?.data || [];
-//         const trackTimeData: any | any[] | undefined = results?.apitrackTime?.data || [];
-//         const uniqueCompaniesData: any | any[] | undefined = [...new Set(trackTimeData.map((item: any) => item.namecompanie))];
-//         setCompanies(companiesData);
-//         setTrakestime(trackTimeData);
-//         setUniqueCompanies(uniqueCompaniesData);
-
-//     }, [results])
-
-
-//     const handleButtonClick = React.useCallback(async (record: any) => {
-//         try {
-//             const res = await fetch(`/api/analytics?companyname=${record.companyName}`);
-//             if (!res.ok) throw new Error("Error fetching data");
-
-//             const response = await fetch(`/api/analytics?companyname=${record.companyName}`, {
-//                 method: "DELETE",
-//             });
-//             setRefreshTrigger((prev) => prev + 1);
-//             const result = await res.json();
-//         } catch (err) {
-//             console.log("🚀 ~ handleButtonClick ~ err:", err);
-//         }
-//     }, []);
-
-
-
-//     const handleCreate = React.useCallback(async () => {
-//         const apicompaniesdashboard: any[] | any = results?.apicompaniesdashboard?.data || [];
-//         const apitrackTime = results?.apitrackTime?.data;
-
-//         if (!apicompaniesdashboard.length) {
-//             console.log("No companies data found.");
-//             return;
-//         }
-
-//         try {
-//             // Desactivamos el trigger de refresco mientras hacemos las solicitudes
-//             setRefreshTrigger(0);
-
-//             // Recorremos todos los registros
-//             const promises = apicompaniesdashboard.map(async (record: any) => {
-//                 try {
-//                     // Hacemos la solicitud GET primero
-//                     const res = await fetch(`/api/analytics?companyname=${record.companyName}`);
-//                     if (!res.ok) {
-//                         throw new Error(`Error fetching data for ${record.companyName}`);
-//                     }
-
-//                     // Luego hacemos la solicitud DELETE
-//                     const response = await fetch(`/api/analytics?companyname=${record.companyName}`, {
-//                         method: "DELETE",
-//                     });
-
-//                     if (!response.ok) {
-//                         throw new Error(`Error deleting data for ${record.companyName}`);
-//                     }
-
-//                     const result = await response.json();
-//                     console.log("🚀 ~ handleCreate ~ result:", result);
-//                 } catch (err) {
-//                     console.error("Error processing record:", record.companyName, err);
-//                 }
-//             });
-
-//             // Esperamos que todas las promesas se resuelvan antes de actualizar el estado
-//             await Promise.all(promises);
-
-//             // Una vez completado, activamos nuevamente el trigger para refrescar
-//             setRefreshTrigger((prev) => prev + 1);
-//             console.log("Successfully processed all companies.");
-//         } catch (err) {
-//             console.error("🚀 ~ handleCreate ~ global error:", err);
-//         }
-//     }, [results, refreshTrigger]);
-
-
-
-
-
-
-
-
-
-//     const router = {
-//         pathname,
-//         searchParams: new URLSearchParams(),
-//         navigate: (path: string) => setPathname(path),
-//     };
-
-
-//     // Navigation configuration
-//     const NAVIGATION = [
-//         {
-//             kind: 'header',
-//             title: 'Main items',
-//         },
-//         {
-//             segment: 'dashboard',
-//             title: 'Dashboard',
-//             icon: <DashboardIcon />,
-//             component: () => <div>
-//                 <DashboardBody>
-//                     <Typography variant="h6" sx={{ marginBottom: 3, color: 'text.primary' }}>
-//                         trake
-//                     </Typography>
-
-//                     <div>
-//                         <strong>Formater Trake : </strong>
-//                         <span>{trakestime?.length} </span>
-//                     </div>
-//                     <hr />
-
-//                     <div>
-//                         <strong>Trake each company: </strong>
-//                         <ButtonGroup variant="contained" aria-label="Basic button group">
-//                             {
-//                                 uniqueCompanies &&
-
-//                                 uniqueCompanies?.map((company: any, index: number) => (
-//                                     <Button key={index} onClick={() => handleButtonClick(company)}>{company}</Button>
-//                                 ))
-//                             }
-//                         </ButtonGroup>
-//                     </div>
-//                     <hr />
-//                     <div>
-//                         <strong>Trake each company: </strong>
-//                         <ButtonGroup variant="contained" aria-label="Basic button group">
-//                             {
-//                                 uniqueCompanies &&
-
-//                                 <Button onClick={() => handleCreate()}>All Companies</Button>
-
-//                             }
-//                         </ButtonGroup>
-//                     </div>
-
-
-//                 </DashboardBody>
-//             </div>,
-//         },
-//         {
-//             segment: 'orders',
-//             title: 'Orders',
-//             icon: <ShoppingCartIcon />,
-//         },
-//         {
-//             kind: 'divider',
-//         },
-//         {
-//             kind: 'header',
-//             title: 'Analytics',
-//         },
-//         {
-//             segment: 'reports',
-//             title: 'Reports',
-//             icon: <BarChartIcon />,
-//             children: [
-//                 {
-//                     segment: 'sales',
-//                     title: 'Sales',
-//                     icon: <DescriptionIcon />,
-//                 },
-//                 {
-//                     segment: 'traffic',
-//                     title: 'Traffic',
-//                     icon: <DescriptionIcon />,
-//                 },
-//             ],
-//         },
-//         {
-//             segment: 'integrations',
-//             title: 'Integrations',
-//             icon: <LayersIcon />,
-//         },
-//     ];
-
-
-//     return (
-//         <Dashboard
-//             navigation={NAVIGATION}
-//             router={router}
-//             theme={demoTheme}
-//         />
-//     );
-// };
-
-// export default IndexPage;
 "use client"
 import * as React from 'react';
 import { extendTheme } from '@mui/material/styles';
@@ -242,11 +8,14 @@ import DescriptionIcon from '@mui/icons-material/Description';
 import LayersIcon from '@mui/icons-material/Layers';
 import Dashboard from '@/components/Dashboard/Dashboard';
 import DashboardBody from '@/components/Dashboard/DashboardBody/DashboardBody';
-import { Button, ButtonGroup, Typography } from '@mui/material';
+import { Box, Button, ButtonGroup, LinearProgress, Typography } from '@mui/material';
 import { useFetchMultiple } from '../../../hooks/useFetchMultiple';
 import DashboardCard from '@/components/Dashboard/DashboardCard/DashboardCard';
-import styles from '@/styles/Dashboard.module.css'
-
+import styles from '@/styles/Dashboard.module.css';
+import dataToSendHard from '../../../tools/HardDataMenu';
+import useFakeInfo from '../../../hooks/useFakeInfo';
+import FakeinfoDashboard from '@/components/FakeInfoDashboard/FakeinfoDahsboard';
+import useHandleCreate from '../../../hooks/useFloating';
 
 // Theme configuration
 const demoTheme = extendTheme({
@@ -266,14 +35,17 @@ const demoTheme = extendTheme({
 const IndexPage = () => {
     const [pathname, setPathname] = React.useState('/dashboard');
     const [refreshTrigger, setRefreshTrigger] = React.useState<number>(0);
-    const [data, setData] = React.useState<any>({
+    const [data, setData] = React.useState<any | undefined>({
         trakestime: [],
         companies: [],
         uniqueCompanies: [],
     });
+    const [progress, setProgress] = React.useState<number>(0);
+    const [statusMessage, setStatusMessage] = React.useState<string>('');
+    const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
     const { results, loading, fetchMultiple } = useFetchMultiple();
-
+    const { handleCreate } = useHandleCreate(data, setRefreshTrigger);
     React.useEffect(() => {
         fetchMultiple([{ url: "/api/trackTime" }, { url: "/api/companiesdashboard" }]);
     }, [fetchMultiple, refreshTrigger]);
@@ -282,6 +54,12 @@ const IndexPage = () => {
         const companiesData = results?.apicompaniesdashboard?.data || [];
         const trackTimeData: any = results?.apitrackTime?.data || [];
         const uniqueCompaniesData: any | any[] = [...new Set(trackTimeData.map((item: any) => item.namecompanie))];
+
+        if (trackTimeData.length >= 2000) {
+            handleCreate();
+            //create data of floating // when and how many
+        }
+
         setData({
             companies: companiesData,
             trakestime: trackTimeData,
@@ -304,10 +82,8 @@ const IndexPage = () => {
         }
     }, []);
 
-
     const handleButtonDelete = React.useCallback(async (companyName: string) => {
         try {
-
             const response = await fetch(`/api/analytics?companyname=${companyName}`, {
                 method: "DELETE",
             });
@@ -318,38 +94,9 @@ const IndexPage = () => {
         }
     }, []);
 
-    const handleCreate = React.useCallback(async () => {
-        const { companies } = data;
-        if (!companies.length) {
-            console.log("No companies data found.");
-            return;
-        }
-
-        try {
-            setRefreshTrigger(0);
-            const promises = companies.map(async (record: any) => {
-                try {
-                    const res = await fetch(`/api/analytics?companyname=${record.companyName}`);
-                    if (!res.ok) throw new Error(`Error fetching data for ${record.companyName}`);
-
-                    const response = await fetch(`/api/analytics?companyname=${record.companyName}`, {
-                        method: "DELETE",
-                    });
-                    if (!response.ok) throw new Error(`Error deleting data for ${record.companyName}`);
-
-                    return await response.json();
-                } catch (err) {
-                    console.error("Error processing record:", record.companyName, err);
-                }
-            });
-
-            await Promise.all(promises);
-            setRefreshTrigger(prev => prev + 1);
-            console.log("Successfully processed all companies.");
-        } catch (err) {
-            console.error("🚀 ~ handleCreate ~ global error:", err);
-        }
-    }, [data]);
+    //nico id 67adfab7df1c3e1f1a53af56
+    //india id 67b07e338de3e7e8122cf29b
+    const fakeData = useFakeInfo(Date.now(), { userId: "67adfab7df1c3e1f1a53af56", email: "nico.contigliani@gmail.com" });
 
     const router = {
         pathname,
@@ -375,48 +122,70 @@ const IndexPage = () => {
                                 <span>{data.trakestime?.length} </span>
                             </div>
                             <hr />
+                            {isLoading && (
+                                <Box sx={{ width: "100%", mb: 2 }}>
+                                    <LinearProgress variant="determinate" value={progress} />
+                                    <Typography variant="body2" color="text.secondary" align="center">
+                                        {`${Math.round(progress)}%`}
+                                    </Typography>
+                                    <Typography variant="body2" color="text.primary" align="center">
+                                        {statusMessage}
+                                    </Typography>
+                                </Box>
+                            )}
+
                             <div>
                                 <strong>Trake each company: </strong>
-
-                                <ButtonGroup variant="outlined" size="small" aria-label="Basic button group">
-                                    {
-                                        data.uniqueCompanies &&
+                                <ButtonGroup variant="contained" size="small" aria-label="Basic button group">
+                                    {data.uniqueCompanies &&
                                         data.uniqueCompanies.map((company: any, index: number) => (
                                             <Button key={index} onClick={() => handleButtonClick(company)}>{company}</Button>
-                                        ))
-                                    }
+                                        ))}
                                 </ButtonGroup>
-
                             </div>
                             <hr />
                             <div>
                                 <strong>Delete Trake each company: </strong>
-
                                 <ButtonGroup variant="contained" size="small" aria-label="Basic button group">
-                                    {
-                                        data.uniqueCompanies &&
+                                    {data.uniqueCompanies &&
                                         data.uniqueCompanies.map((company: any, index: number) => (
-                                            <Button key={index} onClick={() => handleButtonDelete(company)}>Delete {company}</Button>
-                                        ))
-                                    }
+                                            <Button key={index} color="error" variant="contained" onClick={() => handleButtonDelete(company)}>Delete {company}</Button>
+                                        ))}
                                 </ButtonGroup>
                             </div>
                             <hr />
-                            <div>
-                                <strong>Trake each company: </strong>
-                                <ButtonGroup variant="contained" size="small" aria-label="Basic button group">
-                                    <Button onClick={handleCreate}>All Companies</Button>
-                                </ButtonGroup>
-                            </div>
+                            <Box sx={{ width: "100%", mb: 2 }}>
 
+                                <div>
+                                    <strong>Trake each company: </strong>
+                                    <ButtonGroup variant="contained" size="small" aria-label="Basic button group">
+                                        <Button onClick={handleCreate}>All Companies</Button>
+                                    </ButtonGroup>
+                                </div>
+                            </Box>
+                            <Box sx={{ width: "100%", mb: 2 }}>
+
+                                <div>
+
+
+                                    <FakeinfoDashboard
+                                        setIsLoading={setIsLoading}
+                                        setStatusMessage={setStatusMessage}
+                                        setProgress={setProgress}
+                                        dataToSendHard={dataToSendHard}
+                                        setRefreshTrigger={setRefreshTrigger}
+                                    />
+
+
+                                </div>
+                            </Box>
+                            <hr />
+                            <ButtonGroup variant="contained" color='inherit' size="small" aria-label="Basic button group">
+                                <Button onClick={() => setRefreshTrigger(prev => prev + 1)}>Reset</Button>
+                            </ButtonGroup>
                         </div>
-
                     </div>
-
-
                 </div>
-
-
             ),
         },
         {
@@ -453,7 +222,7 @@ const IndexPage = () => {
             title: 'Integrations',
             icon: <LayersIcon />,
         },
-    ], [data, handleButtonClick, handleCreate]);
+    ], [data, handleButtonClick, handleCreate, isLoading, progress, statusMessage]);
 
     return (
         <Dashboard

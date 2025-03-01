@@ -21,7 +21,7 @@ const useSectionTimeTracker = (namecompanies: string) => {
     userId: storedData?._id || "",
     email: storedData?.email || "",
   });
-
+  
   // Función para actualizar datos del usuario desde localStorage
   const updateUserDataFromStorage = useCallback(() => {
     if (storedData?.isLogin) {
@@ -31,6 +31,7 @@ const useSectionTimeTracker = (namecompanies: string) => {
       });
     }
 
+    
     if (storedData?.demo) {
       setDemos(true);
     }
@@ -141,6 +142,7 @@ const useSectionTimeTracker = (namecompanies: string) => {
 
       const dataToSend = { ...userData, sectionTimes, totalTime, history, clicks, namecompanie: namecompanies };
 
+      console.log("🚀 ~ dataToSend:", dataToSend)
       try {
         const response = await fetch("/api/trackTime", {
           method: "POST",

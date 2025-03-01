@@ -87,7 +87,9 @@ const Menuone: React.FC<MenuProps> = (props) => {
     };
 
     return (
-        <Grid container spacing={2} style={{ padding: isMobile ? '1px' : '20px' }}>
+        <Grid container spacing={2} style={{ padding: isMobile ? '1px' : '20px' }}
+            data-cy="empresa-page-menu"
+        >
             <Grid item xs={12}>
                 <div
                     className={styles.container}
@@ -105,6 +107,7 @@ const Menuone: React.FC<MenuProps> = (props) => {
                                         fontWeight="700"
                                         color="#ffffff"
                                         fontFamily="Arial, sans-serif"
+                                        data-cy="Logo"
                                     />
                                 )}
                             </Grid>
@@ -116,6 +119,8 @@ const Menuone: React.FC<MenuProps> = (props) => {
                                         fontWeight="500"
                                         color="#dddddd"
                                         fontFamily="Helvetica, sans-serif"
+                                        data-cy="Info"
+
                                     />
                                 )}
                             </Grid>
@@ -126,6 +131,8 @@ const Menuone: React.FC<MenuProps> = (props) => {
                                     placeholder="Buscar en el menú..."
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
+                                    data-cy="Serch"
+
                                 />
                             </Grid>
                         </Grid>
@@ -141,6 +148,8 @@ const Menuone: React.FC<MenuProps> = (props) => {
                                 className={styles.section}
                                 onMouseEnter={() => handleSectionEnter(sectionName)}
                                 onMouseLeave={() => handleSectionLeave(sectionName)}
+                                data-cy={sectionName}
+
                             >
                                 <div className={styles.sectionHeader}>
                                     <h2>{sectionName}</h2>
@@ -157,9 +166,10 @@ const Menuone: React.FC<MenuProps> = (props) => {
                                                 md={4}
                                                 className={styles.menuItem}
                                                 // onMouseEnter={() => handleSectionEnter(elementId)}
-                                                
+
                                                 onMouseLeave={() => handleSectionLeave(elementId)}
                                                 onClick={() => handleClick(elementId, "menuItem")}
+                                                data-cy={`${elementId}-menuItem`}
                                             >
                                                 <div className={styles.cardImage}>
                                                     <Image
@@ -170,6 +180,7 @@ const Menuone: React.FC<MenuProps> = (props) => {
                                                         priority
                                                         style={{ objectFit: 'cover' }}
                                                         onClick={() => handleClick(elementId, "image")}
+                                                        data-cy={`${elementId}-image`}
                                                     />
                                                 </div>
                                                 <div className={styles.itemDetails}>
@@ -186,7 +197,8 @@ const Menuone: React.FC<MenuProps> = (props) => {
                                                         onChange={handleChange}
                                                         value="someValue"
                                                         color="white"
-                                                        // onClick={() => handleClick(elementId, "button")}
+                                                        data-cy={`Button-${item.Name}`}
+                                                    // onClick={() => handleClick(elementId, "button")}
                                                     />
                                                 </div>
                                             </Grid>
@@ -204,6 +216,7 @@ const Menuone: React.FC<MenuProps> = (props) => {
                             fontWeight="500"
                             color="#ddd"
                             fontFamily="Helvetica, sans-serif"
+                            data-cy={`Schedules`}
                         />
                     </Grid>
 
