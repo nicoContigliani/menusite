@@ -21,30 +21,19 @@
 .container {
   display: grid;
   grid-template-columns: 1fr;
-  /* Por defecto, una columna */
+  
   gap: 1px;
-  /* Espacio entre elementos */
   padding: 1%;
-  /* Padding para evitar que el contenido toque los bordes */
   box-sizing: border-box;
-  /* Incluye padding y borde dentro del ancho/alto */
   max-width: 100%;
-  /* Evita que el contenedor sea más ancho que su padre */
   overflow-x: auto;
-  /* Permite desplazamiento horizontal si es necesario */
   word-wrap: break-word;
-  /* Rompe palabras largas para evitar desbordamientos */
 
   justify-content: center;
-  /* Centra las columnas horizontalmente dentro del contenedor */
   align-content: center;
-  /* Centra el contenido en el eje vertical */
 
   justify-items: center;
-  /* Centra cada elemento en su celda horizontalmente */
-  align-items: center;
-  /* Centra cada elemento en su celda verticalmente */
-  /* background-color: red; */
+  align-items: start;
 }
 
 /* Contenedor para el texto */

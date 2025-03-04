@@ -17,7 +17,6 @@ const Profile = (props: any) => {
     setCurrent,
     dataMocks
   } = props;
-  console.log("🚀 ~ ProfileGrid ~ dataResult:", dataResult);
 
   return (
     <div className={styles.body}> {/* Fondo fijo */}

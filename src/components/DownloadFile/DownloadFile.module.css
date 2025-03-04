@@ -1,180 +1,216 @@
+/* Elegant, futuristic CSS for DownloadFile component */
+.wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    width: 100%;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    padding: 2rem;
-    box-sizing: border-box;
-    font-family: 'Inter', sans-serif; /* Fuente moderna */
+  width: 100%;
+  background: rgba(255, 255, 255, 0.8) !important;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-radius: 16px !important;
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06) !important;
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
 }
 
-.navigation {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    max-width: 1200px;
-    margin-bottom: 2rem;
-    padding: 0 1rem;
-}
-
-.navButton {
-    background-color: #ffffff;
-    border: 1px solid #e0e0e0;
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    font-size: 1.5rem;
-    cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    color: #333; /* Color de ícono más suave */
-}
-
-.navButton:hover {
-    transform: scale(1.1);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    background-color: #f8f8f8;
+.container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0));
+  pointer-events: none;
 }
 
 .title {
-    font-size: 2rem;
-    color: #ffffff;
-    text-align: center;
-    margin: 0;
-    word-break: break-word; /* Asegura que no se salga del contenedor */
-    text-shadow: 1px 1px rgba(255, 255, 255, 0.261);
-    padding-bottom: 3%;
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 600;
+  color: #2c2c2c;
+  margin: 0 0 2rem 0;
+  padding-bottom: 1rem;
+  position: relative;
+  text-align: center;
 }
 
-
-
-.profile {
-    width: 100%;
-    max-width: 1200px;
-    background: rgba(255, 255, 255, 0.95); /* Fondo más sólido pero con transparencia */
-    border-radius: 20px; /* Bordes más redondeados */
-    padding: 2.5rem;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    margin: 0 auto;
-    backdrop-filter: blur(12px); /* Efecto de desenfoque más pronunciado */
-    border: 1px solid rgba(255, 255, 255, 0.2); /* Borde sutil */
+.title::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 3px;
+  background: linear-gradient(90deg, #3d7ad6, #00b8c4);
+  border-radius: 3px;
 }
 
-.tabsContainer {
-    margin: 1rem;
-    background-color: white;
-    border-radius: 15px;
-    padding: 2rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+.content {
+  margin: 1rem 0 2rem;
 }
 
-.selectButton {
-    background-color: #0073e6;
-    color: #fff;
-    border: none;
-    border-radius: 30px;
-    padding: 1rem 2rem;
-    font-size: 1rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    text-shadow: 1px 1px rgba(0, 0, 0, 0.1);
-    position: relative;
-    overflow: hidden;
+.downloadCard {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  padding: 1.5rem;
+  height: 100%;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(61, 122, 214, 0.1);
 }
 
-.selectButton::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 300%;
-    height: 300%;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0) 70%);
-    transform: translate(-50%, -50%) scale(0);
-    transition: transform 0.5s ease;
-    pointer-events: none;
+.downloadCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
 }
 
-.selectButton:hover {
-    background-color: #005bb5;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+.cardTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #3d7ad6;
+  margin: 0 0 1rem 0;
 }
 
-.selectButton:hover::before {
-    transform: translate(-50%, -50%) scale(1);
+.cardDescription {
+  font-size: 0.95rem;
+  color: #4a4a4a;
+  margin-bottom: 1.5rem;
+  flex-grow: 1;
+  line-height: 1.6;
 }
 
-.selectButton:active {
-    background-color: #004a9c;
-    transform: translateY(0);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+.downloadButton {
+  align-self: flex-start;
+  margin-top: auto;
 }
 
-/* Media Queries para Responsividad */
-@media (max-width: 1200px) {
-    .profile {
-        max-width: 95%;
-    }
+.infoSection {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: rgba(61, 122, 214, 0.05);
+  border-radius: 12px;
+  border-left: 3px solid #3d7ad6;
 }
 
+.infoText {
+  color: #4a4a4a;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.actionSection {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+
+.nextButton {
+  background: linear-gradient(135deg, #3d7ad6, #00b8c4);
+  color: white;
+  border: none;
+  border-radius: 30px;
+  padding: 0.875rem 1.75rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(61, 122, 214, 0.2);
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.nextButton::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.7s ease;
+}
+
+.nextButton:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(61, 122, 214, 0.3);
+}
+
+.nextButton:hover::before {
+  left: 100%;
+}
+
+.nextButton:active {
+  transform: translateY(1px);
+}
+
+.buttonIcon {
+  margin-left: 0.5rem;
+  transition: transform 0.3s ease;
+}
+
+.nextButton:hover .buttonIcon {
+  transform: translateX(3px);
+}
+
+/* Media Queries for responsiveness */
 @media (max-width: 768px) {
-    .navButton {
-        width: 50px;
-        height: 50px;
-        font-size: 1.2rem;
-    }
+  .container {
+    padding: 1.75rem;
+  }
 
-    .title {
-        font-size: 2rem;
-    }
+  .title {
+    margin-bottom: 1.5rem;
+  }
 
-    .profile {
-        padding: 2rem;
-    }
+  .downloadCard {
+    padding: 1.25rem;
+  }
 
-    .tabsContainer {
-        padding: 1.5rem;
-    }
-
-    .selectButton {
-        padding: 0.8rem 1.5rem;
-        font-size: 0.9rem;
-    }
+  .infoSection {
+    padding: 1.25rem;
+  }
 }
 
 @media (max-width: 480px) {
-    .container {
-        padding: 1rem;
-    }
+  .container {
+    padding: 1.5rem;
+  }
 
-    .profile {
-        max-width: 90%;
-        padding: 1.5rem;
-    }
+  .title {
+    font-size: 1.5rem;
+    margin-bottom: 1.25rem;
+  }
 
-    .tabsContainer {
-        padding: 1rem;
-    }
+  .downloadCard {
+    padding: 1rem;
+  }
 
-    .title {
-        font-size: 1.8rem;
-    }
+  .cardTitle {
+    font-size: 1.1rem;
+  }
 
-    .selectButton {
-        padding: 0.7rem 1.2rem;
-        font-size: 0.8rem;
-    }
+  .infoSection {
+    padding: 1rem;
+    margin: 1.5rem 0;
+  }
+
+  .nextButton {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.95rem;
+  }
 }
+

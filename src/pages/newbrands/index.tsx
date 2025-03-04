@@ -24,6 +24,7 @@ const Licence = dynamic(() => import("@/components/Licence/Licence"))
 
 import stepsData from "../../../dataJSON/stepsDataSet.json"
 import dataMocks from "../../../dataJSON/dataMocks.json"
+import { Grid } from "@mui/material"
 
 
 
@@ -198,6 +199,7 @@ const page = () => {
           }}
         />
       </div>
+
       {
         finishit ?
           <div className={styles.result}>
@@ -224,68 +226,71 @@ const page = () => {
           </div> :
           null
       }
-      <div className={styles.container}>
-        {
-          finishit ? "" :
-            <div className={styles.steps}>
-              <Divider />
-              {showProfile ? <Navbar /> : null}
-              <Divider />
-              <StepsComponent items={items} current={current} setCurrent={setCurrent} />
-            </div>
-        }
-        {
-          finishit ? "" :
-            <div className={styles.body}>
-              {showDownload ? (
-                <DownloadFile setCurrent={setCurrent} />
-              ) : null}
-              {showUploadImageToStorage ? (
-                <UploadImageToStorage
-                  uploadedFiles={uploadedFiles}
-                  setUploadedFiles={setUploadedFiles}
-                  setCurrent={setCurrent}
-                  setDataResult={setDataResult}
-                  folderName={folderName}
-                  setFolderName={setFolderName}
-                />
-              ) : null}
-              {showProfile ? (
-                <Profile
-                  folderName={folderName}
-                  dataResult={dataResult}
-                  paymentLevel={paymentLevel}
-                  setSelectedProfile={setSelectedProfile}
-                  setCurrent={setCurrent}
-                  dataMocks={dataMocks}
-                />
-              ) : null}
-              {showLicence ? (
-                <Licence
-                  labelCheck={labelCheck}
-                  setLabelCheck={setLabelCheck}
-                  checked={checked}
-                  setChecked={setChecked}
-                  setCurrent={setCurrent}
-                />
-              ) : null}
 
-              {showStaff ? <StaffOfSystem staffData={dataResult || dataMocks} /> : null}
 
-              <div>
-                {/* Botón de Crear */}
-                <div className={styles.buttonContainer}>
-                  {
-                    (abilityButtonSend) &&
-                    <Button type="primary" block size="large" onClick={handleCreate}>
-                      Crear
-                    </Button>
-                  }
+        <div className={styles.container}>
+          {
+            finishit ? "" :
+              <div className={styles.steps}>
+                <Divider />
+                {showProfile ? <Navbar /> : null}
+                <Divider />
+                <StepsComponent items={items} current={current} setCurrent={setCurrent} />
+              </div>
+          }
+          {
+            finishit ? "" :
+              <div className={styles.body}>
+                {showDownload ? (
+                  <DownloadFile setCurrent={setCurrent} />
+                ) : null}
+                {showUploadImageToStorage ? (
+                  <UploadImageToStorage
+                    uploadedFiles={uploadedFiles}
+                    setUploadedFiles={setUploadedFiles}
+                    setCurrent={setCurrent}
+                    setDataResult={setDataResult}
+                    folderName={folderName}
+                    setFolderName={setFolderName}
+                  />
+                ) : null}
+                {showProfile ? (
+                  <Profile
+                    folderName={folderName}
+                    dataResult={dataResult}
+                    paymentLevel={paymentLevel}
+                    setSelectedProfile={setSelectedProfile}
+                    setCurrent={setCurrent}
+                    dataMocks={dataMocks}
+                  />
+                ) : null}
+                {showLicence ? (
+                  <Licence
+                    labelCheck={labelCheck}
+                    setLabelCheck={setLabelCheck}
+                    checked={checked}
+                    setChecked={setChecked}
+                    setCurrent={setCurrent}
+                  />
+                ) : null}
+
+                {showStaff ? <StaffOfSystem staffData={dataResult || dataMocks} /> : null}
+
+                <div>
+                  {/* Botón de Crear */}
+                  <div className={styles.buttonContainer}>
+                    {
+                      (abilityButtonSend) &&
+                      <Button type="primary" block size="large" onClick={handleCreate}>
+                        Crear
+                      </Button>
+                    }
+                  </div>
                 </div>
               </div>
-            </div>
-        }
-      </div>
+          }
+
+        </div>
     </div>
   )
 }
