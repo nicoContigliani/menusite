@@ -20,6 +20,7 @@ interface MenuItem {
 interface MenuProps {
     menuData: any
     groupedSections: { [key: string]: MenuItem[] }
+    groupedSectionpromotions: { [key: string]: MenuItem[] }
     backgroundImages: any
     namecompanies: string
     promotions: any
@@ -33,7 +34,7 @@ interface ConfigType {
 }
 
 const Menufourd: React.FC<MenuProps> = (props) => {
-    const { backgroundImages, config, groupedSections, info, menuData, promotions, schedules } = props
+    const { backgroundImages, config, groupedSections, groupedSectionpromotions, info, menuData, promotions, schedules } = props
 
     const [namecompanies, setNamecompanies] = useState<string>('')
     useLayoutEffect(() => {
@@ -70,6 +71,25 @@ const Menufourd: React.FC<MenuProps> = (props) => {
     if (loading) {
         return <div>Loading...</div>
     }
+
+
+    const memoizedSectionsPromotions = (groupedSectionpromotions ? Object.entries(groupedSectionpromotions) : [])
+        .map(([sectionName, items]) => {
+            const filteredItems = items.filter(
+                (item: any) =>
+                    // Check if any of the fields match the search term (case-insensitive)
+                    [item.Name, item.Description, item.Menu_Title, item.Section].some(
+                        (field) => typeof field === "string" && field.toLowerCase().includes(searchTerm.toLowerCase()),
+                    ) ||
+                    // Additional check for Price field if it's a string
+                    (typeof item.Price === "string" && item.Price.toLowerCase().includes(searchTerm.toLowerCase())),
+            )
+            return [sectionName, filteredItems] as [string, MenuItem[]]
+        })
+        .filter(([, items]) => items.length > 0)
+
+
+
 
     const memoizedSections = Object.entries(groupedSections)
         .map(([sectionName, items]) => {
@@ -147,6 +167,71 @@ const Menufourd: React.FC<MenuProps> = (props) => {
             </header>
 
             <main className={styles.main}>
+                {
+                    memoizedSectionsPromotions.length > 0 &&
+                    <div className={styles.sectionTitle}>
+                        <h5 className={styles.titleStructure}>Promoción</h5>
+                    </div>
+                }
+                {memoizedSectionsPromotions?.map(([sectionName, items]) => (
+                    <div key={sectionName} className={styles.section}>
+                        <div className={styles.sectionHeader}>
+                            <div className={styles.sectionTitle}
+                                onMouseEnter={() => handleSectionEnter(sectionName)}
+                                onMouseLeave={() => handleSectionLeave(sectionName)}
+                            >
+                                {sectionName}
+                            </div>
+                        </div>
+                        <div className={styles.sectionItems}>
+                            {items?.map((item: MenuItem, index: number) => (
+                                <div key={`${sectionName}-${item?.Item_id}-${index}`} className={styles.menuItem}>
+                                    <div className={styles.itemInfo}
+                                        onMouseEnter={() => handleSectionEnter(getElementId(sectionName, index, item.Name))}
+                                        onClick={() => handleClick(getElementId(sectionName, index, item.Name), "menuItem")}
+                                    >
+                                        <div className={styles.cardImage}>
+                                            <Image
+                                                src={`${item.Item_Image}`}
+                                                alt={item.Name}
+                                                width={100}
+                                                height={100}
+                                                priority
+                                            />
+                                        </div>
+                                        <div className={styles.itemDetails}>
+                                            <h2>{item?.Name}</h2>
+                                            <div className={styles.itemDescription}>{item?.Description}</div>
+                                            <div className={styles.price}>{`$${item.Price}`}</div>
+                                        </div>
+                                    </div>
+                                    <div onMouseEnter={() => handleSectionEnter(`Button-${item.Name}`)}>
+                                        <SelectComponent
+                                            orderdescription={[]}
+                                            delivery={true}
+                                            takeaway={false}
+                                            Dinein={false}
+                                            onChange={handleChange}
+                                            value="someValue"
+                                            className="no"
+                                            color="white"
+                                            type="default"
+                                        />
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                ))}
+            </main>
+
+            <main className={styles.main}>
+                {
+                    memoizedSections.length > 0 &&
+                    <div className={styles.sectionTitle}>
+                        <h5 className={styles.titleStructure}>Menú</h5>
+                    </div>
+                }
                 {memoizedSections?.map(([sectionName, items]) => (
                     <div key={sectionName} className={styles.section}>
                         <div className={styles.sectionHeader}>
@@ -161,9 +246,9 @@ const Menufourd: React.FC<MenuProps> = (props) => {
                             {items?.map((item: MenuItem, index: number) => (
                                 <div key={`${sectionName}-${item?.Item_id}-${index}`} className={styles.menuItem}>
                                     <div className={styles.itemInfo}
-                                     onMouseEnter={() => handleSectionEnter(getElementId(sectionName, index, item.Name))}
-                                     onClick={() => handleClick(getElementId(sectionName, index, item.Name), "menuItem")}
-                                >
+                                        onMouseEnter={() => handleSectionEnter(getElementId(sectionName, index, item.Name))}
+                                        onClick={() => handleClick(getElementId(sectionName, index, item.Name), "menuItem")}
+                                    >
                                         <div className={styles.cardImage}>
                                             <Image
                                                 src={`${item.Item_Image}`}

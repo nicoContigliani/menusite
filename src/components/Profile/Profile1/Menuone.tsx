@@ -8,6 +8,9 @@ import useSectionTimeTracker from "../../../../hooks/useSectionTimeTracker"
 import Image from "next/image"
 import SelectComponent from "@/components/SelectComponent/SelectComponent"
 import { extractLastSegment } from "../../../../tools/urlService"
+import HorizontalCarousel from "@/components/ElegantCarouselPromotions/ElegantCarouselPromotions"
+import Searchs from "@/components/Serchs/Serchs"
+import { Divider } from "@mui/material"
 
 interface MenuItem {
     Item_id: string
@@ -20,7 +23,8 @@ interface MenuItem {
 
 interface MenuProps {
     menuData: any
-    groupedSections: { [key: string]: MenuItem[] }
+    groupedSections: { [key: string]: MenuItem[] },
+    groupedSectionpromotions: { [key: string]: MenuItem[] }
     backgroundImages: any
     namecompanies: string
     promotions: any
@@ -34,7 +38,8 @@ interface ConfigType {
 }
 
 const Menuone: React.FC<MenuProps> = (props) => {
-    const { backgroundImages, config, groupedSections, info, menuData, promotions, schedules } = props
+    const { backgroundImages, config, groupedSections, groupedSectionpromotions, info, menuData, promotions, schedules } = props
+    console.log("🚀 ~ promotions:", promotions)
 
     // const { sectionTimes, handleSectionEnter } = useSectionTimeTracker()
     // useEffect(() => {
@@ -58,13 +63,15 @@ const Menuone: React.FC<MenuProps> = (props) => {
     const [searchTerm, setSearchTerm] = useState("")
     const [loading, setLoading] = useState(true)
     const [iconURL, setIconURL] = useState<string>("")
-
+    const [sectionsDataKey, setSectionsDataKey] = useState<string[]>([])
     useEffect(() => {
         if (groupedSections) {
             const firstSection: any = Object.values(groupedSections)[0]
             if (firstSection && firstSection.length > 0) {
                 // You can do something with `firstSection` if needed
             }
+            const sectionsKey = Object.keys(groupedSections)
+            setSectionsDataKey(sectionsKey)
         }
 
         if (config && config.length > 0) {
@@ -79,18 +86,45 @@ const Menuone: React.FC<MenuProps> = (props) => {
         return <div>Loading...</div>
     }
 
-    const memoizedSections = Object.entries(groupedSections)
+
+
+    const memoizedSectionsPromotions = (groupedSectionpromotions ? Object.entries(groupedSectionpromotions) : [])
         .map(([sectionName, items]) => {
             const filteredItems = items.filter(
-                (item) =>
-                    [item.Name, item.Description, item.Menu_Title].some(
+                (item: any) =>
+                    // Check if any of the fields match the search term (case-insensitive)
+                    [item.Name, item.Description, item.Menu_Title, item.Section].some(
                         (field) => typeof field === "string" && field.toLowerCase().includes(searchTerm.toLowerCase()),
                     ) ||
+                    // Additional check for Price field if it's a string
                     (typeof item.Price === "string" && item.Price.toLowerCase().includes(searchTerm.toLowerCase())),
             )
             return [sectionName, filteredItems] as [string, MenuItem[]]
         })
         .filter(([, items]) => items.length > 0)
+
+
+
+
+
+
+
+    const memoizedSections = Object.entries(groupedSections)
+        .map(([sectionName, items]) => {
+            const filteredItems = items.filter(
+                (item: any) =>
+                    // Check if any of the fields match the search term (case-insensitive)
+                    [item.Name, item.Description, item.Menu_Title, item.Section].some(
+                        (field) => typeof field === "string" && field.toLowerCase().includes(searchTerm.toLowerCase()),
+                    ) ||
+                    // Additional check for Price field if it's a string
+                    (typeof item.Price === "string" && item.Price.toLowerCase().includes(searchTerm.toLowerCase())),
+            )
+            return [sectionName, filteredItems] as [string, MenuItem[]]
+        })
+        .filter(([, items]) => items.length > 0)
+
+
 
 
     const handleChange = (value: { inputValue: string; clarification: string }) => {
@@ -144,17 +178,92 @@ const Menuone: React.FC<MenuProps> = (props) => {
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
+
                 </div>
+                <Searchs
+                    info={sectionsDataKey}
+                    setSearchTerm={setSearchTerm}
+                />
             </header>
 
+            {/* <div className={styles.main}>
+
+                {
+                    promotions &&
+                    <HorizontalCarousel
+                        items={memoizedSectionsPromotions}
+                        color="white"
+                    />
+                }
+            </div> */}
+
             <main className={styles.main}>
+                {
+                    memoizedSectionsPromotions?.length > 0 &&
+                    <div className={styles.sectionTitle}>
+                        <h5 className={styles.titleStructure}>Promosiones</h5>
+                    </div>
+                }
+                {memoizedSectionsPromotions?.map(([sectionName, items]) => (
+                    <div key={sectionName} className={styles.section}>
+                        <div className={styles.sectionHeader}>
+                            <div className={styles.sectionTitle}
+                                onMouseEnter={() => handleSectionEnter(`${sectionName}`)}
+                                onMouseLeave={() => handleSectionLeave(`${sectionName}`)}
+                            >
+                                {sectionName}
+                            </div>
+                        </div>
+                        <div className={styles.sectionItems}>
+                            {items?.map((item: MenuItem, index: number) => (
+                                <div key={`${sectionName}-${item?.Item_id}-${index}`} className={styles.menuItem}>
+                                    <div className={styles.itemInfo}
+                                        onMouseEnter={() => handleSectionEnter(getElementId(sectionName, index, item.Name))}
+                                        onClick={() => handleClick(getElementId(sectionName, index, item.Name), "menuItem")}
+                                    >
+                                        <div className={styles.cardImage}>
+                                            <Image
+                                                src={`${item.Item_Image}`}
+                                                alt={item.Name}
+                                                width={100}
+                                                height={100}
+                                                priority
+                                            />
+                                        </div>
+                                        <div className={styles.itemDetails}>
+                                            <h2>{item?.Name}</h2>
+                                            <div className={styles.itemDescription}>{item?.Description}</div>
+                                            <div className={styles.price}>{`$${item.Price}`}</div>
+                                        </div>
+                                    </div>
+                                    <div onMouseEnter={() => handleSectionEnter(`Button-${item.Name}`)}>
+                                        <SelectComponent
+                                            orderdescription={[]}
+                                            delivery
+                                            takeaway={false}
+                                            Dinein={false}
+                                            onChange={handleChange}
+                                            value="someValue"
+                                        />
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                ))}
+            </main>
+       
+            <br />
+            <main className={styles.main}>
+                <div className={styles.sectionTitle}>
+                    <h5 className={styles.titleStructure}>Menú</h5>
+                </div>
                 {memoizedSections?.map(([sectionName, items]) => (
                     <div key={sectionName} className={styles.section}>
                         <div className={styles.sectionHeader}>
                             <div className={styles.sectionTitle}
                                 onMouseEnter={() => handleSectionEnter(`${sectionName}`)}
                                 onMouseLeave={() => handleSectionLeave(`${sectionName}`)}
-
                             >
                                 {sectionName}
                             </div>

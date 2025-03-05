@@ -1,0 +1,73 @@
+/* Contenedor principal de la tarjeta de promoción */
+.promotionCard {
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Hover effect for cards */
+.promotionCard:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Imagen de la promoción */
+.promotionImage {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+}
+
+/* Contenido de la tarjeta */
+.promotionContent {
+    padding: 12px;
+    text-align: center;
+}
+
+/* Título de la promoción */
+.promotionTitle {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #333333;
+    margin-bottom: 4px;
+}
+
+/* Descripción de la promoción */
+.promotionDescription {
+    font-size: 0.8rem;
+    color: #666666;
+    margin-bottom: 8px;
+    line-height: 1.3;
+}
+
+/* Precio de la promoción */
+.promotionPrice {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #000000;
+    background-color: #f8f9fa;
+    padding: 6px 10px;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+/* Responsividad para pantallas pequeñas */
+@media (max-width: 768px) {
+    .promotionImage {
+        height: 100px; /* Altura reducida para móviles */
+    }
+
+    .promotionTitle {
+        font-size: 0.9rem;
+    }
+
+    .promotionDescription {
+        font-size: 0.75rem;
+    }
+
+    .promotionPrice {
+        font-size: 0.8rem;
+    }
+}

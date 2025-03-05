@@ -26,6 +26,7 @@ interface MenuItem {
 interface MenuProps {
     menuData: any
     groupedSections: { [key: string]: MenuItem[] }
+    groupedSectionpromotions: { [key: string]: MenuItem[] }
     backgroundImages: any
     namecompanies: string
     promotions: any
@@ -39,7 +40,7 @@ interface ConfigType {
 }
 
 const Menuone: React.FC<MenuProps> = (props) => {
-    const { backgroundImages, config, groupedSections, info, menuData, promotions, schedules } = props
+    const { backgroundImages, config, groupedSections, groupedSectionpromotions, info, menuData, promotions, schedules } = props
     const [searchTerm, setSearchTerm] = useState("")
     const [iconURL, setIconURL] = useState<string>("")
     const [namecompanies, setNamecompanies] = useState<string>('')
@@ -64,6 +65,26 @@ const Menuone: React.FC<MenuProps> = (props) => {
         }
     }, [config])
 
+
+    const memoizedSectionsPromotions = (groupedSectionpromotions ? Object.entries(groupedSectionpromotions) : [])
+        .map(([sectionName, items]) => {
+            const filteredItems = items.filter(
+                (item: any) =>
+                    // Check if any of the fields match the search term (case-insensitive)
+                    [item.Name, item.Description, item.Menu_Title, item.Section].some(
+                        (field) => typeof field === "string" && field.toLowerCase().includes(searchTerm.toLowerCase()),
+                    ) ||
+                    // Additional check for Price field if it's a string
+                    (typeof item.Price === "string" && item.Price.toLowerCase().includes(searchTerm.toLowerCase())),
+            )
+            return [sectionName, filteredItems] as [string, MenuItem[]]
+        })
+        .filter(([, items]) => items.length > 0)
+
+
+
+
+
     const memoizedSections = Object.entries(groupedSections)
         .map(([sectionName, items]) => {
             const filteredItems = items.filter(
@@ -87,16 +108,21 @@ const Menuone: React.FC<MenuProps> = (props) => {
     };
 
     return (
-        <Grid container spacing={2} style={{ padding: isMobile ? '1px' : '20px' }}
+        <Grid container spacing={0}
             data-cy="empresa-page-menu"
         >
             <Grid item xs={12}>
                 <div
                     className={styles.container}
-                    style={{ backgroundImage: backgroundImages || "none" }}
+                    style={{
+                        backgroundImage: backgroundImages || "none",
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                        backgroundRepeat: "no-repeat",
+                    }}
                 >
                     <header className={styles.header}>
-                        <Grid container alignItems="center" spacing={2}>
+                        <Grid container alignItems="center" spacing={0}>
                             <Grid item xs={12} md={4} onMouseEnter={() => handleSectionEnter("logo")}>
                                 {iconURL && (
                                     <Logo
@@ -132,13 +158,102 @@ const Menuone: React.FC<MenuProps> = (props) => {
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
                                     data-cy="Serch"
-
-                                />
+                                    style={{
+                                        color: 'white', // Color del texto
+                                        textShadow: '2px 2px 4px rgba(0, 0, 0, 0.75)', // Sombra del texto
+                                    }} />
                             </Grid>
                         </Grid>
                     </header>
 
+
+
                     <main className={styles.main}>
+                        {
+                            memoizedSectionsPromotions.length>0 &&
+                            <div className={styles.sectionTitle}>
+                                <h5 className={styles.titleStructure}>Promoción</h5>
+                            </div>
+                        }
+                        {memoizedSectionsPromotions.map(([sectionName, items]) => (
+                            <Grid
+                                key={sectionName}
+                                item
+                                xs={12}
+                                data-section={sectionName}
+                                className={styles.section}
+                                onMouseEnter={() => handleSectionEnter(sectionName)}
+                                onMouseLeave={() => handleSectionLeave(sectionName)}
+                                data-cy={sectionName}
+
+                            >
+                                <div className={styles.sectionHeader}>
+                                    <h2>{sectionName}</h2>
+                                </div>
+                                <Grid container spacing={2}>
+                                    {items.map((item, index) => {
+                                        const elementId = getElementId(sectionName, index, item.Name); // Generar el identificador único
+                                        return (
+                                            <Grid
+                                                key={elementId}
+                                                item
+                                                xs={12}
+                                                sm={6}
+                                                md={4}
+                                                className={styles.menuItem}
+                                                // onMouseEnter={() => handleSectionEnter(elementId)}
+
+                                                onMouseLeave={() => handleSectionLeave(elementId)}
+                                                onClick={() => handleClick(elementId, "menuItem")}
+                                                data-cy={`${elementId}-menuItem`}
+                                            >
+                                                <div className={styles.cardImage}>
+                                                    <Image
+                                                        src={item.Item_Image}
+                                                        alt={item.Name}
+                                                        width={200}
+                                                        height={200}
+                                                        priority
+                                                        style={{ objectFit: 'cover' }}
+                                                        onClick={() => handleClick(elementId, "image")}
+                                                        data-cy={`${elementId}-image`}
+                                                    />
+                                                </div>
+                                                <div className={styles.itemDetails}>
+                                                    <h2>{item.Name}</h2>
+                                                    <p className={styles.itemDescription}>{item.Description}</p>
+                                                    <p className={styles.price}>{`$${item.Price}`}</p>
+                                                </div>
+                                                <div onMouseEnter={() => handleSectionEnter(`Button-${item.Name}`)}>
+                                                    <SelectComponent
+                                                        orderdescription={[]}
+                                                        delivery
+                                                        takeaway={false}
+                                                        Dinein={false}
+                                                        onChange={handleChange}
+                                                        value="someValue"
+                                                        color="white"
+                                                        data-cy={`Button-${item.Name}`}
+                                                    // onClick={() => handleClick(elementId, "button")}
+                                                    />
+                                                </div>
+                                            </Grid>
+                                        );
+                                    })}
+                                </Grid>
+                            </Grid>
+                        ))}
+                    </main>
+
+
+
+                    <main className={styles.main}>
+                        {
+                            memoizedSections.length>0 &&
+                            <div className={styles.sectionTitle}>
+                                <h5 className={styles.titleStructure}>Menú</h5>
+                            </div>
+                        }
                         {memoizedSections.map(([sectionName, items]) => (
                             <Grid
                                 key={sectionName}

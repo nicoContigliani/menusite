@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import styles from './ElegantCarousel.module.css'
+import PromotionsCard from './PromotionsCard/PromotionsCard'
 
 interface Item {
   id: string | number
@@ -16,10 +17,11 @@ interface HorizontalCarouselProps {
 }
 
 export default function HorizontalCarousel({ items }: any) {
+  console.log("🚀 ~ HorizontalCarousel ~ items:", items)
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isTransitioning, setIsTransitioning] = useState(false)
 
-  const itemsPerView = 3
+  const itemsPerView = 2
 
   const nextSlide = useCallback(() => {
     if (!isTransitioning) {
@@ -30,7 +32,7 @@ export default function HorizontalCarousel({ items }: any) {
       setTimeout(() => setIsTransitioning(false), 300); // Sincronizado con CSS
     }
   }, [isTransitioning, items.length]);
-  
+
   const prevSlide = useCallback(() => {
     if (!isTransitioning) {
       setIsTransitioning(true);
@@ -58,10 +60,18 @@ export default function HorizontalCarousel({ items }: any) {
             width: `${(items.length / itemsPerView) * 100}%`,
           }}
         >
-          {items.map((item:any) => (
+          {/* .Menu_Title */}
+          {items?.map((item: any) => (
             <div className={styles.carouselItem} key={item.id}>
               <div className={styles.textContent}>
-                <h3 className={styles.title}>{item.Menu_Title}</h3>
+                <h3 className={styles.title}>{item[0]}</h3>
+                {
+                  (item[1] && item) &&
+                  <PromotionsCard
+                    item={item[1]}
+                  />
+                }
+
                 {item.Description && (
                   <h5 className={styles.description}>{item.Description}</h5>
                 )}
@@ -93,3 +103,5 @@ export default function HorizontalCarousel({ items }: any) {
     </div>
   )
 }
+
+

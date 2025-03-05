@@ -156,3 +156,11 @@
         width: 90%;
     }
 }
+.titleStructure{
+    text-align: center;
+    padding: 1rem;  
+    color: #f5f2e9;
+    font-family: "Playfair Display", serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+  }

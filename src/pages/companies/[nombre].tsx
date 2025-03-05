@@ -44,6 +44,9 @@ const EmpresaPage = ({ nombre }: { nombre: string }) => {
     const [namecompanies, setNamecompanies] = useState<string>('');
 
     const [isLogin, setIsLogin] = useState(true); // Use isLogin directly
+
+    const [isLogin2, setIsLogin2] = useState(false);
+
     const [fullUrl, setFullUrl] = useState("");
     const [openResponsive, setOpenResponsive] = useState(false);
 
@@ -88,6 +91,7 @@ const EmpresaPage = ({ nombre }: { nombre: string }) => {
             setOpenResponsive(true)
         }
         if (storedData?.aud != null) {
+            setIsLogin2(true)
             const { aud, email, _id, access_token, expires_at, userid } = storedData
 
             // setIsLogin(true)
@@ -119,6 +123,7 @@ const EmpresaPage = ({ nombre }: { nombre: string }) => {
                 setExcelData(response?.data);
                 setNamecompanies(folder);
                 setIsLoaded(true);
+                console.log("🚀 ~ fetchExcelData ~ response?.data:", response?.data)
             } else {
                 console.error("❌ Error fetching data:", response.error);
                 dispatch(setChExcelData({
@@ -156,7 +161,9 @@ const EmpresaPage = ({ nombre }: { nombre: string }) => {
     }, [isLoaded, namecompanies, data]);
 
     return (
-        <div className={styles.body} data-cy="empresa-page">
+        <div
+            className={styles.body}
+            data-cy="empresa-page">
             <ModalComponents
                 openResponsive={openResponsive}
                 setOpenResponsive={setOpenResponsive}
@@ -187,7 +194,10 @@ const EmpresaPage = ({ nombre }: { nombre: string }) => {
                     data-cy="auth-form" // Añadido para Cypress
                 />
             </ModalComponents>
-            <div className={styles.container} data-cy="menu-container">
+
+            <div
+                className={styles.container}
+                data-cy="menu-container">
                 {memoizedMenuNew}
             </div>
         </div>

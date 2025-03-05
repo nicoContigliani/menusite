@@ -1,0 +1,76 @@
+/* .infoContainer */
+.infoContainer {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr); /* Single column by default */
+    border-radius: 12px; /* More rounded corners for elegance */
+    overflow: hidden;
+    max-width: 100%;
+    box-sizing: border-box;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    padding: 16px; /* Padding for spacing */
+}
+
+/* .infoText */
+.infoText {
+    display: grid;
+    gap: 1rem; /* Slightly increased gap for cleaner appearance */
+    grid-template-columns: repeat(4, 1fr); /* 4 columns on large screens */
+    font-size: 16px;
+    font-weight: 400;
+    color: #333;
+    line-height: 1.6;
+    padding-bottom: 0.5%; /* Add some padding at the bottom */
+}
+
+/* .itemWrapper */
+.itemWrapper {
+    margin: 10px 0;
+    display: flex;
+    justify-content: center; /* Center the button */
+    align-items: center;
+    text-align: center; /* Center content */
+    flex-direction: column; /* Stack button vertically */
+}
+
+/* Button customization */
+.infoText button {
+    width: 100%; /* Button fills the container */
+    color: #fff; /* White text for contrast */
+    font-size: 16px;
+    padding: 10px 20px; /* Larger padding for a more generous button */
+    border-radius: 8px; /* Softer rounded corners */
+    border: 2px solid #4CAF50; /* Subtle border color */
+    background-color: #4CAF50; /* Green background */
+    transition: all 0.3s ease; /* Smooth transition for all properties */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Slight shadow on the button */
+}
+
+.infoText button:hover {
+    background-color: #45a049; /* Darker green on hover */
+    transform: translateY(-2px); /* Lift the button on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
+}
+
+/* Responsive styling for smaller screens */
+@media (max-width: 768px) {
+    .infoText {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns on small screens */
+        font-size: 14px; /* Adjust font size for readability on small screens */
+    }
+
+    .itemWrapper {
+        margin: 3px 0;
+        justify-content: space-between; /* Space out items evenly */
+    }
+
+    .infoText button {
+        font-size: 14px; /* Font size adjustment for mobile */
+        padding: 1px 16px; /* Slightly smaller padding */
+        width: auto; /* Button width adjusts to content */
+    }
+}
+
+/* Optional: Add a subtle hover effect on the container */
+.infoContainer:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Stronger shadow when hovering the container */
+}

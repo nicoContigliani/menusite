@@ -16,7 +16,7 @@ const Schedules: React.FC<SchedulesProps> = ({
     Schedules,
     fontSize = "14px",
     fontWeight = "400",
-    color = "#333",
+    color,
     fontFamily = "Arial, sans-serif",
     containerClassName = "",
     textClassName = ""
@@ -27,7 +27,7 @@ const Schedules: React.FC<SchedulesProps> = ({
 
     return (
         <div className={`${containerClassName} ${styles.infoContainer}`} style={{ fontFamily }}>
-            <div className={`${textClassName} ${styles.infoText}`} style={{ fontSize, fontWeight, color }}>
+            <div className={`${textClassName} ${styles.infoText}`} style={{ fontSize, fontWeight, color: color || 'black' }}>
                 <div className={styles.title}>Horarios</div>
                 {
                     Schedules.length && Schedules.map((schedule: any, index: number) => (
