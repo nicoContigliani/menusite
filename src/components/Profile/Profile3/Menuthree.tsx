@@ -119,7 +119,6 @@ const Menuone: React.FC<MenuProps> = (props) => {
                         backgroundSize: "cover",
                         backgroundPosition: "center",
                         backgroundRepeat: "no-repeat",
-                        backgroundAttachment: "fixed", // Fija el fondo para que no se mueva
 
                     }}
                 >
