@@ -7,5 +7,5 @@ body {
     /* Elimina cualquier borde */
     box-sizing: border-box;
     /* Asegura que el padding y el borde no afecten el tamaño */
-    background-color: red;
+
 }
