@@ -3,51 +3,69 @@
   min-height: 100vh;
   background-color: #000000;
   color: white;
-  padding: 1.5rem; /* Más espacio en escritorio */
-  font-family: 'Segoe UI', system-ui, sans-serif;
-  background-image: 
-    radial-gradient(circle, transparent 20%, #2a2a2a 20%, #2a2a2a 80%, transparent 80%, transparent),
+  padding: 2rem; /* Increased padding for better spacing */
+  font-family: "Segoe UI", system-ui, sans-serif;
+  background-image: radial-gradient(circle, transparent 20%, #2a2a2a 20%, #2a2a2a 80%, transparent 80%, transparent),
     radial-gradient(circle, transparent 20%, #2a2a2a 20%, #2a2a2a 80%, transparent 80%, transparent);
   background-size: 10px 10px;
   background-position: 0 0, 5px 5px;
   position: relative;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  display: flex; /* Added flex display */
+  flex-direction: column; /* Stack children vertically */
+  align-items: center; /* Center horizontally */
 }
 
 .header {
   text-align: center;
-  margin-bottom: 2rem; 
+  margin-bottom: 2.5rem; /* Increased margin */
+  width: 100%;
+  max-width: 1200px; /* Added max-width for large screens */
 }
 
 .mainTitle {
-  font-size: 3rem; /* Mayor tamaño para PC */
-  font-weight: 600;
+  font-size: 3.5rem; /* Increased size for better visibility */
+  font-weight: 700; /* Increased weight for better visibility */
   margin-bottom: 1.5rem;
-  font-family: 'Segoe Script', cursive;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  font-family: "Segoe Script", cursive;
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5); /* Enhanced shadow */
   position: relative;
+  color: #ffffff; /* Ensure high contrast */
 }
 
 .mainTitle::after {
-  content: '';
+  content: "";
   position: absolute;
-  bottom: -10px;
+  bottom: -12px;
   left: 50%;
   transform: translateX(-50%);
-  width: 180px;
-  height: 2px;
-  background: white;
+  width: 200px; /* Wider line */
+  height: 3px; /* Thicker line */
+  background: linear-gradient(90deg, transparent, white, transparent); /* Gradient effect */
 }
 
 .searchInput {
-  width: 50%; /* En PC será más pequeño */
+  width: 50%;
+  max-width: 600px; /* Added max-width */
   margin: 0 auto;
-  padding: 1rem;
+  padding: 1rem 1.5rem; /* Increased horizontal padding */
   background: rgba(255, 255, 255, 0.1);
   border: 2px solid rgba(255, 255, 255, 0.3);
   color: white;
-  border-radius: 4px;
-  font-size: 1rem;
-  margin-bottom: 2rem;
+  border-radius: 8px; /* Increased border radius */
+  font-size: 1.1rem; /* Slightly larger font */
+  margin-bottom: 2.5rem; /* Increased margin */
+  transition: all 0.3s ease; /* Smooth transition */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Added shadow */
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
 }
 
 .searchInput::placeholder {
@@ -56,52 +74,69 @@
 
 .menuWrapper {
   display: grid;
-  gap: 2rem; /* Espacio más grande en PC */
-  grid-template-columns: 1fr 1fr 1fr; /* Tres columnas en PC */
+  gap: 2.5rem; /* Increased gap */
+  grid-template-columns: repeat(3, 1fr); /* Three equal columns */
   position: relative;
-  background-color: #000000a3;
+  background-color: rgba(0, 0, 0, 0.7); /* More transparent */
+  width: 100%;
+  max-width: 1400px; /* Added max-width for large screens */
+  padding: 2rem; /* Added padding */
+  border-radius: 12px; /* Added border radius */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3); /* Added shadow */
 }
 
 .section {
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem; /* Increased margin */
   position: relative;
+  padding: 1.5rem; /* Added padding */
+  border-radius: 10px; /* Added border radius */
+  background-color: rgba(20, 20, 20, 0.6); /* Subtle background */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Added transition */
+}
+
+.section:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
 }
 
 .section::before {
-  content: '';
+  content: "";
   position: absolute;
   top: -8px;
   left: -8px;
   right: -8px;
   bottom: -8px;
-  border: 2px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
+  border: 2px solid rgba(255, 255, 255, 0.15); /* Slightly more visible */
+  border-radius: 12px; /* Increased radius */
   pointer-events: none;
+  z-index: -1; /* Ensure it stays behind content */
 }
 
 .sectionTitle {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  font-family: 'Segoe Script', cursive;
+  font-size: 2.2rem; /* Increased size */
+  margin-bottom: 1.5rem; /* Increased margin */
+  font-family: "Segoe Script", cursive;
   position: relative;
   padding-left: 1rem;
   font-weight: 700;
+  color: #ffffff; /* Ensure high contrast */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4); /* Added shadow */
 }
 
 .sectionTitle::after {
-  content: '';
+  content: "";
   position: absolute;
-  left: 1rem;
-  right: 1rem;
-  bottom: -5px;
+  left: 0;
+  right: 0;
+  bottom: -8px;
   height: 2px;
-  background: rgba(255, 255, 255, 0.3);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.1)); /* Gradient effect */
 }
 
 .sectionItems {
   display: flex;
-  flex-wrap: wrap; /* Permite que los items se distribuyan mejor */
-  gap: 1rem;
+  flex-direction: column; /* Changed to column for consistent layout */
+  gap: 1.2rem; /* Increased gap */
   padding: 1rem;
 }
 
@@ -109,13 +144,24 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
+  padding: 1.2rem; /* Increased padding */
+  background: rgba(255, 255, 255, 0.12); /* Slightly more visible */
+  border-radius: 10px; /* Increased radius */
+  transition: all 0.3s ease; /* Added transition */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Added shadow */
+}
+
+.menuItem:hover {
+  background: rgba(255, 255, 255, 0.18);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
 }
 
 .itemImage {
   display: block;
+  margin-right: 1rem; /* Added margin */
+  border-radius: 6px; /* Added radius */
+  overflow: hidden; /* Ensure image respects border radius */
 }
 
 .itemInfo {
@@ -123,115 +169,202 @@
   justify-content: space-between;
   align-items: baseline;
   width: 100%;
+  flex-wrap: wrap; /* Allow wrapping on small screens */
+}
+
+.itemDetails {
+  flex: 1; /* Take available space */
+  min-width: 0; /* Allow text truncation */
 }
 
 .itemName {
-  font-size: 1.2rem;
-  font-weight: 500;
+  font-size: 1.3rem; /* Increased size */
+  font-weight: 600; /* Increased weight */
+  margin-bottom: 0.5rem; /* Added margin */
+  color: #ffffff; /* Ensure high contrast */
 }
 
 .itemDescription {
   font-size: 1rem;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.8); /* Increased opacity */
   font-style: italic;
+  margin-bottom: 0.5rem; /* Added margin */
+  line-height: 1.4; /* Improved line height */
 }
 
 .price {
-  font-size: 1.2rem;
-  font-weight: 600;
-  margin-left: 1rem;
+  font-size: 1.3rem; /* Increased size */
+  font-weight: 700; /* Increased weight */
+  margin-left: 1.5rem; /* Increased margin */
   white-space: nowrap;
+  color: #ffffff; /* Ensure high contrast */
+  background: rgba(255, 255, 255, 0.15); /* Added background */
+  padding: 0.4rem 0.8rem; /* Added padding */
+  border-radius: 6px; /* Added radius */
 }
 
 .noResults {
   text-align: center;
-  padding: 2rem;
-  color: rgba(255, 255, 255, 0.7);
+  padding: 3rem; /* Increased padding */
+  color: rgba(255, 255, 255, 0.8); /* Increased opacity */
   font-style: italic;
+  font-size: 1.2rem; /* Increased size */
+  grid-column: 1 / -1; /* Span all columns */
+  background: rgba(255, 255, 255, 0.08); /* Added background */
+  border-radius: 8px; /* Added radius */
+}
+
+/* PARA TABLET (pantallas medianas) */
+@media (max-width: 1024px) {
+  .menuWrapper {
+    grid-template-columns: repeat(2, 1fr); /* Two columns for tablets */
+    gap: 2rem;
+  }
+
+  .mainTitle {
+    font-size: 3rem;
+  }
+
+  .searchInput {
+    width: 70%;
+  }
 }
 
 /* PARA MÓVIL (pantallas pequeñas) */
 @media (max-width: 768px) {
   .menuContainer {
-    padding: 1rem; /* Menos espacio en móvil */
+    padding: 1.5rem; /* Adjusted padding */
   }
 
   .mainTitle {
-    font-size: 2rem; /* Más pequeño en móvil */
+    font-size: 2.2rem; /* Adjusted size */
+  }
+
+  .mainTitle::after {
+    width: 150px; /* Adjusted width */
   }
 
   .searchInput {
-    width: 90%; /* Más ancho en móvil */
-    padding: 0.75rem;
+    width: 90%; /* Wider on mobile */
+    padding: 0.9rem;
+    font-size: 1rem;
   }
 
   .menuWrapper {
-    grid-template-columns: 1fr; /* Una sola columna en móvil */
-    gap: 1.5rem;
+    grid-template-columns: 1fr; /* Single column on mobile */
+    gap: 1.8rem;
+    padding: 1.5rem; /* Reduced padding */
+  }
+
+  .section {
+    padding: 1.2rem; /* Reduced padding */
   }
 
   .sectionTitle {
-    font-size: 1.5rem; /* Más pequeño para pantallas pequeñas */
-    padding-left: 1rem;
+    font-size: 1.8rem; /* Adjusted size */
+    padding-left: 0.5rem;
   }
 
   .sectionItems {
-    display: flex;
-    flex-direction: column; /* Los items estarán en columna */
     gap: 1rem;
-    padding: 0.5rem;
+    padding: 0.8rem;
   }
 
   .menuItem {
     flex-direction: column;
     align-items: flex-start;
     width: 100%;
-    padding: 0.75rem;
+    padding: 1rem;
+  }
+
+  .itemImage {
+    margin-right: 0;
+    margin-bottom: 1rem; /* Added margin bottom */
+    width: 100%; /* Full width */
+    max-height: 180px; /* Limit height */
+    object-fit: cover; /* Maintain aspect ratio */
+  }
+
+  .itemInfo {
+    flex-direction: column; /* Stack vertically */
   }
 
   .itemName {
-    font-size: 1rem;
+    font-size: 1.2rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .itemDescription {
+    margin-bottom: 0.8rem;
   }
 
   .price {
-    font-size: 1rem;
+    font-size: 1.1rem;
     margin-left: 0;
     margin-top: 0.5rem;
+    align-self: flex-end; /* Align to the right */
   }
 }
 
 /* Para pantallas muy pequeñas (como móviles muy compactos) */
 @media (max-width: 480px) {
-  .mainTitle {
-    font-size: 1.5rem; /* Aún más pequeño */
+  .menuContainer {
+    padding: 1rem; /* Further reduced padding */
   }
 
-  .sectionTitle {
-    font-size: 1.25rem; /* Reducido para pantallas ultra pequeñas */
+  .header {
+    margin-bottom: 1.8rem;
+  }
+
+  .mainTitle {
+    font-size: 1.8rem; /* Further reduced size */
+  }
+
+  .mainTitle::after {
+    width: 120px; /* Adjusted width */
+    bottom: -8px;
   }
 
   .searchInput {
-    font-size: 14px; /* Fuente más pequeña */
-    padding: 0.5rem;
+    font-size: 0.9rem; /* Smaller font */
+    padding: 0.7rem;
+    margin-bottom: 1.8rem;
   }
 
   .menuWrapper {
-    gap: 1rem; /* Menos espacio entre los items */
+    gap: 1.2rem; /* Reduced gap */
+    padding: 1rem;
+  }
+
+  .section {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .sectionTitle {
+    font-size: 1.5rem; /* Further reduced size */
+    margin-bottom: 1rem;
   }
 
   .menuItem {
-    padding: 0.5rem;
+    padding: 0.8rem;
   }
 
   .itemName {
+    font-size: 1.1rem;
+  }
+
+  .itemDescription {
     font-size: 0.9rem;
   }
 
   .price {
-    font-size: 0.9rem;
+    font-size: 1rem;
+    padding: 0.3rem 0.6rem;
   }
 
   .sectionItems {
     padding: 0.5rem;
   }
 }
+

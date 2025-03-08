@@ -1,59 +1,67 @@
-/* Info.module.css */
-
 .infoContainer {
-    display: grid;
-    gap: 1rem;
-    grid-template-columns: repeat(1, 1fr); /* Solo una columna por defecto */
-    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding: 16px;
-    overflow: hidden; /* Evitar desbordes */
-    max-width: 100%; /* Asegura que no se desborde horizontalmente */
-    box-sizing: border-box; /* Asegura que el padding no cause desbordamiento */
+    border-radius: 8px;
+    max-width: 100%;
+    box-sizing: border-box;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Sombra para el contenedor */
 }
 
 .infoText {
     display: grid;
-    gap: 0.2rem;
-    grid-template-columns: repeat(4, 1fr); /* Tres columnas en pantallas grandes */
+    gap: 0.8rem;
+    grid-template-columns: repeat(3, 1fr); /* 3 columnas en escritorio */
     font-size: 16px;
     font-weight: 400;
     color: #333;
     line-height: 1.6;
-    word-wrap: break-word; /* Asegura que el texto largo se ajuste */
-    overflow-wrap: break-word; /* Para evitar que el contenido largo desborde */
-    padding-bottom: 5%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Sombra para el texto */
 }
 
-.infoText div {
-    margin: 4px 0;
+.infoItem {
     display: flex;
-    align-items: center; /* Alinea verticalmente los íconos y el texto */
-    flex-wrap: wrap; /* Permite que los elementos envuelvan si es necesario */
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Sombra para los ítems */
 }
 
-.infoText svg { /* Estilo para los íconos */
-    margin-right: 8px; /* Espacio entre el ícono y el texto */
-    font-size: 18px; /* Tamaño del ícono */
+/* Íconos */
+.infoItem svg {
+    font-size: 18px;
+    color: #555;
+    filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5)); /* Sombra para los íconos */
 }
 
-/* Responsividad: tres columnas en pantallas más grandes y tres columnas más pequeñas en pantallas móviles con texto más pequeño */
+/* Ajuste para móviles */
 @media (max-width: 768px) {
     .infoText {
-        grid-template-columns: repeat(2, 1fr); /* Mantener tres columnas en pantallas pequeñas */
-        font-size: 14px; /* Reducir el tamaño de la fuente en móviles */
-        word-wrap: break-word; /* Asegura que el texto largo se ajuste */
-        overflow-wrap: break-word; /* Para evitar que el contenido largo desborde */
+        grid-template-columns: repeat(3, 1fr); /* 2 columnas en móviles */
+        font-size: 14px;
+        padding-left: 1%;
+        padding-right: 1%;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Sombra para móviles */
     }
-    .infoText div {
-        margin: 4px 0;
-        display: flex;
-        align-items: center; /* Alinea verticalmente los íconos y el texto */
-        flex-wrap: nowrap; /* Permite que los elementos envuelvan si es necesario */
-    }
-    
-    .infoText svg { /* Estilo para los íconos */
-        margin-right: 8px; /* Espacio entre el ícono y el texto */
-        font-size: 18px; /* Tamaño del ícono */
 
+    .infoItem {
+        gap: 6px;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Sombra para móviles */
     }
+
+    .infoItem svg {
+        font-size: 16px;
+        filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5)); /* Sombra para íconos en móviles */
+    }
+}
+
+/* Estilo para cuando no hay información */
+.noInfo {
+    text-align: center;
+    font-size: 14px;
+    color: #888;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Sombra para el mensaje de no información */
 }

@@ -7,6 +7,9 @@
     background: #1a1a1a; /* Fondo oscuro elegante */
     font-family: 'Playfair Display', serif;
     color: #f5f5f5;
+    background-size: cover; /* Asegura que la imagen de fondo se ajuste bien */
+    background-position: center; /* Centra la imagen de fondo */
+    background-attachment: fixed; /* Fija el fondo mientras se hace scroll */
 }
 
 /* Filtro de búsqueda con un diseño más refinado */
@@ -143,6 +146,11 @@
 @media (max-width: 768px) {
     .sectionItems {
         grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    }
+    .sectionItems {
+        grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+        /* Ajusta aún más las tarjetas */
+        gap: 15px;
     }
 }
 

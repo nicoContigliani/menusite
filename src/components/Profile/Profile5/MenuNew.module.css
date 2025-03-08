@@ -4,25 +4,26 @@
     flex-direction: column;
     gap: 10px;
     padding: 10px;
-    background-color: #000000;
     background-size: cover;
     background-position: center;
-    color: #ffffff;
     overflow-x: hidden;
-    background-size: cover; /* La imagen cubre todo el área */
-    background-position: center; /* Centrada */
-    background-attachment: fixed; /* Fijada mientras se hace scroll */
+    background-attachment: fixed;
+    background-size: cover; /* Asegura que la imagen de fondo se ajuste bien */
+    background-position: center; /* Centra la imagen de fondo */
+    background-attachment: fixed; /* Fija el fondo mientras se hace scroll */
+    background-color: #000000;
+    color: #ffffff;
 }
 
 /* Cabecera */
 .header {
     text-align: center;
-    padding: 20px 0;
+    padding: 15px 0; /* Reducido padding para mejorar la visualización en móviles */
     border-bottom: 3px solid #f39c12;
 }
 
 .header h1 {
-    font-size: 3rem;
+    font-size: 2.5rem; /* Reducido el tamaño para una mejor visibilidad en móvil */
     font-weight: 700;
     color: #f39c12;
     text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.8);
@@ -34,24 +35,24 @@
 }
 
 .sectionTitle {
-    font-size: 2rem;
+    font-size: 1.8rem; /* Ajustado el tamaño en pantalla pequeña */
     font-weight: 700;
     color: #f39c12;
-    margin-bottom: 20px;
+    margin-bottom: 15px; /* Menor espacio entre título y contenido */
 }
 
 /* Grid tipo masonry */
 .masonryGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
-    padding: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); /* Ajuste del tamaño mínimo para las tarjetas */
+    gap: 15px; /* Menor espacio entre los elementos */
+    padding: 5px; /* Reducción del padding para mantener el contenido alineado */
 }
 
 /* Tarjeta */
 .card {
     background: #fff;
-    border-radius: 12px;
+    border-radius: 10px; /* Bordes ligeramente redondeados */
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
     overflow: hidden;
     position: relative;
@@ -70,7 +71,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 200px;
+    height: 180px; /* Reducido el tamaño para que las tarjetas sean más compactas */
     background-color: rgba(0, 0, 0, 0.3);
     overflow: hidden;
 }
@@ -87,26 +88,26 @@
 }
 
 .cardContent {
-    padding: 15px;
+    padding: 12px; /* Reducido el padding para el contenido */
     background: #fff;
     text-align: center;
 }
 
 .cardTitle {
-    font-size: 1.5rem;
+    font-size: 1.4rem; /* Ajustado para móviles */
     font-weight: 700;
     color: #333;
     margin-bottom: 8px;
 }
 
 .cardDescription {
-    font-size: 0.9rem;
+    font-size: 0.85rem; /* Ajustado el tamaño para mejor legibilidad */
     color: #777;
     margin-bottom: 12px;
 }
 
 .cardPrice {
-    font-size: 1.3rem;
+    font-size: 1.1rem; /* Tamaño ajustado */
     font-weight: 700;
     color: #e74c3c;
 }
@@ -115,7 +116,7 @@
 .searchInput {
     width: 90%;
     padding: 10px;
-    margin: 15px auto;
+    margin: 10px auto; /* Ajustado el margen */
     border-radius: 6px;
     border: 2px solid #f39c12;
     background-color: rgba(0, 0, 0, 0.7);
@@ -136,30 +137,38 @@
 
 /* Responsivo para móviles */
 @media (max-width: 768px) {
+    .main{
+        padding: 1%;
+        padding-left: 3%;
+    }
     .header h1 {
-        font-size: 2.5rem;
+        font-size: 2.2rem; /* Ajuste para pantallas pequeñas */
     }
 
     .sectionTitle {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
     }
 
     .masonryGrid {
-        gap: 15px;
+        gap: 12px; /* Ajuste para las tarjetas */
     }
 
     .cardTitle {
-        font-size: 1.3rem;
+        font-size: 1.2rem;
     }
 
     .cardPrice {
-        font-size: 1.2rem;
+        font-size: 1rem;
+    }
+
+    .menuContainer {
+        padding: 5px; /* Reducido para asegurar mejor presentación en móviles */
     }
 }
 
 @media (max-width: 480px) {
     .header h1 {
-        font-size: 2rem;
+        font-size: 1.8rem;
     }
 
     .searchInput {
@@ -169,12 +178,12 @@
     }
 
     .sectionTitle {
-        font-size: 1.5rem;
+        font-size: 1.4rem;
     }
 
     .masonryGrid {
         grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-        gap: 10px;
+        gap: 8px;
     }
 
     .card {
@@ -187,11 +196,11 @@
     }
 
     .cardContent {
-        padding: 10px;
+        padding: 8px; /* Ajuste para mejorar la vista */
     }
 
     .cardTitle {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
     }
 
     .cardDescription {

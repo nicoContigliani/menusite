@@ -46,18 +46,31 @@ const IndexPage = () => {
 
     const { results, loading, fetchMultiple } = useFetchMultiple();
     const { handleCreate } = useHandleCreate(data, setRefreshTrigger);
+    // React.useEffect(() => {
+    //     fetchMultiple([{ url: "/api/trackTime" }, { url: "/api/companiesdashboard" }]);
+    // }, [fetchMultiple, refreshTrigger]);
+
+
+    const fetchData = React.useCallback(() => {
+        fetchMultiple([
+            { url: "/api/trackTime" },
+            { url: "/api/companiesdashboard" },
+        ]);
+    }, [fetchMultiple]);
+
     React.useEffect(() => {
-        fetchMultiple([{ url: "/api/trackTime" }, { url: "/api/companiesdashboard" }]);
-    }, [fetchMultiple, refreshTrigger]);
+        fetchData();
+    }, [fetchData, refreshTrigger]);
 
     React.useEffect(() => {
         const companiesData = results?.apicompaniesdashboard?.data || [];
         const trackTimeData: any = results?.apitrackTime?.data || [];
-        const uniqueCompaniesData: any | any[] = [...new Set(trackTimeData.map((item: any) => item.namecompanie))];
+        // const uniqueCompaniesData: any | any[] = [...new Set(trackTimeData.map((item: any) => item.namecompanie))];
+        const uniqueCompaniesData = [...new Set(trackTimeData.map((item: { namecompanie: string }) => item.namecompanie))];
+
 
         if (trackTimeData.length >= 2000) {
             handleCreate();
-            //create data of floating // when and how many
         }
 
         setData({

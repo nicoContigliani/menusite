@@ -2,9 +2,15 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  padding: 20px;
-  background-color: #f9f9f93a;
+  padding: 40px 30px; /* Increased padding for better spacing */
+  background-color: rgba(249, 249, 249, 0.25); 
   background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  font-family: "Playfair Display", "Georgia", serif; /* Elegant serif font */
+  justify-content: center; /* Added to center vertically */
+  align-items: center; /* Added to center horizontally */
 }
 
 .header {
@@ -12,120 +18,293 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  padding: 20px;
-  background-color: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.408);
-  border-radius: 10px;
+  gap: 20px; /* Increased gap */
+  padding: 35px 40px; /* More generous padding */
+  background-color: rgba(255, 255, 255, 0.95); /* Slightly more opaque */
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12); /* Softer, more spread shadow */
+  border-radius: 16px; /* Increased border radius */
+  margin-bottom: 30px; /* Added margin */
+  position: relative; /* For decorative elements */
+  overflow: hidden; /* For decorative elements */
+  width: 100%; /* Ensure it doesn't stretch beyond the screen */
+  max-width: 900px; /* Added max-width to limit size */
 }
 
 .mainTitle {
-  font-size: 2rem;
-  color: #333;
-  font-weight: bold;
+  font-size: 2.8rem; /* Larger size */
+  color: #2c3e50; /* Sophisticated dark blue-gray */
+  font-weight: 700;
   margin: 0;
+  letter-spacing: 1px; /* Slight letter spacing */
+  text-align: center;
+  line-height: 1.2;
+  position: relative;
+  padding-bottom: 15px; /* Space for decorative element */
+}
+
+/* Elegant underline for title */
+.mainTitle::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 2px;
+  background: #d4af37; /* Gold accent */
 }
 
 .searchInput {
   width: 100%;
-  max-width: 400px;
-  padding: 10px 15px;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  max-width: 500px; /* Slightly wider */
+  padding: 14px 20px; /* More generous padding */
+  font-size: 1.05rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 30px; /* Rounded search input */
   outline: none;
-  transition: border-color 0.3s ease;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+  font-family: "Open Sans", sans-serif; /* Sans-serif for input */
 }
 
 .searchInput:focus {
-  border-color: #007bff;
+  border-color: #d4af37; /* Gold accent */
+  box-shadow: 0 4px 20px rgba(212, 175, 55, 0.15); /* Gold-tinted shadow on focus */
+}
+
+.searchInput::placeholder {
+  color: #aab0b6; /* Subtle placeholder color */
 }
 
 .menuWrapper {
-  margin-top: 20px;
+  margin-top: 30px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 35px; /* Increased gap */
+  max-width: 1200px; /* Maximum width */
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  padding-left: 15px; /* Add padding to prevent content from touching edges */
+  padding-right: 15px; /* Add padding to prevent content from touching edges */
 }
 
 .section {
-  background-color: #ffffff;
-  padding: 15px;
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 30px; /* More generous padding */
+  border-radius: 16px; /* Increased border radius */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); /* Softer, more elegant shadow */
+  transition: transform 0.3s ease; /* Smooth transition */
+  position: relative; /* For decorative elements */
+  width: 100%; /* Ensure section takes full width */
+  max-width: 900px; /* Limit the width */
+  margin: 0 auto; /* Center the section */
 }
 
 .sectionTitle {
-  font-size: 1.5rem;
-  color: #555;
-  margin-bottom: 15px;
-  border-bottom: 2px solid #007bff;
-  padding-bottom: 5px;
+  font-size: 2rem; /* Larger size */
+  color: #2c3e50; /* Sophisticated dark blue-gray */
+  margin-bottom: 25px; /* Increased margin */
+  border-bottom: none; /* Remove default border */
+  padding-bottom: 15px;
+  position: relative;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* Elegant underline for section titles */
+.sectionTitle::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 2px;
+  background: #d4af37; /* Gold accent */
 }
 
 .sectionItems {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
+  display: grid; /* Changed to grid for better layout */
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); /* Responsive grid */
+  gap: 25px; /* Increased gap */
 }
 
 .menuItem {
   display: flex;
   align-items: flex-start;
-  gap: 15px;
-  padding: 15px;
-  border: 1px solid #e0e0e0;
-  border-radius: 10px;
-  background-color: #f8f8f8;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  gap: 20px; /* Increased gap */
+  padding: 2px; /* More generous padding */
+  border: none; /* Removed border */
+  border-radius: 12px; /* Increased border radius */
+  background-color: #ffffff; /* Pure white background */
+  transition: all 0.3s ease; /* Smooth transition */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05); /* Subtle initial shadow */
+  position: relative; /* For decorative elements */
+  overflow: hidden; /* For decorative elements */
+  width: 100%; /* Ensure it doesn't stretch too far */
+  max-width: 400px; /* Limit the width of each menu item */
+  margin: 0 auto; /* Center the menu items */
 }
 
 .menuItem:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1); /* Enhanced shadow on hover */
+}
+
+/* Elegant hover effect */
+.menuItem::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 0;
+  background: #d4af37; /* Gold accent */
+  transition: height 0.3s ease;
+}
+
+.menuItem:hover::before {
+  height: 100%;
 }
 
 .itemImage {
   flex-shrink: 0;
+  position: relative; /* For shadow effect */
 }
 
 .image {
   border-radius: 50%;
   object-fit: cover;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Shadow for image */
+  border: 3px solid white; /* White border around image */
+  transition: transform 0.3s ease;
+}
+
+.menuItem:hover .image {
+  transform: scale(1.05); /* Slight zoom on hover */
 }
 
 .itemInfo {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 5px;
+  gap: 10px; /* Increased gap */
+  flex: 1; /* Take remaining space */
 }
 
 .itemName {
-  font-size: 1.2rem;
-  color: #333;
-  font-weight: bold;
+  font-size: 1.4rem; /* Larger size */
+  color: #2c3e50; /* Sophisticated dark blue-gray */
+  font-weight: 600;
   margin: 0;
+  line-height: 1.3;
+  position: relative;
+  padding-right: 80px; /* Space for price */
 }
 
 .itemDescription {
-  font-size: 0.9rem;
-  color: #666;
+  font-size: 1rem; /* Slightly larger */
+  color: #5d6d7e; /* Softer color */
   margin: 0;
+  line-height: 1.6; /* Improved line height */
+  font-family: "Open Sans", sans-serif; /* Sans-serif for description */
+  font-style: italic;
 }
 
 .price {
-  font-size: 1rem;
-  font-weight: bold;
-  color: #007bff;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #d4af37; /* Gold accent */
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: rgba(212, 175, 55, 0.1); /* Subtle gold background */
+  padding: 5px 12px;
+  border-radius: 20px;
 }
 
 .noResults {
-  font-size: 1rem;
-  color: #ff3333;
+  font-size: 1.1rem;
+  color: #7f5a58; /* Elegant burgundy */
   text-align: center;
-  padding: 20px;
-  background-color: #ffe6e6;
-  border-radius: 10px;
-  border: 1px solid #ffcccc;
+  padding: 30px;
+  background-color: rgba(255, 230, 230, 0.7); /* More subtle background */
+  border-radius: 12px;
+  border: 1px solid rgba(255, 204, 204, 0.5); /* More subtle border */
+  font-style: italic;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  .menuContainer {
+    padding: 25px 20px;
+  }
+
+  .header {
+    padding: 25px;
+    width: 100%;
+    max-width: 900px; /* Prevent stretching beyond screen */
+  }
+
+  .mainTitle {
+    font-size: 2.2rem;
+    text-align: center; /* Center title in mobile view */
+  }
+
+  .searchInput {
+    max-width: 100%;
+  }
+
+  .menuWrapper {
+    padding-left: 0px; /* Padding to prevent content touching edges */
+    padding-right: 10px; /* Padding to prevent content touching edges */
+  }
+
+  .section {
+    padding: 25px 20px;
+  }
+
+  .sectionItems {
+    grid-template-columns: 1fr; /* Single column on mobile */
+  }
+
+  .menuItem {
+    padding: 20px;
+    width: 100%; /* Ensures menu item width doesn't stretch too far */
+    max-width: 350px; /* Restrict the width on mobile */
+    margin: 0 auto; /* Center the item */
+  }
+
+  .itemName {
+    font-size: 1.3rem;
+    padding-right: 0; /* Reset padding */
+  }
+
+  .price {
+    position: static; /* Reset position */
+    display: inline-block;
+    margin-top: 10px;
+  }
+}
+
+/* For very small screens */
+@media (max-width: 480px) {
+  .menuContainer {
+    padding: 15px;
+  }
+
+  .header {
+    padding: 20px;
+  }
+
+  .mainTitle {
+    font-size: 2rem;
+  }
+
+  .sectionItems {
+    grid-template-columns: 1fr; /* Single column on very small screens */
+  }
 }

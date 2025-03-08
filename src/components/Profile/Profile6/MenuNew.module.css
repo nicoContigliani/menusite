@@ -5,16 +5,16 @@
     align-items: center;
     gap: 20px;
     padding: 15px;
-    background: linear-gradient(to bottom, #1e1e1e, #0a0a0a);
+    background: linear-gradient(to bottom, #1e1e1e, #0a0a0a); /* Fondo con gradiente */
     color: #f0f0f0;
     overflow: hidden;
     max-width: 1200px;
     margin: 0 auto;
     border-radius: 10px;
-    background-size: cover;
-    background-position: center;
+    background-size: cover; /* Asegura que la imagen de fondo se ajuste bien */
+    background-position: center; /* Centra la imagen de fondo */
+    background-attachment: fixed; /* Fija el fondo mientras se hace scroll */
 }
-
 /* Encabezado */
 .header {
     width: 100%;

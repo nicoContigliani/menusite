@@ -12,6 +12,9 @@
     background-position: center;
     background-attachment: fixed;
     min-height: 100vh;
+    background-size: cover; /* Asegura que la imagen de fondo se ajuste bien */
+    background-position: center; /* Centra la imagen de fondo */
+    background-attachment: fixed; /* Fija el fondo mientras se hace scroll */
 }
 
 /* Cabecera con estilo más llamativo */
@@ -154,9 +157,9 @@
     }
 
     .sectionItems {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        /* Ajusta las tarjetas */
+        gap: 20px;
     }
 
     .menuItem {
@@ -210,4 +213,10 @@
     .itemInfo .price {
         font-size: 1.1rem;
     }
+    .sectionItems {
+        grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+        /* Ajusta aún más las tarjetas */
+        gap: 15px;
+    }
+
 }

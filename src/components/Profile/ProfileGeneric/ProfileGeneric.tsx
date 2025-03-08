@@ -7,12 +7,20 @@ import Info from "@/components/Info/Info"
 import Schedules from "@/components/Schedules/Schedules"
 import SelectComponent from "@/components/SelectComponent/SelectComponent"
 import { Divider } from "antd"
-import styles from "../Profile3/MenuNew.module.css"
 import useSectionTimeTracker from "../../../../hooks/useSectionTimeTracker"
 import { extractLastSegment } from "../../../../tools/urlService"
 import Grid from '@mui/material/Grid'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
+import MenuSection from "./MainComponents/MainComponents"
+import useDynamicStyles from "../../../../hooks/useDynamicStyles" // Importa el custom hook
+
+
+// import styles from "../Profile3/MenuNew.module.css"
+
+import stryless from '../Profile3/MenuNew.module.css'
+import GenericSearch from "./GenericSerch/GenericSerch"
+
 
 interface MenuItem {
     Item_id: string
@@ -33,6 +41,7 @@ interface MenuProps {
     info: any
     schedules: any
     config: any[]
+    profile?: string // Asegúrate de que `profile` esté definida como prop
 }
 
 interface ConfigType {
@@ -40,10 +49,14 @@ interface ConfigType {
 }
 
 const Menuone: React.FC<MenuProps> = (props) => {
-    const { backgroundImages, config, groupedSections, groupedSectionpromotions, info, menuData, promotions, schedules } = props
+    console.log("🚀 ~ props:", props)
+    const { backgroundImages, config, groupedSections, groupedSectionpromotions, info, menuData, promotions, schedules, profile } = props
     const [searchTerm, setSearchTerm] = useState("")
     const [iconURL, setIconURL] = useState<string>("")
     const [namecompanies, setNamecompanies] = useState<string>('')
+
+    // Función para seleccionar los estilos según el perfil
+    const styles = useDynamicStyles(profile);
 
     const theme = useTheme()
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
@@ -64,7 +77,6 @@ const Menuone: React.FC<MenuProps> = (props) => {
             setIconURL(config[0].IconBrand || "")
         }
     }, [config])
-
 
     const memoizedSectionsPromotions = (groupedSectionpromotions ? Object.entries(groupedSectionpromotions) : [])
         .map(([sectionName, items]) => {
@@ -96,12 +108,9 @@ const Menuone: React.FC<MenuProps> = (props) => {
         console.log("Order Info:", value)
     }
 
-    const getElementId = (sectionName: string, index: number, itemName: string) => {
-        return `${sectionName}-${index}-${itemName}`;
-    };
 
     return (
-        <Grid data-cy="empresa-page-menu">
+        <Grid  data-cy="empresa-page-menu">
             <div
                 className={styles.container}
                 style={{
@@ -109,10 +118,18 @@ const Menuone: React.FC<MenuProps> = (props) => {
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                     backgroundRepeat: "no-repeat",
+                    minHeight: "100vh",
+                    width: "100%",
                 }}
             >
                 <header className={styles.header}>
-                    <Grid container alignItems="center" spacing={0}>
+                    <Grid 
+                     container 
+                     direction="column"  // Siempre en columna
+                     alignItems="center"
+                     justifyContent="center"
+                     spacing={2} // Espaciado entre elementos
+                    >
                         <Grid item xs={12} md={4} onMouseEnter={() => handleSectionEnter("logo")}>
                             {iconURL && (
                                 <Logo
@@ -127,7 +144,15 @@ const Menuone: React.FC<MenuProps> = (props) => {
                                 />
                             )}
                         </Grid>
-                        <Grid item xs={12} md={4} onMouseEnter={() => handleSectionEnter("info")}>
+                        <Grid
+                            item
+                            xs={12}
+                            md={4}
+                            onMouseEnter={() => handleSectionEnter("info")}
+                            display="flex"
+                            justifyContent="center"
+                            alignItems="center"
+                        >
                             {info && (
                                 <Info
                                     info={info}
@@ -139,165 +164,47 @@ const Menuone: React.FC<MenuProps> = (props) => {
                                 />
                             )}
                         </Grid>
-                        <Grid item xs={12} md={4} onMouseEnter={() => handleSectionEnter("search")}>
-                            <input
-                                type="text"
-                                className={styles.searchInput}
-                                placeholder="Buscar en el menú..."
-                                value={searchTerm}
-                                onChange={(e) => setSearchTerm(e.target.value)}
-                                data-cy="Serch"
-                                style={{
-                                    color: 'white',
-                                    textShadow: '2px 2px 4px rgba(0, 0, 0, 0.75)',
-                                }} />
+
+                        <Grid  item xs={12} md={4} onMouseEnter={() => handleSectionEnter("search")}>
+                            <GenericSearch value={searchTerm} onChange={setSearchTerm} profile={profile} />
                         </Grid>
                     </Grid>
                 </header>
 
-                <main className={styles.main}>
-                    {memoizedSectionsPromotions.length > 0 && (
-                        <div className={styles.sectionTitle}>
-                            <h5 className={styles.titleStructure}>Promoción</h5>
-                        </div>
-                    )}
-                    {memoizedSectionsPromotions.map(([sectionName, items]) => (
-                        <Grid
-                            key={sectionName}
-                            item
-                            xs={12}
-                            data-section={sectionName}
-                            className={styles.section}
-                            onMouseEnter={() => handleSectionEnter(sectionName)}
-                            onMouseLeave={() => handleSectionLeave(sectionName)}
-                            data-cy={sectionName}
-                        >
-                            <div className={styles.sectionHeader}>
-                                <h2>{sectionName}</h2>
-                            </div>
-                            <Grid container spacing={2}>
-                                {items.map((item, index) => {
-                                    const elementId = getElementId(sectionName, index, item.Name);
-                                    return (
-                                        <Grid
-                                            key={elementId}
-                                            item
-                                            xs={12}
-                                            sm={6}
-                                            md={4}
-                                            className={styles.menuItem}
-                                            onMouseLeave={() => handleSectionLeave(elementId)}
-                                            onClick={() => handleClick(elementId, "menuItem")}
-                                            data-cy={`${elementId}-menuItem`}
-                                        >
-                                            <div className={styles.cardImage}>
-                                                <Image
-                                                    src={item.Item_Image}
-                                                    alt={item.Name}
-                                                    width={200}
-                                                    height={200}
-                                                    priority
-                                                    style={{ objectFit: 'cover' }}
-                                                    onClick={() => handleClick(elementId, "image")}
-                                                    data-cy={`${elementId}-image`}
-                                                />
-                                            </div>
-                                            <div className={styles.itemDetails}>
-                                                <h2>{item.Name}</h2>
-                                                <p className={styles.itemDescription}>{item.Description}</p>
-                                                <p className={styles.price}>{`$${item.Price}`}</p>
-                                            </div>
-                                            <div onMouseEnter={() => handleSectionEnter(`Button-${item.Name}`)}>
-                                                <SelectComponent
-                                                    orderdescription={[]}
-                                                    delivery
-                                                    takeaway={false}
-                                                    Dinein={false}
-                                                    onChange={handleChange}
-                                                    value="someValue"
-                                                    color="white"
-                                                    data-cy={`Button-${item.Name}`}
-                                                />
-                                            </div>
-                                        </Grid>
-                                    );
-                                })}
-                            </Grid>
-                        </Grid>
-                    ))}
-                </main>
+                <MenuSection
+                    sections={memoizedSectionsPromotions}
+                    title="Promoción"
+                    handleSectionEnter={handleSectionEnter}
+                    handleSectionLeave={handleSectionLeave}
+                    handleClick={handleClick}
+                    handleChange={handleChange}
+                    profile={profile}
+                />
+                <MenuSection
+                    sections={memoizedSections}
+                    title="Menú"
+                    handleSectionEnter={handleSectionEnter}
+                    handleSectionLeave={handleSectionLeave}
+                    handleClick={handleClick}
+                    handleChange={handleChange}
+                    profile={profile}
 
-                <main className={styles.main}>
-                    {memoizedSections.length > 0 && (
-                        <div className={styles.sectionTitle}>
-                            <h5 className={styles.titleStructure}>Menú</h5>
-                        </div>
-                    )}
-                    {memoizedSections.map(([sectionName, items]) => (
-                        <Grid
-                            key={sectionName}
-                            item
-                            xs={12}
-                            data-section={sectionName}
-                            className={styles.section}
-                            onMouseEnter={() => handleSectionEnter(sectionName)}
-                            onMouseLeave={() => handleSectionLeave(sectionName)}
-                            data-cy={sectionName}
-                        >
-                            <div className={styles.sectionHeader}>
-                                <h2>{sectionName}</h2>
-                            </div>
-                            <Grid container spacing={2}>
-                                {items.map((item, index) => {
-                                    const elementId = getElementId(sectionName, index, item.Name);
-                                    return (
-                                        <Grid
-                                            key={elementId}
-                                            item
-                                            xs={12}
-                                            sm={6}
-                                            md={4}
-                                            className={styles.menuItem}
-                                            onMouseLeave={() => handleSectionLeave(elementId)}
-                                            onClick={() => handleClick(elementId, "menuItem")}
-                                            data-cy={`${elementId}-menuItem`}
-                                        >
-                                            <div className={styles.cardImage}>
-                                                <Image
-                                                    src={item.Item_Image}
-                                                    alt={item.Name}
-                                                    width={200}
-                                                    height={200}
-                                                    priority
-                                                    style={{ objectFit: 'cover' }}
-                                                    onClick={() => handleClick(elementId, "image")}
-                                                    data-cy={`${elementId}-image`}
-                                                />
-                                            </div>
-                                            <div className={styles.itemDetails}>
-                                                <h2>{item.Name}</h2>
-                                                <p className={styles.itemDescription}>{item.Description}</p>
-                                                <p className={styles.price}>{`$${item.Price}`}</p>
-                                            </div>
-                                            <div onMouseEnter={() => handleSectionEnter(`Button-${item.Name}`)}>
-                                                <SelectComponent
-                                                    orderdescription={[]}
-                                                    delivery
-                                                    takeaway={false}
-                                                    Dinein={false}
-                                                    onChange={handleChange}
-                                                    value="someValue"
-                                                    color="white"
-                                                    data-cy={`Button-${item.Name}`}
-                                                />
-                                            </div>
-                                        </Grid>
-                                    );
-                                })}
-                            </Grid>
-                        </Grid>
-                    ))}
-                </main>
+                />
+
+                <Grid item xs={12} className={styles.schedules} onMouseEnter={() => handleSectionEnter("schedules")}>
+                    <Schedules
+                        Schedules={schedules}
+                        fontSize={isMobile ? "12px" : "14px"}
+                        fontWeight="500"
+                        color="#ddd"
+                        fontFamily="Helvetica, sans-serif"
+                        data-cy={`Schedules`}
+                    />
+                </Grid>
+
+                <footer className={styles.footer}>
+                    <p>{`© ${new Date().getFullYear()} LlakaScript`}</p>
+                </footer>
             </div>
         </Grid>
     )

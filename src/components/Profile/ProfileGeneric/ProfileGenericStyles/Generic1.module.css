@@ -5,14 +5,15 @@
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
+  background-repeat: no-repeat; /* Evita que la imagen de fondo se repita */
   color: #ffffff;
   font-family: "Arial", sans-serif;
   text-shadow: #000000 0.1em 0.1em 0.2em;
   width: 100%;
   max-width: 1200px;
-  /* margin: 0 auto;
-  padding: 1rem; */
+  margin: 0 auto; /* Centra el contenedor */
   box-sizing: border-box;
+  overflow: hidden; /* Evita desbordamiento */
 }
 
 .header {
@@ -20,7 +21,7 @@
   flex-direction: column;
   align-items: center;
   padding: 20px;
-  background-color: rgba(0, 0, 0, 0.153);
+  background-color: rgba(40, 40, 40, 0.9);
   position: sticky;
   top: 0;
   z-index: 10;
@@ -74,17 +75,20 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  box-sizing: border-box; /* Asegura que el padding no cause desbordamiento */
 }
 
 .section {
   margin-bottom: 40px;
   width: 100%;
   max-width: 1200px;
+  box-sizing: border-box; /* Evita desbordamiento */
 }
 
 .sectionHeader {
   margin-bottom: 20px;
   text-align: center;
+  width: 100%; /* Asegura que ocupe todo el ancho */
 }
 
 .sectionTitle {
@@ -93,6 +97,9 @@
   color: #ff6f61;
   text-align: center;
   margin-bottom: 20px;
+  width: 100%; /* Asegura que ocupe todo el ancho */
+  box-sizing: border-box;
+  padding: 0 10px; /* Evita que el texto toque los bordes */
 }
 
 .sectionItems {
@@ -100,10 +107,11 @@
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 20px;
   width: 100%;
+  box-sizing: border-box;
 }
 
 .menuItem {
-  background-color: rgba(0, 0, 0, 0.202);
+  background-color: rgba(40, 40, 40, 0.9);
   border-radius: 16px;
   overflow: hidden;
   transition: transform 0.3s ease;
@@ -112,6 +120,7 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
+  box-sizing: border-box; /* Evita desbordamiento */
 }
 
 .menuItem:hover {
@@ -122,6 +131,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%; /* Asegura que ocupe todo el ancho */
 }
 
 .cardImage {
@@ -139,6 +149,8 @@
 .itemDetails {
   padding: 15px;
   text-align: center;
+  width: 100%; /* Asegura que ocupe todo el ancho */
+  box-sizing: border-box;
 }
 
 .itemDetails h2 {
@@ -150,6 +162,7 @@
 .itemDescription {
   font-size: 0.9rem;
   margin-bottom: 10px;
+  color: #ffffff;
 }
 
 .price {
@@ -159,17 +172,21 @@
 }
 
 .footer {
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(40, 40, 40, 0.9);
   text-align: center;
   padding: 20px;
   font-size: 0.9rem;
   border-radius: 5%;
+  color: #ffffff;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .schedules {
-  background-color: rgba(0, 0, 0, 0.011);
+  background-color: rgba(40, 40, 40, 0.9);
 }
 
+/* Estilos responsivos */
 @media (min-width: 769px) {
   .header {
     flex-direction: row;
@@ -190,54 +207,27 @@
 
 @media (max-width: 768px) {
   .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    padding: 0 10px; /* Añade padding para evitar desbordamiento */
   }
 
-  .info {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .topHeader {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .logo {
-    margin-bottom: 20px;
-    text-align: center;
-  }
-
-  .sectionHeader {
-    margin-left: 0;
-    margin-bottom: 20px;
-  }
-
-  .searchContainer {
-    margin-left: 0;
-    max-width: none;
+  .main {
+    padding: 10px; /* Reduce el padding en móviles */
   }
 
   .sectionTitle {
-    font-size: 1.5rem;
+    font-size: 1.5rem; /* Reduce el tamaño del título en móviles */
   }
 
   .sectionItems {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; /* Una columna en móviles */
   }
 
   .menuItem {
-    max-width: 100%;
-    margin: 0 auto;
+    max-width: 100%; /* Asegura que no exceda el ancho */
   }
 
   .cardImage {
-    height: auto;
-    overflow: hidden;
+    height: auto; /* Ajusta la altura automáticamente */
   }
 }
 
@@ -270,8 +260,10 @@
 .titleStructure {
   text-align: center;
   padding: 1rem;
-  color: #f5f2e9;
+  color: #ff6f61;
   font-family: "Playfair Display", serif;
   font-size: 1.8rem;
   font-weight: 700;
+  width: 100%; /* Asegura que ocupe todo el ancho */
+  box-sizing: border-box;
 }

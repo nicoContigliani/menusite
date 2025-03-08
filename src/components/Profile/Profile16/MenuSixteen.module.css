@@ -7,6 +7,9 @@
   font-family: "Roboto", sans-serif;
   background-color: #333333;
   color: #f5f2e9;
+  background-size: cover; /* Asegura que la imagen de fondo se ajuste bien */
+  background-position: center; /* Centra la imagen de fondo */
+  background-attachment: fixed; /* Fija el fondo mientras se hace scroll */
 }
 
 .header {

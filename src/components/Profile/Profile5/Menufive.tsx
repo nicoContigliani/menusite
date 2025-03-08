@@ -108,7 +108,7 @@
 //                     />
 //                 </div>
 //             </header>
-            
+
 
 
 
@@ -192,6 +192,7 @@ import SelectComponent from "@/components/SelectComponent/SelectComponent"
 import useSectionTimeTracker from "../../../../hooks/useSectionTimeTracker"
 import Logo from "@/components/Logo/Logo"
 import { extractLastSegment } from "../../../../tools/urlService"
+import { Grid } from "@mui/material"
 
 interface MenuItem {
   Menu_Title: string
@@ -319,126 +320,130 @@ const Menufive: React.FC<MenuProps> = (props) => {
       </header>
 
       {/* Render promotions sections if they exist */}
-      {memoizedSectionsPromotions.length > 0 && (
-        <>
-          <div className={styles.sectionTitle}>
-            <h5 className={styles.titleStructure}>Promoción</h5>
-          </div>
+      <Grid className={styles.main} container >
 
-          {memoizedSectionsPromotions.map(([sectionName, items], index) => (
-            <section
-              key={index}
-              className={styles.section}
-              onMouseEnter={() => handleSectionEnter(sectionName)}
-              onMouseLeave={() => handleSectionLeave(sectionName)}
-            >
-              <h2 className={styles.sectionTitle}>{sectionName}</h2>
-              <div className={styles.masonryGrid}>
-                {items.length > 0 ? (
-                  items.map((item, itemIndex) => (
-                    <div
-                      key={itemIndex}
-                      className={styles.card}
-                      onMouseEnter={() => handleSectionEnter(getElementId(sectionName, index, item.Name))}
-                      onClick={() => handleClick(getElementId(sectionName, index, item.Name), "menuItem")}
-                    >
-                      <div className={styles.cardImage}>
-                        <Image
-                          src={item.Item_Image || "/placeholder.svg"}
-                          alt={item.Name}
-                          width={400}
-                          height={400}
-                          priority
-                        />
-                      </div>
-                      <div className={styles.cardContent}>
-                        <h3 className={styles.cardTitle}>{item.Name}</h3>
-                        <span className={styles.cardDescription}>{item.Description}</span>
-                        <span className={styles.cardPrice}>{`$${item.Price}`}</span>
-                      </div>
-                      <div onMouseEnter={() => handleSectionEnter(`Button-${item.Name}`)}>
-                        <SelectComponent
-                          orderdescription={[]}
-                          delivery={true}
-                          takeaway={false}
-                          Dinein={false}
-                          onChange={handleChange}
-                          value="someValue"
-                          className="no"
-                          color="black"
-                        />
-                      </div>
-                    </div>
-                  ))
-                ) : (
-                  <span>No se encontraron artículos</span>
-                )}
-              </div>
-            </section>
-          ))}
-        </>
-      )}
+        {memoizedSectionsPromotions.length > 0 && (
+          <>
+            <div className={styles.sectionTitle}>
+              <h5 className={styles.titleStructure}>Promoción</h5>
+            </div>
 
-      {/* Render regular menu sections */}
-      {memoizedSections.length > 0 && (
-        <>
-          <div className={styles.sectionTitle}>
-            <h5 className={styles.titleStructure}>Menú</h5>
-          </div>
+            {memoizedSectionsPromotions.map(([sectionName, items], index) => (
+              <section
+                key={index}
+                className={styles.section}
+                onMouseEnter={() => handleSectionEnter(sectionName)}
+                onMouseLeave={() => handleSectionLeave(sectionName)}
+              >
+                <h2 className={styles.sectionTitle}>{sectionName}</h2>
+                <div className={styles.masonryGrid}>
+                  {items.length > 0 ? (
+                    items.map((item, itemIndex) => (
+                      <div
+                        key={itemIndex}
+                        className={styles.card}
+                        onMouseEnter={() => handleSectionEnter(getElementId(sectionName, index, item.Name))}
+                        onClick={() => handleClick(getElementId(sectionName, index, item.Name), "menuItem")}
+                      >
+                        <div className={styles.cardImage}>
+                          <Image
+                            src={item.Item_Image || "/placeholder.svg"}
+                            alt={item.Name}
+                            width={400}
+                            height={400}
+                            priority
+                          />
+                        </div>
+                        <div className={styles.cardContent}>
+                          <h3 className={styles.cardTitle}>{item.Name}</h3>
+                          <span className={styles.cardDescription}>{item.Description}</span>
+                          <span className={styles.cardPrice}>{`$${item.Price}`}</span>
+                        </div>
+                        <div onMouseEnter={() => handleSectionEnter(`Button-${item.Name}`)}>
+                          <SelectComponent
+                            orderdescription={[]}
+                            delivery={true}
+                            takeaway={false}
+                            Dinein={false}
+                            onChange={handleChange}
+                            value="someValue"
+                            className="no"
+                            color="black"
+                          />
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <span>No se encontraron artículos</span>
+                  )}
+                </div>
+              </section>
+            ))}
+          </>
+        )}
 
-          {memoizedSections.map(([sectionName, items], index) => (
-            <section
-              key={index}
-              className={styles.section}
-              onMouseEnter={() => handleSectionEnter(sectionName)}
-              onMouseLeave={() => handleSectionLeave(sectionName)}
-            >
-              <h2 className={styles.sectionTitle}>{sectionName}</h2>
-              <div className={styles.masonryGrid}>
-                {items.length > 0 ? (
-                  items.map((item, itemIndex) => (
-                    <div
-                      key={itemIndex}
-                      className={styles.card}
-                      onMouseEnter={() => handleSectionEnter(getElementId(sectionName, index, item.Name))}
-                      onClick={() => handleClick(getElementId(sectionName, index, item.Name), "menuItem")}
-                    >
-                      <div className={styles.cardImage}>
-                        <Image
-                          src={item.Item_Image || "/placeholder.svg"}
-                          alt={item.Name}
-                          width={400}
-                          height={400}
-                          priority
-                        />
+        {/* Render regular menu sections */}
+        {memoizedSections.length > 0 && (
+          <>
+            <div className={styles.sectionTitle}>
+              <h5 className={styles.titleStructure}>Menú</h5>
+            </div>
+
+            {memoizedSections.map(([sectionName, items], index) => (
+              <section
+                key={index}
+                className={styles.section}
+                onMouseEnter={() => handleSectionEnter(sectionName)}
+                onMouseLeave={() => handleSectionLeave(sectionName)}
+              >
+                <h2 className={styles.sectionTitle}>{sectionName}</h2>
+                <div className={styles.masonryGrid}>
+                  {items.length > 0 ? (
+                    items.map((item, itemIndex) => (
+                      <div
+                        key={itemIndex}
+                        className={styles.card}
+                        onMouseEnter={() => handleSectionEnter(getElementId(sectionName, index, item.Name))}
+                        onClick={() => handleClick(getElementId(sectionName, index, item.Name), "menuItem")}
+                      >
+                        <div className={styles.cardImage}>
+                          <Image
+                            src={item.Item_Image || "/placeholder.svg"}
+                            alt={item.Name}
+                            width={400}
+                            height={400}
+                            priority
+                          />
+                        </div>
+                        <div className={styles.cardContent}>
+                          <h3 className={styles.cardTitle}>{item.Name}</h3>
+                          <span className={styles.cardDescription}>{item.Description}</span>
+                          <span className={styles.cardPrice}>{`$${item.Price}`}</span>
+                        </div>
+                        <div onMouseEnter={() => handleSectionEnter(`Button-${item.Name}`)}>
+                          <SelectComponent
+                            orderdescription={[]}
+                            delivery={true}
+                            takeaway={false}
+                            Dinein={false}
+                            onChange={handleChange}
+                            value="someValue"
+                            className="no"
+                            color="black"
+                          />
+                        </div>
                       </div>
-                      <div className={styles.cardContent}>
-                        <h3 className={styles.cardTitle}>{item.Name}</h3>
-                        <span className={styles.cardDescription}>{item.Description}</span>
-                        <span className={styles.cardPrice}>{`$${item.Price}`}</span>
-                      </div>
-                      <div onMouseEnter={() => handleSectionEnter(`Button-${item.Name}`)}>
-                        <SelectComponent
-                          orderdescription={[]}
-                          delivery={true}
-                          takeaway={false}
-                          Dinein={false}
-                          onChange={handleChange}
-                          value="someValue"
-                          className="no"
-                          color="black"
-                        />
-                      </div>
-                    </div>
-                  ))
-                ) : (
-                  <span>No se encontraron artículos</span>
-                )}
-              </div>
-            </section>
-          ))}
-        </>
-      )}
+                    ))
+                  ) : (
+                    <span>No se encontraron artículos</span>
+                  )}
+                </div>
+              </section>
+            ))}
+          </>
+        )}
+      </Grid>
+
     </div>
   )
 }
