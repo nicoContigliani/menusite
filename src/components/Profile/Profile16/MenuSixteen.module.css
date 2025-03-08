@@ -129,6 +129,8 @@
 @media (max-width: 768px) {
   .container {
     padding: 1rem;
+    padding-left: 6%;
+    padding-right: 6%;
   }
 
   .header {
