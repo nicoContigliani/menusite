@@ -215,7 +215,8 @@ const Menufourd: React.FC<MenuProps> = (props) => {
                                             value="someValue"
                                             className="no"
                                             color="white"
-                                            type="default"
+                                            size="small"
+
                                         />
                                     </div>
                                 </div>
@@ -274,7 +275,6 @@ const Menufourd: React.FC<MenuProps> = (props) => {
                                             value="someValue"
                                             className="no"
                                             color="white"
-                                            type="default"
                                         />
                                     </div>
                                 </div>
