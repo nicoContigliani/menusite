@@ -135,8 +135,8 @@ const page = () => {
       folderName: `${folderName}`,
       hojas: dataResult,
       selectedProfile: selectedProfile,
-      status_Companies: true
-
+      status_Companies: true,
+      paymentLevel:paymentLevel
     };
 
 

@@ -25,6 +25,7 @@ interface MenuProps {
     info: any
     schedules: any
     config: any[]
+    paymentLevel: any
 }
 
 interface ConfigType {
@@ -32,7 +33,7 @@ interface ConfigType {
 }
 
 const MenuNine: React.FC<MenuProps> = (props) => {
-    const { backgroundImages, config, groupedSections, info, menuData, promotions, schedules } = props
+    const { backgroundImages, config, groupedSections, info, menuData, promotions, schedules, paymentLevel=0 } = props
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [debouncedSearchTerm, setDebouncedSearchTerm] = useState<string>('');
     const [loading, setLoading] = useState(true)
@@ -168,6 +169,7 @@ const MenuNine: React.FC<MenuProps> = (props) => {
                                                 value="someValue"
                                                 className="no"
                                                 color="white"
+                                                paymentLevel={paymentLevel||0}
                                             />
                                         </div>
                                     </div>

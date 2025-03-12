@@ -16,6 +16,8 @@ import dataToSendHard from '../../../tools/HardDataMenu';
 import useFakeInfo from '../../../hooks/useFakeInfo';
 import FakeinfoDashboard from '@/components/FakeInfoDashboard/FakeinfoDahsboard';
 import useHandleCreate from '../../../hooks/useFloating';
+import { FaMotorcycle, FaWallet } from "react-icons/fa"
+
 
 // Theme configuration
 const demoTheme = extendTheme({
@@ -61,6 +63,11 @@ const IndexPage = () => {
     React.useEffect(() => {
         fetchData();
     }, [fetchData, refreshTrigger]);
+
+
+
+
+
 
     React.useEffect(() => {
         const companiesData = results?.apicompaniesdashboard?.data || [];
@@ -202,9 +209,9 @@ const IndexPage = () => {
             ),
         },
         {
-            segment: 'orders',
-            title: 'Orders',
-            icon: <ShoppingCartIcon />,
+            segment: 'payments',
+            title: 'Payments',
+            icon: <FaWallet />,
         },
         {
             kind: 'divider',

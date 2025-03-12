@@ -28,6 +28,7 @@ interface MenuProps {
     info: any
     schedules: any
     config: any[]
+    paymentLevel: any
 }
 
 interface ConfigType {
@@ -35,7 +36,7 @@ interface ConfigType {
 }
 
 const Menutwo: React.FC<MenuProps> = (props) => {
-    const { backgroundImages, config, groupedSections, groupedSectionpromotions, info, menuData, promotions, schedules } = props
+    const { backgroundImages, config, groupedSections, groupedSectionpromotions, info, menuData, promotions, schedules, paymentLevel = 0 } = props
 
 
 
@@ -208,6 +209,7 @@ const Menutwo: React.FC<MenuProps> = (props) => {
                                             Dinein={false}
                                             onChange={handleChange}
                                             value="someValue"
+                                            paymentLevel={paymentLevel||0}
                                         />
                                     </div>
                                 </div>
@@ -263,7 +265,7 @@ const Menutwo: React.FC<MenuProps> = (props) => {
                                             value="someValue"
                                             className="no"
                                             color="black"
-
+                                            paymentLevel={paymentLevel||0}
                                         />
                                     </div>
                                 </div>

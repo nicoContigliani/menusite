@@ -31,6 +31,7 @@ interface MenuProps {
   info: any
   schedules: any
   config: any[]
+  paymentLevel:any
 }
 
 interface ConfigType {
@@ -38,7 +39,7 @@ interface ConfigType {
 }
 
 const Menufive: React.FC<MenuProps> = (props) => {
-  const { backgroundImages, config, groupedSections, groupedSectionpromotions } = props
+  const { backgroundImages, config, groupedSections, groupedSectionpromotions, paymentLevel=0 } = props
 
   const [namecompanies, setNamecompanies] = useState<string>("")
   useLayoutEffect(() => {
@@ -185,6 +186,7 @@ const Menufive: React.FC<MenuProps> = (props) => {
                             value="someValue"
                             className="no"
                             color="black"
+                            paymentLevel={paymentLevel||0}
                           />
                         </div>
                       </div>
@@ -246,6 +248,7 @@ const Menufive: React.FC<MenuProps> = (props) => {
                             value="someValue"
                             className="no"
                             color="black"
+                            paymentLevel={paymentLevel||0}
                           />
                         </div>
                       </div>

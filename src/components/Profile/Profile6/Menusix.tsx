@@ -23,6 +23,7 @@ interface MenuProps {
     groupedSections: Record<string, MenuItem[]>;
     menuData: any;
     backgroundImages: string | null;
+    paymentLevel: any;
 }
 
 interface ConfigType {
@@ -31,7 +32,7 @@ interface ConfigType {
 
 
 const Menufive: React.FC<MenuProps> = (props: any) => {
-    const { backgroundImages, config, groupedSections, info, menuData, promotions, schedules } = props
+    const { backgroundImages, config, groupedSections, info, menuData, promotions, schedules, paymentLevel=0 } = props
 
     const [searchTerm, setSearchTerm] = useState<string>('');
 
@@ -183,6 +184,7 @@ const Menufive: React.FC<MenuProps> = (props: any) => {
                                             value="someValue"
                                             className="no"
                                             color="white"
+                                            paymentLevel={paymentLevel||0}
                                         />
                                     </div>
                                 </div>

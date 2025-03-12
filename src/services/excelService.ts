@@ -8,6 +8,7 @@ export async function readAndInsertExcelData(todo: any) {
     hojas,
     selectedProfile,
     status_Companies,
+    paymentLevel
   } = todo;
 
   const client = await clientPromise;
@@ -25,6 +26,7 @@ export async function readAndInsertExcelData(todo: any) {
           folderName,
           hojas,
           selectedProfile,
+          paymentLevel,
           updateAt: new Date(),
         },
       }
@@ -39,6 +41,7 @@ export async function readAndInsertExcelData(todo: any) {
       status_Companies: status_Companies ?? true,
       selectedProfile,
       visits: 0,
+      paymentLevel,
       createAt: new Date(),
       updateAt: new Date(),
     });

@@ -27,6 +27,7 @@ interface MenuProps {
     info: any
     schedules: any
     config: any[]
+    paymentLevel:any
 }
 
 interface ConfigType {
@@ -34,7 +35,7 @@ interface ConfigType {
 }
 
 const Menufourd: React.FC<MenuProps> = (props) => {
-    const { backgroundImages, config, groupedSections, groupedSectionpromotions, info, menuData, promotions, schedules } = props
+    const { backgroundImages, config, groupedSections, groupedSectionpromotions, info, menuData, promotions, schedules,paymentLevel=0 } = props
 
     const [namecompanies, setNamecompanies] = useState<string>('')
     useLayoutEffect(() => {
@@ -216,7 +217,7 @@ const Menufourd: React.FC<MenuProps> = (props) => {
                                             className="no"
                                             color="white"
                                             size="small"
-
+                                            paymentLevel={paymentLevel||0}
                                         />
                                     </div>
                                 </div>
@@ -275,6 +276,7 @@ const Menufourd: React.FC<MenuProps> = (props) => {
                                             value="someValue"
                                             className="no"
                                             color="white"
+                                            paymentLevel={paymentLevel||0}
                                         />
                                     </div>
                                 </div>

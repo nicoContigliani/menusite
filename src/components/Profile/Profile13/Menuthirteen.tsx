@@ -24,13 +24,14 @@ interface MenuProps {
     info: any
     schedules: any
     config: any[]
+    paymentLevel:any
 }
 
 interface ConfigType {
     IconBrand: string
 }
 const Menuthirteen: React.FC<MenuProps> = (props) => {
-    const { backgroundImages, config, groupedSections, info, menuData, promotions, schedules } = props
+    const { backgroundImages, config, groupedSections, info, menuData, promotions, schedules, paymentLevel=0 } = props
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [namecompanies, setNamecompanies] = useState<string>('')
     useLayoutEffect(() => {
@@ -166,6 +167,7 @@ const Menuthirteen: React.FC<MenuProps> = (props) => {
                                             value="someValue"
                                             className="no"
                                             color="black"
+                                            paymentLevel={paymentLevel||0}
                                         />
                                     </div>
                                 </div>

@@ -23,6 +23,7 @@ interface MenuProps {
     info: any
     schedules: any
     config: any[]
+    paymentLevel:any
 }
 
 interface ConfigType {
@@ -30,7 +31,7 @@ interface ConfigType {
 }
 
 const MenuEight: React.FC<MenuProps> = (props) => {
-    const { backgroundImages, config, groupedSections, info, menuData, promotions, schedules } = props
+    const { backgroundImages, config, groupedSections, info, menuData, promotions, schedules, paymentLevel } = props
   
 
     const [namecompanies, setNamecompanies] = useState<string>('')
@@ -137,6 +138,7 @@ const MenuEight: React.FC<MenuProps> = (props) => {
                                                 value="someValue"
                                                 className="no"
                                                 color="white"
+                                                paymentLevel={paymentLevel||0}
                                             />
                                         </div>
                                     </div>

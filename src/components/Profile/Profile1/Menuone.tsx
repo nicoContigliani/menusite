@@ -30,7 +30,8 @@ interface MenuProps {
     promotions: any
     info: any
     schedules: any
-    config: any[]
+    config: any[],
+    paymentLevel: any
 }
 
 interface ConfigType {
@@ -38,7 +39,7 @@ interface ConfigType {
 }
 
 const Menuone: React.FC<MenuProps> = (props) => {
-    const { backgroundImages, config, groupedSections, groupedSectionpromotions, info, menuData, promotions, schedules } = props
+    const { backgroundImages, config, groupedSections, groupedSectionpromotions, info, menuData, promotions, schedules, paymentLevel = 0 } = props
     console.log("🚀 ~ promotions:", promotions)
 
     // const { sectionTimes, handleSectionEnter } = useSectionTimeTracker()
@@ -244,6 +245,7 @@ const Menuone: React.FC<MenuProps> = (props) => {
                                             Dinein={false}
                                             onChange={handleChange}
                                             value="someValue"
+                                            paymentLevel={paymentLevel || 0}
                                         />
                                     </div>
                                 </div>
@@ -252,7 +254,7 @@ const Menuone: React.FC<MenuProps> = (props) => {
                     </div>
                 ))}
             </main>
-       
+
             <br />
             <main className={styles.main}>
                 <div className={styles.sectionTitle}>

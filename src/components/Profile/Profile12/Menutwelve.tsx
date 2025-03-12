@@ -23,6 +23,7 @@ interface MenuProps {
     info: any
     schedules: any
     config: any[]
+    paymentLevel:any
 }
 
 interface ConfigType {
@@ -30,7 +31,7 @@ interface ConfigType {
 }
 
 const Menutwelve: React.FC<MenuProps> = (props) => {
-    const { backgroundImages, config, groupedSections, info, menuData, promotions, schedules } = props
+    const { backgroundImages, config, groupedSections, info, menuData, promotions, schedules, paymentLevel } = props
     const [searchTerm, setSearchTerm] = useState("")
     const [loading, setLoading] = useState(true)
     const [iconURL, setIconURL] = useState<string>("")
@@ -123,6 +124,7 @@ const Menutwelve: React.FC<MenuProps> = (props) => {
                                             value="someValue"
                                             className="no"
                                             color="black"
+                                            paymentLevel={paymentLevel||0}
                                         />
                                     </div>
                                 </div>

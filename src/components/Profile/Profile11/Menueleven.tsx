@@ -26,10 +26,11 @@ interface MenuProps {
     info: any
     schedules: any
     config: any[]
+    paymentLevel:any
 }
 
 const Menueleven: React.FC<MenuProps> = (props: MenuProps) => {
-    const { backgroundImages, config, groupedSections, info, menuData, promotions, schedules } = props
+    const { backgroundImages, config, groupedSections, info, menuData, promotions, schedules, paymentLevel } = props
 
     const [searchTerm, setSearchTerm] = useState<string>("")
     const [loading, setLoading] = useState(true)
@@ -136,6 +137,7 @@ const Menueleven: React.FC<MenuProps> = (props: MenuProps) => {
                                                 value="someValue"
                                                 className="no"
                                                 color="white"
+                                                paymentLevel={paymentLevel||0}
                                             />
                                         </div>
                                     </div>

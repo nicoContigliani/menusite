@@ -252,6 +252,7 @@ interface MenuProps {
   info: any
   schedules: any
   config: any[]
+  paymentLevel:any
 }
 
 interface ConfigType {
@@ -259,7 +260,7 @@ interface ConfigType {
 }
 
 const Menuone: React.FC<MenuProps> = (props) => {
-  const { backgroundImages, config, groupedSections, info, menuData, promotions, schedules } = props
+  const { backgroundImages, config, groupedSections, info, menuData, promotions, schedules,paymentLevel=0 } = props
   const parallaxRef = useRef<HTMLDivElement>(null)
   const sectionsRef = useRef<Map<string, HTMLDivElement>>(new Map())
 
@@ -477,6 +478,7 @@ const Menuone: React.FC<MenuProps> = (props) => {
                         value="someValue"
                         className="no"
                         color="white"
+                        paymentLevel={paymentLevel||0}
                       />
                     </div>
                   </div>

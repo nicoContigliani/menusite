@@ -41,7 +41,8 @@ export interface DataGeneral {
   Promotion?: any
   Config?: ConfigType[]
   Info?: InfoType[]
-  schedules?: SchedulesType[]
+  schedules?: SchedulesType[],
+  paymentLevel: number
 }
 
 export const useMenuData = (dataGeneral: DataGeneral) => {
@@ -52,10 +53,11 @@ export const useMenuData = (dataGeneral: DataGeneral) => {
   const [schedules, setSchedules] = useState<SchedulesType[] | null>(null)
   const [config, setConfig] = useState<ConfigType[] | null>(null)
   const [isReady, setIsReady] = useState(false)
+  const [paymentLevel,setPaymentLevel]= useState(dataGeneral?.paymentLevel)
 
   useEffect(() => {
     if (dataGeneral && dataGeneral.Hoja1) {
-      const { Hoja1, Promotion, Config, Info, schedules } = dataGeneral
+      const { Hoja1, Promotion, Config, Info, schedules,paymentLevel } = dataGeneral
 
       if (Hoja1.length > 0) setMenuData(Hoja1)
       if (Config?.[0]?.Background_Image) {
@@ -123,6 +125,7 @@ export const useMenuDataAternative = (dataGeneral: any) => {
     schedules,
     config,
     isReady,
+    paymentLevel: dataGeneral?.paymentLevel
   }
 }
 

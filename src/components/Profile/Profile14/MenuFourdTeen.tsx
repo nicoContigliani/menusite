@@ -61,6 +61,7 @@ interface MenuProps {
     info: Record<string, Infoype[]>,
     Promotion: Record<string, MenuItem[]>,
     schedules: Record<string, SchedulesType[]>,
+    paymentLevel: any
 }
 const MenuFourdTeen: React.FC<MenuProps> = (props) => {
     const {
@@ -71,6 +72,7 @@ const MenuFourdTeen: React.FC<MenuProps> = (props) => {
         info,
         schedules,
         config,
+        paymentLevel=0
     } = props
 
     const [searchTerm, setSearchTerm] = useState('');
@@ -227,6 +229,7 @@ const MenuFourdTeen: React.FC<MenuProps> = (props) => {
                                             value="someValue"
                                             className="no"
                                             color="white"
+                                            paymentLevel={paymentLevel||0}
                                         />
                                     </div>
                                 </div>

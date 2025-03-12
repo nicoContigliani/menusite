@@ -12,10 +12,11 @@ const Profile = (props: any) => {
   const {
     folderName,
     dataResult,
-    paymentLevel,
+    paymentLevel=0,
     setSelectedProfile,
     setCurrent,
     dataMocks
+    
   } = props;
 
   return (
