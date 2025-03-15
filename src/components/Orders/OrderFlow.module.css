@@ -1,4 +1,4 @@
-.floatingButton {
+/* .floatingButton {
     position: fixed;
     bottom: 20px;
     left: 50%;
@@ -16,5 +16,52 @@
     }
     100% {
       box-shadow: 0 0 0 0 rgba(25, 118, 210, 0);
+    }
+  } */
+
+  .floatingButton {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    animation: pulse 2s infinite;
+    width: 90%; /* Asegura que el botón ocupe un ancho adecuado en móviles */
+    max-width: 300px; /* Limita el ancho máximo para que no se vea demasiado grande en pantallas grandes */
+    padding: 12px 24px; /* Añade un padding para que el botón sea más fácil de tocar */
+    font-size: 16px; /* Aumenta el tamaño de la fuente para mejor legibilidad */
+    border-radius: 25px; /* Bordes redondeados para un aspecto moderno */
+    background-color: #1976d2; /* Color de fondo del botón */
+    color: white; /* Color del texto */
+    border: none; /* Elimina el borde */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    transition: background-color 0.3s ease; /* Transición suave para el hover */
+  }
+  
+  .floatingButton:hover {
+    background-color: #1565c0; /* Cambia el color al pasar el mouse */
+  }
+  
+  @keyframes pulse {
+    0% {
+      box-shadow: 0 0 0 0 rgba(25, 118, 210, 0.7);
+    }
+    70% {
+      box-shadow: 0 0 0 15px rgba(25, 118, 210, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(25, 118, 210, 0);
+    }
+  }
+  
+  /* Estilos específicos para móviles */
+  @media (max-width: 600px) {
+    .floatingButton {
+      width: 95%; /* Ocupa casi todo el ancho en móviles */
+      max-width: none; /* Elimina el límite de ancho máximo */
+      bottom: 10px; /* Ajusta la posición inferior para móviles */
+      font-size: 14px; /* Reduce el tamaño de la fuente en móviles */
+      padding: 10px 20px; /* Ajusta el padding para móviles */
     }
   }
