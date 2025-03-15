@@ -1,12 +1,11 @@
 .floatingButton {
-    position: fixed;
-    bottom: 20px;
+    position: fixed; /* Mantiene el botón en la pantalla siempre */
+    bottom: 20px; /* Lo posiciona en la parte inferior */
     left: 50%;
     transform: translateX(-50%);
-    z-index: 1000; /* Asegura que el botón esté por encima de otros elementos */
-    animation: pulse 2s infinite;
-    width: 90%; /* Ancho adecuado para móviles */
-    max-width: 300px; /* Ancho máximo para pantallas grandes */
+    z-index: 1000; /* Lo coloca por encima de otros elementos */
+    width: 90%;
+    max-width: 300px;
     padding: 12px 24px;
     font-size: 16px;
     border-radius: 25px;
@@ -16,39 +15,40 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     transition: background-color 0.3s ease;
-  }
-  
-  .floatingButton:hover {
+    animation: pulse 2s infinite;
+}
+
+/* Efecto al pasar el mouse */
+.floatingButton:hover {
     background-color: #1565c0;
-  }
-  
-  @keyframes pulse {
+}
+
+/* Animación de pulso */
+@keyframes pulse {
     0% {
-      box-shadow: 0 0 0 0 rgba(25, 118, 210, 0.7);
+        box-shadow: 0 0 0 0 rgba(25, 118, 210, 0.7);
     }
     70% {
-      box-shadow: 0 0 0 15px rgba(25, 118, 210, 0);
+        box-shadow: 0 0 0 15px rgba(25, 118, 210, 0);
     }
     100% {
-      box-shadow: 0 0 0 0 rgba(25, 118, 210, 0);
+        box-shadow: 0 0 0 0 rgba(25, 118, 210, 0);
     }
-  }
-  
-  /* Estilos específicos para móviles */
-  @media (max-width: 600px) {
+}
+
+/* Ajustes para dispositivos móviles */
+@media (max-width: 600px) {
     .floatingButton {
-      width: 95%; /* Ocupa casi todo el ancho en móviles */
-      max-width: none; /* Elimina el límite de ancho máximo */
-      bottom: 10px; /* Ajusta la posición inferior para móviles */
-      font-size: 14px; /* Reduce el tamaño de la fuente en móviles */
-      padding: 10px 20px; /* Ajusta el padding para móviles */
+        width: 90%;
+        bottom: 20px; /* Lo mantiene flotando siempre visible */
+        font-size: 14px;
+        padding: 10px 20px;
     }
-  }
-  
-  /* Clase para el contenedor principal */
-  .mainContainer {
+}
+
+/* Para asegurarse de que el botón se mantenga en la vista */
+.bodyContainer {
     position: relative;
-    overflow: visible; /* Asegura que el botón flotante no se corte */
-    margin: 0;
-    padding: 0;
-  }
+    min-height: 100vh; /* Asegura que el contenido mínimo cubra la pantalla */
+    overflow: hidden;
+}
