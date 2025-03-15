@@ -468,9 +468,10 @@ const Orderflow = (props: any) => {
   };
 
   return (
-    <div>
+    <div className={styles.mainContainer}>
       {orders.length > 0 && (
         <Button
+
           onClick={handleOpenModal}
           variant="contained"
           color="primary"
