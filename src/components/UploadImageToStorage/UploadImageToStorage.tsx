@@ -9,9 +9,10 @@ import type { UploadChangeParam } from "antd/es/upload/interface"
 import styles from "./UploadImageToStorage.module.css"
 import { ReadExcelFile } from "@/services/readExcelFile"
 import { replaceImageUrls } from "@/services/UploadImageUrl.services"
+import { transformExtras } from "@/services/TransformedMenuItem.services"
 
-export default function UploadImagesToStorage(props:any) {
-  const {setDataResult, setCurrent,uploadedFiles, setUploadedFiles,folderName,setFolderName} = props
+export default function UploadImagesToStorage(props: any) {
+  const { setDataResult, setCurrent, uploadedFiles, setUploadedFiles, folderName, setFolderName } = props
   const [files, setFiles] = useState<FileList | null>(null)
   // const [folderName, setFolderName] = useState<string | null>(null)
   const [uploading, setUploading] = useState(false)
@@ -35,8 +36,13 @@ export default function UploadImagesToStorage(props:any) {
       setFolderName(xlsxFile.name.replace(".xlsx", ""))
       try {
         // Read the Excel file and store the data in state
-        const data = await ReadExcelFile(xlsxFile)
-        setExcelData(data)  // Store the parsed Excel data
+        const data: any = await ReadExcelFile(xlsxFile)
+
+        //TODO acá va la regla de negocio para contar objetos(cuantas fotos se suben y cuantos items, parte de lo que se cobra)
+
+
+        const sidata: any = await transformExtras(data)
+        setExcelData(sidata)  // Store the parsed Excel data
       } catch (err) {
         setError("Error al leer el archivo Excel.")
       }

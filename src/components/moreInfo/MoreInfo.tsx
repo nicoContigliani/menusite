@@ -7,9 +7,10 @@ import ReusableModal from '../ReusableModal/ReusableModal';
 interface MoreInfoProps {
   titleModal?: string; // Prop opcional para el título del modal
   modalcontent?: string; // Prop opcional para el contenido del modal
+  labelInfo?: any;
 }
 
-const MoreInfo: React.FC<MoreInfoProps> = ({ titleModal, modalcontent }) => {
+const MoreInfo: React.FC<MoreInfoProps> = ({ titleModal, modalcontent, labelInfo }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleOpenModal = () => {
@@ -33,37 +34,16 @@ const MoreInfo: React.FC<MoreInfoProps> = ({ titleModal, modalcontent }) => {
           margin: 0, // Elimina los márgenes externos
         }}
       >
-        More Info
+        {labelInfo || "More Info"}
       </Button>
 
       <ReusableModal
         open={isModalOpen}
         onClose={handleCloseModal}
         title={titleModal || "Título del Modal"} // Usa el título proporcionado o uno por defecto
-        content={
-          <>
-            {/* Botón de cierre en la esquina superior derecha */}
-            <IconButton
-              onClick={handleCloseModal}
-              sx={{
-                position: 'absolute', // Posición absoluta
-                top: 8, // Distancia desde la parte superior
-                right: 8, // Distancia desde la derecha
-                color: 'text.secondary', // Color del ícono
-                '&:hover': {
-                  color: 'text.primary', // Cambia el color al pasar el mouse
-                },
-              }}
-            >
-              <CloseIcon />
-            </IconButton>
-            <Typography>
-              {modalcontent || "Contenido del Modal"} {/* Usa el contenido proporcionado o uno por defecto */}
-            </Typography>
-          </>
-        }
         actions={
           <>
+            {/* Botones de acciones (opcional) */}
             {/* <Button onClick={handleCloseModal} color="secondary">
               Cancelar
             </Button>
@@ -72,7 +52,29 @@ const MoreInfo: React.FC<MoreInfoProps> = ({ titleModal, modalcontent }) => {
             </Button> */}
           </>
         }
-      />
+      >
+        {/* Contenido del modal pasado como `children` */}
+        <>
+          {/* Botón de cierre en la esquina superior derecha */}
+          <IconButton
+            onClick={handleCloseModal}
+            sx={{
+              position: 'absolute', // Posición absoluta
+              top: 8, // Distancia desde la parte superior
+              right: 8, // Distancia desde la derecha
+              color: 'text.secondary', // Color del ícono
+              '&:hover': {
+                color: 'text.primary', // Cambia el color al pasar el mouse
+              },
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+          <Typography>
+            {modalcontent || "Contenido del Modal"} {/* Usa el contenido proporcionado o uno por defecto */}
+          </Typography>
+        </>
+      </ReusableModal>
     </div>
   );
 };

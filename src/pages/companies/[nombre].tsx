@@ -123,7 +123,6 @@ const EmpresaPage = ({ nombre }: { nombre: string }) => {
                 setExcelData(response?.data);
                 setNamecompanies(folder);
                 setIsLoaded(true);
-                console.log("🚀 ~ fetchExcelData ~ response?.data:", response?.data)
             } else {
                 console.error("❌ Error fetching data:", response.error);
                 dispatch(setChExcelData({

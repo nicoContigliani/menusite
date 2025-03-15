@@ -1,0 +1,20 @@
+.floatingButton {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    animation: pulse 2s infinite;
+  }
+  
+  @keyframes pulse {
+    0% {
+      box-shadow: 0 0 0 0 rgba(25, 118, 210, 0.7);
+    }
+    70% {
+      box-shadow: 0 0 0 15px rgba(25, 118, 210, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(25, 118, 210, 0);
+    }
+  }

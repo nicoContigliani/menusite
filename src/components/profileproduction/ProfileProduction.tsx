@@ -318,6 +318,7 @@ const ProfileProduction = (props: any) => {
     useEffect(() => {
         const funtionasync = async () => {
             setDataGeneral(props?.menuItems ?? {})
+            console.log("🚀 ~ funtionasync ~ props?.menuItems:", props?.menuItems)
             setSelectedProfile(props?.menuItems?.selectedProfile ?? null)
             setCompanyNames(props?.menuItems?.companyNames ?? "")
         }
