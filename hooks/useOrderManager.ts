@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { v4 as uuidv4 } from "uuid";
 
 interface Order {
   id: string
@@ -16,13 +17,15 @@ const useOrderManager = () => {
 
   const addOrder = async (order: Omit<Order, "id">): Promise<void> => {
     return new Promise((resolve) => {
-      const newOrder = { ...order, id: Date.now().toString() }
+      const newOrder = { ...order, id: uuidv4() }
       setOrders((prevOrders) => [...prevOrders, newOrder])
       resolve() // Resuelve la promesa
     })
   }
 
   const editOrder = (id: string, updatedOrder: Partial<Order>) => {
+    console.log("🚀 ~ editOrder ~ updatedOrder:", updatedOrder)
+    console.log("🚀 ~ editOrder ~ id:", id)
     setOrders((prevOrders) =>
       prevOrders.map((order) => (order.id === id ? { ...order, ...updatedOrder } : order)),
     )

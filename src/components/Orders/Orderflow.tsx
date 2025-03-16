@@ -462,7 +462,8 @@ const Orderflow = (props: any) => {
         ...selectedOrder,
         extra: updatedExtras,
       };
-      editOrder(updatedOrder); // Actualizar la orden en el estado principal
+      // editOrder(updatedOrder); // Actualizar la orden en el estado principal
+      editOrder(selectedOrder.id, { extra: updatedExtras })
       handleCloseEditModal();
     }
   };
