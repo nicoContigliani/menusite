@@ -531,6 +531,17 @@ const Menuone: React.FC<MenuProps> = (props) => {
             />
           </div>
         </div>
+        {
+          orders.length > 0 &&
+          <div className={styles.floatingButton}>
+            <OrderFlow
+              orders={orders} // Lista de órdenes seleccionadas
+              editOrder={editOrder} // Función para editar una orden
+              deleteOrder={deleteOrder} // Función para eliminar una orden
+            />
+          </div>
+        }
+
         <CatchOrder
           title={item.Name}
           description={item.Description}
@@ -657,16 +668,6 @@ const Menuone: React.FC<MenuProps> = (props) => {
       <footer className={styles.footer}>
         <p>{`© ${new Date().getFullYear()} LlakaScript`}</p>
       </footer>
-      {
-        orders.length > 0 &&
-        <div className={styles.floatingButton}>
-          <OrderFlow
-            orders={orders} // Lista de órdenes seleccionadas
-            editOrder={editOrder} // Función para editar una orden
-            deleteOrder={deleteOrder} // Función para eliminar una orden
-          />
-        </div>
-      }
 
     </div>
   );
