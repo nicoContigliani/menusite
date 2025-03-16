@@ -45,10 +45,3 @@
         padding: 10px 20px;
     }
 }
-
-/* Para asegurarse de que el botón se mantenga en la vista */
-.bodyContainer {
-    position: relative;
-    min-height: 100vh; /* Asegura que el contenido mínimo cubra la pantalla */
-    overflow: hidden;
-}

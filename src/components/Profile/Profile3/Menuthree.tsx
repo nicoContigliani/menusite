@@ -485,7 +485,7 @@ const Menuone: React.FC<MenuProps> = (props) => {
         onClick={() => handleClick(elementId, "menuItem")}
         data-cy={`${elementId}-menuItem`}
       >
- 
+
         <div className={styles.cardImage}>
           <Image
             src={item.Item_Image || "/placeholder.svg"}
@@ -540,7 +540,7 @@ const Menuone: React.FC<MenuProps> = (props) => {
           // onConfirm={handleOrderConfirm}
           onConfirm={addOrder}
         />
-        
+
       </div>
     );
   };
@@ -657,11 +657,14 @@ const Menuone: React.FC<MenuProps> = (props) => {
       <footer className={styles.footer}>
         <p>{`© ${new Date().getFullYear()} LlakaScript`}</p>
       </footer>
+
       <OrderFlow
-          orders={orders} // Lista de órdenes seleccionadas
-          editOrder={editOrder} // Función para editar una orden
-          deleteOrder={deleteOrder} // Función para eliminar una orden
-        />
+        orders={orders} // Lista de órdenes seleccionadas
+        editOrder={editOrder} // Función para editar una orden
+        deleteOrder={deleteOrder} // Función para eliminar una orden
+      />
+
+
     </div>
   );
 };
