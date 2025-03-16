@@ -417,7 +417,7 @@ const Orderflow = (props: any) => {
   const [selectedOrder, setSelectedOrder] = useState<any>(null);
   const [selectedExtras, setSelectedExtras] = useState<{ [key: string]: boolean }>({});
 
-  useEffect(() => { 
+  useEffect(() => {
     orders.length === 0 && setModal1(false);
   }, [orders, modal1]);
 
@@ -470,15 +470,15 @@ const Orderflow = (props: any) => {
   return (
     <div className={styles.mainContainer}>
       {orders.length > 0 && (
-        <Button
-
-          onClick={handleOpenModal}
-          variant="contained"
-          color="primary"
-          className={styles.floatingButton}
-        >
-          Finalizar Orden
-        </Button>
+        <div className={styles.floatingButton}>
+          <div
+            className={styles.floatingButton}
+            onClick={handleOpenModal}
+     
+          >
+            Finalizar Orden
+          </div>
+        </div>
       )}
 
       {orders.length > 0 && (

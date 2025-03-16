@@ -1,47 +1,9 @@
 .floatingButton {
-    position: fixed; /* Mantiene el botón en la pantalla siempre */
-    bottom: 20px; /* Lo posiciona en la parte inferior */
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1000; /* Lo coloca por encima de otros elementos */
-    width: 90%;
-    max-width: 300px;
-    padding: 12px 24px;
-    font-size: 16px;
-    border-radius: 25px;
-    background-color: #1976d2;
-    color: white;
-    border: none;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    animation: pulse 2s infinite;
-}
+    display: flex;
+    justify-content: center;
+    /* Centra horizontalmente */
+    align-items: end;
+    /* Centra verticalmente */
 
-/* Efecto al pasar el mouse */
-.floatingButton:hover {
-    background-color: #1565c0;
-}
 
-/* Animación de pulso */
-@keyframes pulse {
-    0% {
-        box-shadow: 0 0 0 0 rgba(25, 118, 210, 0.7);
-    }
-    70% {
-        box-shadow: 0 0 0 15px rgba(25, 118, 210, 0);
-    }
-    100% {
-        box-shadow: 0 0 0 0 rgba(25, 118, 210, 0);
-    }
-}
-
-/* Ajustes para dispositivos móviles */
-@media (max-width: 600px) {
-    .floatingButton {
-        width: 90%;
-        bottom: 20px; /* Lo mantiene flotando siempre visible */
-        font-size: 14px;
-        padding: 10px 20px;
-    }
 }
