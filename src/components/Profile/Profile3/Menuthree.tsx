@@ -42,7 +42,6 @@ interface MenuProps {
 }
 
 const Menuone: React.FC<MenuProps> = (props) => {
-  console.log("🚀 ~ props:", props)
   const { backgroundImages, config, groupedSections, groupedSectionpromotions, info, menuData, promotions, schedules, paymentLevel = 0,staff } = props;
   const [searchTerm, setSearchTerm] = useState("");
   const [iconURL, setIconURL] = useState<string>("");
@@ -51,10 +50,7 @@ const Menuone: React.FC<MenuProps> = (props) => {
   const [isSmallScreen, setIsSmallScreen] = useState(false);
 
   const { orders, addOrder, editOrder, deleteOrder } = useOrderManager()
-
   const {hasPermission} = useRules(config, staff)
-  if (orders.length > 0) console.log("🚀 ~ orders:*************", orders)
-  console.log("🚀 ~ hasPermission:", hasPermission)
 
 
 

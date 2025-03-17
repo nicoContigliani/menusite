@@ -20,6 +20,9 @@ import useDynamicStyles from "../../../../hooks/useDynamicStyles" // Importa el 
 
 import stryless from '../Profile3/MenuNew.module.css'
 import GenericSearch from "./GenericSerch/GenericSerch"
+import useOrderManager from "../../../../hooks/useOrderManager"
+import useRules from "../../../../hooks/useRules"
+import Orderflow from "@/components/Orders/Orderflow"
 
 
 interface MenuItem {
@@ -28,7 +31,9 @@ interface MenuItem {
     Description: string
     Price: string | number
     Menu_Title: string
-    Item_Image: string
+    Item_Image: string;
+    extra?: any;
+    extras?: any;
 }
 
 interface MenuProps {
@@ -42,6 +47,8 @@ interface MenuProps {
     schedules: any
     config: any[]
     profile?: string // Asegúrate de que `profile` esté definida como prop
+    staff: any
+    paymentLevel: any;
 }
 
 interface ConfigType {
@@ -50,10 +57,16 @@ interface ConfigType {
 
 const Menuone: React.FC<MenuProps> = (props) => {
     console.log("🚀 ~ props:", props)
-    const { backgroundImages, config, groupedSections, groupedSectionpromotions, info, menuData, promotions, schedules, profile } = props
+    const { backgroundImages, config, groupedSections, groupedSectionpromotions, info, menuData, promotions, schedules, profile, paymentLevel = 0, staff } = props
     const [searchTerm, setSearchTerm] = useState("")
     const [iconURL, setIconURL] = useState<string>("")
     const [namecompanies, setNamecompanies] = useState<string>('')
+
+    const { orders, addOrder, editOrder, deleteOrder } = useOrderManager()
+    const { hasPermission } = useRules(config, staff)
+
+
+
 
     // Función para seleccionar los estilos según el perfil
     const styles = useDynamicStyles(profile);
@@ -110,7 +123,7 @@ const Menuone: React.FC<MenuProps> = (props) => {
 
 
     return (
-        <Grid  data-cy="empresa-page-menu">
+        <Grid data-cy="empresa-page-menu">
             <div
                 className={styles.container}
                 style={{
@@ -123,12 +136,12 @@ const Menuone: React.FC<MenuProps> = (props) => {
                 }}
             >
                 <header className={styles.header}>
-                    <Grid 
-                     container 
-                     direction="column"  // Siempre en columna
-                     alignItems="center"
-                     justifyContent="center"
-                     spacing={2} // Espaciado entre elementos
+                    <Grid
+                        container
+                        direction="column"  // Siempre en columna
+                        alignItems="center"
+                        justifyContent="center"
+                        spacing={2} // Espaciado entre elementos
                     >
                         <Grid item xs={12} md={4} onMouseEnter={() => handleSectionEnter("logo")}>
                             {iconURL && (
@@ -165,7 +178,7 @@ const Menuone: React.FC<MenuProps> = (props) => {
                             )}
                         </Grid>
 
-                        <Grid  item xs={12} md={4} onMouseEnter={() => handleSectionEnter("search")}>
+                        <Grid item xs={12} md={4} onMouseEnter={() => handleSectionEnter("search")}>
                             <GenericSearch value={searchTerm} onChange={setSearchTerm} profile={profile} />
                         </Grid>
                     </Grid>
@@ -179,6 +192,7 @@ const Menuone: React.FC<MenuProps> = (props) => {
                     handleClick={handleClick}
                     handleChange={handleChange}
                     profile={profile}
+                    addOrder={addOrder}
                 />
                 <MenuSection
                     sections={memoizedSections}
@@ -188,6 +202,7 @@ const Menuone: React.FC<MenuProps> = (props) => {
                     handleClick={handleClick}
                     handleChange={handleChange}
                     profile={profile}
+                    addOrder={addOrder}
 
                 />
 
@@ -202,6 +217,17 @@ const Menuone: React.FC<MenuProps> = (props) => {
                     />
                 </Grid>
 
+                {
+                    orders.length > 0 &&
+                    <div className={styles.floatingButton}>
+                        <Orderflow
+                            orders={orders} // Lista de órdenes seleccionadas
+                            editOrder={editOrder} // Función para editar una orden
+                            deleteOrder={deleteOrder} // Función para eliminar una orden
+                            info={info}
+                        />
+                    </div>
+                }
                 <footer className={styles.footer}>
                     <p>{`© ${new Date().getFullYear()} LlakaScript`}</p>
                 </footer>

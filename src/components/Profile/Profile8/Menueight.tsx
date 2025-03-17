@@ -4,6 +4,10 @@ import styles from './MenuNew.module.css';
 import SelectComponent from '@/components/SelectComponent/SelectComponent';
 import useSectionTimeTracker from '../../../../hooks/useSectionTimeTracker';
 import { extractLastSegment } from '../../../../tools/urlService';
+import Orderflow from '@/components/Orders/Orderflow';
+import CatchOrder from '@/components/CatchOrder/CatchOrder';
+import useOrderManager from '../../../../hooks/useOrderManager';
+import useRules from '../../../../hooks/useRules';
 
 interface MenuItem {
     Item_id: string
@@ -12,6 +16,8 @@ interface MenuItem {
     Price: string | number
     Menu_Title: string
     Item_Image: string
+    extra?:any,
+    extras?:any
 }
 
 interface MenuProps {
@@ -24,6 +30,7 @@ interface MenuProps {
     schedules: any
     config: any[]
     paymentLevel:any
+    staff:any
 }
 
 interface ConfigType {
@@ -31,8 +38,11 @@ interface ConfigType {
 }
 
 const MenuEight: React.FC<MenuProps> = (props) => {
-    const { backgroundImages, config, groupedSections, info, menuData, promotions, schedules, paymentLevel } = props
+    const { backgroundImages, config, groupedSections, info, menuData, promotions, schedules, paymentLevel,staff } = props
   
+    const { orders, addOrder, editOrder, deleteOrder } = useOrderManager()
+    const { hasPermission } = useRules(config, staff)
+
 
     const [namecompanies, setNamecompanies] = useState<string>('')
     useLayoutEffect(() => {
@@ -95,7 +105,17 @@ const MenuEight: React.FC<MenuProps> = (props) => {
                     />
                 </div>
             </header>
-
+            {
+                orders.length > 0 &&
+                <div className={styles.floatingButton}>
+                    <Orderflow
+                        orders={orders} // Lista de órdenes seleccionadas
+                        editOrder={editOrder} // Función para editar una orden
+                        deleteOrder={deleteOrder} // Función para eliminar una orden
+                        info={info}
+                    />
+                </div>
+            }
             <div className={styles.menuWrapper}>
                 {Object.entries(groupedSections).map(([sectionName, items], sectionIndex) => {
                     const filteredSectionItems = items.filter(item =>
@@ -129,17 +149,14 @@ const MenuEight: React.FC<MenuProps> = (props) => {
                                             <span className={styles.price}>{`$${item.Price}`}</span>
                                         </div>
                                         <div onMouseEnter={() => handleSectionEnter(`Button-${item.Name}`)}>
-                                            <SelectComponent
-                                                orderdescription={[]}
-                                                delivery={true}
-                                                takeaway={false}
-                                                Dinein={false}
-                                                onChange={handleChange}
-                                                value="someValue"
-                                                className="no"
-                                                color="white"
-                                                paymentLevel={paymentLevel||0}
-                                            />
+                                        <CatchOrder
+                                            title={item.Name}
+                                            description={item.Description}
+                                            price={item.Price}
+                                            extra={item?.extras}
+                                            urlImage={item.Item_Image}
+                                            onConfirm={addOrder}
+                                        />
                                         </div>
                                     </div>
                                 ))}

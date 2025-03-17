@@ -172,3 +172,53 @@
     color: #b59a66;
     font-style: italic;
 }
+
+
+.floatingButton {
+    position: fixed; /* Mantiene el botón en la pantalla siempre */
+    bottom: 20px; /* Lo posiciona en la parte inferior */
+    left: 50%; /* Centra horizontalmente */
+    transform: translateX(-50%); /* Ajusta el centrado */
+    z-index: 1000; /* Lo coloca por encima de otros elementos */
+    width: 90%; /* Ancho del botón */
+    max-width: 300px; /* Ancho máximo */
+    padding: 12px 24px; /* Espaciado interno */
+    font-size: 16px; /* Tamaño de la fuente */
+    border-radius: 25px; /* Bordes redondeados */
+    background-color: #1976d2; /* Color de fondo */
+    color: white; /* Color del texto */
+    border: none; /* Sin borde */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra */
+    cursor: pointer; /* Cursor tipo puntero */
+    transition: background-color 0.3s ease; /* Transición suave */
+    animation: pulse 2s infinite; /* Animación de pulso */
+  }
+  
+  /* Efecto al pasar el mouse */
+  .floatingButton:hover {
+    background-color: #1565c0; /* Cambia el color de fondo al pasar el mouse */
+  }
+  
+  /* Animación de pulso */
+  @keyframes pulse {
+    0% {
+      box-shadow: 0 0 0 0 rgba(25, 118, 210, 0.7);
+    }
+    70% {
+      box-shadow: 0 0 0 15px rgba(25, 118, 210, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(25, 118, 210, 0);
+    }
+  }
+  
+  /* Ajustes para dispositivos móviles */
+  @media (max-width: 600px) {
+    .floatingButton {
+      width: 90%; /* Ancho en dispositivos móviles */
+      bottom: 20px; /* Lo mantiene flotando siempre visible */
+      font-size: 14px; /* Tamaño de fuente más pequeño */
+      padding: 10px 20px; /* Espaciado interno reducido */
+    }
+  }
+  

@@ -584,7 +584,7 @@ const SelectComponent = (props: Props) => {
                         pb: 1,
                         display: "flex",
                         alignItems: "center",
-                        gap: 1,
+                        gap: 1, 
                         borderBottom: `1px solid ${alpha(theme.palette.divider, 0.5)}`,
                     }}
                 >

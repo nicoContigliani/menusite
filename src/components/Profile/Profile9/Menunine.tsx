@@ -6,6 +6,10 @@ import useSectionTimeTracker from '../../../../hooks/useSectionTimeTracker';
 import Logo from '@/components/Logo/Logo';
 import Info from '@/components/Info/Info';
 import { extractLastSegment } from '../../../../tools/urlService';
+import useOrderManager from '../../../../hooks/useOrderManager';
+import useRules from '../../../../hooks/useRules';
+import CatchOrder from '@/components/CatchOrder/CatchOrder';
+import Orderflow from '@/components/Orders/Orderflow';
 
 interface MenuItem {
     Item_id: string
@@ -14,6 +18,8 @@ interface MenuItem {
     Price: string | number
     Menu_Title: string
     Item_Image: string
+    extra?: any,
+    extras?: any
 }
 
 interface MenuProps {
@@ -26,6 +32,8 @@ interface MenuProps {
     schedules: any
     config: any[]
     paymentLevel: any
+    staff: any;
+
 }
 
 interface ConfigType {
@@ -33,11 +41,15 @@ interface ConfigType {
 }
 
 const MenuNine: React.FC<MenuProps> = (props) => {
-    const { backgroundImages, config, groupedSections, info, menuData, promotions, schedules, paymentLevel=0 } = props
+    const { backgroundImages, config, groupedSections, info, menuData, promotions, schedules, paymentLevel = 0, staff } = props
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [debouncedSearchTerm, setDebouncedSearchTerm] = useState<string>('');
     const [loading, setLoading] = useState(true)
     const [iconURL, setIconURL] = useState<string>("")
+
+    const { orders, addOrder, editOrder, deleteOrder } = useOrderManager()
+    const { hasPermission } = useRules(config, staff)
+
 
     const [namecompanies, setNamecompanies] = useState<string>('')
     useLayoutEffect(() => {
@@ -110,6 +122,17 @@ const MenuNine: React.FC<MenuProps> = (props) => {
                         />
                         : null}
                 </div>
+                {
+                    orders.length > 0 &&
+                    <div className={styles.floatingButton}>
+                        <Orderflow
+                            orders={orders} // Lista de órdenes seleccionadas
+                            editOrder={editOrder} // Función para editar una orden
+                            deleteOrder={deleteOrder} // Función para eliminar una orden
+                            info={info}
+                        />
+                    </div>
+                }
                 <div className={styles.searchContainer}
                     onMouseEnter={() => handleSectionEnter("search")}
                 >
@@ -160,16 +183,13 @@ const MenuNine: React.FC<MenuProps> = (props) => {
                                             <span className={styles.price}>{`$${item.Price}`}</span>
                                         </div>
                                         <div onMouseEnter={() => handleSectionEnter(`Button-${item.Name}`)}>
-                                            <SelectComponent
-                                                orderdescription={[]}
-                                                delivery={true}
-                                                takeaway={false}
-                                                Dinein={false}
-                                                onChange={handleChange}
-                                                value="someValue"
-                                                className="no"
-                                                color="white"
-                                                paymentLevel={paymentLevel||0}
+                                            <CatchOrder
+                                                title={item.Name}
+                                                description={item.Description}
+                                                price={item.Price}
+                                                extra={item?.extras}
+                                                urlImage={item.Item_Image}
+                                                onConfirm={addOrder}
                                             />
                                         </div>
                                     </div>

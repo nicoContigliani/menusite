@@ -11,6 +11,10 @@ import { extractLastSegment } from "../../../../tools/urlService"
 import HorizontalCarousel from "@/components/ElegantCarouselPromotions/ElegantCarouselPromotions"
 import Searchs from "@/components/Serchs/Serchs"
 import { Divider } from "@mui/material"
+import useOrderManager from "../../../../hooks/useOrderManager"
+import useRules from "../../../../hooks/useRules"
+import Orderflow from "@/components/Orders/Orderflow"
+import CatchOrder from "@/components/CatchOrder/CatchOrder"
 
 interface MenuItem {
     Item_id: string
@@ -18,7 +22,9 @@ interface MenuItem {
     Description: string
     Price: string | number
     Menu_Title: string
-    Item_Image: string
+    Item_Image: string,
+    extra?:any,
+    extras?:any
 }
 
 interface MenuProps {
@@ -31,7 +37,9 @@ interface MenuProps {
     info: any
     schedules: any
     config: any[],
-    paymentLevel: any
+    paymentLevel: any,
+    staff: any;
+
 }
 
 interface ConfigType {
@@ -39,12 +47,16 @@ interface ConfigType {
 }
 
 const Menuone: React.FC<MenuProps> = (props) => {
-    const { backgroundImages, config, groupedSections, groupedSectionpromotions, info, menuData, promotions, schedules, paymentLevel = 0 } = props
+    const { backgroundImages, config, groupedSections, groupedSectionpromotions, info, menuData, promotions, schedules, paymentLevel = 0, staff } = props
     console.log("🚀 ~ promotions:", promotions)
 
     // const { sectionTimes, handleSectionEnter } = useSectionTimeTracker()
     // useEffect(() => {
     // }, [sectionTimes])
+
+    const { orders, addOrder, editOrder, deleteOrder } = useOrderManager()
+    const { hasPermission } = useRules(config, staff)
+
 
     const [namecompanies, setNamecompanies] = useState<string>('')
     useLayoutEffect(() => {
@@ -238,14 +250,13 @@ const Menuone: React.FC<MenuProps> = (props) => {
                                         </div>
                                     </div>
                                     <div onMouseEnter={() => handleSectionEnter(`Button-${item.Name}`)}>
-                                        <SelectComponent
-                                            orderdescription={[]}
-                                            delivery
-                                            takeaway={false}
-                                            Dinein={false}
-                                            onChange={handleChange}
-                                            value="someValue"
-                                            paymentLevel={paymentLevel || 0}
+                                    <CatchOrder
+                                            title={item.Name}
+                                            description={item.Description}
+                                            price={item.Price}
+                                            extra={item?.extras}
+                                            urlImage={item.Item_Image}
+                                            onConfirm={addOrder}
                                         />
                                     </div>
                                 </div>
@@ -293,13 +304,13 @@ const Menuone: React.FC<MenuProps> = (props) => {
                                         </div>
                                     </div>
                                     <div onMouseEnter={() => handleSectionEnter(`Button-${item.Name}`)}>
-                                        <SelectComponent
-                                            orderdescription={[]}
-                                            delivery
-                                            takeaway={false}
-                                            Dinein={false}
-                                            onChange={handleChange}
-                                            value="someValue"
+                                        <CatchOrder
+                                            title={item.Name}
+                                            description={item.Description}
+                                            price={item.Price}
+                                            extra={item?.extras}
+                                            urlImage={item.Item_Image}
+                                            onConfirm={addOrder}
                                         />
                                     </div>
                                 </div>
@@ -308,6 +319,17 @@ const Menuone: React.FC<MenuProps> = (props) => {
                     </div>
                 ))}
             </main>
+            {
+                orders.length > 0 &&
+                <div className={styles.floatingButton}>
+                    <Orderflow
+                        orders={orders} // Lista de órdenes seleccionadas
+                        editOrder={editOrder} // Función para editar una orden
+                        deleteOrder={deleteOrder} // Función para eliminar una orden
+                        info={info}
+                    />
+                </div>
+            }
             <div
                 onMouseEnter={() => handleSectionEnter(`${schedules}`)}
             >

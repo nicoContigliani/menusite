@@ -7,13 +7,20 @@ import Schedules from "@/components/Schedules/Schedules"
 import useSectionTimeTracker from "../../../../hooks/useSectionTimeTracker"
 import SelectComponent from "@/components/SelectComponent/SelectComponent"
 import { extractLastSegment } from "../../../../tools/urlService"
+import useOrderManager from "../../../../hooks/useOrderManager"
+import useRules from "../../../../hooks/useRules"
+import CatchOrder from "@/components/CatchOrder/CatchOrder"
+import Orderflow from "@/components/Orders/Orderflow"
 
 interface MenuItem {
+    Item_Image: unknown
     Item_id: string
     Name: string
     Description: string
     Price: string | number
     Menu_Title: string
+    extra?: any,
+    extras?: any
 }
 
 interface MenuProps {
@@ -26,6 +33,7 @@ interface MenuProps {
     schedules: any
     config: any[]
     paymentLevel: any
+    staff: any;
 }
 
 interface ConfigType {
@@ -36,7 +44,12 @@ interface ConfigType {
 const MenuFifTeen: React.FC<MenuProps> = (props) => {
     // const { menuData, groupedSections, backgroundImages, namecompanies, Promotion, info, schedules, config } = props
     const { backgroundImages, config, groupedSections, info, menuData,
-        promotions, schedules, paymentLevel=0 } = props
+        promotions, schedules, paymentLevel = 0, staff } = props
+    const { orders, addOrder, editOrder, deleteOrder } = useOrderManager()
+    const { hasPermission } = useRules(config, staff)
+
+
+
     const [namecompanies, setNamecompanies] = useState<string>('')
     useLayoutEffect(() => {
         if (typeof window !== "undefined") {
@@ -176,16 +189,13 @@ const MenuFifTeen: React.FC<MenuProps> = (props) => {
                                             <div className={styles.price}>{`$${item.Price}`}</div>
                                         </div>
                                         <div onMouseEnter={() => handleSectionEnter(`Button-${item.Name}`)}>
-                                            <SelectComponent
-                                                orderdescription={[]}
-                                                delivery={true}
-                                                takeaway={false}
-                                                Dinein={false}
-                                                onChange={handleChange}
-                                                value="someValue"
-                                                className="no"
-                                                color="black"
-                                                paymentLevel={paymentLevel||0}
+                                            <CatchOrder
+                                                title={item.Name}
+                                                description={item.Description}
+                                                price={item.Price}
+                                                extra={item?.extras}
+                                                urlImage={item.Item_Image}
+                                                onConfirm={addOrder}
                                             />
                                         </div>
                                     </div>
@@ -195,6 +205,17 @@ const MenuFifTeen: React.FC<MenuProps> = (props) => {
                     </div>
                 ))}
             </main>
+            {
+                orders.length > 0 &&
+                <div className={styles.floatingButton}>
+                    <Orderflow
+                        orders={orders} // Lista de órdenes seleccionadas
+                        editOrder={editOrder} // Función para editar una orden
+                        deleteOrder={deleteOrder} // Función para eliminar una orden
+                        info={info}
+                    />
+                </div>
+            }
             <div
                 onMouseEnter={() => handleSectionEnter(`${schedules}`)}
 

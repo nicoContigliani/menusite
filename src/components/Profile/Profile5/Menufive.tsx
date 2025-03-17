@@ -9,6 +9,10 @@ import useSectionTimeTracker from "../../../../hooks/useSectionTimeTracker"
 import Logo from "@/components/Logo/Logo"
 import { extractLastSegment } from "../../../../tools/urlService"
 import { Grid } from "@mui/material"
+import Orderflow from "@/components/Orders/Orderflow"
+import CatchOrder from "@/components/CatchOrder/CatchOrder"
+import useOrderManager from "../../../../hooks/useOrderManager"
+import useRules from "../../../../hooks/useRules"
 
 interface MenuItem {
   Menu_Title: string
@@ -19,6 +23,8 @@ interface MenuItem {
   Name: string
   Description: string
   Price: string
+  extra?: any,
+  extras?: any
 }
 
 interface MenuProps {
@@ -31,7 +37,9 @@ interface MenuProps {
   info: any
   schedules: any
   config: any[]
-  paymentLevel:any
+  paymentLevel: any
+  staff: any;
+
 }
 
 interface ConfigType {
@@ -39,7 +47,11 @@ interface ConfigType {
 }
 
 const Menufive: React.FC<MenuProps> = (props) => {
-  const { backgroundImages, config, groupedSections, groupedSectionpromotions, paymentLevel=0 } = props
+  const { backgroundImages, config, groupedSections, groupedSectionpromotions, paymentLevel = 0, staff, info } = props
+
+  const { orders, addOrder, editOrder, deleteOrder } = useOrderManager()
+  const { hasPermission } = useRules(config, staff)
+
 
   const [namecompanies, setNamecompanies] = useState<string>("")
   useLayoutEffect(() => {
@@ -144,7 +156,17 @@ const Menufive: React.FC<MenuProps> = (props) => {
             <div className={styles.sectionTitle}>
               <h5 className={styles.titleStructure}>Promoción</h5>
             </div>
-
+            {
+              orders.length > 0 &&
+              <div className={styles.floatingButton}>
+                <Orderflow
+                  orders={orders} // Lista de órdenes seleccionadas
+                  editOrder={editOrder} // Función para editar una orden
+                  deleteOrder={deleteOrder} // Función para eliminar una orden
+                  info={info}
+                />
+              </div>
+            }
             {memoizedSectionsPromotions.map(([sectionName, items], index) => (
               <section
                 key={index}
@@ -177,16 +199,13 @@ const Menufive: React.FC<MenuProps> = (props) => {
                           <span className={styles.cardPrice}>{`$${item.Price}`}</span>
                         </div>
                         <div onMouseEnter={() => handleSectionEnter(`Button-${item.Name}`)}>
-                          <SelectComponent
-                            orderdescription={[]}
-                            delivery={true}
-                            takeaway={false}
-                            Dinein={false}
-                            onChange={handleChange}
-                            value="someValue"
-                            className="no"
-                            color="black"
-                            paymentLevel={paymentLevel||0}
+                          <CatchOrder
+                            title={item.Name}
+                            description={item.Description}
+                            price={item.Price}
+                            extra={item?.extras}
+                            urlImage={item.Item_Image}
+                            onConfirm={addOrder}
                           />
                         </div>
                       </div>
@@ -239,16 +258,13 @@ const Menufive: React.FC<MenuProps> = (props) => {
                           <span className={styles.cardPrice}>{`$${item.Price}`}</span>
                         </div>
                         <div onMouseEnter={() => handleSectionEnter(`Button-${item.Name}`)}>
-                          <SelectComponent
-                            orderdescription={[]}
-                            delivery={true}
-                            takeaway={false}
-                            Dinein={false}
-                            onChange={handleChange}
-                            value="someValue"
-                            className="no"
-                            color="black"
-                            paymentLevel={paymentLevel||0}
+                          <CatchOrder
+                            title={item.Name}
+                            description={item.Description}
+                            price={item.Price}
+                            extra={item?.extras}
+                            urlImage={item.Item_Image}
+                            onConfirm={addOrder}
                           />
                         </div>
                       </div>

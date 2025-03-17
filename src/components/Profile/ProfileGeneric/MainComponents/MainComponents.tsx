@@ -3,6 +3,7 @@ import { Grid } from "@mui/material";
 import Image from "next/image";
 import SelectComponent from "@/components/SelectComponent/SelectComponent";
 import useDynamicStyles from "../../../../../hooks/useDynamicStyles";
+import CatchOrder from "@/components/CatchOrder/CatchOrder";
 // import styles from "../../Profile3/MenuNew.module.css";
 
 interface MenuItem {
@@ -12,6 +13,8 @@ interface MenuItem {
   Price: string | number;
   Menu_Title: string;
   Item_Image: string;
+  extra?: any;
+  extras?: any;
 }
 
 interface MenuSectionProps {
@@ -21,8 +24,8 @@ interface MenuSectionProps {
   handleSectionLeave: (sectionName: string) => void;
   handleClick: (elementId: string, type: string) => void;
   handleChange: (value: { inputValue: string; clarification: string }) => void;
-  profile?:any;
-
+  profile?: any;
+  addOrder: any
 }
 
 const MenuSection: React.FC<MenuSectionProps> = ({
@@ -32,7 +35,9 @@ const MenuSection: React.FC<MenuSectionProps> = ({
   handleSectionLeave,
   handleClick,
   handleChange,
-  profile
+  profile,
+  addOrder
+  
 }) => {
   const getElementId = (sectionName: string, index: number, itemName: string) => {
     return `${sectionName}-${index}-${itemName}`;
@@ -92,15 +97,13 @@ const MenuSection: React.FC<MenuSectionProps> = ({
                     <p className={styles.price}>{`$${item.Price}`}</p>
                   </div>
                   <div onMouseEnter={() => handleSectionEnter(`Button-${item.Name}`)}>
-                    <SelectComponent
-                      orderdescription={[]}
-                      delivery
-                      takeaway={false}
-                      Dinein={false}
-                      onChange={handleChange}
-                      value="someValue"
-                      color="white"
-                      data-cy={`Button-${item.Name}`}
+                    <CatchOrder
+                      title={item.Name}
+                      description={item.Description}
+                      price={item.Price}
+                      extra={item?.extras}
+                      urlImage={item.Item_Image}
+                      onConfirm={addOrder}
                     />
                   </div>
                 </Grid>
