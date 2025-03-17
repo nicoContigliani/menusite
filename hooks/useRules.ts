@@ -17,7 +17,7 @@ const useRules = (config: any, staff: any) => {
 
                 case "staff":
                     // Verificar si el usuario está en la lista de staff
-                    const isStaff = staff.some((item: any) => stringclean(item.email) === stringclean(email));
+                    const isStaff = staff?.some((item: any) => stringclean(item.email) === stringclean(email));
                     // const mapDAta = staff.map((item:any)=>{
              
                     // })
@@ -26,13 +26,13 @@ const useRules = (config: any, staff: any) => {
 
                 case "owner":
                     // Verificar si el usuario es el owner
-                    const isOwner = staff.some((item: any) => stringclean(item.email) === email && item.role === 'owner');
+                    const isOwner = staff?.some((item: any) => stringclean(item.email) === email && item.role === 'owner');
                     setHasPermission(isOwner);
                     break;
 
                 case "employees":
                     // Verificar si el usuario es un empleado
-                    const isEmployee = staff.some((item: any) => stringclean(item.email) === email && item.role === 'employee');
+                    const isEmployee = staff?.some((item: any) => stringclean(item.email) === email && item.role === 'employee');
                     setHasPermission(isEmployee);
                     break;
 
