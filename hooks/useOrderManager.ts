@@ -24,8 +24,6 @@ const useOrderManager = () => {
   }
 
   const editOrder = (id: string, updatedOrder: Partial<Order>) => {
-    console.log("🚀 ~ editOrder ~ updatedOrder:", updatedOrder)
-    console.log("🚀 ~ editOrder ~ id:", id)
     setOrders((prevOrders) =>
       prevOrders.map((order) => (order.id === id ? { ...order, ...updatedOrder } : order)),
     )

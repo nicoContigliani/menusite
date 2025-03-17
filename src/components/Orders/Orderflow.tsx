@@ -1,352 +1,274 @@
 
-// import React, { useEffect, useState } from 'react';
-// import ReusableModal from '../ReusableModal/ReusableModal';
-// import { Button, Typography, Grid, Divider, Box, Stack } from '@mui/material';
-// import styles from './OrderFlow.module.css'; // Importar el CSS Module
 
-// const OrderItem = ({ item }: { item: any }) => (
-//   <Box sx={{ marginBottom: 2 }}>
-//     <Typography variant="h6">{item.Name}</Typography>
-//     <Typography variant="body1">{item.Description}</Typography>
-//     <Typography variant="body2" color="textSecondary">Precio: ${item.Price}</Typography>
+// "use client"
 
-//     {item.extra?.length > 0 && (
-//       <Box sx={{ marginTop: 1 }}>
-//         <Typography variant="subtitle2">Extras:</Typography>
-//         {item.extra.map((extra: any, i: number) => (
-//           <Typography key={i} variant="body2">
-//             {extra.name}: ${extra.price}
-//           </Typography>
-//         ))}
-//       </Box>
-//     )}
+// import React, { useCallback, useEffect, useMemo, useState } from "react"
+// import ReusableModal from "../ReusableModal/ReusableModal"
+// import {
+//   Button,
+//   Typography,
+//   Box,
+//   Stack,
+//   TextField,
+//   Select,
+//   MenuItem,
+//   InputLabel,
+//   FormControl,
+//   type SelectChangeEvent,
+// } from "@mui/material"
+// import styles from "./OrderFlow.module.css"
+// import CheckboxMaterialUI from "../CheckboxMaterialUI/CheckboxMaterialUI"
+// import { v4 as uuidv4 } from "uuid"
+// import OrderItem from "./OrdersItems/OrdersItems"
 
-//     <Typography variant="body2" color="textSecondary">
-//       Comentarios: {item.Comments || "Ninguno"}
-//     </Typography>
-//     <Typography variant="body2" color="textSecondary">
-//       Tipo de Pedido: {item.Type}
-//     </Typography>
-//     <Divider sx={{ marginTop: 2 }} />
-//   </Box>
-// );
+// // Define proper types instead of using 'any'
+// interface OrderExtra {
+//   name: string
+//   price: number
+// }
 
-// const Orderflow = (props: any) => {
-//   const { orders } = props;
-//   const [modal1, setModal1] = useState<boolean>(false);
+// // Renamed from Order to OrderItem to avoid conflict with existing Order type
+// interface OrderItemType {
+//   id: string
+//   title: string
+//   price: number
+//   quantity: number
+//   extra: OrderExtra[]
+//   extraGeneral: OrderExtra[]
+//   // Add other properties as needed
+// }
 
-//   useEffect(() => { }, [orders, modal1]);
+// interface OrderFlowProps {
+//   // Use the existing Order type from your codebase
+//   orders: any[] // We'll use 'any[]' temporarily to avoid conflicts
+//   deleteOrder: (id: string) => void
+//   editOrder: (id: string, updates: any) => void
+// }
 
-//   const handleOpenModal = () => {
-//     setModal1(true);
-//   };
+// const Orderflow: React.FC<OrderFlowProps> = ({ orders, deleteOrder, editOrder }) => {
+//   const [modal1, setModal1] = useState<boolean>(false)
+//   const [editModal, setEditModal] = useState<boolean>(false)
+//   const [selectedOrder, setSelectedOrder] = useState<any>(null)
+//   console.log("🚀 ~ selectedOrder:", selectedOrder)
+//   const [selectedExtras, setSelectedExtras] = useState<{ [key: string]: boolean }>({})
+//   const [comments, setComments] = useState<string>("")
+//   const [orderType, setOrderType] = useState<string>("")
+//   const [tableNumber, setTableNumber] = useState<string>("")
+//   const [street, setStreet] = useState<string>("")
+//   const [streetNumber, setStreetNumber] = useState<string>("")
+//   const [fullname, setFullname] = useState<string>("")
 
-//   const handleCloseModal = () => {
-//     setModal1(false);
-//   };
+//   // Close modal when orders are empty
+//   useEffect(() => {
+//     if (orders.length === 0) {
+//       setModal1(false)
+//     }
+//   }, [orders])
 
-//   return (
-//     <div>
-//       {orders.length > 0 && (
-//         <Button
-//           onClick={handleOpenModal}
-//           variant="contained"
-//           color="primary"
-//           className={styles.floatingButton}
-//         >
-//           Finalizar Orden
-//         </Button>
-//       )}
+//   // Memoize handlers to prevent unnecessary re-renders
+//   const handleOpenModal = useCallback(() => {
+//     setModal1(true)
+//   }, [])
 
-//       {orders.length > 0 && (
-//         <ReusableModal open={modal1} onClose={handleCloseModal} title="Detalles de la Orden"
-//         showButtons={false}
-//         >
-//           <Box sx={{ maxHeight: '400px', overflowY: 'auto', padding: 2 }}>
-//             <Stack spacing={2}>
-//               {orders.map((item: any, index: number) => (
-//                 <OrderItem key={index} item={item} />
-//               ))}
-//             </Stack>
-//           </Box>
+//   const handleCloseModal = useCallback(() => {
+//     setModal1(false)
+//   }, [])
 
-//           <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: 2 }}>
-//             <Button onClick={handleCloseModal} color="secondary" sx={{ marginRight: 1 }}>
-//               Cerrar
-//             </Button>
-//             <Button onClick={handleCloseModal} color="primary" variant="contained">
-//               Confirmar
-//             </Button>
-//           </Box>
-//         </ReusableModal>
-//       )}
-//     </div>
-//   );
-// };
+//   const handleOpenEditModal = useCallback((order: any) => {
+//     setSelectedOrder(order)
 
-// export default Orderflow;
+//     // Create initial extras state
+//     const initialExtras = order.extraGeneral.reduce((acc:any, curr:any) => {
+//       acc[curr.name] = order.extra.some((extra: any) => extra.name === curr.name)
+//       return acc
+//     }, {})
 
+//     setSelectedExtras(initialExtras)
+//     setEditModal(true)
+//   }, [])
 
+//   const handleCloseEditModal = useCallback(() => {
+//     setEditModal(false)
+//     setSelectedOrder(null)
+//     setSelectedExtras({})
+//   }, [])
 
-// import React, { useEffect, useState } from 'react';
-// import ReusableModal from '../ReusableModal/ReusableModal';
-// import { Button, Typography, Divider, Box, Stack, IconButton } from '@mui/material';
-// import DeleteIcon from '@mui/icons-material/Delete'; // Icono de eliminación
-// import styles from './OrderFlow.module.css'; // Importar el CSS Module
-
-// // Componente OrderItem con botón de eliminación
-// const OrderItem = ({ item, onDelete }: { item: any; onDelete: () => void }) => (
-//   <Box sx={{ marginBottom: 2 }}>
-//     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-//       <Typography variant="h6">{item.Name}</Typography>
-//       <IconButton onClick={onDelete} color="error" aria-label="delete">
-//         <DeleteIcon />
-//       </IconButton>
-//     </Box>
-//     <Typography variant="body1">{item.Description}</Typography>
-//     <Typography variant="body2" color="textSecondary">Precio: ${item.Price}</Typography>
-
-//     {item.extra?.length > 0 && (
-//       <Box sx={{ marginTop: 1 }}>
-//         <Typography variant="subtitle2">Extras:</Typography>
-//         {item.extra.map((extra: any, i: number) => (
-//           <Typography key={i} variant="body2">
-//             {extra.name}: ${extra.price}
-//           </Typography>
-//         ))}
-//       </Box>
-//     )}
-
-//     <Typography variant="body2" color="textSecondary">
-//       Comentarios: {item.Comments || "Ninguno"}
-//     </Typography>
-//     <Typography variant="body2" color="textSecondary">
-//       Tipo de Pedido: {item.Type}
-//     </Typography>
-//     <Divider sx={{ marginTop: 2 }} />
-//   </Box>
-// );
-
-// // Componente Orderflow
-// const Orderflow = (props: any) => {
-//   const { orders, deleteOrder } = props; // Recibir orders y deleteOrder desde props
-//   const [modal1, setModal1] = useState<boolean>(false);
-
-//   useEffect(() => { 
-//     orders.length==0 && setModal1(false);
-//     // orders.length>0 && setModal1(true);
-//   }, [orders, modal1]);
-
-//   const handleOpenModal = () => {
-//     setModal1(true);
-//   };
-
-//   const handleCloseModal = () => {
-//     setModal1(false);
-//   };
-
-//   return (
-//     <div>
-//       {orders.length > 0 && (
-//         <Button
-//           onClick={handleOpenModal}
-//           variant="contained"
-//           color="primary"
-//           className={styles.floatingButton}
-//         >
-//           Finalizar Orden
-//         </Button>
-//       )}
-
-//       {orders.length > 0 && (
-//         <ReusableModal open={modal1} onClose={handleCloseModal} title="Detalles de la Orden" showButtons={false}>
-//           <Box sx={{ maxHeight: '400px', overflowY: 'auto', padding: 2 }}>
-//             <Stack spacing={2}>
-//               {orders.map((item: any, index: number) => (
-//                 <OrderItem
-//                   key={item.id} // Usar el id de la orden como clave
-//                   item={item}
-//                   onDelete={() => deleteOrder(item.id)} // Pasar la función de eliminación
-//                 />
-//               ))}
-//             </Stack>
-//           </Box>
-
-//           <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: 2 }}>
-//             <Button onClick={handleCloseModal} color="secondary" sx={{ marginRight: 1 }}>
-//               Cerrar
-//             </Button>
-//             <Button onClick={handleCloseModal} color="primary" variant="contained">
-//               Confirmar
-//             </Button>
-//           </Box>
-//         </ReusableModal>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default Orderflow;
-
-
-
-// import React, { useEffect, useState } from 'react';
-// import ReusableModal from '../ReusableModal/ReusableModal';
-// import { Button, Typography, Divider, Box, Stack, IconButton } from '@mui/material';
-// import DeleteIcon from '@mui/icons-material/Delete';
-// import EditIcon from '@mui/icons-material/Edit'; // Icono de edición
-// import styles from './OrderFlow.module.css';
-// import CheckboxMaterialUI from '../CheckboxMaterialUI/CheckboxMaterialUI';
-
-// // Componente OrderItem con botón de eliminación y edición
-// const OrderItem = ({ item, onDelete, onEdit }: { item: any; onDelete: () => void; onEdit: () => void }) => (
-//   <Box sx={{ marginBottom: 2 }}>
-//     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-//       <Typography variant="h6">{item.Name}</Typography>
-//       <Box>
-//         <IconButton onClick={onEdit} color="primary" aria-label="edit">
-//           <EditIcon />
-//         </IconButton>
-//         <IconButton onClick={onDelete} color="error" aria-label="delete">
-//           <DeleteIcon />
-//         </IconButton>
-//       </Box>
-//     </Box>
-//     <Typography variant="body1">{item.Description}</Typography>
-//     <Typography variant="body2" color="textSecondary">Precio: ${item.Price}</Typography>
-
-//     {item.extra?.length > 0 && (
-//       <Box sx={{ marginTop: 1 }}>
-//         <Typography variant="subtitle2">Extras:</Typography>
-//         {item.extra.map((extra: any, i: number) => (
-//           <Typography key={i} variant="body2">
-//             {extra.name}: ${extra.price}
-//           </Typography>
-//         ))}
-//       </Box>
-//     )}
-
-//     <Typography variant="body2" color="textSecondary">
-//       Comentarios: {item.Comments || "Ninguno"}
-//     </Typography>
-//     <Typography variant="body2" color="textSecondary">
-//       Tipo de Pedido: {item.Type}
-//     </Typography>
-//     <Divider sx={{ marginTop: 2 }} />
-//   </Box>
-// );
-
-// // Componente Orderflow
-// const Orderflow = (props: any) => {
-//   const { orders, deleteOrder, extraGeneral } = props; // Recibir orders, deleteOrder y extraGeneral desde props
-//   const [modal1, setModal1] = useState<boolean>(false);
-//   const [editModal, setEditModal] = useState<boolean>(false);
-//   const [selectedOrder, setSelectedOrder] = useState<any>(null);
-//   const [selectedExtras, setSelectedExtras] = useState<{ [key: string]: boolean }>({});
-
-//   useEffect(() => { 
-//     orders.length === 0 && setModal1(false);
-//   }, [orders, modal1]);
-
-//   const handleOpenModal = () => {
-//     setModal1(true);
-//   };
-
-//   const handleCloseModal = () => {
-//     setModal1(false);
-//   };
-
-//   const handleOpenEditModal = (order: any) => {
-//     setSelectedOrder(order);
-//     const initialExtras = extraGeneral.reduce((acc: any, curr: any) => {
-//       acc[curr.name] = order.extra.some((extra: any) => extra.name === curr.name);
-//       return acc;
-//     }, {});
-//     setSelectedExtras(initialExtras);
-//     setEditModal(true);
-//   };
-
-//   const handleCloseEditModal = () => {
-//     setEditModal(false);
-//     setSelectedOrder(null);
-//     setSelectedExtras({});
-//   };
-
-//   const handleCheckboxChange = (name: string, isChecked: boolean) => {
-//     setSelectedExtras({
-//       ...selectedExtras,
+//   const handleCheckboxChange = useCallback((name: string, isChecked: boolean) => {
+//     setSelectedExtras((prev) => ({
+//       ...prev,
 //       [name]: isChecked,
-//     });
-//   };
+//     }))
+//   }, [])
 
-//   const handleConfirmEdit = () => {
-//     const updatedExtras = extraGeneral.filter((extra: any) => selectedExtras[extra.name]);
-//     const updatedOrder = {
-//       ...selectedOrder,
-//       extra: updatedExtras,
-//     };
-//     props.updateOrder(updatedOrder); // Función para actualizar la orden en el estado principal
-//     handleCloseEditModal();
-//   };
+//   const handleConfirmEdit = useCallback(() => {
+//     if (selectedOrder) {
+//       const updatedExtras = selectedOrder.extraGeneral.filter((extra: any) => selectedExtras[extra.name])
+//       editOrder(selectedOrder.id, { extra: updatedExtras })
+//       handleCloseEditModal()
+//     }
+//   }, [selectedOrder, selectedExtras, editOrder, handleCloseEditModal])
+
+//   const handleOrderTypeChange = useCallback((event: SelectChangeEvent) => {
+//     setOrderType(event.target.value)
+//   }, [])
+
+//   const handleConfirmOrder = useCallback(() => {
+//     const orderDetails = {
+//       comments,
+//       orderType,
+//       tableNumber: orderType === "en el lugar" ? tableNumber : null,
+//       orderId: orderType === "para llevar" ? uuidv4() : null,
+//       deliveryAddress: orderType === "delivery" ? `${street} ${streetNumber}` : null,
+//       fullname: orderType === "para llevar" || orderType === "delivery" ? fullname : null,
+//     }
+
+//     console.log("Order Details:", orderDetails)
+//     // Send order details to server
+//     handleCloseModal()
+
+//     // Reset form fields after submission
+//     setComments("")
+//     setOrderType("")
+//     setTableNumber("")
+//     setStreet("")
+//     setStreetNumber("")
+//     setFullname("")
+//   }, [comments, orderType, tableNumber, street, streetNumber, fullname, handleCloseModal])
+
+//   // Memoize the order items to prevent unnecessary re-renders
+//   const orderItems = useMemo(() => {
+//     return orders.map((item) => (
+//       <OrderItem
+//         key={item.id}
+//         item={item}
+//         onDelete={() => deleteOrder(item.id)}
+//         onEdit={() => handleOpenEditModal(item)}
+//       />
+//     ))
+//   }, [orders, deleteOrder, handleOpenEditModal])
+
+//   // Memoize the extras checkboxes
+//   const extrasCheckboxes = useMemo(() => {
+//     return selectedOrder?.extraGeneral?.map((extra: any) => (
+//       <Box key={extra.name} sx={{ mb: 1 }}>
+//         <CheckboxMaterialUI
+//           name={extra.name}
+//           checked={Boolean(selectedExtras[extra.name])}
+//           onChange={handleCheckboxChange}
+//           label={`${extra.name} - $${extra.price}`}
+//           color="primary"
+//         />
+//       </Box>
+//     ))
+//   }, [selectedOrder?.extraGeneral, selectedExtras, handleCheckboxChange])
+
+//   // Only render the component when there are orders
+//   if (orders.length === 0) {
+//     return null
+//   }
 
 //   return (
-//     <div>
-//       {orders.length > 0 && (
-//         <Button
-//           onClick={handleOpenModal}
-//           variant="contained"
-//           color="primary"
-//           className={styles.floatingButton}
-//         >
-//           Finalizar Orden
-//         </Button>
-//       )}
+//     <div className={styles.mainContainer}>
+//       <div className={styles.floatingButton} onClick={handleOpenModal}>
+//         Finalizar Orden
+//       </div>
 
-//       {orders.length > 0 && (
-//         <ReusableModal open={modal1} onClose={handleCloseModal} title="Detalles de la Orden" showButtons={false}>
-//           <Box sx={{ maxHeight: '400px', overflowY: 'auto', padding: 2 }}>
-//             <Stack spacing={2}>
-//               {orders.map((item: any, index: number) => (
-//                 <OrderItem
-//                   key={item.id}
-//                   item={item}
-//                   onDelete={() => deleteOrder(item.id)}
-//                   onEdit={() => handleOpenEditModal(item)}
-//                 />
-//               ))}
-//             </Stack>
-//           </Box>
-
-//           <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: 2 }}>
-//             <Button onClick={handleCloseModal} color="secondary" sx={{ marginRight: 1 }}>
-//               Cerrar
-//             </Button>
-//             <Button onClick={handleCloseModal} color="primary" variant="contained">
-//               Confirmar
-//             </Button>
-//           </Box>
-//         </ReusableModal>
-//       )}
-
-//       <ReusableModal open={editModal} onClose={handleCloseEditModal} title="Editar Extras" showButtons={false}>
-//         <Box sx={{ maxHeight: '400px', overflowY: 'auto', padding: 2 }}>
-//           <Typography variant="h6" sx={{ mb: 2, fontWeight: 'bold' }}>
-//             Selecciona tus extras
-//           </Typography>
-//           {extraGeneral?.map((extra: any) => (
-//             <Box key={extra.name} sx={{ mb: 1 }}>
-//               <CheckboxMaterialUI
-//                 name={extra.name}
-//                 checked={Boolean(selectedExtras[extra.name])}
-//                 onChange={handleCheckboxChange}
-//                 label={`${extra.name} - $${extra.price}`}
-//                 color="primary"
-//               />
-//             </Box>
-//           ))}
+//       <ReusableModal open={modal1} onClose={handleCloseModal} title="Detalles de la Orden" showButtons={false}>
+//         <Box sx={{ maxHeight: "400px", overflowY: "auto", padding: 2 }}>
+//           <Stack spacing={2}>{orderItems}</Stack>
 //         </Box>
 
-//         <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: 2 }}>
+//         <Box sx={{ marginTop: 2 }}>
+//           <TextField
+//             fullWidth
+//             label="Comentarios"
+//             value={comments}
+//             onChange={(e) => setComments(e.target.value)}
+//             multiline
+//             rows={2}
+//             sx={{ mb: 2 }}
+//           />
+
+//           <FormControl fullWidth sx={{ mb: 2 }}>
+//             <InputLabel id="order-type-label">Tipo de Pedido</InputLabel>
+//             <Select
+//               labelId="order-type-label"
+//               value={orderType}
+//               label="Tipo de Pedido"
+//               onChange={handleOrderTypeChange}
+//             >
+//               <MenuItem value="en el lugar">Comer en el lugar</MenuItem>
+//               <MenuItem value="para llevar">Para llevar</MenuItem>
+//               <MenuItem value="delivery">Delivery</MenuItem>
+//             </Select>
+//           </FormControl>
+
+//           {orderType === "en el lugar" && (
+//             <TextField
+//               fullWidth
+//               label="Número de Mesa"
+//               value={tableNumber}
+//               onChange={(e) => setTableNumber(e.target.value)}
+//               sx={{ mb: 2 }}
+//             />
+//           )}
+
+//           {orderType === "para llevar" && (
+//             <TextField
+//               fullWidth
+//               label="Nombre de la persona que recibe"
+//               value={fullname}
+//               onChange={(e) => setFullname(e.target.value)}
+//               sx={{ mb: 2 }}
+//             />
+//           )}
+
+//           {orderType === "delivery" && (
+//             <>
+//               <TextField
+//                 fullWidth
+//                 label="Nombre de la persona que recibe"
+//                 value={fullname}
+//                 onChange={(e) => setFullname(e.target.value)}
+//                 sx={{ mb: 2 }}
+//               />
+//               <TextField
+//                 fullWidth
+//                 label="Calle"
+//                 value={street}
+//                 onChange={(e) => setStreet(e.target.value)}
+//                 sx={{ mb: 2 }}
+//               />
+//               <TextField
+//                 fullWidth
+//                 label="Número"
+//                 value={streetNumber}
+//                 onChange={(e) => setStreetNumber(e.target.value)}
+//                 sx={{ mb: 2 }}
+//               />
+//             </>
+//           )}
+//         </Box>
+
+//         <Box sx={{ display: "flex", justifyContent: "flex-end", marginTop: 2 }}>
+//           <Button onClick={handleCloseModal} color="secondary" sx={{ marginRight: 1 }}>
+//             Cerrar
+//           </Button>
+//           <Button onClick={handleConfirmOrder} color="primary" variant="contained">
+//             Confirmar
+//           </Button>
+//         </Box>
+//       </ReusableModal>
+
+//       <ReusableModal open={editModal} onClose={handleCloseEditModal} title="Editar Extras" showButtons={false}>
+//         <Box sx={{ maxHeight: "400px", overflowY: "auto", padding: 2 }}>
+//           <Typography variant="h6" sx={{ mb: 2, fontWeight: "bold" }}>
+//             Selecciona tus extras
+//           </Typography>
+//           {extrasCheckboxes}
+//         </Box>
+
+//         <Box sx={{ display: "flex", justifyContent: "flex-end", marginTop: 2 }}>
 //           <Button onClick={handleCloseEditModal} color="secondary" sx={{ marginRight: 1 }}>
 //             Cancelar
 //           </Button>
@@ -356,178 +278,326 @@
 //         </Box>
 //       </ReusableModal>
 //     </div>
-//   );
-// };
+//   )
+// }
 
-// export default Orderflow;
+// export default React.memo(Orderflow)
 
 
 
-import React, { useEffect, useState } from 'react';
-import ReusableModal from '../ReusableModal/ReusableModal';
-import { Button, Typography, Divider, Box, Stack, IconButton } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit'; // Icono de edición
-import styles from './OrderFlow.module.css';
-import CheckboxMaterialUI from '../CheckboxMaterialUI/CheckboxMaterialUI';
+"use client"
 
-// Componente OrderItem con botón de eliminación y edición
-const OrderItem = ({ item, onDelete, onEdit }: { item: any; onDelete: () => void; onEdit: () => void }) => (
-  <Box sx={{ marginBottom: 2 }}>
-    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-      <Typography variant="h6">{item.Name}</Typography>
-      <Box>
-        <IconButton onClick={onEdit} color="primary" aria-label="edit">
-          <EditIcon />
-        </IconButton>
-        <IconButton onClick={onDelete} color="error" aria-label="delete">
-          <DeleteIcon />
-        </IconButton>
-      </Box>
-    </Box>
-    <Typography variant="body1">{item.Description}</Typography>
-    <Typography variant="body2" color="textSecondary">Precio: ${item.Price}</Typography>
+import React, { useCallback, useEffect, useMemo, useState } from "react"
+import ReusableModal from "../ReusableModal/ReusableModal"
+import {
+  Button,
+  Typography,
+  Box,
+  Stack,
+  TextField,
+  Select,
+  MenuItem,
+  InputLabel,
+  FormControl,
+  type SelectChangeEvent,
+} from "@mui/material"
+import styles from "./OrderFlow.module.css"
+import CheckboxMaterialUI from "../CheckboxMaterialUI/CheckboxMaterialUI"
+import { v4 as uuidv4 } from "uuid"
+import OrderItem from "./OrdersItems/OrdersItems"
+import { sendWhatsAppMessage } from "@/services/OrderWathSappServices/ordersWithWhattSapp.services"
 
-    {item.extra?.length > 0 && (
-      <Box sx={{ marginTop: 1 }}>
-        <Typography variant="subtitle2">Extras:</Typography>
-        {item.extra.map((extra: any, i: number) => (
-          <Typography key={i} variant="body2">
-            {extra.name}: ${extra.price}
-          </Typography>
-        ))}
-      </Box>
-    )}
+// Define proper types instead of using 'any'
+interface OrderExtra {
+  name: string
+  price: number
+}
 
-    <Typography variant="body2" color="textSecondary">
-      Comentarios: {item.Comments || "Ninguno"}
-    </Typography>
-    <Typography variant="body2" color="textSecondary">
-      Tipo de Pedido: {item.Type}
-    </Typography>
-    <Divider sx={{ marginTop: 2 }} />
-  </Box>
-);
+// Renamed from Order to OrderItem to avoid conflict with existing Order type
+interface OrderItemType {
+  id: string
+  title: string
+  price: number
+  quantity: number
+  extra: OrderExtra[]
+  extraGeneral: OrderExtra[]
+  // Add other properties as needed
+}
 
-// Componente Orderflow
-const Orderflow = (props: any) => {
-  const { orders, deleteOrder, editOrder } = props; // Recibir orders, deleteOrder y editOrder desde props
-  const [modal1, setModal1] = useState<boolean>(false);
-  const [editModal, setEditModal] = useState<boolean>(false);
-  const [selectedOrder, setSelectedOrder] = useState<any>(null);
-  const [selectedExtras, setSelectedExtras] = useState<{ [key: string]: boolean }>({});
+interface OrderFlowProps {
+  // Use the existing Order type from your codebase
+  orders: any[] // We'll use 'any[]' temporarily to avoid conflicts
+  deleteOrder: (id: string) => void
+  editOrder: (id: string, updates: any) => void
+  info: any;
+}
 
+const Orderflow: React.FC<OrderFlowProps> = ({ orders, deleteOrder, editOrder,info }) => {
+  const [modal1, setModal1] = useState<boolean>(false)
+  const [editModal, setEditModal] = useState<boolean>(false)
+  const [selectedOrder, setSelectedOrder] = useState<any>(null)
+  const [selectedExtras, setSelectedExtras] = useState<{ [key: string]: boolean }>({})
+  const [comments, setComments] = useState<string>("")
+  const [orderType, setOrderType] = useState<string>("")
+  const [tableNumber, setTableNumber] = useState<string>("")
+  const [street, setStreet] = useState<string>("")
+  const [streetNumber, setStreetNumber] = useState<string>("")
+  const [fullname, setFullname] = useState<string>("")
+  const [error, setError] = useState<string | null>(null)
+
+  // Close modal when orders are empty
   useEffect(() => {
-    orders.length === 0 && setModal1(false);
-  }, [orders, modal1]);
-
-  const handleOpenModal = () => {
-    setModal1(true);
-  };
-
-  const handleCloseModal = () => {
-    setModal1(false);
-  };
-
-  // Abrir el modal de edición y cargar los extras seleccionados
-  const handleOpenEditModal = (order: any) => {
-    setSelectedOrder(order);
-    const initialExtras = order.extraGeneral.reduce((acc: any, curr: any) => {
-      acc[curr.name] = order.extra.some((extra: any) => extra.name === curr.name);
-      return acc;
-    }, {});
-    setSelectedExtras(initialExtras);
-    setEditModal(true);
-  };
-
-  const handleCloseEditModal = () => {
-    setEditModal(false);
-    setSelectedOrder(null);
-    setSelectedExtras({});
-  };
-
-  // Manejar cambios en los checkboxes de extras
-  const handleCheckboxChange = (name: string, isChecked: boolean) => {
-    setSelectedExtras({
-      ...selectedExtras,
-      [name]: isChecked,
-    });
-  };
-
-  // Confirmar la edición de extras
-  const handleConfirmEdit = () => {
-    if (selectedOrder) {
-      const updatedExtras = selectedOrder.extraGeneral.filter((extra: any) => selectedExtras[extra.name]);
-      const updatedOrder = {
-        ...selectedOrder,
-        extra: updatedExtras,
-      };
-      // editOrder(updatedOrder); // Actualizar la orden en el estado principal
-      editOrder(selectedOrder.id, { extra: updatedExtras })
-      handleCloseEditModal();
+    if (orders.length === 0) {
+      setModal1(false)
     }
-  };
+  }, [orders])
+
+  // Memoize handlers to prevent unnecessary re-renders
+  const handleOpenModal = useCallback(() => {
+    setModal1(true)
+  }, [])
+
+  const handleCloseModal = useCallback(() => {
+    setModal1(false)
+    setError(null)
+  }, [])
+
+  const handleOpenEditModal = useCallback((order: any) => {
+    setSelectedOrder(order)
+
+    // Create initial extras state
+    const initialExtras = order.extraGeneral.reduce((acc: any, curr: any) => {
+      acc[curr.name] = order.extra.some((extra: any) => extra.name === curr.name)
+      return acc
+    }, {})
+
+    setSelectedExtras(initialExtras)
+    setEditModal(true)
+  }, [])
+
+  const handleCloseEditModal = useCallback(() => {
+    setEditModal(false)
+    setSelectedOrder(null)
+    setSelectedExtras({})
+  }, [])
+
+  const handleCheckboxChange = useCallback((name: string, isChecked: boolean) => {
+    setSelectedExtras((prev) => ({
+      ...prev,
+      [name]: isChecked,
+    }))
+  }, [])
+
+  const handleConfirmEdit = useCallback(() => {
+    if (selectedOrder) {
+      const updatedExtras = selectedOrder.extraGeneral.filter((extra: any) => selectedExtras[extra.name])
+      editOrder(selectedOrder.id, { extra: updatedExtras })
+      handleCloseEditModal()
+    }
+  }, [selectedOrder, selectedExtras, editOrder, handleCloseEditModal])
+
+  const handleOrderTypeChange = useCallback((event: SelectChangeEvent) => {
+    setOrderType(event.target.value)
+  }, [])
+  console.log("🚀 ~ handleConfirmOrder ~ info?.phone:", info[0])
+
+  const handleConfirmOrder = useCallback(() => {
+    // Validaciones
+    if (!orderType) {
+      setError("Por favor, selecciona un tipo de pedido.");
+      return;
+    }
+  
+    if (orderType === "en el lugar" && !tableNumber) {
+      setError("Por favor, ingresa el número de mesa.");
+      return;
+    }
+  
+    if (orderType === "delivery" && (!street || !streetNumber || !fullname)) {
+      setError("Por favor, completa todos los campos de dirección.");
+      return;
+    }
+  
+    if (orderType === "para llevar" && !fullname) {
+      setError("Por favor, ingresa el nombre de la persona que recibe.");
+      return;
+    }
+  
+    // Crear el objeto de detalles de la orden
+    const orderDetails = {
+      comments,
+      orderType,
+      tableNumber: orderType === "en el lugar" ? tableNumber : null,
+      orderId: orderType === "para llevar" ? uuidv4() : null,
+      deliveryAddress: orderType === "delivery" ? `${street} ${streetNumber}` : null,
+      fullname: orderType === "para llevar" || orderType === "delivery" ? fullname : null,
+      items: orders, // Incluir los ítems de la orden
+    };
+    console.log("🚀 ~ handleConfirmOrder ~ orderDetails:", orderDetails)
+    // Validar y formatear el número de teléfono
+    const phoneNumber = info[0]?.phone?.replace(/\D/g, ""); // Elimina caracteres no numéricos
+    if (!phoneNumber) {
+      setError("Número de teléfono no válido.");
+      return;
+    }
+    
+    
+    // Enviar el mensaje por WhatsApp
+    sendWhatsAppMessage(orderDetails, phoneNumber);
+
+
+
+    
+  
+    // Cerrar el modal y resetear los campos
+    handleCloseModal();
+    setComments("");
+    setOrderType("");
+    setTableNumber("");
+    setStreet("");
+    setStreetNumber("");
+    setFullname("");
+  }, [comments, orderType, tableNumber, street, streetNumber, fullname, handleCloseModal, orders, info?.phone]);
+  // Memoize the order items to prevent unnecessary re-renders
+  const orderItems = useMemo(() => {
+    return orders.map((item) => (
+      <OrderItem
+        key={item.id}
+        item={item}
+        onDelete={() => deleteOrder(item.id)}
+        onEdit={() => handleOpenEditModal(item)}
+      />
+    ))
+  }, [orders, deleteOrder, handleOpenEditModal])
+
+  // Memoize the extras checkboxes
+  const extrasCheckboxes = useMemo(() => {
+    return selectedOrder?.extraGeneral?.map((extra: any) => (
+      <Box key={extra.name} sx={{ mb: 1 }}>
+        <CheckboxMaterialUI
+          name={extra.name}
+          checked={Boolean(selectedExtras[extra.name])}
+          onChange={handleCheckboxChange}
+          label={`${extra.name} - $${extra.price}`}
+          color="primary"
+        />
+      </Box>
+    ))
+  }, [selectedOrder?.extraGeneral, selectedExtras, handleCheckboxChange])
+
+  // Only render the component when there are orders
+  if (orders.length === 0) {
+    return null
+  }
 
   return (
     <div className={styles.mainContainer}>
-      {orders.length > 0 && (
-        <div className={styles.floatingButton}>
-          <div
-            className={styles.floatingButton}
-            onClick={handleOpenModal}
-     
-          >
-            Finalizar Orden
-          </div>
-        </div>
-      )}
+      <div className={styles.floatingButton} onClick={handleOpenModal}>
+        Finalizar Orden
+      </div>
 
-      {orders.length > 0 && (
-        <ReusableModal open={modal1} onClose={handleCloseModal} title="Detalles de la Orden" showButtons={false}>
-          <Box sx={{ maxHeight: '400px', overflowY: 'auto', padding: 2 }}>
-            <Stack spacing={2}>
-              {orders.map((item: any, index: number) => (
-                <OrderItem
-                  key={item.id}
-                  item={item}
-                  onDelete={() => deleteOrder(item.id)}
-                  onEdit={() => handleOpenEditModal(item)}
-                />
-              ))}
-            </Stack>
-          </Box>
-
-          <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: 2 }}>
-            <Button onClick={handleCloseModal} color="secondary" sx={{ marginRight: 1 }}>
-              Cerrar
-            </Button>
-            <Button onClick={handleCloseModal} color="primary" variant="contained">
-              Confirmar
-            </Button>
-          </Box>
-        </ReusableModal>
-      )}
-
-      {/* Modal de edición de extras */}
-      <ReusableModal open={editModal} onClose={handleCloseEditModal} title="Editar Extras" showButtons={false}>
-        <Box sx={{ maxHeight: '400px', overflowY: 'auto', padding: 2 }}>
-          <Typography variant="h6" sx={{ mb: 2, fontWeight: 'bold' }}>
-            Selecciona tus extras
-          </Typography>
-          {selectedOrder?.extraGeneral?.map((extra: any) => (
-            <Box key={extra.name} sx={{ mb: 1 }}>
-              <CheckboxMaterialUI
-                name={extra.name}
-                checked={Boolean(selectedExtras[extra.name])}
-                onChange={handleCheckboxChange}
-                label={`${extra.name} - $${extra.price}`}
-                color="primary"
-              />
-            </Box>
-          ))}
+      <ReusableModal open={modal1} onClose={handleCloseModal} title="Detalles de la Orden" showButtons={false}>
+        <Box sx={{ maxHeight: "400px", overflowY: "auto", padding: 2 }}>
+          <Stack spacing={2}>{orderItems}</Stack>
         </Box>
 
-        <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: 2 }}>
+        <Box sx={{ marginTop: 2 }}>
+          <TextField
+            fullWidth
+            label="Comentarios"
+            value={comments}
+            onChange={(e) => setComments(e.target.value)}
+            multiline
+            rows={2}
+            sx={{ mb: 2 }}
+          />
+
+          <FormControl fullWidth sx={{ mb: 2 }}>
+            <InputLabel id="order-type-label">Tipo de Pedido</InputLabel>
+            <Select
+              labelId="order-type-label"
+              value={orderType}
+              label="Tipo de Pedido"
+              onChange={handleOrderTypeChange}
+            >
+              <MenuItem value="en el lugar">Comer en el lugar</MenuItem>
+              <MenuItem value="para llevar">Para llevar</MenuItem>
+              <MenuItem value="delivery">Delivery</MenuItem>
+            </Select>
+          </FormControl>
+
+          {orderType === "en el lugar" && (
+            <TextField
+              fullWidth
+              label="Número de Mesa"
+              value={tableNumber}
+              onChange={(e) => setTableNumber(e.target.value)}
+              sx={{ mb: 2 }}
+            />
+          )}
+
+          {orderType === "para llevar" && (
+            <TextField
+              fullWidth
+              label="Nombre de la persona que recibe"
+              value={fullname}
+              onChange={(e) => setFullname(e.target.value)}
+              sx={{ mb: 2 }}
+            />
+          )}
+
+          {orderType === "delivery" && (
+            <>
+              <TextField
+                fullWidth
+                label="Nombre de la persona que recibe"
+                value={fullname}
+                onChange={(e) => setFullname(e.target.value)}
+                sx={{ mb: 2 }}
+              />
+              <TextField
+                fullWidth
+                label="Calle"
+                value={street}
+                onChange={(e) => setStreet(e.target.value)}
+                sx={{ mb: 2 }}
+              />
+              <TextField
+                fullWidth
+                label="Número"
+                value={streetNumber}
+                onChange={(e) => setStreetNumber(e.target.value)}
+                sx={{ mb: 2 }}
+              />
+            </>
+          )}
+        </Box>
+
+        {error && (
+          <Typography color="error" sx={{ mt: 2 }}>
+            {error}
+          </Typography>
+        )}
+
+        <Box sx={{ display: "flex", justifyContent: "flex-end", marginTop: 2 }}>
+          <Button onClick={handleCloseModal} color="secondary" sx={{ marginRight: 1 }}>
+            Cerrar
+          </Button>
+          <Button onClick={handleConfirmOrder} color="primary" variant="contained">
+            Confirmar
+          </Button>
+        </Box>
+      </ReusableModal>
+
+      <ReusableModal open={editModal} onClose={handleCloseEditModal} title="Editar Extras" showButtons={false}>
+        <Box sx={{ maxHeight: "400px", overflowY: "auto", padding: 2 }}>
+          <Typography variant="h6" sx={{ mb: 2, fontWeight: "bold" }}>
+            Selecciona tus extras
+          </Typography>
+          {extrasCheckboxes}
+        </Box>
+
+        <Box sx={{ display: "flex", justifyContent: "flex-end", marginTop: 2 }}>
           <Button onClick={handleCloseEditModal} color="secondary" sx={{ marginRight: 1 }}>
             Cancelar
           </Button>
@@ -537,7 +607,7 @@ const Orderflow = (props: any) => {
         </Box>
       </ReusableModal>
     </div>
-  );
-};
+  )
+}
 
-export default Orderflow;
+export default React.memo(Orderflow)

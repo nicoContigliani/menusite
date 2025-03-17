@@ -311,6 +311,7 @@ const GenericProfileComponent = dynamic(() => import("../../components/Profile/P
 })
 
 const ProfileProduction = (props: any) => {
+    console.log("🚀 ~ ProfileProduction ~ props:", props)
     const [dataGeneral, setDataGeneral] = useState<any | undefined>(undefined)
     const [selectedProfile, setSelectedProfile] = useState<string | null>(null)
     const [companyNames, setCompanyNames] = useState<string>("")
@@ -325,7 +326,7 @@ const ProfileProduction = (props: any) => {
         funtionasync()
     }, [props?.menuItems])
 
-    const { menuData, backgroundImageSet, promotions, info, schedules, config, isReady } = useMenuDataAternative(
+    const { menuData, backgroundImageSet, promotions, info, schedules, config, isReady,staff } = useMenuDataAternative(
         dataGeneral ?? { hoja: {} },
     )
 
@@ -387,6 +388,7 @@ const ProfileProduction = (props: any) => {
                 schedules={schedules}
                 config={config || []}
                 profile={selectedProfile || "Generic"} // Pasa el perfil seleccionado
+                staff={staff}
             />
         )
     }

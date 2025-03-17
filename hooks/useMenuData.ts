@@ -1,3 +1,4 @@
+import { set } from "mongoose"
 import { useState, useEffect } from "react"
 
 export interface MenuItem {
@@ -42,6 +43,7 @@ export interface DataGeneral {
   Config?: ConfigType[]
   Info?: InfoType[]
   schedules?: SchedulesType[],
+  staff: any[];
   paymentLevel: number
 }
 
@@ -52,12 +54,13 @@ export const useMenuData = (dataGeneral: DataGeneral) => {
   const [info, setInfo] = useState<InfoType[] | null>(null)
   const [schedules, setSchedules] = useState<SchedulesType[] | null>(null)
   const [config, setConfig] = useState<ConfigType[] | null>(null)
+  const [staff, setStaff] = useState<any[] | any | null>(null)
   const [isReady, setIsReady] = useState(false)
-  const [paymentLevel,setPaymentLevel]= useState(dataGeneral?.paymentLevel)
+  const [paymentLevel, setPaymentLevel] = useState(dataGeneral?.paymentLevel)
 
   useEffect(() => {
     if (dataGeneral && dataGeneral.Hoja1) {
-      const { Hoja1, Promotion, Config, Info, schedules,paymentLevel } = dataGeneral
+      const { Hoja1, Promotion, Config, Info, schedules, staff, paymentLevel } = dataGeneral
 
       if (Hoja1.length > 0) setMenuData(Hoja1)
       if (Config?.[0]?.Background_Image) {
@@ -71,6 +74,7 @@ export const useMenuData = (dataGeneral: DataGeneral) => {
       if (Info) setInfo(Info)
       if (schedules) setSchedules(schedules)
       if (Config) setConfig(Config)
+      if (staff) setStaff(staff)
 
       setIsReady(true)
     }
@@ -83,6 +87,7 @@ export const useMenuData = (dataGeneral: DataGeneral) => {
     info,
     schedules,
     config,
+    staff,
     isReady,
   }
 }
@@ -94,11 +99,12 @@ export const useMenuDataAternative = (dataGeneral: any) => {
   const [info, setInfo] = useState<InfoType[] | null>(null)
   const [schedules, setSchedules] = useState<SchedulesType[] | null>(null)
   const [config, setConfig] = useState<ConfigType[] | null>(null)
+  const [staff, setStaff] = useState<any | null>(null)
   const [isReady, setIsReady] = useState(false)
 
   useEffect(() => {
     if (dataGeneral && dataGeneral?.hojas?.Hoja1) {
-      const { Hoja1, Promotion, Config, Info, schedules } = dataGeneral?.hojas
+      const { Hoja1, Promotion, Config, Info, schedules, staff } = dataGeneral?.hojas
 
       if (Hoja1.length > 0) setMenuData(Hoja1)
       if (Config?.[0]?.Background_Image) {
@@ -112,7 +118,7 @@ export const useMenuDataAternative = (dataGeneral: any) => {
       if (Info) setInfo(Info)
       if (schedules) setSchedules(schedules)
       if (Config) setConfig(Config)
-
+      if (staff) setStaff(staff)
       setIsReady(true)
     }
   }, [dataGeneral])
@@ -124,6 +130,7 @@ export const useMenuDataAternative = (dataGeneral: any) => {
     info,
     schedules,
     config,
+    staff,
     isReady,
     paymentLevel: dataGeneral?.paymentLevel
   }
