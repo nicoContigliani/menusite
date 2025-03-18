@@ -338,7 +338,7 @@ const Orderflow: React.FC<OrderFlowProps> = ({ orders, deleteOrder, editOrder,in
   const [selectedOrder, setSelectedOrder] = useState<any>(null)
   const [selectedExtras, setSelectedExtras] = useState<{ [key: string]: boolean }>({})
   const [comments, setComments] = useState<string>("")
-  const [orderType, setOrderType] = useState<string>("")
+  const [orderType, setOrderType] = useState<string>("en el lugar")
   const [tableNumber, setTableNumber] = useState<string>("")
   const [street, setStreet] = useState<string>("")
   const [streetNumber, setStreetNumber] = useState<string>("")
@@ -436,7 +436,7 @@ const Orderflow: React.FC<OrderFlowProps> = ({ orders, deleteOrder, editOrder,in
     console.log("🚀 ~ handleConfirmOrder ~ info[0]?.phone:", info[0]?.phone)
     console.log("🚀 ~ handleConfirmOrder ~ orderDetails:", orderDetails)
     // Validar y formatear el número de teléfono
-    const phoneNumber = info[0]?.phone
+    const phoneNumber = info[0]?.whathsapp|| info[0]?.phone
     // const phoneNumber = info[0]?.phone?.replace(/\D/g, ""); // Elimina caracteres no numéricos
     if (!phoneNumber) {
       setError("Número de teléfono no válido.");
