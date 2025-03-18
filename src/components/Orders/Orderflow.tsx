@@ -433,9 +433,11 @@ const Orderflow: React.FC<OrderFlowProps> = ({ orders, deleteOrder, editOrder,in
       fullname: orderType === "para llevar" || orderType === "delivery" ? fullname : null,
       items: orders, // Incluir los ítems de la orden
     };
+    console.log("🚀 ~ handleConfirmOrder ~ info[0]?.phone:", info[0]?.phone)
     console.log("🚀 ~ handleConfirmOrder ~ orderDetails:", orderDetails)
     // Validar y formatear el número de teléfono
-    const phoneNumber = info[0]?.phone?.replace(/\D/g, ""); // Elimina caracteres no numéricos
+    const phoneNumber = info[0]?.phone
+    // const phoneNumber = info[0]?.phone?.replace(/\D/g, ""); // Elimina caracteres no numéricos
     if (!phoneNumber) {
       setError("Número de teléfono no válido.");
       return;
