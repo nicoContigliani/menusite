@@ -303,6 +303,7 @@
   }
 }
 
+
 .floatingButton {
   position: fixed; /* Mantiene el botón en la pantalla siempre */
   bottom: 20px; /* Lo posiciona en la parte inferior */
@@ -344,9 +345,39 @@
 /* Ajustes para dispositivos móviles */
 @media (max-width: 600px) {
   .floatingButton {
-    width: 90%; /* Ancho en dispositivos móviles */
+    width: 80%; /* Ancho en dispositivos móviles */
     bottom: 20px; /* Lo mantiene flotando siempre visible */
     font-size: 14px; /* Tamaño de fuente más pequeño */
     padding: 10px 20px; /* Espaciado interno reducido */
+  }
+}
+
+@media screen and (max-width: 480px) and (max-height: 700px) {
+  .container {
+    padding: 0 8px;
+    max-width: 100%;
+  }
+
+  .main {
+    grid-template-columns: repeat(2, 1fr); /* Reducir a 2 columnas para mejorar la visibilidad */
+    gap: 8px;
+  }
+
+  .menuItem {
+    border: none; /* Eliminar bordes en los elementos */
+    box-shadow: none; /* Eliminar sombras */
+  }
+
+  .itemDetails h2 {
+    font-size: 0.75rem; /* Ajustar tamaño del texto */
+  }
+
+  .price {
+    font-size: 0.75rem;
+  }
+
+  .floatingButton {
+    width: 95%;
+    max-width: 280px;
   }
 }

@@ -17,7 +17,10 @@ import OrderFlow from "@/components/Orders/Orderflow";
 import useRules from "../../../../hooks/useRules";
 import { permission } from "process";
 import OrderSpeeds from "@/components/OrderSpeeds/OrderSpeeds";
-import { Grid, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
+import Container from 'react-bootstrap/Container';
+
+
 
 interface MenuItem {
   Item_id: string;
@@ -190,7 +193,7 @@ const Menuone: React.FC<MenuProps> = (props) => {
   };
 
   return (
-    <Grid container spacing={2}
+    <div
       className={styles.container}
       style={{
         backgroundImage: backgroundImages || "none",
@@ -338,7 +341,7 @@ const Menuone: React.FC<MenuProps> = (props) => {
         <p>{`© ${new Date().getFullYear()} LlakaScript`}</p>
       </footer>
 
-    </Grid>
+    </div>
   );
 };
 
