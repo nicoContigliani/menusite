@@ -265,6 +265,7 @@ const Menufive: React.FC<MenuProps> = (props) => {
                             extra={item?.extras}
                             urlImage={item.Item_Image}
                             onConfirm={addOrder}
+                            colobuttonorder={"error"}
                           />
                         </div>
                       </div>

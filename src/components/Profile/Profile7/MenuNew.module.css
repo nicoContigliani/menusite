@@ -318,3 +318,7 @@
     }
   }
   
+  .orderButton{
+    background-color: rgba(107, 107, 107, 0.601);
+    color : white;
+  }

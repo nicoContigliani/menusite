@@ -15,6 +15,9 @@ import CatchOrder from "@/components/CatchOrder/CatchOrder";
 import useOrderManager from "../../../../hooks/useOrderManager";
 import OrderFlow from "@/components/Orders/Orderflow";
 import useRules from "../../../../hooks/useRules";
+import { permission } from "process";
+import OrderSpeeds from "@/components/OrderSpeeds/OrderSpeeds";
+import { Grid, Typography } from "@mui/material";
 
 interface MenuItem {
   Item_id: string;
@@ -35,22 +38,25 @@ interface MenuProps {
   namecompanies: string;
   promotions: any;
   info: any;
-  staff:any;
+  staff: any;
   schedules: any;
   config: any[];
   paymentLevel: any;
 }
 
 const Menuone: React.FC<MenuProps> = (props) => {
-  const { backgroundImages, config, groupedSections, groupedSectionpromotions, info, menuData, promotions, schedules, paymentLevel = 0,staff } = props;
+  const { backgroundImages, config, groupedSections, groupedSectionpromotions, info, menuData, promotions, schedules, paymentLevel = 0, staff } = props;
   const [searchTerm, setSearchTerm] = useState("");
   const [iconURL, setIconURL] = useState<string>("");
   const [namecompanies, setNamecompanies] = useState<string>("");
   const [isMobile, setIsMobile] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
 
+  const [isModalOpen, setIsModalOpen] = useState(false); // Estado para controlar la apertura y cierre del modal
+
+
   const { orders, addOrder, editOrder, deleteOrder } = useOrderManager()
-  const {hasPermission} = useRules(config, staff)
+  const { hasPermission } = useRules(config, staff)
 
 
 
@@ -77,6 +83,9 @@ const Menuone: React.FC<MenuProps> = (props) => {
       setIconURL(config[0].IconBrand || "");
     }
   }, [config]);
+
+
+
 
   const memoizedSectionsPromotions = (groupedSectionpromotions ? Object.entries(groupedSectionpromotions) : [])
     .map(([sectionName, items]) => {
@@ -181,7 +190,7 @@ const Menuone: React.FC<MenuProps> = (props) => {
   };
 
   return (
-    <div
+    <Grid container spacing={2}
       className={styles.container}
       style={{
         backgroundImage: backgroundImages || "none",
@@ -229,6 +238,30 @@ const Menuone: React.FC<MenuProps> = (props) => {
           />
         </div>
       </header>
+
+
+      {(hasPermission && memoizedSectionsPromotions && memoizedSections) && (
+        <OrderSpeeds
+          permission={hasPermission} // Prop para controlar si el modal se muestra
+          title="Order Speed" // Título del modal
+          showButtons={true} // Controla la visibilidad de los botones
+          fullScreen={true}
+          orders={orders}
+          addOrder={addOrder}
+          editOrder={editOrder}
+          deleteOrder={deleteOrder}
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          memoizedSectionsPromotions={memoizedSectionsPromotions}
+          memoizedSections={memoizedSections}
+        >
+          {/* Contenido del modal */}
+          <Typography>
+
+          </Typography>
+        </OrderSpeeds>
+      )}
+
 
       {memoizedSectionsPromotions.length > 0 && (
         <div className={styles.sectionTitle}>
@@ -286,7 +319,7 @@ const Menuone: React.FC<MenuProps> = (props) => {
             editOrder={editOrder} // Función para editar una orden
             deleteOrder={deleteOrder} // Función para eliminar una orden
             info={info}
-        />
+          />
         </div>
       }
 
@@ -305,7 +338,7 @@ const Menuone: React.FC<MenuProps> = (props) => {
         <p>{`© ${new Date().getFullYear()} LlakaScript`}</p>
       </footer>
 
-    </div>
+    </Grid>
   );
 };
 

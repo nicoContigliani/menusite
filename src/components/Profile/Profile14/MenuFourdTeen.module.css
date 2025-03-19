@@ -1,34 +1,35 @@
-@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400&display=swap");
-
 .container {
-  max-width: 1200px;
+  max-width: 100%;
   margin: 0 auto;
-  padding: 1.5rem;
+  padding: 1rem;
   font-family: "Roboto", sans-serif;
   background-color: #545454;
   color: #F5F5F5;
-  text-shadow: #9d9d9d;
-  background-size: cover; /* Asegura que la imagen de fondo se ajuste bien */
-  background-position: center; /* Centra la imagen de fondo */
-  background-attachment: fixed; /* Fija el fondo mientras se hace scroll */
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  box-sizing: border-box;
 }
 
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
 }
 
 .logo {
   font-family: "Playfair Display", serif;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: 700;
+  flex-shrink: 0;
 }
 
 .searchContainer {
   width: 100%;
-  max-width: 300px;
+  max-width: 100%;
+  margin-top: 0.5rem;
 }
 
 .searchInput {
@@ -37,15 +38,13 @@
   border: 1px solid #ddd;
   border-radius: 4px;
   font-family: "Roboto", sans-serif;
+  box-sizing: border-box;
 }
 
 .main {
   display: grid;
-  gap: 1.5rem;
-}
-
-.section {
-  margin-bottom: 1.5rem;
+  gap: 1rem;
+  grid-template-columns: 1fr;
 }
 
 .sectionHeader {
@@ -54,7 +53,7 @@
 
 .sectionTitle {
   font-family: "Playfair Display", serif;
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   font-weight: 700;
   border-bottom: 2px solid #333;
   padding-bottom: 0.5rem;
@@ -62,47 +61,20 @@
 
 .sectionItems {
   display: grid;
-  gap: 1.2rem;
-  grid-template-columns: repeat(3, 1fr);
-  /* Mantener 3 columnas en todas las resoluciones */
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 }
 
 .menuItem {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: flex-start;
   gap: 0.5rem;
 }
 
 .itemInfo {
-  flex-grow: 1;
   color: white;
-
-}
-
-.Name {
-  color: #F5F5F5;
-}
-
-.Description {
-  color: #F5F5F5;
-}
-
-.price {
-  color: #F5F5F5;
-}
-
-.itemInfo h2 {
-  font-family: "Playfair Display", serif;
-  font-size: 1.2rem;
-  margin: 0 0 0.5rem 0;
-}
-
-.itemInfo span {
-  display: block;
-  font-size: 0.9rem;
-  color: #a9a9a9ec;
-  margin-bottom: 0.25rem;
+  width: 100%;
 }
 
 .price {
@@ -111,95 +83,35 @@
 }
 
 .footer {
-  margin-top: 1.5rem;
+  margin-top: 1rem;
   text-align: center;
   font-size: 0.75rem;
   color: #666;
 }
 
-/* ✅ 📲 Mantener el formato de desktop en móviles */
-@media (max-width: 767px) {
-  .container {
-    padding: 1rem;
-  }
-
-  .logo {
-    font-size: 1.3rem;
-  }
-
-  .searchContainer {
-    max-width: 240px;
-  }
-
-  .searchInput {
-    padding: 0.4rem;
-  }
-
-  .sectionTitle {
-    font-size: 1.6rem;
-  }
-
-  .sectionItems {
-    grid-template-columns: repeat(3, 1fr);
-    /* Mantiene 3 columnas en móviles */
-  }
-
-  .menuItem {
-    flex-direction: column;
-  }
-
-  .footer {
-    font-size: 0.7rem;
-  }
-}
-
-/* ✅ 📺 Mantener el formato en tablets */
-@media (max-width: 1024px) {
-  .sectionItems {
-    grid-template-columns: repeat(3, 1fr);
-    /* Mantiene 3 columnas en tablets */
-  }
-
-  .Name {
-    color: #F5F5F5;
-  }
-
-  .Description {
-    color: #F5F5F5;
-  }
-
-  .price {
-    color: #F5F5F5;
-  }
-}
-
-
 .floatingButton {
-  position: fixed; /* Mantiene el botón en la pantalla siempre */
-  bottom: 20px; /* Lo posiciona en la parte inferior */
-  left: 50%; /* Centra horizontalmente */
-  transform: translateX(-50%); /* Ajusta el centrado */
-  z-index: 1000; /* Lo coloca por encima de otros elementos */
-  width: 90%; /* Ancho del botón */
-  max-width: 300px; /* Ancho máximo */
-  padding: 12px 24px; /* Espaciado interno */
-  font-size: 16px; /* Tamaño de la fuente */
-  border-radius: 25px; /* Bordes redondeados */
-  background-color: #1976d2; /* Color de fondo */
-  color: white; /* Color del texto */
-  border: none; /* Sin borde */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra */
-  cursor: pointer; /* Cursor tipo puntero */
-  transition: background-color 0.3s ease; /* Transición suave */
-  animation: pulse 2s infinite; /* Animación de pulso */
+  position: fixed;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  width: 90%;
+  max-width: 280px;
+  padding: 10px 20px;
+  font-size: 14px;
+  border-radius: 25px;
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  animation: pulse 2s infinite;
 }
 
-/* Efecto al pasar el mouse */
 .floatingButton:hover {
-  background-color: #1565c0; /* Cambia el color de fondo al pasar el mouse */
+  background-color: #1565c0;
 }
 
-/* Animación de pulso */
 @keyframes pulse {
   0% {
     box-shadow: 0 0 0 0 rgba(25, 118, 210, 0.7);
@@ -212,12 +124,21 @@
   }
 }
 
-/* Ajustes para dispositivos móviles */
 @media (max-width: 600px) {
+  .searchContainer {
+    max-width: 100%;
+  }
+
+  .sectionTitle {
+    font-size: 1.3rem;
+  }
+
+  .sectionItems {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+
   .floatingButton {
-    width: 90%; /* Ancho en dispositivos móviles */
-    bottom: 20px; /* Lo mantiene flotando siempre visible */
-    font-size: 14px; /* Tamaño de fuente más pequeño */
-    padding: 10px 20px; /* Espaciado interno reducido */
+    font-size: 12px;
+    padding: 8px 16px;
   }
 }

@@ -11,7 +11,11 @@ import { ReadExcelFile } from "@/services/readExcelFile"
 import { replaceImageUrls } from "@/services/UploadImageUrl.services"
 import { transformExtras } from "@/services/TransformedMenuItem.services"
 
+import { useDispatch } from "react-redux"
+import { showToast } from "../../../store/toastSlice"
+
 export default function UploadImagesToStorage(props: any) {
+  const dispatch = useDispatch()
   const { setDataResult, setCurrent, uploadedFiles, setUploadedFiles, folderName, setFolderName } = props
   const [files, setFiles] = useState<FileList | null>(null)
   // const [folderName, setFolderName] = useState<string | null>(null)
@@ -56,6 +60,9 @@ export default function UploadImagesToStorage(props: any) {
       const { data, error } = await supabase.storage.from(bucketName).list(folderPath)
       if (error) throw error
 
+
+
+      
       const deletePromises = data?.map((file) => {
         const filePath = `${folderPath}/${file.name}`
         return supabase.storage.from(bucketName).remove([filePath])
@@ -101,6 +108,8 @@ export default function UploadImagesToStorage(props: any) {
         const { data, error } = await supabase.storage.from(bucketName).upload(filePath, file, { upsert: true })
 
         if (error) throw error
+        if (error) dispatch(showToast({ message: "Error upload files!", type: "error" }))
+
 
         const { data: urlData } = supabase.storage.from(bucketName).getPublicUrl(filePath)
 
@@ -127,6 +136,7 @@ export default function UploadImagesToStorage(props: any) {
       const si = replaceImageUrls(excelData, uploadedFiles)
       setDataResult(si)
       setCurrent(2)
+      dispatch(showToast({ message: "upload files!", type: "success" }))
 
     }
   }, [uploadedFiles, excelData, uploadProgress])

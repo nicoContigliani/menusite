@@ -10,7 +10,6 @@ const useDynamicStyles = (profile: string | undefined) => {
 
     // Función para cargar los estilos según el perfil
     const getStyles = async (profile: string | undefined): Promise<any> => {
-        console.log("🚀 ~ getStyles ~ profile:", profile);
         switch (profile) {
             case "ProfileGeneric":
                 return (await import("../src/components/Profile/ProfileGeneric/ProfileGenericStyles/Generic.module.css")).default;

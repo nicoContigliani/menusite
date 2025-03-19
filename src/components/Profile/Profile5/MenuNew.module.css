@@ -51,7 +51,7 @@
 
 /* Tarjeta */
 .card {
-    background: #fff;
+    background: #3d3d3d8e;
     border-radius: 10px; /* Bordes ligeramente redondeados */
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
     overflow: hidden;

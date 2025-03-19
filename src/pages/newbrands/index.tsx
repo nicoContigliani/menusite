@@ -26,7 +26,8 @@ import stepsData from "../../../dataJSON/stepsDataSet.json"
 import dataMocks from "../../../dataJSON/dataMocks.json"
 import { Grid } from "@mui/material"
 
-
+import { useDispatch } from "react-redux"
+import { showToast } from "../../../store/toastSlice"
 
 interface DescriptionItem {
   key: string
@@ -35,7 +36,7 @@ interface DescriptionItem {
 }
 
 const page = () => {
-
+  const dispatch = useDispatch()
   const [isLogin, setIsLogin] = useState(false);
   const [openResponsive, setOpenResponsive] = useState(false);
 
@@ -158,11 +159,14 @@ const page = () => {
         //folderName(namecompoanies)
         //status_Companies
 
+     dispatch(showToast({ message: "Companies, Created!", type: "success" }))
 
 
 
       } else {
         console.error('Error en la solicitud:', response.statusText);
+        dispatch(showToast({ message: "Error, Created!", type: "error" }))
+
       }
     } catch (error) {
       console.error('Error al hacer la solicitud:', error);
@@ -172,23 +176,7 @@ const page = () => {
   return (
     <div className={styles.main}>
       <div className={styles.header}>
-        {/* <ModalComponents
-          openResponsive={openResponsive}
-          setOpenResponsive={setOpenResponsive}>
-          {
-            isLogin ?
-              <div>
-                si
-              </div>
-              :
-              <Login
-                redirections={true}
-                setOpenResponsive={setOpenResponsive}
-                fullUrl={fullUrl}
-              />
-          }
-        </ModalComponents> */}
-
+    
         <Header
           imagetodo={{
             src: "/images/flama.png",

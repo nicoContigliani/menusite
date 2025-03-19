@@ -20,8 +20,8 @@ interface MenuItem {
     Price: string | number
     Menu_Title: string
     Item_Image: string
-    extra?:any,
-    extras?:any
+    extra?: any,
+    extras?: any
 }
 
 interface MenuProps {
@@ -34,7 +34,7 @@ interface MenuProps {
     schedules: any
     config: any[]
     paymentLevel: any
-    staff:any
+    staff: any
 }
 
 interface ConfigType {
@@ -42,12 +42,12 @@ interface ConfigType {
 }
 
 const Menuten: React.FC<MenuProps> = (props) => {
-    const { backgroundImages, config, groupedSections, info, menuData, promotions, schedules, paymentLevel = 0,staff } = props
+    const { backgroundImages, config, groupedSections, info, menuData, promotions, schedules, paymentLevel = 0, staff } = props
 
-      const { orders, addOrder, editOrder, deleteOrder } = useOrderManager()
-        const { hasPermission } = useRules(config, staff)
-    
-    
+    const { orders, addOrder, editOrder, deleteOrder } = useOrderManager()
+    const { hasPermission } = useRules(config, staff)
+
+
     const [namecompanies, setNamecompanies] = useState<string>('')
     useLayoutEffect(() => {
         if (typeof window !== "undefined") {
@@ -192,14 +192,17 @@ const Menuten: React.FC<MenuProps> = (props) => {
                                             <div className={styles.itemDescription}>{item?.Description}</div>
                                             <div className={styles.price}>{`$${item.Price}`}</div>
                                             <hr />
-                                            <CatchOrder
-                                                title={item.Name}
-                                                description={item.Description}
-                                                price={item.Price}
-                                                extra={item?.extras}
-                                                urlImage={item.Item_Image}
-                                                onConfirm={addOrder}
-                                            />
+                                            <div className={styles.orderButton}>
+
+                                                <CatchOrder
+                                                    title={item.Name}
+                                                    description={item.Description}
+                                                    price={item.Price}
+                                                    extra={item?.extras}
+                                                    urlImage={item.Item_Image}
+                                                    onConfirm={addOrder}
+                                                />
+                                            </div>
                                         </div>
 
                                     </div>

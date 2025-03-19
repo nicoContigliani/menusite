@@ -353,3 +353,8 @@
     padding: 10px 20px; /* Espaciado interno reducido */
   }
 }
+
+.orderButton{
+  background-color: #262626;
+  color: #f4f4f4;
+}

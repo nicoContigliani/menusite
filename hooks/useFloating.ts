@@ -4,7 +4,7 @@ const useHandleCreate = (data: any, setRefreshTrigger: React.Dispatch<React.SetS
     const handleCreate = useCallback(async () => {
         const { companies } = data;
         if (!companies.length) {
-            console.log("No companies data found.");
+            // console.log("No companies data found.");
             return;
         }
 
@@ -28,7 +28,7 @@ const useHandleCreate = (data: any, setRefreshTrigger: React.Dispatch<React.SetS
 
             await Promise.all(promises);
             setRefreshTrigger((prev) => prev + 1);
-            console.log("Successfully processed all companies.");
+            // console.log("Successfully processed all companies.");
         } catch (err) {
             console.error("🚀 ~ handleCreate ~ global error:", err);
         }

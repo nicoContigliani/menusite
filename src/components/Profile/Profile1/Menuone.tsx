@@ -163,7 +163,7 @@ const Menuone: React.FC<MenuProps> = (props) => {
                         : null}
                 </div>
 
-                <div className={styles.info}
+                <div className={styles.itemInfo }
                     onMouseEnter={() => handleSectionEnter("info")}
                     onMouseLeave={() => handleSectionLeave("info")}
                 >

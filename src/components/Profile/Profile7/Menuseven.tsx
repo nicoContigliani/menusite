@@ -254,15 +254,18 @@ const Menuone: React.FC<MenuProps> = (props) => {
                       <div className={styles.itemDescription}>{item?.Description}</div>
                       <div className={styles.price}>{`$${item.Price}`}</div>
                     </div>
-                    <div onMouseEnter={() => handleSectionEnter(`Button-${item.Name}`)}>
-                      <CatchOrder
-                        title={item.Name}
-                        description={item.Description}
-                        price={item.Price}
-                        extra={item?.extras}
-                        urlImage={item.Item_Image}
-                        onConfirm={addOrder}
-                      />
+                    <div className={styles.orderButton}>
+
+                      <div onMouseEnter={() => handleSectionEnter(`Button-${item.Name}`)}>
+                        <CatchOrder
+                          title={item.Name}
+                          description={item.Description}
+                          price={item.Price}
+                          extra={item?.extras}
+                          urlImage={item.Item_Image}
+                          onConfirm={addOrder}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>

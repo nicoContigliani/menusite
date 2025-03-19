@@ -21,7 +21,7 @@ const useSectionTimeTracker = (namecompanies: string) => {
     userId: storedData?._id || "",
     email: storedData?.email || "",
   });
-  
+
   // Función para actualizar datos del usuario desde localStorage
   const updateUserDataFromStorage = useCallback(() => {
     if (storedData?.isLogin) {
@@ -31,7 +31,7 @@ const useSectionTimeTracker = (namecompanies: string) => {
       });
     }
 
-    
+
     if (storedData?.demo) {
       setDemos(true);
     }
@@ -51,7 +51,7 @@ const useSectionTimeTracker = (namecompanies: string) => {
   }, [updateUserDataFromStorage]);
 
   useEffect(() => {
-    console.log("🆕 userData actualizado:", userData);
+    // console.log("🆕 userData actualizado:", userData);
   }, [userData]);
 
   // Manejar la entrada a una sección
@@ -155,13 +155,13 @@ const useSectionTimeTracker = (namecompanies: string) => {
         } else {
           // throw new Error("Error en el envío");
           // console.error("❌ Error al enviar datos:");
-          console.log("❌ Error al enviar datos:");
+          if (process.env.NODE_ENV === "development") console.log("❌ Error al enviar datos:");
 
         }
       } catch (error) {
         // console.error("❌ Error al enviar datos:", error);
 
-        console.log("❌ Error al enviar datos:");
+        if (process.env.NODE_ENV === "development") console.log("❌ Error al enviar datos:");
 
       }
     },

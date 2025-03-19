@@ -6,7 +6,6 @@ const useRules = (config: any, staff: any) => {
 
     // Obtener y limpiar el email del usuario desde localStorage
     const email = stringclean(localStorage.getItem('email'));
-    console.log("🚀 ~ useRules ~ email:", email);
 
     useEffect(() => {
         if (config[0]?.whoDoOrder) {

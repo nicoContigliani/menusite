@@ -303,7 +303,6 @@
   }
 }
 
-
 .floatingButton {
   position: fixed; /* Mantiene el botón en la pantalla siempre */
   bottom: 20px; /* Lo posiciona en la parte inferior */
@@ -351,4 +350,3 @@
     padding: 10px 20px; /* Espaciado interno reducido */
   }
 }
-

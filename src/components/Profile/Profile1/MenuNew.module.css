@@ -1,7 +1,7 @@
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 2rem;
+    padding: 1.5rem;
     font-family: "Roboto", sans-serif;
     background-color: #333333;
     color: #f5f2e9;
@@ -11,55 +11,54 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 1rem;
-}
-
-.logoContainer {
-    justify-self: start;
+    margin-bottom: 1.5rem;
 }
 
 .logo {
     font-family: "Playfair Display", serif;
-    font-size: 3.8rem;
+    font-size: 3rem;
     font-weight: 700;
     color: #ffffff;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
 }
 
 .searchContainer {
     width: 100%;
-    max-width: 300px;
+    max-width: 400px;
     display: flex;
     justify-content: center;
 }
 
 .searchInput {
     width: 100%;
-    padding: 0.5rem;
+    padding: 0.75rem;
     border: none;
-    border-bottom: 1px solid #f5f2e9;
+    border-bottom: 2px solid #f5f2e9;
     font-family: "Roboto", sans-serif;
     background-color: transparent;
     color: #f5f2e9;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
 }
 
 .searchInput::placeholder {
     color: #cccccc;
+    opacity: 0.7;
+}
+
+.searchInput:focus {
+    outline: none;
+    border-bottom-color: #ffffff;
 }
 
 .main {
     display: grid;
-    gap: 3rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.575);
-    padding: 1%;
-}
-
-.mainPromotions {
-    display: grid;
-    gap: 3rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.575);
-    padding: 1%;
-    margin-bottom: 4rem; /* Separación adicional para promociones */
+    gap: 2rem;
+    padding: 1.5rem;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .section {
@@ -75,29 +74,30 @@
     font-size: 2rem;
     font-weight: 700;
     color: #f5f2e9;
-    border-bottom: 1px solid #f5f2e9;
+    border-bottom: 2px solid #f5f2e9;
     padding-bottom: 0.5rem;
+    text-align: center;
 }
 
 .sectionItems {
     display: grid;
-    gap: 2rem;
-    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 }
 
 .menuItem {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.75rem;
 }
 
 .itemInfo {
+    padding: 5%;
     display: flex;
     gap: 1rem;
     align-items: flex-start;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.119);
-    padding: 1rem;
-    border-radius: 8px;
+    padding: 1.25rem;
+    border-radius: 12px;
     background-color: rgba(255, 255, 255, 0.05);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -108,8 +108,7 @@
 }
 
 .cardImage {
-    border-radius: 10%;
-    flex-shrink: 0;
+    border-radius: 10px;
     width: 100px;
     height: 100px;
     object-fit: cover;
@@ -131,7 +130,7 @@
 
 .itemInfo h2 {
     font-family: "Playfair Display", serif;
-    font-size: 1.3rem;
+    font-size: 1.25rem;
     margin: 0 0 0.5rem 0;
     color: #f5f2e9;
 }
@@ -140,6 +139,7 @@
     font-size: 0.9rem;
     color: #cccccc;
     margin-right: 1rem;
+    line-height: 1.4;
 }
 
 .price {
@@ -147,118 +147,108 @@
     color: #f5f2e9;
     white-space: nowrap;
     margin-top: 0.5rem;
+    font-size: 1.1rem;
 }
 
 .footer {
     margin-top: 3rem;
     text-align: center;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     color: #cccccc;
     border-top: 1px solid #f5f2e9;
-    padding-top: 1rem;
+    padding-top: 1.5rem;
 }
 
-/* Estilos responsivos */
+/* Floating Button */
+.floatingButton {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    width: 90%;
+    max-width: 300px;
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    border-radius: 30px;
+    background-color: #1976d2;
+    color: white;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    animation: pulse 2s infinite;
+}
+
+.floatingButton:hover {
+    background-color: #1565c0;
+    transform: translateX(-50%) scale(1.05);
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(25, 118, 210, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 15px rgba(25, 118, 210, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(25, 118, 210, 0);
+    }
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
     .container {
         padding: 1rem;
-        margin: 0;
+     
     }
 
-    .header {
-        grid-template-columns: 1fr;
-        justify-items: center;
-        gap: 1.5rem;
-        align-items: center;
+    .logo {
+        font-size: 2.5rem;
     }
 
-    .logoContainer,
-    .searchContainer {
-        justify-self: center;
-        width: 100%;
+    .searchInput {
+        font-size: 0.9rem;
     }
 
-    .searchContainer {
-        max-width: 90%;
+    .sectionTitle {
+        font-size: 1.75rem;
     }
 
     .sectionItems {
         grid-template-columns: 1fr;
     }
 
-    .sectionTitle {
-        font-size: 1.8rem;
-    }
-
     .itemInfo h2 {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
     }
 
     .itemDescription {
         font-size: 0.85rem;
     }
 
-    .footer {
-        font-size: 0.7rem;
+    .price {
+        font-size: 1rem;
     }
-}
-.titleStructure{
-   text-align: center;
-   padding: 1rem;  
-   color: #f5f2e9;
-   font-family: "Playfair Display", serif;
-   font-size: 1.8rem;
-   font-weight: 700;
-}
 
-
-
-.floatingButton {
-    position: fixed; /* Mantiene el botón en la pantalla siempre */
-    bottom: 20px; /* Lo posiciona en la parte inferior */
-    left: 50%; /* Centra horizontalmente */
-    transform: translateX(-50%); /* Ajusta el centrado */
-    z-index: 1000; /* Lo coloca por encima de otros elementos */
-    width: 90%; /* Ancho del botón */
-    max-width: 300px; /* Ancho máximo */
-    padding: 12px 24px; /* Espaciado interno */
-    font-size: 16px; /* Tamaño de la fuente */
-    border-radius: 25px; /* Bordes redondeados */
-    background-color: #1976d2; /* Color de fondo */
-    color: white; /* Color del texto */
-    border: none; /* Sin borde */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra */
-    cursor: pointer; /* Cursor tipo puntero */
-    transition: background-color 0.3s ease; /* Transición suave */
-    animation: pulse 2s infinite; /* Animación de pulso */
-  }
-  
-  /* Efecto al pasar el mouse */
-  .floatingButton:hover {
-    background-color: #1565c0; /* Cambia el color de fondo al pasar el mouse */
-  }
-  
-  /* Animación de pulso */
-  @keyframes pulse {
-    0% {
-      box-shadow: 0 0 0 0 rgba(25, 118, 210, 0.7);
-    }
-    70% {
-      box-shadow: 0 0 0 15px rgba(25, 118, 210, 0);
-    }
-    100% {
-      box-shadow: 0 0 0 0 rgba(25, 118, 210, 0);
-    }
-  }
-  
-  /* Ajustes para dispositivos móviles */
-  @media (max-width: 600px) {
     .floatingButton {
-      width: 90%; /* Ancho en dispositivos móviles */
-      bottom: 20px; /* Lo mantiene flotando siempre visible */
-      font-size: 14px; /* Tamaño de fuente más pequeño */
-      padding: 10px 20px; /* Espaciado interno reducido */
+        font-size: 0.9rem;
+        padding: 0.75rem 1.5rem;
     }
-  }
-  
-  
+}
+
+@media (max-width: 480px) {
+    .logo {
+        font-size: 2rem;
+    }
+
+    .sectionTitle {
+        font-size: 1.5rem;
+    }
+
+    .floatingButton {
+        font-size: 0.85rem;
+        padding: 0.5rem 1rem;
+    }
+}
