@@ -1,0 +1,73 @@
+/* .infoContainer */
+.infoContainer {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr); /* Single column by default */
+    border-radius: 12px;
+    overflow: hidden;
+    max-width: 100%;
+    box-sizing: border-box;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+}
+
+/* .infoText */
+.infoText {
+    display: grid;
+    gap: 0.5rem; /* Reduce the gap between items */
+    grid-template-columns: repeat(4, 1fr);
+    font-size: 16px;
+    font-weight: 400;
+    color: #333;
+    line-height: 1.6;
+    padding-bottom: 0.3%;
+}
+
+/* .itemWrapper */
+.itemWrapper {
+    margin: 3px 0; /* Reducing the margin between buttons */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+}
+
+/* Button customization */
+.infoText button {
+    width: 80%; /* Reduce width of the button */
+    color: #fff;
+    font-size: 14px; /* Slightly smaller font size */
+    padding: 5px 16px; /* Smaller padding for a more compact button */
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.infoText button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive styling for smaller screens */
+@media (max-width: 768px) {
+    .infoText {
+        grid-template-columns: repeat(3, 1fr); /* Change to 3 columns */
+        font-size: 14px;
+    }
+
+    .itemWrapper {
+        margin: 0px 0;
+        justify-content: space-between;
+    }
+
+    .infoText button {
+        font-size: 12px;
+        padding: 5px 5px; /* Smaller padding for mobile */
+        width: auto;
+    }
+}
+
+/* Optional: Add a subtle hover effect on the container */
+.infoContainer:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}

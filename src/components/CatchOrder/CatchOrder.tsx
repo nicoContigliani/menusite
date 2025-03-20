@@ -195,6 +195,7 @@ const CatchOrder = (props: CatchOrderProps) => {
                   maxWidth: "200px",
                 }}
               >
+                <br />
                 <Image
                   src={urlImage || "/placeholder.svg"}
                   alt="Logo"

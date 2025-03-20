@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button } from '@mui/material';
 import ReusableModal from '../ReusableModal/ReusableModal';
 import styles from './OrderSpeeds.module.css'
+import ShowItemMenu from '../ShowItemMenu/ShowItemMenu';
 interface OrderSpeedsProps {
     permission?: boolean; // Prop para controlar si el modal se muestra
     title: string; // Título del modal
@@ -27,14 +28,14 @@ const OrderSpeeds: React.FC<OrderSpeedsProps> = ({
     searchTerm, setSearchTerm,
     memoizedSectionsPromotions, memoizedSections
 }) => {
-    console.log("🚀 ~  memoizedSectionsPromotions, memoizedSections:",  memoizedSectionsPromotions, memoizedSections)
+    console.log("🚀 ~  memoizedSectionsPromotions, memoizedSections:", memoizedSectionsPromotions, memoizedSections)
     const [isModalOpen, setIsModalOpen] = useState(false); // Estado para controlar la apertura y cierre del modal
 
 
 
 
 
-    
+
     // Función para abrir el modal
     const handleOpenModal = () => {
         setIsModalOpen(true);
@@ -73,6 +74,10 @@ const OrderSpeeds: React.FC<OrderSpeedsProps> = ({
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         data-cy="Search"
+                    />
+                    <ShowItemMenu
+                        title="todo"
+                        memoData={memoizedSections}
                     />
 
                     {children}
