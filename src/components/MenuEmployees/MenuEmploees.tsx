@@ -8,7 +8,7 @@ import { getLocalhostStorage } from '@/services/localstorage.services';
 import useOrderManager from '../../../hooks/useOrderManager';
 import useRules from '../../../hooks/useRules';
 import Todo from './MenuOrderDetails/OrderSpeedMUI';
-import MenuInterface from './MenuOrderDetails/menu/menu-interface';
+import Header from '../layout/header/Header';
 
 // Define el tipo para las secciones agrupadas
 
@@ -126,6 +126,22 @@ const MenuEmploees = (props: any) => {
 
     return (
         <div>
+            <hr />
+            <hr />
+            <hr />
+            <br />
+            <hr />
+
+            <Header
+
+                imagetodo={{
+                    src: "/images/flama.png",
+                    alt: "Flama",
+                    width: 1600,
+                    height: 1200,
+                    quality: 100,
+                }}
+            />
             <ModalComponents
                 openResponsive={openResponsive}
                 setOpenResponsive={setOpenResponsive}
@@ -151,7 +167,7 @@ const MenuEmploees = (props: any) => {
                     <hr />
                     <br />
                     <hr />
-     
+
                     <Todo
                         menuData={menuDatas}
                     />
