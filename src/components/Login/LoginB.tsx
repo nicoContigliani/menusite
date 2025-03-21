@@ -97,8 +97,11 @@
 import React, { useEffect, useState } from 'react'
 import styles from '@/styles/auth.module.css';
 import { localhostStorage } from '@/services/localstorage.services';
+import { useDispatch } from 'react-redux';
+import { loginSuccess } from '../../../store/authSlice';
 
 const LoginB = (props: any) => {
+    const dispatch = useDispatch();
     const {
         redirections,
         setOpenResponsive,
@@ -115,7 +118,7 @@ const LoginB = (props: any) => {
         e.preventDefault();
         setError(null);
         setIsLoading(true);
-        
+
         const data = { email, password };
 
         try {
@@ -128,6 +131,7 @@ const LoginB = (props: any) => {
             });
 
             const result = await response.json();
+            console.log("🚀 ~ handleLogin ~ result:", result)
 
             if (!response.ok) {
                 throw new Error(result.message || `Error: ${response.status} ${response.statusText}`);
@@ -137,6 +141,7 @@ const LoginB = (props: any) => {
                 await localhostStorage(result);
                 await setOpenResponsive(false);
                 await setIsLogin(true);
+                await dispatch(loginSuccess(result));
             }
         } catch (error) {
             setError((error as Error).message || "Error al iniciar sesión");
@@ -155,7 +160,7 @@ const LoginB = (props: any) => {
             </div>
 
             {error && (
-                <div 
+                <div
                     className={`${styles.errorMessage}`}
                     data-cy="login-error-message"
                     role="alert"
@@ -164,14 +169,14 @@ const LoginB = (props: any) => {
                 </div>
             )}
 
-            <form 
-                onSubmit={handleLogin} 
+            <form
+                onSubmit={handleLogin}
                 className={styles.form}
                 data-cy="login-form"
             >
                 <div className={styles.field}>
-                    <label 
-                        htmlFor="email" 
+                    <label
+                        htmlFor="email"
                         className={styles.label}
                         data-cy="login-email-label"
                     >
@@ -192,8 +197,8 @@ const LoginB = (props: any) => {
                 </div>
 
                 <div className={styles.field}>
-                    <label 
-                        htmlFor="password" 
+                    <label
+                        htmlFor="password"
                         className={styles.label}
                         data-cy="login-password-label"
                     >
@@ -213,8 +218,8 @@ const LoginB = (props: any) => {
                     />
                 </div>
 
-                <button 
-                    type="submit" 
+                <button
+                    type="submit"
                     className={`${styles.button} ${isLoading ? styles.loading : ''}`}
                     data-cy="login-submit-button"
                     disabled={isLoading}

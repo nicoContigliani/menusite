@@ -10,6 +10,20 @@ export const localhostStorage = (data: any) => {
 };
 
 
+// export const getLocalhostStorage = () => {
+//     const data: Record<string, any> = {}; // Objeto para almacenar los valores
+
+//     Object.keys(localStorage).forEach((key) => {
+//         try {
+//             data[key] = JSON.parse(localStorage.getItem(key) as string); // Intenta parsear JSON
+//         } catch {
+//             data[key] = localStorage.getItem(key); // Si falla, almacena como string
+//         }
+//     });
+
+//     return data;
+// };
+
 export const getLocalhostStorage = () => {
     const data: Record<string, any> = {}; // Objeto para almacenar los valores
 

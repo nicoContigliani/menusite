@@ -9,6 +9,8 @@ import useOrderManager from '../../../hooks/useOrderManager';
 import useRules from '../../../hooks/useRules';
 import Todo from './MenuOrderDetails/OrderSpeedMUI';
 import Header from '../layout/header/Header';
+import { RootState } from '../../../store/store';
+import { useSelector } from 'react-redux';
 
 // Define el tipo para las secciones agrupadas
 
@@ -25,6 +27,34 @@ const MenuEmploees = (props: any) => {
     const [promotionsDatas, setPromotionsDatas] = useState<any[]>([]);
     console.log("🚀 ~ MenuEmploees ~ menuDatas:", menuDatas)
     console.log("🚀 ~ MenuEmploees ~ promotionsDatas:", promotionsDatas)
+
+    const user = useSelector((state: RootState) => state.auth.user);
+    console.log("🚀 ~ MenuEmploees ~ user:", user)
+
+
+
+
+
+    useEffect(() => {
+        const handleStorageChange = () => {
+            const storedData = getLocalhostStorage();
+            console.log("Datos del localStorage:", storedData);
+            if (storedData.aud != null) {
+                setIsLogin(true);
+            } else {
+                setIsLogin(false);
+            }
+        };
+
+        // Escuchar cambios en el localStorage
+        window.addEventListener("storage", handleStorageChange);
+
+        // Limpiar el event listener al desmontar el componente
+        return () => {
+            window.removeEventListener("storage", handleStorageChange);
+        };
+    }, []);
+
 
 
 
@@ -67,6 +97,8 @@ const MenuEmploees = (props: any) => {
         } else {
             setIsLogin(true);
             setDataMail(storedData.email || "");
+
+
         }
     };
 
@@ -122,6 +154,14 @@ const MenuEmploees = (props: any) => {
     const dataMap = menuDatas?.map((item: any) => item.key)
     const todo = [...new Set(dataMap)]
 
+    useEffect(() => {
+        const storedData = getLocalhostStorage();
+        if (storedData?.aud || user?.aud === "isLogin") {
+            setIsLogin(true);
+        } else {
+            setIsLogin(false);
+        }
+    }, [user, getLocalhostStorage()]);
 
 
     return (
@@ -162,7 +202,7 @@ const MenuEmploees = (props: any) => {
                 />
             </ModalComponents>
 
-            {isLogin && validationEmploeesMail() ? (
+            {(isLogin) && validationEmploeesMail() ? (
                 <div>
                     <hr />
                     <br />

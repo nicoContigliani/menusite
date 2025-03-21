@@ -3,13 +3,16 @@ import { configureStore } from '@reduxjs/toolkit';
 import counterReducer from './counter/counterSlice';
 import chExcelDataReducer from './chExcelDataSlice';
 import toastReducer from "./toastSlice"
+import auth from "./authSlice"
 
 
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
     chExcelData: chExcelDataReducer,
-    toast: toastReducer
+    toast: toastReducer,
+    auth: auth
+
 
   },
 });
