@@ -205,6 +205,10 @@ import { fetchData } from '@/services/fetch.services';
 import { Menu, Skeleton } from 'antd';
 import styles from './employes.module.css';
 import MenuEmploees from '@/components/MenuEmployees/MenuEmploees';
+import styles2 from '@/styles/auth.module.css';
+import { localhostStorage } from '@/services/localstorage.services';
+import { useDispatch } from 'react-redux';
+import { loginSuccess } from '../../../store/authSlice';
 
 
 export async function getServerSideProps({ params }: { params: { nombre: string } }) {
@@ -228,9 +232,17 @@ const EmpresaPage = ({ nombre }: { nombre: string }) => {
     const router = useRouter();
     const [data, setData] = useState<any | undefined>(undefined);
     const [isLoaded, setIsLoaded] = useState(false);
+    const [isLogin, setIsLogin] = useState(false)
+
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [isLoading, setIsLoading] = useState(false)
+    const [error, setError] = useState<string | null>(null)
+
+    const dispatch = useDispatch();
 
 
-    
+
     const fetchExcelData = useCallback(async (folder: string) => {
         const formData = {
             folder,
@@ -259,15 +271,140 @@ const EmpresaPage = ({ nombre }: { nombre: string }) => {
         }
     }, [nombre, isLoaded, fetchExcelData]);
 
+
+
+
+    const handleLogin = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setError(null);
+        setIsLoading(true);
+
+        const data = { email, password };
+
+        try {
+            const response = await fetch('/api/loginuser', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+            console.log("🚀 ~ handleLogin ~ result:", result)
+
+            if (!response.ok) {
+                throw new Error(result.message || `Error: ${response.status} ${response.statusText}`);
+            }
+
+            if (response.status === 200) {
+                await localhostStorage(result);
+                await setIsLogin(true);
+                await dispatch(loginSuccess(result));
+            }
+        } catch (error) {
+            setError((error as Error).message || "Error al iniciar sesión");
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+
+
+
+
+
+
+
     return (
         <div className={styles.body} data-cy="empresa-page">
             <div className={styles.container} data-cy="menu-container">
                 {isLoaded ? (
                     <div>
-                        <MenuEmploees
-                            menuItems={data}
-                            namecompanies={nombre}
-                        />
+                        {
+                            isLogin ? <MenuEmploees
+                                menuItems={data}
+                                namecompanies={nombre}
+                            /> : <div className={styles.authContainer} data-cy="login-container">
+                            <div className={styles.header}>
+                                <h1 className={styles.title} data-cy="login-title">Welcome back</h1>
+                                <span className={styles.subtitle} data-cy="login-subtitle">
+                                    Sign in to your account
+                                </span>
+                            </div>
+                
+                            {error && (
+                                <div
+                                    className={`${styles.errorMessage}`}
+                                    data-cy="login-error-message"
+                                    role="alert"
+                                >
+                                    {error}
+                                </div>
+                            )}
+                
+                            <form
+                                onSubmit={handleLogin}
+                                className={styles2.form}
+                                data-cy="login-form"
+                            >
+                                <div className={styles2.field}>
+                                    <label
+                                        htmlFor="email"
+                                        className={styles2.label}
+                                        data-cy="login-email-label"
+                                    >
+                                        Email
+                                    </label>
+                                    <input
+                                        id="email"
+                                        type="email"
+                                        className={styles2.input}
+                                        placeholder="Enter your email"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        required
+                                        data-cy="login-email-input"
+                                        aria-label="Email address"
+                                        disabled={isLoading}
+                                    />
+                                </div>
+                
+                                <div className={styles2.field}>
+                                    <label
+                                        htmlFor="password"
+                                        className={styles2.label}
+                                        data-cy="login-password-label"
+                                    >
+                                        Password
+                                    </label>
+                                    <input
+                                        id="password"
+                                        type="password"
+                                        className={styles2.input}
+                                        placeholder="Enter your password"
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        required
+                                        data-cy="login-password-input"
+                                        aria-label="Password"
+                                        disabled={isLoading}
+                                    />
+                                </div>
+                
+                                <button
+                                    type="submit"
+                                    className={`${styles2.button} ${isLoading ? styles2.loading : ''}`}
+                                    data-cy="login-submit-button"
+                                    disabled={isLoading}
+                                >
+                                    {isLoading ? 'Signing in...' : 'Sign in'}
+                                </button>
+                            </form>
+                        </div>
+                        }
+
+
                     </div>
                 ) : (
                     <Skeleton active />
