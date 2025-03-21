@@ -15,10 +15,6 @@ import CatchOrder from "@/components/CatchOrder/CatchOrder";
 import useOrderManager from "../../../../hooks/useOrderManager";
 import OrderFlow from "@/components/Orders/Orderflow";
 import useRules from "../../../../hooks/useRules";
-import { permission } from "process";
-import OrderSpeeds from "@/components/OrderSpeeds/OrderSpeeds";
-import { Typography } from "@mui/material";
-import Container from 'react-bootstrap/Container';
 
 
 
@@ -243,27 +239,7 @@ const Menuone: React.FC<MenuProps> = (props) => {
       </header>
 
 
-      {(hasPermission && memoizedSectionsPromotions && memoizedSections) && (
-        <OrderSpeeds
-          permission={hasPermission} // Prop para controlar si el modal se muestra
-          title="Order Speed" // Título del modal
-          showButtons={true} // Controla la visibilidad de los botones
-          fullScreen={true}
-          orders={orders}
-          addOrder={addOrder}
-          editOrder={editOrder}
-          deleteOrder={deleteOrder}
-          searchTerm={searchTerm}
-          setSearchTerm={setSearchTerm}
-          memoizedSectionsPromotions={memoizedSectionsPromotions}
-          memoizedSections={memoizedSections}
-        >
-          {/* Contenido del modal */}
-          <Typography>
-
-          </Typography>
-        </OrderSpeeds>
-      )}
+  
 
 
       {memoizedSectionsPromotions.length > 0 && (

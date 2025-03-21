@@ -10,6 +10,7 @@ export interface MenuItem {
   Name: string
   Description: string
   Price: string
+  extras?: any;
 }
 
 export interface ConfigType {

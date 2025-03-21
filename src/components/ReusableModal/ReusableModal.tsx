@@ -51,6 +51,8 @@ const ReusableModal: React.FC<ReusableModalProps> = ({
         sx: {
           borderRadius: 2,
           overflow: 'hidden',
+          zIndex: 1001, // Un valor más alto que el del ReusableModal
+
         },
       }}
     >
