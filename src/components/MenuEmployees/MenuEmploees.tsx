@@ -15,6 +15,7 @@ import { useSelector } from 'react-redux';
 // Define el tipo para las secciones agrupadas
 
 const MenuEmploees = (props: any) => {
+    console.log("🚀 ~ MenuEmploees ~ props:", props)
     const [dataGeneral, setDataGeneral] = useState<any | undefined>(undefined);
     const [selectedProfile, setSelectedProfile] = useState<string | null>(null);
     const [companyNames, setCompanyNames] = useState<string>("");
@@ -127,8 +128,6 @@ const MenuEmploees = (props: any) => {
 
 
 
-
-
     useEffect(() => {
         // Transformar groupedSections y guardar en menuDatas
         if (groupedSections && typeof groupedSections === 'object' && !Array.isArray(groupedSections)) {
@@ -154,16 +153,12 @@ const MenuEmploees = (props: any) => {
     const dataMap = menuDatas?.map((item: any) => item.key)
     const todo = [...new Set(dataMap)]
 
-    useEffect(() => {
-        const storedData = getLocalhostStorage();
-        if (storedData?.aud || user?.aud === "isLogin") {
-            setIsLogin(true);
-        } else {
-            setIsLogin(false);
-        }
-    }, [user, getLocalhostStorage()]);
+    const [supported, setSupported] = useState<boolean | null>(null)
 
 
+
+
+    
     return (
         <div>
             <hr />
@@ -211,6 +206,8 @@ const MenuEmploees = (props: any) => {
                     <Todo
                         menuData={menuDatas}
                     />
+
+             
                     {/* <MenuInterface menuData={menuData} /> */}
                 </div>
             ) : (

@@ -29,6 +29,10 @@ import {
   FormControlLabel,
   Checkbox,
   Chip,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
 } from "@mui/material"
 import {
   Search as SearchIcon,
@@ -40,22 +44,140 @@ import {
   FilterList as FilterIcon,
 } from "@mui/icons-material"
 import { useMediaQuery } from "../../../../hooks/use-mobile"
-import type { MenuItem, MenuCategory, CartItem, MenuItemExtra } from "../../../../types/menu-types"
+import type { MenuItem as MenuItemType, MenuCategory, CartItem, MenuItemExtra } from "../../../../types/menu-types"
+import { useSelector } from "react-redux"
+import { RootState } from "../../../../store/store"
+import { Info } from "lucide-react"
+import { sendWhatsAppMessageEmployees } from "../../../services//OrderWathSappServices/ordersWithWhattSappEmployees.services"
+
+type InfoType = {
+  whathsapp: string;
+  // Otras propiedades que pueda tener Info
+};
+
 
 export default function MenuInterface({ menuData }: { menuData: MenuCategory[] }) {
-  console.log("🚀 ~ MenuInterface ~ menuData:", menuData)
   const [tabValue, setTabValue] = useState(0)
   const [searchQuery, setSearchQuery] = useState("")
   const [filteredData, setFilteredData] = useState<MenuCategory[]>(menuData)
   const [cart, setCart] = useState<CartItem[]>([])
+  console.log("🚀 ~ MenuInterface ~ cart:", cart)
   const [cartOpen, setCartOpen] = useState(false)
   const [detailsOpen, setDetailsOpen] = useState(false)
-  const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null)
+  const [selectedItem, setSelectedItem] = useState<MenuItemType | null>(null)
   const [selectedExtras, setSelectedExtras] = useState<MenuItemExtra[]>([])
   const [filterOpen, setFilterOpen] = useState(false)
   const [menuTitleFilter, setMenuTitleFilter] = useState<string[]>([])
+  const [infoData, setInfoData] = useState<any[] | any | undefined>(null)
 
   const isMobile = useMediaQuery("(max-width: 768px)")
+
+  const [orderType, setOrderType] = useState<"mesa" | "para llevar" | "delivery">("mesa");
+  console.log("🚀 ~ MenuInterface ~ orderType:", orderType)
+
+  const [tableNumber, setTableNumber] = useState("");
+  const [orderNumber, setOrderNumber] = useState("");
+  const [deliveryAddress, setDeliveryAddress] = useState("");
+  const [comments, setComments] = useState("");
+
+  // Manejar cambio en el tipo de pedido
+  const handleOrderTypeChange = (event: any) => {
+    setOrderType(event.target.value as "mesa" | "para llevar" | "delivery");
+  };
+
+
+
+
+  const { ok, data, error, message } = useSelector((state: RootState) => state.chExcelData);
+
+  useEffect(() => {
+    if (data) {
+      const { hojas: { Info } } = data;
+      console.log("🚀 ~ useEffect ~ Info:", Info);
+
+      if (Info !== null && Info !== undefined) {
+        // Asegúrate de que Info[0] tenga la estructura correcta
+        const infoData = Info[0] as InfoType; // Tipado correcto
+        setInfoData(infoData); // Asigna el objeto completo
+      }
+    }
+  }, [data]);
+
+  // const handleConfirmOrder = () => {
+  //   if (infoData) {
+  //     let dataTypeOrder
+  //     switch (orderType) {
+  //       case "mesa":
+  //         dataTypeOrder = tableNumber
+  //         break;
+  //       case "para llevar":
+  //         dataTypeOrder = orderNumber
+  //         break;
+  //       case "delivery":
+  //         dataTypeOrder = deliveryAddress
+  //         break;
+  //     }
+  //     console.log("🚀 ~ handleConfirmOrder ~ dataTypeOrder:", dataTypeOrder)
+
+  //     const messageSent = sendWhatsAppMessageEmployees(cart, infoData.whatsapp); // Accede a infoData.whathsapp
+  //     if (messageSent) {
+  //       console.log("Mensaje enviado correctamente");
+  //     } else {
+  //       console.log("Error al enviar el mensaje");
+  //     }
+  //   } else {
+  //     console.error("No se encontró el número de WhatsApp en infoData");
+  //   }
+  // };
+
+  const handleConfirmOrder = () => {
+    if (infoData) {
+      let dataTypeOrder: string;
+
+      // Determinar el valor de dataTypeOrder según el tipo de pedido
+      switch (orderType) {
+        case "mesa":
+          dataTypeOrder = `Mesa: ${tableNumber}`;
+          break;
+        case "para llevar":
+          dataTypeOrder = `Número de Orden: ${orderNumber}`;
+          break;
+        case "delivery":
+          dataTypeOrder = `Dirección de Entrega: ${deliveryAddress}`;
+          break;
+        default:
+          dataTypeOrder = "Tipo de pedido no especificado";
+          break;
+      }
+
+      console.log("🚀 ~ handleConfirmOrder ~ dataTypeOrder:", dataTypeOrder);
+
+      // Crear el objeto con los detalles del pedido
+      const orderDetails: any = {
+        orderType, // Tipo de pedido (mesa, para llevar, delivery)
+        dataTypeOrder, // Información adicional según el tipo de pedido
+        cart, // Lista de ítems en el carrito
+        comments, // Comentarios adicionales
+      };
+
+      // Enviar el mensaje de WhatsApp
+      const messageSent = sendWhatsAppMessageEmployees(orderDetails, infoData.whatsapp);
+
+      if (messageSent) {
+        console.log("Mensaje enviado correctamente");
+      } else {
+        console.log("Error al enviar el mensaje");
+      }
+    } else {
+      console.error("No se encontró el número de WhatsApp en infoData");
+    }
+  };
+
+
+
+
+
+
 
   // Filtrar datos basados en la búsqueda y filtros
   useEffect(() => {
@@ -116,7 +238,7 @@ export default function MenuInterface({ menuData }: { menuData: MenuCategory[] }
   }
 
   // Agregar item al carrito
-  const addToCart = (item: MenuItem, extras: MenuItemExtra[] = []) => {
+  const addToCart = (item: MenuItemType, extras: MenuItemExtra[] = []) => {
     const price = Number.parseFloat(item.Price.replace("$", ""))
     const extrasTotal = extras.reduce((sum, extra) => sum + extra.price, 0)
 
@@ -136,7 +258,7 @@ export default function MenuInterface({ menuData }: { menuData: MenuCategory[] }
   }
 
   // Abrir diálogo de detalles
-  const openDetails = (item: MenuItem) => {
+  const openDetails = (item: MenuItemType) => {
     setSelectedItem(item)
     setSelectedExtras([])
     setDetailsOpen(true)
@@ -411,6 +533,8 @@ export default function MenuInterface({ menuData }: { menuData: MenuCategory[] }
           <Typography variant="h6" sx={{ mb: 2 }}>
             Pedido Actual
           </Typography>
+          <hr />
+
 
           {cart.length === 0 ? (
             <Typography variant="body1" sx={{ textAlign: "center", my: 4 }}>
@@ -499,7 +623,105 @@ export default function MenuInterface({ menuData }: { menuData: MenuCategory[] }
                 <Typography variant="h6">${calculateTotal().toFixed(2)}</Typography>
               </Box>
 
-              <Button variant="contained" color="primary" fullWidth size="large">
+
+              <hr />
+              <Box sx={{ maxWidth: 300, margin: "auto", mt: 2 }}>
+
+                <Typography variant="h6" gutterBottom>
+                  Comentarios
+                </Typography>
+                <FormControl fullWidth sx={{ mb: 1, mt: 1 }}>
+
+                  <TextField
+                    fullWidth
+                    label="Comentarios"
+                    value={comments}
+                    onChange={(e) => setComments(e.target.value)}
+                    sx={{ mb: 1 }}
+                    size="small"
+                  />
+                </FormControl>
+
+                <Typography variant="h6" gutterBottom>
+                  Seleccione el tipo de pedido
+                </Typography>
+
+                {/* Selector de tipo de pedido */}
+                <FormControl fullWidth sx={{ mb: 1, mt: 1 }}>
+                  <InputLabel>Tipo de Pedido</InputLabel>
+                  <Select
+                    value={orderType}
+                    onChange={handleOrderTypeChange}
+                    label="Tipo de Pedido"
+                    size="small"
+                  >
+                    <MenuItem value="mesa">Mesa</MenuItem>
+                    <MenuItem value="para llevar">Para Llevar</MenuItem>
+                    <MenuItem value="delivery">Delivery</MenuItem>
+                  </Select>
+                </FormControl>
+
+                {/* Campos adicionales según el tipo de pedido */}
+                {orderType === "mesa" && (
+                  <TextField
+                    fullWidth
+                    label="Número de Mesa"
+                    value={tableNumber}
+                    onChange={(e) => setTableNumber(e.target.value)}
+                    sx={{ mb: 1 }}
+                    size="small"
+                  />
+                )}
+
+                {orderType === "para llevar" && (
+                  <TextField
+                    fullWidth
+                    label="Número de Orden"
+                    value={orderNumber}
+                    onChange={(e) => setOrderNumber(e.target.value)}
+                    sx={{ mb: 1 }}
+                    size="small"
+                  />
+                )}
+
+                {orderType === "delivery" && (
+                  <TextField
+                    fullWidth
+                    label="Dirección de Entrega (Calle y Número)"
+                    value={deliveryAddress}
+                    onChange={(e) => setDeliveryAddress(e.target.value)}
+                    sx={{ mb: 1 }}
+                    size="small"
+                  />
+                )}
+
+                {/* Mostrar los valores guardados en el estado */}
+                <Typography variant="body1" sx={{ mb: 1, mt: 2 }}>
+                  <span>Tipo de Pedido:</span> {orderType}
+                </Typography>
+                {orderType === "mesa" && (
+                  <span>Número de Mesa: {tableNumber}</span>
+                  // <Typography variant="body1">
+                  // </Typography>
+                )}
+                {orderType === "para llevar" && (
+                  <span>Número de Orden: {orderNumber}</span>
+                  // <Typography variant="body1">
+                  // </Typography>
+                )}
+                {orderType === "delivery" && (
+                  <span>Dirección de Entrega:{deliveryAddress}</span>
+                  // <Typography variant="body1">
+                  // </Typography>
+                )}
+              </Box>
+              <hr />
+
+
+
+
+
+              <Button variant="contained" color="primary" fullWidth size="large" onClick={handleConfirmOrder}>
                 Confirmar Pedido
               </Button>
             </>

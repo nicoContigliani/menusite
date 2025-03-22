@@ -55,6 +55,7 @@
  * @returns boolean - Indica si el mensaje se envió correctamente.
  */
 export const sendWhatsAppMessage = (orderDetails: any, phoneNumber: string): boolean => {
+  console.log("🚀 ~ sendWhatsAppMessage ~ phoneNumber:", phoneNumber)
   // Validar el número de teléfono
   if (!phoneNumber || !/^\d+$/.test(phoneNumber)) {
     console.error("Número de teléfono no válido.")
