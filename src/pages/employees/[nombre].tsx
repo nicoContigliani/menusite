@@ -4,11 +4,13 @@ import { fetchData } from '@/services/fetch.services';
 import { Skeleton } from 'antd';
 import styles from './employes.module.css';
 import MenuEmploees from '@/components/MenuEmployees/MenuEmploees';
-import { localhostStorage } from '@/services/localstorage.services';
+import { getLocalhostStorage, localhostStorage } from '@/services/localstorage.services';
 import { useDispatch } from 'react-redux';
 import { loginSuccess } from '../../../store/authSlice';
 import Image from 'next/image';
 import { setChExcelData } from '../../../store/chExcelDataSlice';
+import useGeolocation from '../../../hooks/useGeolocation';
+
 
 export async function getServerSideProps({ params }: { params: { nombre: string } }) {
     const { nombre } = params;
@@ -38,6 +40,23 @@ const EmpresaPage = ({ nombre }: { nombre: string }) => {
     const [error, setError] = useState<string | null>(null);
     const dispatch = useDispatch();
 
+    const { position, errors } = useGeolocation();
+    console.log("🚀 ~ EmpresaPage ~ position:", position)
+
+
+    useEffect(() => {
+        const storedData = getLocalhostStorage()
+        console.log("🚀 ~ useEffect ~ storedData:", storedData)
+        if (storedData?.aud != null) {
+            const { aud, email, _id, access_token, expires_at, userid } = storedData
+            setIsLogin(true)
+        } else {
+            setIsLogin(false)
+        }
+    }, [])
+
+
+
     const fetchExcelData = useCallback(async (folder: string) => {
         const formData = {
             folder,
@@ -55,7 +74,7 @@ const EmpresaPage = ({ nombre }: { nombre: string }) => {
                     data: response.data,
                     error: null,
                     message: 'Datos cargados correctamente',
-                  }));
+                }));
 
             } else {
                 console.error("❌ Error fetching data:", response.error);
@@ -93,6 +112,7 @@ const EmpresaPage = ({ nombre }: { nombre: string }) => {
             if (!response.ok) {
                 throw new Error(result.message || `Error: ${response.status} ${response.statusText}`);
             }
+            console.log("🚀 ~ handleLogin ~ result:", result)
 
             if (response.status === 200) {
                 await localhostStorage(result);

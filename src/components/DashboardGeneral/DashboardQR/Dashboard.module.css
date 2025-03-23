@@ -1,0 +1,141 @@
+/* Contenedor principal */
+.dashboardQrContainer {
+    padding: 28px;
+    background-color: #f5f5f5;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    width: 100%;
+    margin: 0 auto;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-sizing: border-box;
+  }
+  
+  .dashboardQrContainer:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Fila de QR */
+  .qrRow {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 0 !important; /* Anula los márgenes predeterminados de Ant Design */
+  }
+  
+  /* Tarjeta de QR */
+  .qrCard {
+    height: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    background-color: white;
+    border: none !important; /* Elimina el borde predeterminado de Ant Design */
+  }
+  
+  .qrCard:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+    transform: translateY(-3px);
+  }
+  
+  /* Título de la tarjeta */
+  .cardTitle {
+    margin: 0 !important;
+    text-align: center;
+    color: #1890ff;
+    font-weight: 600 !important;
+    padding: 8px 0;
+  }
+  
+  /* Contenedor del QR */
+  .qrWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
+    margin-bottom: 20px;
+    background-color: #fafafa;
+    border-radius: 8px;
+  }
+  
+  /* Botón de acción */
+  .actionButton {
+    border-radius: 8px;
+    height: 44px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    font-size: 15px;
+    box-shadow: 0 2px 6px rgba(24, 144, 255, 0.15);
+  }
+  
+  .actionButton:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 8px rgba(24, 144, 255, 0.25);
+  }
+  
+  /* Media Queries para dispositivos móviles */
+  @media (max-width: 768px) {
+    .dashboardQrContainer {
+      padding: 20px;
+      border-radius: 12px;
+      margin: 0 auto; /* Asegura que esté centrado */
+      width: calc(100% - 32px); /* Ajusta el ancho para evitar desbordamiento */
+      max-width: 100%;
+    }
+  
+    .qrRow {
+      margin: 0 -8px !important; /* Compensa el gutter de Ant Design */
+    }
+  
+    .qrCard {
+      margin-bottom: 16px;
+      width: 100%; /* Asegura que ocupe todo el ancho disponible */
+    }
+  
+    .qrWrapper {
+      padding: 16px 0;
+      margin-bottom: 16px;
+    }
+  
+    .actionButton {
+      height: 40px;
+    }
+  }
+  
+  /* Asegurarse de que los QR se vean bien en dispositivos pequeños */
+  @media (max-width: 480px) {
+    .dashboardQrContainer {
+      padding: 16px;
+      width: calc(100% - 24px); /* Ajuste más preciso para móviles pequeños */
+    }
+  
+    .qrWrapper {
+      transform: scale(0.95);
+      padding: 12px 0;
+    }
+  
+    .cardTitle {
+      font-size: 18px !important;
+    }
+  
+    .actionButton {
+      height: 38px;
+      font-size: 14px;
+    }
+  }
+  
+  /* Ajustes específicos para dispositivos muy pequeños */
+  @media (max-width: 360px) {
+    .dashboardQrContainer {
+      padding: 12px;
+      width: calc(100% - 16px);
+    }
+  
+    .qrWrapper {
+      transform: scale(0.85);
+    }
+  }
+  
+  
