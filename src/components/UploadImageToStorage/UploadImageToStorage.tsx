@@ -18,14 +18,11 @@ export default function UploadImagesToStorage(props: any) {
   const dispatch = useDispatch()
   const { setDataResult, setCurrent, uploadedFiles, setUploadedFiles, folderName, setFolderName } = props
   const [files, setFiles] = useState<FileList | null>(null)
-  // const [folderName, setFolderName] = useState<string | null>(null)
   const [uploading, setUploading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  // const [uploadedFiles, setUploadedFiles] = useState<any | any[] | undefined>([])
   const [uploadProgress, setUploadProgress] = useState(0); // State for progress
 
 
-  const [uploadedObjects, setUploadedObjects] = useState<any[]>([])
   const [excelData, setExcelData] = useState<Record<string, any[]> | null>(null) // New state for Excel data
 
 
@@ -44,8 +41,9 @@ export default function UploadImagesToStorage(props: any) {
 
         //TODO acá va la regla de negocio para contar objetos(cuantas fotos se suben y cuantos items, parte de lo que se cobra)
 
-
         const sidata: any = await transformExtras(data)
+        console.log("🚀 ~ handleFileChange ~ sidata:", sidata)
+        
         setExcelData(sidata)  // Store the parsed Excel data
       } catch (err) {
         setError("Error al leer el archivo Excel.")
@@ -60,9 +58,6 @@ export default function UploadImagesToStorage(props: any) {
       const { data, error } = await supabase.storage.from(bucketName).list(folderPath)
       if (error) throw error
 
-
-
-      
       const deletePromises = data?.map((file) => {
         const filePath = `${folderPath}/${file.name}`
         return supabase.storage.from(bucketName).remove([filePath])

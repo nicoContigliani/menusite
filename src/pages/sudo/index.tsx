@@ -2,15 +2,12 @@
 import * as React from 'react';
 import { extendTheme } from '@mui/material/styles';
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import DescriptionIcon from '@mui/icons-material/Description';
 import LayersIcon from '@mui/icons-material/Layers';
 import Dashboard from '@/components/Dashboard/Dashboard';
-import DashboardBody from '@/components/Dashboard/DashboardBody/DashboardBody';
 import { Box, Button, ButtonGroup, LinearProgress, Typography } from '@mui/material';
 import { useFetchMultiple } from '../../../hooks/useFetchMultiple';
-import DashboardCard from '@/components/Dashboard/DashboardCard/DashboardCard';
 import styles from '@/styles/Dashboard.module.css';
 import dataToSendHard from '../../../tools/HardDataMenu';
 import useFakeInfo from '../../../hooks/useFakeInfo';

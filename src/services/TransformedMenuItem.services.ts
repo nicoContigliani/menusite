@@ -1,3 +1,6 @@
+
+import { GeolocationService } from './locationUser.services';
+
 interface MenuItem {
     Menu_Title: string;
     Item_Image: string;
@@ -18,11 +21,35 @@ interface TransformedMenuItem extends Omit<MenuItem, 'extra'> {
     extras: ExtraItem[];
 }
 
+interface LocationData {
+    latitude: number;
+    longitude: number;
+    fullAddress?: string;
+}
+
+interface InfoItem {
+    phone: number;
+    mail: string;
+    x: string;
+    instagram: string;
+    facebook: string;
+    web: string;
+    whatsapp: number;
+    ubication: string;
+    delivery: string;
+    takeaway: string;
+    Dinein: string;
+    reservation: string;
+    pay: string;
+    chatboot: string;
+    coordinates?: LocationData;
+}
+
 interface FullData {
     Hoja1: MenuItem[];
     Promotion: MenuItem[];
     Config: any[];
-    Info: any[];
+    Info: InfoItem[];
     schedules: any[];
     staff: any[];
 }
@@ -33,14 +60,12 @@ interface TransformedFullData extends Omit<FullData, 'Hoja1' | 'Promotion'> {
 }
 
 export async function transformExtras(data: FullData): Promise<TransformedFullData> {
-    const transformItem = async (item: MenuItem): Promise<TransformedMenuItem> => {
+    // 1. Transformar los ítems del menú
+    const transformItem = (item: MenuItem): TransformedMenuItem => {
         const extras: ExtraItem[] = [];
 
         if (item.extra) {
-            const extraPairs = item.extra.split(',');
-
-            // Procesar cada par de manera asíncrona (si fuera necesario)
-            await Promise.all(extraPairs.map(async (pair) => {
+            item.extra.split(',').forEach(pair => {
                 const [name, price] = pair.split(':');
                 if (name && price) {
                     extras.push({
@@ -48,7 +73,7 @@ export async function transformExtras(data: FullData): Promise<TransformedFullDa
                         price: parseInt(price.trim(), 10)
                     });
                 }
-            }));
+            });
         }
 
         return {
@@ -57,7 +82,25 @@ export async function transformExtras(data: FullData): Promise<TransformedFullDa
         };
     };
 
-    // Transformar Hoja1 y Promotion de manera concurrente
+    // 2. Obtener ubicación precisa del usuario
+    const enhancedInfo = [...data.Info];
+    if (enhancedInfo.length > 0) {
+        try {
+            const userUbications = await GeolocationService.getPreciseLocation();
+            console.log("🚀 ~ Ubicación obtenida:", userUbications);
+
+            if (userUbications) {
+                enhancedInfo[0] = {
+                    ...enhancedInfo[0],
+                    coordinates: userUbications
+                };
+            }
+        } catch (error) {
+            console.error("Error al obtener la ubicación precisa:", error);
+        }
+    }
+
+    // 3. Transformar los menús en paralelo
     const [transformedHoja1, transformedPromotion] = await Promise.all([
         Promise.all(data.Hoja1.map(transformItem)),
         Promise.all(data.Promotion.map(transformItem))
@@ -66,9 +109,17 @@ export async function transformExtras(data: FullData): Promise<TransformedFullDa
     return {
         ...data,
         Hoja1: transformedHoja1,
-        Promotion: transformedPromotion
+        Promotion: transformedPromotion,
+        Info: enhancedInfo
     };
 }
+
+
+
+
+
+
+
 
 // // Ejemplo de uso
 // const fullData = {

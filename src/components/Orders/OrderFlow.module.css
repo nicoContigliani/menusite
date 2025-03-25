@@ -1,7 +1,6 @@
 .floatingButton {
     display: flex;
     justify-content: center;
-    /* Centra horizontalmente */
-    align-items: end;
+    align-items: flex-end;
 
 }

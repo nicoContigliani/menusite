@@ -5,6 +5,9 @@ import ReusableModal from "../ReusableModal/ReusableModal"
 import { Button, DialogActions, Grid, Typography, Box, Paper } from "@mui/material"
 import Image from "next/image"
 import CheckboxMaterialUI from "../CheckboxMaterialUI/CheckboxMaterialUI"
+import { useSelector } from "react-redux"
+import { RootState } from "../../../store/store"
+import useRules from "../../../hooks/useRules"
 
 interface CatchOrderProps {
   title: string
@@ -27,11 +30,38 @@ interface CatchOrderProps {
 
 }
 
+interface CompaniesData {
+  hojas: {
+    Config: any[];
+    staff: any[];
+    Hoja1?: any;     // Opcional si existe
+    Info?: any;      // Opcional si existe
+    Promotion?: any; // Opcional si existe
+    schedules?: any; // Opcional si existe
+  };
+}
+
+
 const CatchOrder = (props: CatchOrderProps) => {
   const { title, description, price, extra, urlImage, onConfirm, colobuttonorder, colorbuttonreset, labelorder, labelorderreset } = props
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedExtras, setSelectedExtras] = useState<{ [key: string]: boolean }>({})
   const [isConfirming, setIsConfirming] = useState(false) // Estado para manejar la confirmación
+  const [ruleUsed, setRuleUsed] = useState(false);
+  
+  // Usamos el tipo CompaniesData en el selector
+  const companiesData = useSelector((state: RootState) => state.chExcelData.data as unknown as CompaniesData | undefined);
+  
+  // Proporcionamos valores por defecto seguros y tipados
+  const { hojas } = companiesData || { hojas: { Config: [], staff: [] } };
+  const { Config = [], staff = [] } = hojas;
+  
+  const { hasPermission } = useRules(Config, staff);
+  console.log("🚀 ~ CatchOrder ~ hasPermission:", hasPermission)
+  
+  useEffect(() => {
+    setRuleUsed(hasPermission);
+  }, [hasPermission]);
 
 
   // Inicializar los extras seleccionados
@@ -130,22 +160,26 @@ const CatchOrder = (props: CatchOrderProps) => {
           p: 0, // Padding para dar espacio alrededor
         }}
       >
+        {
+          ruleUsed && (
+            <Button
+              variant="outlined"
+              color={"inherit"}
+              onClick={handleOpenModal}
+              aria-label="Abrir modal de pedido"
+              sx={{
+                textTransform: "none",
+                borderRadius: "8px",
+                fontWeight: "bold",
+                width: { xs: "100%", md: "auto" },
+                maxWidth: { xs: "100%", md: "300px" },
+              }}
+            >
+              Pedir
+            </Button>
 
-        <Button
-          variant="outlined"
-          color={"inherit"}
-          onClick={handleOpenModal}
-          aria-label="Abrir modal de pedido"
-          sx={{
-            textTransform: "none",
-            borderRadius: "8px",
-            fontWeight: "bold",
-            width: { xs: "100%", md: "auto" },
-            maxWidth: { xs: "100%", md: "300px" },
-          }}
-        >
-          Pedir
-        </Button>
+          )
+        }
 
       </Box>
 
