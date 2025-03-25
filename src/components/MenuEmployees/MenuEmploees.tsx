@@ -9,6 +9,7 @@ import Todo from './MenuOrderDetails/OrderSpeedMUI';
 import Header from '../layout/header/Header';
 import { RootState } from '../../../store/store';
 import { useSelector } from 'react-redux';
+import { Chat } from '../Chat/Chat';
 
 
 const MenuEmploees = (props: any) => {
@@ -141,7 +142,8 @@ const MenuEmploees = (props: any) => {
 
     return (
         <div>
-                 {((isLogin) && validationEmploeesMail()) && (
+            <Chat />
+            {((isLogin) && validationEmploeesMail()) && (
                 <div>
                     <Todo
                         menuData={menuDatas}

@@ -25,6 +25,7 @@
     "@supabase/ssr": "^0.5.2",
     "@supabase/supabase-js": "^2.48.1",
     "@toolpad/core": "^0.12.0",
+    "@types/socket.io-client": "^1.4.36",
     "antd": "^5.23.3",
     "b2-sdk": "^1.7.0",
     "backblaze-b2": "^1.7.0",
@@ -52,6 +53,8 @@
     "react-toastify": "^11.0.5",
     "recharts": "^2.15.1",
     "slick-carousel": "^1.8.1",
+    "socket.io": "^4.8.1",
+    "socket.io-client": "^4.8.1",
     "uuid": "^11.1.0",
     "xlsx": "^0.18.5"
   },
