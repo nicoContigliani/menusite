@@ -26,7 +26,7 @@ const SocketHandler = (req: NextApiRequest, res: NextApiResponseWithSocket) => {
       transports: ["websocket", "polling"],
       // Add CORS settings if needed
       cors: {
-        origin: process.env.NODE_ENV === "production" ? process.env.NEXT_PUBLIC_SITE_URL : "http://localhost:3000",
+        origin: process.env.NEXT_PUBLIC_NODE_ENV === "production" ? process.env.NEXT_PUBLIC_SITE_URL : "http://localhost:3000",
         methods: ["GET", "POST"],
       },
     })
