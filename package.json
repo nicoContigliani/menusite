@@ -25,7 +25,6 @@
     "@supabase/ssr": "^0.5.2",
     "@supabase/supabase-js": "^2.48.1",
     "@toolpad/core": "^0.12.0",
-    "@types/socket.io-client": "^1.4.36",
     "antd": "^5.23.3",
     "b2-sdk": "^1.7.0",
     "backblaze-b2": "^1.7.0",
@@ -71,6 +70,7 @@
     "@types/react-dom": "^19",
     "@types/react-slick": "^0.23.13",
     "@types/react-toastify": "^4.0.2",
+    "@types/socket.io-client": "^1.4.36",
     "cypress": "^14.1.0",
     "start-server-and-test": "^2.0.10",
     "typescript": "^5"

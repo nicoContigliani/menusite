@@ -750,6 +750,17 @@
 // }
 
 
+
+
+
+
+
+
+
+
+
+
+
 import { useState, useEffect } from "react";
 import {
   Box,
@@ -800,6 +811,7 @@ import { RootState } from "../../../../store/store";
 import { sendWhatsAppMessageEmployees } from "../../../services/OrderWathSappServices/ordersWithWhattSappEmployees.services";
 import Image from "next/image";
 import { clearLocalhostStorage } from "@/services/localstorage.services";
+import { orderSocketService } from "@/services/orderSocketServices/orderSocket.services";
 
 // Definición de tipos
 type MenuItemExtra = {
@@ -829,6 +841,7 @@ type CartItem = {
   quantity: number;
   extras: MenuItemExtra[];
   extrasTotal: number;
+  Description:any;
 };
 
 type InfoType = {
@@ -871,7 +884,20 @@ export default function MenuInterface({ menuData, promotionsData = [] }: MenuInt
   const [deliveryAddress, setDeliveryAddress] = useState("");
   const [comments, setComments] = useState("");
 
+  const [userData, setUserData] = useState<any>()
+  const [comapinesData, setCompaniesData] = useState<any>()
+
   const { data } = useSelector((state: RootState) => state.chExcelData as unknown as { data: ExcelData });
+  const user = useSelector((state: RootState) => state.auth);
+
+  useEffect(() => {
+    if (user) setUserData(user?.user)
+  }, [user])
+  useEffect(() => {
+    if (data) setCompaniesData(data)
+  }, [data])
+
+
 
   // Datos actuales a mostrar (menú o promociones)
   const currentData = showPromotions ? promotionsData : menuData;
@@ -951,6 +977,7 @@ export default function MenuInterface({ menuData, promotionsData = [] }: MenuInt
       quantity: 1,
       extras: extras,
       extrasTotal: extrasTotal,
+      Description:item.Description
     };
 
     setCart([...cart, newItem]);
@@ -1011,6 +1038,20 @@ export default function MenuInterface({ menuData, promotionsData = [] }: MenuInt
     setOrderType(event.target.value as "mesa" | "para llevar" | "delivery");
   };
 
+  useEffect(() => {
+    // Inicializar al montar el componente
+    const init = async () => {
+      await orderSocketService.initialize(`${userData?.email}`, `${comapinesData?.companyName}`);
+    };
+    init();
+
+    // Limpiar al desmontar
+    return () => {
+      orderSocketService.disconnect();
+    };
+  }, []);
+
+
   const handleConfirmOrder = () => {
     if (infoData?.whatsapp) {
       let dataTypeOrder = "";
@@ -1031,7 +1072,10 @@ export default function MenuInterface({ menuData, promotionsData = [] }: MenuInt
         dataTypeOrder,
         cart,
         comments,
+        id: Date.now().toString()
       };
+
+      orderSocketService.sendOrder(orderDetails);
 
       sendWhatsAppMessageEmployees(orderDetails, infoData.whatsapp);
     }

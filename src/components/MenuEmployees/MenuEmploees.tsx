@@ -10,7 +10,7 @@ import Header from '../layout/header/Header';
 import { RootState } from '../../../store/store';
 import { useSelector } from 'react-redux';
 import { Chat } from '../Chat/Chat';
-
+import ChatRooms from '../Chat/ChatRoom';
 
 const MenuEmploees = (props: any) => {
     const [dataGeneral, setDataGeneral] = useState<any | undefined>(undefined);
@@ -24,7 +24,7 @@ const MenuEmploees = (props: any) => {
     const [menuDatas, setMenuDatas] = useState<any[] | any | undefined>()
     const [promotionsDatas, setPromotionsDatas] = useState<any[]>([]);
 
-    const user = useSelector((state: RootState) => state.auth.user);
+    const user = useSelector((state: RootState) => state.auth);
 
     useEffect(() => {
         const handleStorageChange = () => {
@@ -142,7 +142,9 @@ const MenuEmploees = (props: any) => {
 
     return (
         <div>
-            <Chat />
+
+            {/* <Chat /> */}
+            {/* <ChatRooms/> */}
             {((isLogin) && validationEmploeesMail()) && (
                 <div>
                     <Todo
