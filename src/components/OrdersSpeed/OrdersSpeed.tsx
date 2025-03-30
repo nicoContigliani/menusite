@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
-import { messageSocketService } from "@/services/orderSocketServices/MessageSocket.services";
+
+
 
 import {
   Box,
@@ -48,6 +49,10 @@ import {
 } from "@mui/icons-material";
 import Image from "next/image";
 import GutterlessList from "../GenericList/OrdersList";
+import Chat from "../Chat/ Chat";
+
+
+
 
 
 const OrdersSpeed = () => {
@@ -71,44 +76,7 @@ const OrdersSpeed = () => {
     if (data) setCompaniesData(data);
   }, [data]);
 
-  useEffect(() => {
-    const init = async () => {
-      await messageSocketService.initialize(
-        `${userData?.email}`,
-        `${comapinesData?.companyName}`
-      );
-    };
-    init();
 
-    return () => {
-      messageSocketService.removeMessageHandler(handler);
-    };
-  }, []);
-
-  const handler = (message: any) => {
-    const messageId = message.data.id;
-    if (!receivedIds.current.has(messageId)) {
-      receivedIds.current.add(messageId);
-      // console.log("Mensaje recibido:", message, "*****", messageId);
-      setMessages((prevMessages) => {
-        // Verificamos si el mensaje ya está en el estado
-        if (!prevMessages.some((msg) => msg.data.id === messageId)) {
-          return [...prevMessages, message]; // Agregar el mensaje si no está
-        }
-        return prevMessages; // Si ya está, no hacemos nada
-      });
-    }
-  };
-
-  useEffect(() => {
-    messageSocketService.addMessageHandler(handler);
-    return () => {
-      messageSocketService.removeMessageHandler(handler);
-    };
-  }, []); // Solo se ejecuta una vez al montar el componente
-
-
-  console.log("🚀 ~ OrdersSpeed ~ messages:", messages)
 
 
   return (
@@ -135,9 +103,18 @@ const OrdersSpeed = () => {
           </Toolbar>
         </AppBar>
 
-        <GutterlessList
+
+        <div style={{ textAlign: "center", padding: "20px" }}>
+          <h2>Chat con Salas</h2>
+   
+            <Chat/>
+        </div>
+
+
+
+        {/* <GutterlessList
           data={messages}
-        />
+        /> */}
       </Box>
 
     </div>
