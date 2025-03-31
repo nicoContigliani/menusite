@@ -23,6 +23,6 @@
       
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/pages/api/users/users"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/pages/api/users/users", "next.config.csj", "next.config.js"],
   "exclude": ["node_modules"]
 }
