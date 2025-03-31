@@ -319,6 +319,8 @@ import { Grid } from "@mui/material"
 
 import { useDispatch } from "react-redux"
 import { showToast } from "../../../store/toastSlice"
+import { redirect } from "next/dist/server/api-utils"
+import { useRouter } from "next/router"
 
 interface DescriptionItem {
   key: string
@@ -362,6 +364,7 @@ const index = () => {
   const [iconsUrl, setIconsUrl] = useState<any | any[] | undefined>("/images/flama.png");
   const [finishit, setFinishit] = useState<boolean>(false);
   const [fullUrl, setFullUrl] = useState("");
+  const [urlsGeneral, setUrlsGeneral] = useState({})
 
   localhostStorage({
     demo: true
@@ -376,6 +379,16 @@ const index = () => {
       setOpenResponsive(true)
     }
   }, [])
+  useEffect(() => {
+    setUrlsGeneral({
+      "employess": `${process.env.NEXT_PUBLIC_SITE_URL}/employees/${folderName}`,
+      "company": `${process.env.NEXT_PUBLIC_SITE_URL}/company/${folderName}`,
+      "dashboard": `${process.env.NEXT_PUBLIC_SITE_URL}/company/dashboard/${folderName}`
+    })
+  }, [])
+
+
+
 
   const { setCurrent: updateStep } = useStepVisibility({
     current,
@@ -464,7 +477,13 @@ const index = () => {
       console.error('Error al hacer la solicitud:', error);
     }
   };
+  const router = useRouter();
 
+  useEffect(() => {
+    if (finishit) {
+      router.push(`/companies/QRS/${folderName}`);
+    }
+  }, [finishit, folderName, router]);
 
 
 
@@ -494,6 +513,10 @@ const index = () => {
                 value={`https://menusi.netlify.app/companies/${folderName}`}
                 icon={"/images/flama.png"}
               /> */}
+
+
+
+
 
               <Button
                 type="primary"
