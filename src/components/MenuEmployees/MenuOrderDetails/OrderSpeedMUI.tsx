@@ -297,9 +297,7 @@ export default function MenuInterface({ menuData, promotionsData = [] }: MenuInt
         dataTypeOrder,
         cart,
         comments,
-        companies: {
-          companiesName: data.companyName
-        },
+        companies: data.companyName,
         user: {
           email: "",
           fullname: "",
@@ -326,16 +324,17 @@ export default function MenuInterface({ menuData, promotionsData = [] }: MenuInt
           const errorData = await response.json();
           throw new Error(errorData.error || 'Error al crear la orden');
         }
-
+        setCartOpen(false)
+        setCart([])
         const createdOrder = await response.json();
+        
         return createdOrder;
       } catch (error) {
         console.error('Error:', error);
 
       }
-
-
-      sendWhatsAppMessageEmployees(orderDetails, infoData.whatsapp);
+    
+      // sendWhatsAppMessageEmployees(orderDetails, infoData.whatsapp);
     }
   };
 
