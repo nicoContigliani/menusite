@@ -24,11 +24,13 @@ export default function handler(req: NextApiRequest, res: NextApiResponseServerI
 
       socket.on("join_room", (room) => {
         socket.join(room);
-        console.log(`Usuario ${socket.id} se unió a la sala ${room} *****`);
+        console.log(`Usuario ${socket.id} se unió a la sala ${room}`);
+        console.log(`El usuario  ${socket.id}  en la sala ${room}`);
       });
 
       socket.on("send_message", ({ room, message, name }) => {
         io.to(room).emit("receive_message*****", { message, name });
+        console.log(`Usuarios  ${socket.id}  en la sala ${room}`);
       });
 
       socket.on("disconnect", () => {
