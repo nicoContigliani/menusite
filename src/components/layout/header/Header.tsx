@@ -37,7 +37,7 @@ export default function Header(props: any) {
       <nav className={styles.nav}>
         <Link href="/" className={styles.logo}>
           <Image
-            src={imagetodo.src || "/placeholder.svg"}
+            src={imagetodo?.src || "/placeholder.svg"}
             alt="LlakaScript Logo"
             width={100}
             height={100}

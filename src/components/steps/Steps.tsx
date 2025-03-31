@@ -16,7 +16,7 @@ interface StepsComponentProps {
 const StepsComponent: React.FC<StepsComponentProps> = memo((props) => {
     const { items, current, setCurrent } = props;
 
-    const [isMobile, setIsMobile] = useState(window.innerWidth > 768);
+    const [isMobile, setIsMobile] = useState(window?.innerWidth > 768);
 
     useEffect(() => {
         const handleResize = () => {
