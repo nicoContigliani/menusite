@@ -297,11 +297,17 @@ export default function MenuInterface({ menuData, promotionsData = [] }: MenuInt
         dataTypeOrder,
         cart,
         comments,
-        companies: data.companyName,
+        companies:{
+          companiesName:comapinesData?.companyName,
+          companiesID:comapinesData?._id
+
+
+        },
         user: {
-          email: "",
-          fullname: "",
-          phone: "",
+          email: userData?.email || "",
+          fullname: userData?.fullname || "",
+          phone: userData?.phone || "",
+          whathsapp: userData?.whatsapp || "",
 
         }
 
@@ -327,13 +333,13 @@ export default function MenuInterface({ menuData, promotionsData = [] }: MenuInt
         setCartOpen(false)
         setCart([])
         const createdOrder = await response.json();
-        
+
         return createdOrder;
       } catch (error) {
         console.error('Error:', error);
 
       }
-    
+
       // sendWhatsAppMessageEmployees(orderDetails, infoData.whatsapp);
     }
   };
