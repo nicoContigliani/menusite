@@ -59,9 +59,18 @@ export async function getCompanyByName(companyName: any) {
     const db = client.db("menuDB");
     const companies = db.collection("companies");
   
-    const existingCompany = await companies.findOne({ 
-      companyName: { $regex: new RegExp(`^${companyName}$`, 'i') } 
-    });
+    // const existingCompany = await companies.findOne({ 
+    //   companyName: { $regex: new RegExp(`^${companyName}$`, 'i') } 
+    // })
+    const existingCompany = await companies.findOne(
+      { companyName: companyName }, // Búsqueda exacta
+      { 
+        collation: { 
+          locale: 'simple', 
+          strength: 1 // Ignora mayúsculas/minúsculas
+        } 
+      }
+    );
 
     // const existingCompany = await companies.findOne();  
 

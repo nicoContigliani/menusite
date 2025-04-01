@@ -14,6 +14,7 @@ import useFakeInfo from '../../../hooks/useFakeInfo';
 import FakeinfoDashboard from '@/components/FakeInfoDashboard/FakeinfoDahsboard';
 import useHandleCreate from '../../../hooks/useFloating';
 import { FaMotorcycle, FaWallet } from "react-icons/fa"
+import CreateIndexAtlas from '@/components/CreateIndexAtlas/CreateIndexAtlas';
 
 
 // Theme configuration
@@ -204,6 +205,14 @@ const IndexPage = () => {
                     </div>
                 </div>
             ),
+        },
+        {
+            segment: 'mongo',
+            title: 'mogno structure',
+            icon: <FaWallet />,
+            component: () => (
+                <CreateIndexAtlas />
+            )
         },
         {
             segment: 'payments',
