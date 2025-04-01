@@ -30,7 +30,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponseServerI
       });
 
       socket.on("send_message", ({ room, message, name }) => {
-        io.to(room).emit("receive_message*****", { message, name });
+        io.to(room).emit("receive_message", { message, name });
         console.log(`Usuarios  ${socket.id}  en la sala ${room}`);
       });
 
