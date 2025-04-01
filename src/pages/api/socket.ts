@@ -6,7 +6,7 @@ import { Socket as NetSocket } from "net";
 import { NextApiResponseServerIO } from "../../../types/socket";
 
 export default function handler(req: NextApiRequest, res: NextApiResponseServerIO) {
-  console.log("************************socket*******************")
+  console.log("************************  socket   *******************")
   if (!res.socket) {
     res.status(500).json({ error: "Socket not available" });
     return;
