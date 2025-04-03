@@ -1,4 +1,7 @@
 import { useState, useEffect } from "react";
+import io from "socket.io-client";
+import { motion, AnimatePresence } from "framer-motion";
+
 import {
   Box,
   Tabs,
@@ -29,6 +32,7 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  useTheme,
 } from "@mui/material";
 import LogoutIcon from '@mui/icons-material/Logout';
 import {
@@ -40,6 +44,7 @@ import {
   Delete as DeleteIcon,
   FilterList as FilterIcon,
   LocalOffer as PromoIcon,
+  Check,
 } from "@mui/icons-material";
 import { Avatar } from '@mui/material';
 import { useMediaQuery } from "../../../../hooks/use-mobile";
@@ -48,6 +53,7 @@ import { RootState } from "../../../../store/store";
 import { sendWhatsAppMessageEmployees } from "../../../services/OrderWathSappServices/ordersWithWhattSappEmployees.services";
 import Image from "next/image";
 import { clearLocalhostStorage } from "@/services/localstorage.services";
+import useSocketChat from "../../../../hooks/useSocket";
 
 // Definición de tipos
 type MenuItemExtra = {
@@ -125,6 +131,13 @@ export default function MenuInterface({ menuData, promotionsData = [] }: MenuInt
 
   const { data } = useSelector((state: RootState) => state.chExcelData as unknown as { data: ExcelData });
   const user = useSelector((state: RootState) => state.auth);
+  const [showConnectionStatus, setShowConnectionStatus] = useState(true);
+
+
+  const socket = io("https://socketserver-t4g9.onrender.com", {
+    transports: ["websocket"], // Fuerza el uso de WebSockets
+  });
+
 
   useEffect(() => {
     if (user) setUserData(user?.user)
@@ -132,6 +145,105 @@ export default function MenuInterface({ menuData, promotionsData = [] }: MenuInt
   useEffect(() => {
     if (data) setCompaniesData(data)
   }, [data])
+
+
+
+  // const {
+  //   name,
+  //   setName,
+  //   room,
+  //   setRoom,
+  //   parsedMessages,
+  //   joinRoom,
+  //   isConnected
+  // } = useSocketChat('https://socketserver-t4g9.onrender.com');
+
+  // useEffect(() => {
+  //   if (user) {
+  //     setName(user?.user?.email || '');
+  //   }
+  //   if (data) {
+  //     setRoom(data?.companyName || '');
+  //   }
+  // }, [user, data, setName, setRoom]);
+
+  // useEffect(() => {
+  //   if (name && room && isConnected) {
+  //     joinRoom();
+  //   }
+  // }, [name, room, isConnected, joinRoom]);
+
+  // useEffect(() => {
+  //   if (isConnected) {
+  //     const timer = setTimeout(() => {
+  //       setShowConnectionStatus(false);
+  //     }, 2000);
+  //     return () => clearTimeout(timer);
+  //   } else {
+  //     setShowConnectionStatus(true);
+  //   }
+  // }, [isConnected]);
+
+
+
+  const {
+    name,
+    setName,
+    room,
+    setRoom,
+    message,
+    setMessage,
+    messages,
+    joinRoom,
+    sendMessage,
+    sendOrder,
+    parsedMessages,
+    isConnected,
+    reconnectAttempts,
+   } = useSocketChat('https://socketserver-t4g9.onrender.com');
+
+  // Configuración inicial del nombre y sala
+  useEffect(() => {
+    if (user) {
+      setName(user?.user?.email || '');
+    }
+    if (data) {
+      setRoom(data?.companyName || '');
+    }
+  }, [user, data, setName, setRoom]);
+
+  // Unirse a la sala cuando esté todo listo
+  useEffect(() => {
+    if (name && room && isConnected) {
+      joinRoom();
+      console.log(`Unido a la sala: ${room} como ${name}`);
+    }
+  }, [name, room, isConnected, joinRoom]);
+
+  // Manejo del estado de conexión con feedback visual mejorado
+  useEffect(() => {
+    if (isConnected) {
+      const timer = setTimeout(() => {
+        setShowConnectionStatus(false);
+      }, 2000);
+      return () => clearTimeout(timer);
+    } else {
+      setShowConnectionStatus(true);
+
+      // Mostrar alerta si hay problemas de conexión después de 5 segundos
+      const alertTimer = setTimeout(() => {
+        if (!isConnected) {
+          console.warn(`Problemas de conexión. Intentos: ${reconnectAttempts}/5`);
+        }
+      }, 5000);
+
+      return () => clearTimeout(alertTimer);
+    }
+  }, [isConnected, reconnectAttempts]);
+
+
+
+
 
 
 
@@ -291,27 +403,43 @@ export default function MenuInterface({ menuData, promotionsData = [] }: MenuInt
           break;
       }
 
-      const orderDetails = {
+      const orderDetails: any = {
         id: Date.now().toString(),
         orderType,
         dataTypeOrder,
         cart,
         comments,
-        companies:{
-          companiesName:comapinesData?.companyName,
-          companiesID:comapinesData?._id
-
-
-        },
-        user: {
-          email: userData?.email || "",
-          fullname: userData?.fullname || "",
-          phone: userData?.phone || "",
-          whathsapp: userData?.whatsapp || "",
-
-        }
-
+        companiesName: comapinesData?.companyName,
+        companiesID: comapinesData?._id,
+        email: userData?.email || "",
+        fullname: userData?.fullname || "",
+        phone: userData?.phone || "",
+        whathsapp: userData?.whatsapp || "",
+        channel: comapinesData?.companyName,
+        name: userData?.email,
+        timestamp: new Date(),
       };
+
+
+      //canal
+      //usuario
+      //mensdaje
+
+      // const orderDetailsString = JSON.stringify(orderDetails);
+
+      // socket.emit("send_message", {
+      //   channel: comapinesData?.companyName,
+      //   name: userData?.email,
+      //   message: JSON.stringify(orderDetailsString) // Envía la orden como string
+      // });
+      try {
+        const socketSuccess = await sendOrder(orderDetails);
+
+      } catch (error) {
+        console.log("🚀 ~ handleConfirmOrder ~ error:", error)
+
+      }
+
 
 
 
@@ -333,6 +461,7 @@ export default function MenuInterface({ menuData, promotionsData = [] }: MenuInt
         setCartOpen(false)
         setCart([])
         const createdOrder = await response.json();
+        window.location.reload()
 
         return createdOrder;
       } catch (error) {
@@ -341,6 +470,7 @@ export default function MenuInterface({ menuData, promotionsData = [] }: MenuInt
       }
 
       // sendWhatsAppMessageEmployees(orderDetails, infoData.whatsapp);
+
     }
   };
 
@@ -349,27 +479,101 @@ export default function MenuInterface({ menuData, promotionsData = [] }: MenuInt
     window.location.reload();
   };
 
+  const [displayTitle, setDisplayTitle] = useState(true); // true = Llakascript, false = Menú/Promo
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setDisplayTitle(prev => !prev); // Alternar cada 5 segundos
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const theme = useTheme();
+
+
+
   return (
-    <Box sx={{ pb: 7 }}>
-      <AppBar position="static" color="primary">
+    <Box sx={{ pb: 0 }}>
+
+      <AppBar position="static"
+        component={motion.div}
+        initial={false}
+        animate={{
+          backgroundColor: showPromotions
+            ? theme.palette.info.dark
+            : theme.palette.primary.main
+        }}
+        transition={{ duration: 0.7 }}
+
+      >
         <Toolbar>
-          <Typography variant="h5" component="div" sx={{ display: 'flex', alignItems: 'center', gap: 1, flexGrow: 1 }}>
-            <Avatar sx={{ width: 50, height: 50 }}>
+          <Box sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 1,
+            flexGrow: 1,
+            height: '40px', // Aumenté la altura para mejor acomodo
+            position: 'relative',
+            overflow: 'hidden' // Para contener las animaciones
+          }}>
+            {/* Avatar con mejor alineación */}
+            <Avatar sx={{
+              width: 28,
+              height: 28,
+              flexShrink: 0, // Evita que se reduzca
+              ml: 0.5 // Pequeño margen izquierdo
+            }}>
               <Image
                 src={"/images/flama.png"}
                 alt={"LlakaScript"}
-                width={50}
-                height={50}
+                width={28}
+                height={28}
                 priority
-                style={{ objectFit: 'contain' }}
+                style={{
+                  objectFit: 'contain',
+                  width: '100%',
+                  height: '100%'
+                }}
               />
             </Avatar>
-            Llakascript
-          </Typography>
 
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            {showPromotions ? 'Promociones' : 'Menú Principal'}
-          </Typography>
+            {/* Contenedor de texto con mejor posicionamiento */}
+            <Box sx={{
+              position: 'relative',
+              width: 'auto', // Ancho automático
+              height: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              flexGrow: 1
+            }}>
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={displayTitle ? 'llakascript' : 'menu-title'}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 10 }}
+                  transition={{ duration: 0.3 }}
+                  style={{
+                    position: 'absolute',
+                    left: 0,
+                    whiteSpace: 'nowrap' // Evita saltos de línea
+                  }}
+                >
+                  <Typography
+                    variant="h6"
+                    sx={{
+                      fontWeight: 600,
+                      lineHeight: 1.2
+                    }}
+                  >
+                    {displayTitle ? 'Llakascript' : (showPromotions ? 'Promociones' : 'Menú Principal')}
+                  </Typography>
+                </motion.div>
+              </AnimatePresence>
+            </Box>
+          </Box>
+
 
           <IconButton color="inherit" onClick={togglePromotions}>
             <Badge badgeContent={showPromotions ? null : promotionsData?.length} color="secondary">
@@ -394,6 +598,109 @@ export default function MenuInterface({ menuData, promotionsData = [] }: MenuInt
           </IconButton>
         </Toolbar>
       </AppBar>
+
+
+
+      <div style={{ textAlign: "center", padding: "5px" }}>
+        {showConnectionStatus && (
+          <Box
+            display="inline-block"
+            minWidth="120px"
+            textAlign="center"
+            my={1}
+          >
+            <AnimatePresence>
+              {!isConnected ? (
+                <motion.div
+                  key="connecting"
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 10 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <Box
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
+                    gap={1}
+                    color="text.secondary"
+                  >
+                    <motion.div
+                      animate={{
+                        opacity: [0.6, 1, 0.6],
+                      }}
+                      transition={{
+                        repeat: Infinity,
+                        duration: 1.5,
+                        ease: "easeInOut"
+                      }}
+                    >
+                      <Typography variant="body2">Conectando...</Typography>
+                    </motion.div>
+
+                    <Box display="flex">
+                      {[...Array(3)]?.map((_, i) => (
+                        <motion.div
+                          key={i}
+                          animate={{
+                            y: [0, -5, 0],
+                            opacity: [0.3, 1, 0.3]
+                          }}
+                          transition={{
+                            repeat: Infinity,
+                            duration: 1.2,
+                            delay: i * 0.2
+                          }}
+                        >
+                          <Typography variant="body2" fontWeight="bold" color="primary">.</Typography>
+                        </motion.div>
+                      ))}
+                    </Box>
+                  </Box>
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="connected"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.5 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <Box
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
+                    gap={1}
+                    color="success.main"
+                  >
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: 0.1 }}
+                    >
+                      <Typography variant="body2">Conectado</Typography>
+                    </motion.div>
+
+                    <motion.div
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 500,
+                        damping: 15
+                      }}
+                    >
+                      <Check color="success" fontSize="small" />
+                    </motion.div>
+                  </Box>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </Box>
+        )}
+      </div>
+
+
 
       <Container maxWidth="md" sx={{ mt: 2 }}>
         <TextField

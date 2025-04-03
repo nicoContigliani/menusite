@@ -144,7 +144,9 @@ const MenuEmploees = (props: any) => {
 
             {/* <Chat /> */}
             {/* <ChatRooms/> */}
-            {((isLogin) && validationEmploeesMail()) && (
+            {((isLogin) 
+            && validationEmploeesMail()
+        ) && (
                 <div>
                     <Todo
                         menuData={menuDatas}

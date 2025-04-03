@@ -32,6 +32,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
 async function handleGet(req: NextApiRequest, res: NextApiResponse, collection: any) {
   const { id, status, customer, dateFrom, dateTo, sort = "desc", watch } = req.query;
+  console.log("🚀 ~ handleGet ~ req.query:", req.query)
 
   // Modo Watch (Server-Sent Events)
   if (watch === "true") {
@@ -40,7 +41,7 @@ async function handleGet(req: NextApiRequest, res: NextApiResponse, collection: 
 
   // Modo GET tradicional
   const query: any = {};
-  
+
   if (id) {
     try {
       query._id = new ObjectId(id as string);
@@ -49,9 +50,17 @@ async function handleGet(req: NextApiRequest, res: NextApiResponse, collection: 
     }
   }
 
-  if (status) query.status = status;
+  // Manejar múltiples estados
+  if (status) {
+    if (typeof status === 'string' && status.includes(',')) {
+      query.status = { $in: status.split(',') };
+    } else {
+      query.status = status;
+    }
+  }
+
   if (customer) query["customer.email"] = customer;
-  
+
   if (dateFrom || dateTo) {
     query.createdAt = {};
     if (dateFrom) query.createdAt.$gte = new Date(dateFrom as string);
@@ -67,6 +76,7 @@ async function handleGet(req: NextApiRequest, res: NextApiResponse, collection: 
       return res.status(200).json(order);
     } else {
       const orders = await collection.find(query).sort(sortOption).toArray();
+      console.log("🚀 ~ handleGet ~ orders:", orders); // Agregado para debug
       return res.status(200).json(orders);
     }
   } catch (error) {
@@ -85,14 +95,14 @@ async function setupChangeStream(req: NextApiRequest, res: NextApiResponse, coll
 
   // Pipeline para filtrar cambios
   const pipeline = [
-    { 
-      $match: { 
+    {
+      $match: {
         $or: [
           { operationType: "insert" },
           { operationType: "update" },
           { operationType: "delete" }
         ]
-      } 
+      }
     }
   ];
 
@@ -112,12 +122,12 @@ async function setupChangeStream(req: NextApiRequest, res: NextApiResponse, coll
     if (req.query.status) {
       query.status = { $in: (req.query.status as string).split(',') };
     }
-    
+
     const initialOrders = await collection.find(query)
       .sort({ createdAt: -1 })
       .limit(50)
       .toArray();
-    
+
     res.write(`event: initial\n`);
     res.write(`data: ${JSON.stringify(initialOrders)}\n\n`);
   } catch (error) {
@@ -179,15 +189,15 @@ async function setupChangeStream(req: NextApiRequest, res: NextApiResponse, coll
 
 // POST - Crear nueva orden
 async function handlePost(req: NextApiRequest, res: NextApiResponse, collection: any) {
-//   const { items, customer } = req.body;
+  //   const { items, customer } = req.body;
 
-//   if (!items || !Array.isArray(items)) {
-//     return res.status(400).json({ error: "Items array is required" });
-//   }
+  //   if (!items || !Array.isArray(items)) {
+  //     return res.status(400).json({ error: "Items array is required" });
+  //   }
 
-//   if (!customer || !customer.email) {
-//     return res.status(400).json({ error: "Customer email is required" });
-//   }
+  //   if (!customer || !customer.email) {
+  //     return res.status(400).json({ error: "Customer email is required" });
+  //   }
 
   const newOrder = {
     ...req.body,
@@ -224,8 +234,8 @@ async function handlePut(req: NextApiRequest, res: NextApiResponse, collection: 
 
     // Validación de versión para evitar conflictos
     if (updateData.version && updateData.version !== currentOrder.version) {
-      return res.status(409).json({ 
-        error: "Conflict", 
+      return res.status(409).json({
+        error: "Conflict",
         message: "Order was modified by another user",
         currentVersion: currentOrder
       });
