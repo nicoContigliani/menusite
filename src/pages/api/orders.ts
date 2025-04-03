@@ -217,16 +217,97 @@ async function handlePost(req: NextApiRequest, res: NextApiResponse, collection:
   }
 }
 
-// PUT - Actualizar orden
+// // PUT - Actualizar orden
+// async function handlePut(req: NextApiRequest, res: NextApiResponse, collection: any) {
+//   const { id } = req.query;
+//   const updateData = req.body;
+
+//   if (!id) {
+//     return res.status(400).json({ error: "Order ID is required" });
+//   }
+
+//   try {
+//     const currentOrder = await collection.findOne({ _id: new ObjectId(id as string) });
+//     if (!currentOrder) {
+//       return res.status(404).json({ error: "Order not found" });
+//     }
+
+//     // Validación de versión para evitar conflictos
+//     if (updateData.version && updateData.version !== currentOrder.version) {
+//       return res.status(409).json({
+//         error: "Conflict",
+//         message: "Order was modified by another user",
+//         currentVersion: currentOrder
+//       });
+//     }
+
+//     const update = {
+//       ...updateData,
+//       updatedAt: new Date(),
+//       version: currentOrder.version + 1
+//     };
+
+//     delete update._id;
+//     delete update.createdAt;
+
+//     const result = await collection.findOneAndUpdate(
+//       { _id: new ObjectId(id as string) },
+//       { $set: update },
+//       { returnDocument: "after" }
+//     );
+
+//     return res.status(200).json(result.value);
+//   } catch (error) {
+//     console.error("Error updating order:", error);
+//     return res.status(500).json({ error: "Error updating order" });
+//   }
+// }
+
 async function handlePut(req: NextApiRequest, res: NextApiResponse, collection: any) {
   const { id } = req.query;
   const updateData = req.body;
 
-  if (!id) {
-    return res.status(400).json({ error: "Order ID is required" });
-  }
-
   try {
+    // Caso 1: Actualización masiva (sin ID específico)
+    if (!id) {
+      // Validar que sea una actualización masiva permitida (ej. cambiar estados)
+      if (!updateData.status && !updateData.query) {
+        return res.status(400).json({ 
+          error: "For bulk updates, either 'status' or 'query' with update fields is required" 
+        });
+      }
+
+      // Construir query para la actualización masiva
+      const bulkQuery = updateData.query || {};
+      
+      // Validar que no se intente actualizar todas las órdenes sin filtros
+      if (Object.keys(bulkQuery).length === 0 && !updateData.status) {
+        return res.status(400).json({ 
+          error: "Bulk updates require filter conditions in 'query' field" 
+        });
+      }
+
+      // Preparar la actualización
+      const update = {
+        $set: {
+          ...(updateData.status && { status: updateData.status }),
+          ...updateData.updates,
+          updatedAt: new Date(),
+        },
+        $inc: { version: 1 }
+      };
+
+      // Ejecutar actualización masiva
+      const result = await collection.updateMany(bulkQuery, update);
+
+      return res.status(200).json({
+        message: "Bulk update successful",
+        matchedCount: result.matchedCount,
+        modifiedCount: result.modifiedCount
+      });
+    }
+
+    // Caso 2: Actualización de una orden específica
     const currentOrder = await collection.findOne({ _id: new ObjectId(id as string) });
     if (!currentOrder) {
       return res.status(404).json({ error: "Order not found" });
@@ -237,19 +318,22 @@ async function handlePut(req: NextApiRequest, res: NextApiResponse, collection: 
       return res.status(409).json({
         error: "Conflict",
         message: "Order was modified by another user",
-        currentVersion: currentOrder
+        currentOrder: currentOrder
       });
     }
 
+    // Preparar la actualización
     const update = {
       ...updateData,
       updatedAt: new Date(),
       version: currentOrder.version + 1
     };
 
+    // Campos protegidos que no deben actualizarse
     delete update._id;
     delete update.createdAt;
 
+    // Ejecutar la actualización
     const result = await collection.findOneAndUpdate(
       { _id: new ObjectId(id as string) },
       { $set: update },
@@ -262,6 +346,9 @@ async function handlePut(req: NextApiRequest, res: NextApiResponse, collection: 
     return res.status(500).json({ error: "Error updating order" });
   }
 }
+
+
+
 
 // DELETE - Eliminar orden
 async function handleDelete(req: NextApiRequest, res: NextApiResponse, collection: any) {
