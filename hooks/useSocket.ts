@@ -262,7 +262,7 @@ interface UseSocketChatReturn {
   messages: Message[];
   joinRoom: () => void;
   sendMessage: () => void;
-  sendOrder: (orderDetails: OrderData,roomsname:any|undefined) => void;
+  sendOrder: (orderDetails: OrderData, roomsname: any | undefined) => void;
   parsedMessages: Array<OrderData | any>;
   isConnected: boolean;
   reconnectAttempts: number;
@@ -432,7 +432,7 @@ const useSocketChat = (socketUrl: string): UseSocketChatReturn => {
     if (room && socket) {
       const orderWithMetadata: OrderData = {
         ...orderDetails,
-        channel: room,
+        channel: roomsname || room,
         name: name || 'System',
         timestamp: new Date().toISOString(),
       };
