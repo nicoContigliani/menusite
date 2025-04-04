@@ -56,10 +56,14 @@ const CustomSpeedDial = dynamic(() => import('@/components/SpeedDial/SpeedDial')
 import {
   FileCopy as FileCopyIcon,
   Grading as GradingIcon,
+  Tv as TvIcon
 } from '@mui/icons-material';
+
+
 import Footer from '@/components/Footer/Footer';
 import { Facebook, Twitter, Instagram, Linkedin } from "lucide-react"
 import Link from 'next/link';
+import OrdersSpeedPresentation from '@/components/OrdersSpeedPresentation/OrdersSpeedPresentation';
 
 // Animation variants
 const fadeIn = {
@@ -109,6 +113,7 @@ const EmpresaPage = ({ nombre }: { nombre: string }) => {
   const [isRegistering, setIsRegistering] = useState(false);
   const [menuShow, setMenuShow] = useState(true);
   const [orderShow, setOrderShow] = useState(false);
+  const [orderPresentationShow, setOrderPresentationShow] = useState(false);
 
   // Check initial auth state
   useEffect(() => {
@@ -324,21 +329,47 @@ const EmpresaPage = ({ nombre }: { nombre: string }) => {
   const handleSpeedDialAction = (type: string) => {
     setOrderShow(type === "OrderSpeed");
     setMenuShow(type === "MenuSpeed");
+    setOrderPresentationShow(type === "PresentationSpeed");
   };
 
   // Speed dial actions
+  // const speedDialActions = [
+  //   {
+
+  //     icon: <TvIcon />,
+  //     name: "Presentation",
+  //     onclick: () => handleSpeedDialAction("PresentationSpeed"),
+  //   },
+  //   {
+  //     icon: <GradingIcon />,
+  //     name: 'Orderskichen',
+  //     onClick: () => handleSpeedDialAction("OrderSpeed"),
+  //   },
+  //   {
+  //     icon: <FileCopyIcon />,
+  //     name: 'Orders',
+  //     onClick: () => handleSpeedDialAction("MenuSpeed"),
+  //   },
+  // ];
+
   const speedDialActions = [
     {
-      icon: <FileCopyIcon />,
-      name: 'Menu',
-      onClick: () => handleSpeedDialAction("MenuSpeed"),
+      icon: <TvIcon />,
+      name: "Presentation",
+      onClick: () => handleSpeedDialAction("PresentationSpeed"), // Cambiado de onclick a onClick
     },
     {
       icon: <GradingIcon />,
-      name: 'Orders',
+      name: 'Orderskichen',
       onClick: () => handleSpeedDialAction("OrderSpeed"),
-    }
+    },
+    {
+      icon: <FileCopyIcon />,
+      name: 'Orders',
+      onClick: () => handleSpeedDialAction("MenuSpeed"),
+    },
   ];
+
 
   // Render loading state
   if (!isLoaded) {
@@ -379,6 +410,23 @@ const EmpresaPage = ({ nombre }: { nombre: string }) => {
               <OrdersSpeed />
             </motion.div>
           )}
+
+          {orderPresentationShow && (
+            <motion.div
+              key="ordersPresentation"
+              className={styles.ordersContainer}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.3 }}
+            >
+              <OrdersSpeedPresentation />
+            </motion.div>
+          )}
+
+
+
+
         </AnimatePresence>
 
         <div className={styles.speedDialWrapper}>

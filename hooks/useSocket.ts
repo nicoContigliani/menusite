@@ -73,7 +73,7 @@
 //     try {
 //       // Primero intentamos parsear directamente
 //       let parsed = JSON.parse(str);
-      
+
 //       // Si el resultado es un string, intentamos parsear nuevamente
 //       while (typeof parsed === 'string') {
 //         try {
@@ -82,7 +82,7 @@
 //           break;
 //         }
 //       }
-      
+
 //       return parsed;
 //     } catch (e) {
 //       return str; // Si falla, devolvemos el string original
@@ -92,7 +92,7 @@
 //   // Procesar mensajes entrantes
 //   const processIncomingMessage = useCallback((data: { from: string; message: string }): Message => {
 //     const parsed = deepParseJson(data.message);
-    
+
 //     if (parsed && typeof parsed === 'object' && parsed.id) {
 //       // Es una orden válida
 //       return {
@@ -103,7 +103,7 @@
 //         timestamp: new Date().toISOString()
 //       };
 //     }
-    
+
 //     // Mensaje normal
 //     return {
 //       name: data.from,
@@ -233,16 +233,12 @@ interface OrderData {
   dataTypeOrder: string;
   cart: OrderItem[];
   comments: string;
-  companies: {
-    companiesName: string;
-    companiesID: string;
-  };
-  user: {
-    email: string;
-    fullname: string;
-    phone: string;
-    whathsapp: string;
-  };
+  companiesName: string;
+  companiesID: string;
+  email: string;
+  fullname: string;
+  phone: string;
+  whathsapp: string;
   channel: string;
   name: string;
   timestamp?: string;
@@ -266,7 +262,7 @@ interface UseSocketChatReturn {
   messages: Message[];
   joinRoom: () => void;
   sendMessage: () => void;
-  sendOrder: (orderDetails: OrderData) => void;
+  sendOrder: (orderDetails: OrderData,roomsname:any|undefined) => void;
   parsedMessages: Array<OrderData | any>;
   isConnected: boolean;
   reconnectAttempts: number;
@@ -304,7 +300,7 @@ const useSocketChat = (socketUrl: string): UseSocketChatReturn => {
   // Procesar mensajes entrantes
   const processIncomingMessage = useCallback((data: { from: string; message: string }): Message => {
     const parsed = deepParseJson(data.message);
-    
+
     if (parsed && typeof parsed === 'object' && parsed.id) {
       return {
         name: data.from,
@@ -314,7 +310,7 @@ const useSocketChat = (socketUrl: string): UseSocketChatReturn => {
         timestamp: new Date().toISOString()
       };
     }
-    
+
     return {
       name: data.from,
       message: typeof parsed === 'string' ? parsed : data.message,
@@ -339,17 +335,17 @@ const useSocketChat = (socketUrl: string): UseSocketChatReturn => {
       setIsConnected(true);
       setReconnectAttempts(0);
       console.log('✅ Socket conectado');
-      
+
       // Reunirse a la sala si ya tenemos nombre y sala
       if (name && room) {
         newSocket.emit('join_channel', room);
       }
     });
 
-    newSocket.on('disconnect', (reason:any) => {
+    newSocket.on('disconnect', (reason: any) => {
       setIsConnected(false);
       console.log('❌ Socket desconectado:', reason);
-      
+
       if (reason === 'io server disconnect' || reason === 'io client disconnect') {
         setTimeout(() => {
           if (reconnectAttempts < maxReconnectAttempts) {
@@ -361,11 +357,11 @@ const useSocketChat = (socketUrl: string): UseSocketChatReturn => {
       }
     });
 
-    newSocket.on('reconnect_attempt', (attempt:any) => {
+    newSocket.on('reconnect_attempt', (attempt: any) => {
       console.log(`🔁 Intento de reconexión ${attempt}`);
     });
 
-    newSocket.on('reconnect_error', (error:any) => {
+    newSocket.on('reconnect_error', (error: any) => {
       console.log('⚠️ Error de reconexión:', error);
     });
 
@@ -432,7 +428,7 @@ const useSocketChat = (socketUrl: string): UseSocketChatReturn => {
     }
   }, [message, room, socket, name]);
 
-  const sendOrder = useCallback((orderDetails: OrderData) => {
+  const sendOrder = useCallback((orderDetails: OrderData, roomsname: any | undefined) => {
     if (room && socket) {
       const orderWithMetadata: OrderData = {
         ...orderDetails,
