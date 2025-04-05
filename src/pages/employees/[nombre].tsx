@@ -58,12 +58,14 @@ import {
   Grading as GradingIcon,
   Tv as TvIcon
 } from '@mui/icons-material';
+import DashboardIcon from '@mui/icons-material/Dashboard';
 
 
 import Footer from '@/components/Footer/Footer';
 import { Facebook, Twitter, Instagram, Linkedin } from "lucide-react"
 import Link from 'next/link';
 import OrdersSpeedPresentation from '@/components/OrdersSpeedPresentation/OrdersSpeedPresentation';
+import OrdersSpeedPresentationStaff from '@/components/OrdersSpeedPresentationStaff/OrdersSpeedPresentationStaff';
 
 // Animation variants
 const fadeIn = {
@@ -114,6 +116,7 @@ const EmpresaPage = ({ nombre }: { nombre: string }) => {
   const [menuShow, setMenuShow] = useState(true);
   const [orderShow, setOrderShow] = useState(false);
   const [orderPresentationShow, setOrderPresentationShow] = useState(false);
+  const [orderPresentationShowStaff, setOrderPresentationShowStaff] = useState(false);
 
   // Check initial auth state
   useEffect(() => {
@@ -330,6 +333,7 @@ const EmpresaPage = ({ nombre }: { nombre: string }) => {
     setOrderShow(type === "OrderSpeed");
     setMenuShow(type === "MenuSpeed");
     setOrderPresentationShow(type === "PresentationSpeed");
+    setOrderPresentationShowStaff(type === "PresentationSpeedStaff");
   };
 
   // Speed dial actions
@@ -354,6 +358,11 @@ const EmpresaPage = ({ nombre }: { nombre: string }) => {
 
   const speedDialActions = [
     {
+      icon: <DashboardIcon />,
+      name: "Presentation Staff ",
+      onClick: () => handleSpeedDialAction("PresentationSpeedStaff"), // Cambiado de onclick a onClick
+    },
+    {
       icon: <TvIcon />,
       name: "Presentation",
       onClick: () => handleSpeedDialAction("PresentationSpeed"), // Cambiado de onclick a onClick
@@ -369,6 +378,8 @@ const EmpresaPage = ({ nombre }: { nombre: string }) => {
       onClick: () => handleSpeedDialAction("MenuSpeed"),
     },
   ];
+
+
 
 
   // Render loading state
@@ -424,6 +435,18 @@ const EmpresaPage = ({ nombre }: { nombre: string }) => {
             </motion.div>
           )}
 
+          {orderPresentationShowStaff && (
+            <motion.div
+              key="ordersPresentation"
+              className={styles.ordersContainer}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.3 }}
+            >
+              <OrdersSpeedPresentationStaff />
+            </motion.div>
+          )}
 
 
 
