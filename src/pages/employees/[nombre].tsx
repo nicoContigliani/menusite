@@ -586,9 +586,9 @@ const EmpresaPage = ({ nombre }: { nombre: string }) => {
             <h2 className={styles.authTitle}>
               {isRegistering ? 'Create Account' : 'Welcome Back'}
             </h2>
-            <p className={styles.authSubtitle}>
+            <span className={styles.authSubtitle}>
               {isRegistering ? 'Join us today' : 'Sign in to continue'}
-            </p>
+            </span>
           </div>
 
           <AnimatePresence>
