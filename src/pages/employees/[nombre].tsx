@@ -59,6 +59,7 @@ import {
   Tv as TvIcon
 } from '@mui/icons-material';
 import DashboardIcon from '@mui/icons-material/Dashboard';
+import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
 
 
 import Footer from '@/components/Footer/Footer';
@@ -66,6 +67,7 @@ import { Facebook, Twitter, Instagram, Linkedin } from "lucide-react"
 import Link from 'next/link';
 import OrdersSpeedPresentation from '@/components/OrdersSpeedPresentation/OrdersSpeedPresentation';
 import OrdersSpeedPresentationStaff from '@/components/OrdersSpeedPresentationStaff/OrdersSpeedPresentationStaff';
+import OrdersSaleStaff from '@/components/OrdersSaleStaff/OrdersSaleStaff';
 
 // Animation variants
 const fadeIn = {
@@ -117,6 +119,7 @@ const EmpresaPage = ({ nombre }: { nombre: string }) => {
   const [orderShow, setOrderShow] = useState(false);
   const [orderPresentationShow, setOrderPresentationShow] = useState(false);
   const [orderPresentationShowStaff, setOrderPresentationShowStaff] = useState(false);
+  const [orderSalesShow, setSalesShow] = useState(false);
 
   // Check initial auth state
   useEffect(() => {
@@ -334,6 +337,7 @@ const EmpresaPage = ({ nombre }: { nombre: string }) => {
     setMenuShow(type === "MenuSpeed");
     setOrderPresentationShow(type === "PresentationSpeed");
     setOrderPresentationShowStaff(type === "PresentationSpeedStaff");
+    setSalesShow(type === "SalesStaff");
   };
 
   // Speed dial actions
@@ -356,7 +360,15 @@ const EmpresaPage = ({ nombre }: { nombre: string }) => {
   //   },
   // ];
 
+
+
+
   const speedDialActions = [
+    {
+      icon: <PointOfSaleIcon />,
+      name: "Sales Staff ",
+      onClick: () => handleSpeedDialAction("SalesStaff"), // Cambiado de onclick a onClick
+    },
     {
       icon: <DashboardIcon />,
       name: "Presentation Staff ",
@@ -445,6 +457,19 @@ const EmpresaPage = ({ nombre }: { nombre: string }) => {
               transition={{ duration: 0.3 }}
             >
               <OrdersSpeedPresentationStaff />
+            </motion.div>
+          )}
+
+          {orderSalesShow && (
+            <motion.div
+              key="ordersPresentation"
+              className={styles.ordersContainer}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.3 }}
+            >
+              <OrdersSaleStaff />
             </motion.div>
           )}
 
