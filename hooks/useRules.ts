@@ -48,9 +48,20 @@ const useRules = (config: any, staff: any) => {
 
                 case "employees":
                     // Verificar si el usuario es un empleado
-                    const isEmployee = staff?.some((item: any) => stringclean(item.email) === email && item.role === 'employee');
+                    const isEmployee = staff?.some((item: any) => stringclean(item.email) === email && (item.role).startsWith('employees'));
                     setHasPermission(isEmployee);
                     break;
+
+                case "chef":
+                    // Verificar si el usuario es un empleado
+                    const isChef = staff?.some((item: any) => stringclean(item.email) === email && (item.role).startsWith('chef'));
+                    setHasPermission(isChef);
+                    break;
+
+
+
+
+
 
                 default:
                     setHasPermission(false);

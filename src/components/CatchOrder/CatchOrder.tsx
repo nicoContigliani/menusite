@@ -9,6 +9,10 @@ import { useSelector } from "react-redux"
 import { RootState } from "../../../store/store"
 import useRules from "../../../hooks/useRules"
 
+
+
+
+
 interface CatchOrderProps {
   title: string
   description: string
