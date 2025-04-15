@@ -12,8 +12,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(400).json({ error: "Email and code are required" });
   }
 
+  // const client = await clientPromise;
+  // const db = client.db("menuDB");
+  const dbName = process.env.NODE_ENV === "development" ? "menuDevDB" : "menuDB";
   const client = await clientPromise;
-  const db = client.db("menuDB");
+  const db = client.db(dbName);
   const users = db.collection("users");
 
   let user: any = await users.findOne({ email });

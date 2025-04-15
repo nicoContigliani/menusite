@@ -177,7 +177,8 @@ const Menuthirteen: React.FC<MenuProps> = (props) => {
                                     <div className={styles.itemInfo}>
                                         <h2>{item.Name}</h2>
                                         <span>{item.Description}</span>
-                                        <span className={styles.price}>{`$${item.Price}`}</span>
+                                        <br />
+                                        <span className={styles.price}>{`${item.Price}`}</span>
                                     </div>
                                     <div onMouseEnter={() => handleSectionEnter(`Button-${item.Name}`)}>
                                         <CatchOrder

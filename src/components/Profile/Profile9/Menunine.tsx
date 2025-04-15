@@ -199,6 +199,9 @@ const MenuNine: React.FC<MenuProps> = (props) => {
                     ) : null;
                 })}
             </div>
+            <footer className={styles.footer}>
+                <p>{`© ${new Date().getFullYear()} LlakaScript`}</p>
+            </footer>
         </div>
     );
 };

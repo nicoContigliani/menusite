@@ -116,7 +116,7 @@ const Menufive: React.FC<MenuProps> = (props: any) => {
             <header className={styles.header}
                 onMouseEnter={() => handleSectionEnter('header')}
             >
-                <h1 className={styles.mainTitle}>{namecompanies}</h1>
+                {/* <h1 className={styles.mainTitle}>{namecompanies}</h1> */}
 
 
                 <div className={styles.logo}
@@ -127,9 +127,9 @@ const Menufive: React.FC<MenuProps> = (props: any) => {
                             namecompanies="LlakaScript"
                             logoUrl={iconURL}
                             size={120} // Tamaño de la imagen
-                            fontSize="22px" // Tamaño de la fuente
+                            fontSize="32px" // Tamaño de la fuente
                             fontWeight="700" // Grosor de la fuente
-                            color="black" // Color del texto
+                            color="#00ffcc" // Color del texto
                             fontFamily="Arial, sans-serif" // Familia de la fuente
                         />
                         : null}
@@ -222,6 +222,9 @@ const Menufive: React.FC<MenuProps> = (props: any) => {
                     </div>
                 </section>
             ))}
+            <footer className={styles.footer}>
+                <div>{`© ${new Date().getFullYear()} LlakaScript`}</div>
+            </footer>
         </div>
     );
 };

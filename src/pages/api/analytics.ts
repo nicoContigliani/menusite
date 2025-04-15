@@ -11,8 +11,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
+    // const client = await clientPromise;
+    // const db = client.db("menuDB");
+    const dbName = process.env.NODE_ENV === "development" ? "menuDevDB" : "menuDB";
     const client = await clientPromise;
-    const db = client.db("menuDB");
+    const db = client.db(dbName);
     const trackes = db.collection("tracktimes");
     const analytics = db.collection("analytics");
     const analyticsBacup = db.collection("analyticsbuckups");
@@ -44,7 +47,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             clicks: { $first: "$clicks" }
           }
         }
-      ],{ allowDiskUse: true }).toArray();
+      ], { allowDiskUse: true }).toArray();
 
       if (!companyData || companyData.length === 0) {
         return res.status(404).json({ error: 'Company not found' });
@@ -120,13 +123,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           const updateOperation: any = {
             $push: { lots: lotData }
           };
-    
+
           await analytics.updateOne(
             { userId: data._id, companyName: data.companyName, email: data.email },
             updateOperation,
             { upsert: true }
           );
-          
+
         }
       }
 

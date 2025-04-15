@@ -11,8 +11,14 @@ export async function readAndInsertExcelData(todo: any) {
     paymentLevel
   } = todo;
 
+
+
+  const dbName = process.env.NODE_ENV === "development" ? "menuDevDB" : "menuDB";
   const client = await clientPromise;
-  const db = client.db("menuDB");
+  const db = client.db(dbName);
+
+  // const client = await clientPromise;
+  // const db = client.db("menuDB");
   const companies = db.collection("companies");
 
   const existingCompany = await companies.findOne({ companyName });
@@ -55,20 +61,33 @@ export async function readAndInsertExcelData(todo: any) {
 export async function getCompanyByName(companyName: any) {
   console.log("🚀 ~ getCompanyByName ~ companyName:", companyName)
   try {
+    // const dbName = process.env.NODE_ENV === "development" ? "menuDevDB" : "menuDB";
+    // const db = client.db("menuDB");
     const client = await clientPromise;
-    const db = client.db("menuDB");
+    const dbName = process.env.NODE_ENV === "development" ? "menuDevDB" : "menuDB";
+    const db = client.db(dbName);
     const companies = db.collection("companies");
-  
+
+
+
+    // const dbName = process.env.NODE_ENV === "development" ? "menuDevDB" : "menuDB";
+    // const db = client.db(dbName);
+    // const client = await clientPromise;
+
+
+
+
+
     // const existingCompany = await companies.findOne({ 
     //   companyName: { $regex: new RegExp(`^${companyName}$`, 'i') } 
     // })
     const existingCompany = await companies.findOne(
       { companyName: companyName }, // Búsqueda exacta
-      { 
-        collation: { 
-          locale: 'simple', 
+      {
+        collation: {
+          locale: 'simple',
           strength: 1 // Ignora mayúsculas/minúsculas
-        } 
+        }
       }
     );
 

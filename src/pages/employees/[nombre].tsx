@@ -282,17 +282,17 @@
 //         alert('Business location data missing');
 //         throw new Error('Business location data missing');
 //       }
-  
+
 //       const userPosition = await GeolocationService.getPreciseLocation();
 //       const businessLocation = convertToLocation(businessData);
 //       const userLocation = convertToLocation(userPosition);
-  
+
 //       const isNear = LocationDiffService.isWithinRange(
 //         businessLocation,
 //         userLocation,
 //         50 // 50 metros de radio
 //       );
-  
+
 //       if (!isNear) {
 //         throw new Error('You must be near the business to log in');
 //       }
@@ -831,6 +831,8 @@ import Footer from '@/components/Footer/Footer';
 import { Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
 import Link from 'next/link';
 import { RootState } from '../../../store/store';
+import { useAuth } from '../../../hooks/useAuth';
+import { recordAttendance } from '@/services/attendance.services';
 
 // Interfaces
 interface CompaniesData {
@@ -841,7 +843,8 @@ interface CompaniesData {
     Info?: any;
     Promotion?: any;
     schedules?: any;
-  };
+  },
+  companyName?: any;
 }
 
 interface Location {
@@ -882,16 +885,14 @@ const EmpresaPage = ({ nombre }: { nombre: string }) => {
   const [data, setData] = useState<any>(null);
   const [dataResum, setDataResum] = useState<any>(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  // const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullname, setFullname] = useState("");
   const [birthday, setBirthday] = useState("");
   const [phone, setPhone] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [isRegistering, setIsRegistering] = useState(false);
+
   const [menuShow, setMenuShow] = useState(true);
   const [orderShow, setOrderShow] = useState(false);
   const [orderPresentationShow, setOrderPresentationShow] = useState(false);
@@ -900,16 +901,25 @@ const EmpresaPage = ({ nombre }: { nombre: string }) => {
 
 
 
+  const {
+    login,
+    register,
+    error,
+    isLoading,
+    isAuthenticated,
+    isRegistering,
+    toggleAuthMode,
+    setIsAuthenticated
+  } = useAuth();
 
 
-  // Check initial auth state
   useEffect(() => {
     const storedData: any = getLocalhostStorage();
     if (storedData?.token) {
       setIsAuthenticated(true);
       dispatch(loginSuccess(storedData));
     }
-  }, [dispatch]);
+  }, [dispatch, setIsAuthenticated]);
 
   // Fetch business data
   const fetchExcelData = useCallback(async (folder: string) => {
@@ -951,83 +961,69 @@ const EmpresaPage = ({ nombre }: { nombre: string }) => {
     };
   };
 
-  // Auth handlers
+
+  // Get company data and staff
+  const companiesData = useSelector((state: RootState) => state.chExcelData.data as unknown as CompaniesData | undefined);
+  const { hojas, companyName } = companiesData || { hojas: { Config: [], staff: [] } };
+  const { Config = [], staff = [] } = hojas;
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    dispatch(clearError());
-    setError(null);
-    setIsLoading(true);
+    const si = await login(email, password);
 
-    try {
-      const response = await fetch('/api/loginuser', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.message || 'Login failed');
-      }
-
-      await localhostStorage(result);
-      dispatch(loginSuccess(result));
-      setIsAuthenticated(true);
-
-    } catch (error) {
-      const message = error instanceof Error ? error.message : 'Login failed';
-      setError(message);
-      dispatch(authFailure(message));
-    } finally {
-      setIsLoading(false);
+    if (si !== null) {
+      await recordAttendance('getIn', email, companyName);
     }
+
+
   };
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
-    dispatch(clearError());
-    setError(null);
-    setIsLoading(true);
-
-    try {
-      const response = await fetch('/api/registerdata', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password, fullname, birthday, phone })
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.message || 'Registration failed');
-      }
-
-      await localhostStorage(result);
-      dispatch(registerSuccess(result));
-      setIsAuthenticated(true);
-      setIsRegistering(false);
-
-    } catch (error) {
-      const message = error instanceof Error ? error.message : 'Registration failed';
-      setError(message);
-      dispatch(authFailure(message));
-    } finally {
-      setIsLoading(false);
-    }
+    await register({ email, password, fullname, birthday, phone });
   };
+
+
+  // const user = useSelector((state: RootState) => state.auth)
+  // console.log("🚀 ~ EmpresaPage ~ user:", user)
+
+
+
+  // useEffect(() => {
+  //   //validar si el usuario esta autenticado
+  //   //validar si esta en staff
+  //   console.log("🚀 ~ EmpresaPage ~ staff:", staff)
+
+  //    if (isAuthenticated&& staff.length > 0 && user?.user?.email) {
+  //   //   if (!hasAccess('staff')) {
+  //   //     alert('No tienes permiso para acceder a esta página');
+  //   //     router.push('/menu');
+  //   //   }
+  //        const si = staff.some((item: any) => item.email === user?.user?.email);
+  //        console.log("🚀 ~ useEffect ~ si:", si)
+  //    }
+
+  // }, [handleLogin, handleRegister])
+
+
+
+
+
+
+
+
+
+
+
 
   // UI handlers
   const handleAuthModeToggle = () => {
     dispatch(clearError());
-    setError(null);
-    setIsRegistering(!isRegistering);
+    // setError(null);
+    // setIsRegistering(!isRegistering);
   };
 
-  // Get company data and staff
-  const companiesData = useSelector((state: RootState) => state.chExcelData.data as unknown as CompaniesData | undefined);
-  const { hojas } = companiesData || { hojas: { Config: [], staff: [] } };
-  const { Config = [], staff = [] } = hojas;
+
 
   // Use access control hook
   const { access, hasAccess } = useAccessControl(Config, staff);
@@ -1050,46 +1046,13 @@ const EmpresaPage = ({ nombre }: { nombre: string }) => {
       alert('No tienes permiso para ver presentaciones staff');
       return;
     }
-    
+
     setOrderShow(type === "OrderSpeed");
     setMenuShow(type === "MenuSpeed");
     setOrderPresentationShow(type === "PresentationSpeed");
     setOrderPresentationShowStaff(type === "PresentationSpeedStaff");
     setSalesShow(type === "SalesStaff");
   };
-
-  // const speedDialActions = [
-  //   {
-  //     icon: <PointOfSaleIcon />,
-  //     name: "Sales Staff",
-  //     onClick: () => handleSpeedDialAction("SalesStaff"),
-  //     visible: hasAccess('sales')
-  //   },
-  //   {
-  //     icon: <DashboardIcon />,
-  //     name: "Presentation Staff",
-  //     onClick: () => handleSpeedDialAction("PresentationSpeedStaff"),
-  //     visible: hasAccess('presentationStaff')
-  //   },
-  //   {
-  //     icon: <TvIcon />,
-  //     name: "Presentation",
-  //     onClick: () => handleSpeedDialAction("PresentationSpeed"),
-  //     visible: hasAccess('presentation')
-  //   },
-  //   {
-  //     icon: <GradingIcon />,
-  //     name: 'Orderskichen',
-  //     onClick: () => handleSpeedDialAction("OrderSpeed"),
-  //     visible: hasAccess('kichen')
-  //   },
-  //   {
-  //     icon: <FileCopyIcon />,
-  //     name: 'Orders',
-  //     onClick: () => handleSpeedDialAction("MenuSpeed"),
-  //     visible: true
-  //   },
-  // ].filter(action => action.visible);
 
 
   const speedDialActions = useMemo(() => [

@@ -9,13 +9,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const { email, password, fullname, birthday,phone } = req.body;
-  if (!email || !password || !fullname || !birthday||!phone) {
+  const { email, password, fullname, birthday, phone } = req.body;
+  if (!email || !password || !fullname || !birthday || !phone) {
     return res.status(400).json({ error: "Email, password and companyName are required" });
   }
-
+  const dbName = process.env.NODE_ENV === "development" ? "menuDevDB" : "menuDB";
   const client = await clientPromise;
-  const db = client.db("menuDB");
+  const db = client.db(dbName);
+  // const client = await clientPromise;
+  // const db = client.db("menuDB");
   const users = db.collection("users");
 
   const existingUser = await users.findOne({ email });
@@ -54,7 +56,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     birthday,
     phone,
     score_user: 0,
-    benefits:false,
+    benefits: false,
     status_user: true,
     // verificationCode, // Almacena el código en la base de datos
     createAt: new Date(),

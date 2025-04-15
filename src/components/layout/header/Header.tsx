@@ -5,14 +5,37 @@ import { useEffect, useLayoutEffect, useState } from "react";
 import ModalComponents from "@/components/ModalComponents/ModalComponents";
 import { Button } from "antd";
 import AuthB from "@/components/AuthB/AuthB";
-import { clearLocalhostStorage } from "@/services/localstorage.services";
+import { clearLocalhostStorage, getLocalhostStorage } from "@/services/localstorage.services";
+import { RootState } from "../../../../store/store";
+import { useSelector } from "react-redux";
 
 export default function Header(props: any) {
   const { imagetodo } = props;
   const [menuOpen, setMenuOpen] = useState(false);
-  const [isLogin, setIsLogin] = useState(true); // Use isLogin directly
+  const [isLogin, setIsLogin] = useState(false); // Use isLogin directly
   const [fullUrl, setFullUrl] = useState("");
   const [openResponsive, setOpenResponsive] = useState(false);
+
+  const users: any | any[] | undefined = useSelector((state: RootState) => state.auth)
+  
+  const {
+    error,
+    isAuthenticated,
+    loading,
+    user
+  } = users
+
+  useEffect(() => {
+    const storedData = getLocalhostStorage()
+    if (storedData?.aud != null || isAuthenticated|| user !== null) {
+      setIsLogin(true)
+    } else {
+      // setOpenResponsive(true)
+    }
+  }, [users])
+
+
+
 
   useLayoutEffect(() => {
     if (typeof window !== "undefined") {
@@ -30,6 +53,12 @@ export default function Header(props: any) {
     setIsLogin(false);
     console.log("Logged out");
   };
+
+
+
+
+
+
 
 
   return (

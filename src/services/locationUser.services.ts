@@ -118,7 +118,7 @@ export class GeolocationService {
       (error) => {
         navigator.geolocation.clearWatch(watchId);
         const errorMsg = this.getEnhancedErrorMsg(error);
-        alert(errorMsg); // Mostrar alerta más descriptiva
+        // alert(errorMsg); // Mostrar alerta más descriptiva
         reject(new Error(errorMsg));
       },
       options
@@ -127,7 +127,7 @@ export class GeolocationService {
     setTimeout(() => {
       navigator.geolocation.clearWatch(watchId);
       const error = new Error('Tiempo de espera agotado. Asegúrate de tener activado el GPS y conexión a internet.');
-      alert(error.message);
+      // alert(error.message);
       reject(error);
     }, 15000);
   }

@@ -5,8 +5,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (req.method === "GET") {
         try {
             // Obtener todas las empresas
+            // const client = await clientPromise;
+            // const db = client.db("menuDB");
+            const dbName = process.env.NODE_ENV === "development" ? "menuDevDB" : "menuDB";
             const client = await clientPromise;
-            const db = client.db("menuDB");
+            const db = client.db(dbName);
             const companies = db.collection("companies");
 
             // Convertir el cursor en un arreglo de documentos

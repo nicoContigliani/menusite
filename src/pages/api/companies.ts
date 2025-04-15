@@ -43,8 +43,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (req.method === "POST") {
     try {
       const data = req.body;
-      console.log("🚀 ~ handler ~ data:", data);
-      console.log("🚀 ~ handler ~ dataInfo:", data?.hojas?.Info[0])
+      // console.log("🚀 ~ handler ~ data:", data);
+      // console.log("🚀 ~ handler ~ dataInfo:", data?.hojas?.Info[0])
 
       const { companyName, hojas } = await readAndInsertExcelData(data);
 

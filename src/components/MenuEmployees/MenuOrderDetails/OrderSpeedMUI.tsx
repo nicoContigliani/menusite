@@ -65,6 +65,7 @@ import useSocketChat from "../../../../hooks/useSocket";
 import { ResponsiveIconMenu } from "@/components/ResponsiveIconMenu/ResponsiveIconMenu";
 import { GenericDrawer } from "@/components/CartDrawer/CartDrawer";
 import OrderAsk from "./orderAsk/OrderAsk";
+import { recordAttendance } from "@/services/attendance.services";
 
 // ======================================
 // Type Definitions
@@ -120,8 +121,8 @@ interface MenuInterfaceProps {
 // Animation variants
 const itemVariants = {
   hidden: { opacity: 0, y: 20 },
-  visible: { 
-    opacity: 1, 
+  visible: {
+    opacity: 1,
     y: 0,
     transition: {
       duration: 0.5,
@@ -479,8 +480,9 @@ export default function MenuInterface({ menuData, promotionsData = [] }: MenuInt
     }
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     clearLocalhostStorage();
+    await recordAttendance('getOut', name, comapinesData?.companyName);
     window.location.reload();
   };
 
@@ -605,8 +607,8 @@ export default function MenuInterface({ menuData, promotionsData = [] }: MenuInt
 
 
 
-          <motion.div 
-            whileHover={buttonHover} 
+          <motion.div
+            whileHover={buttonHover}
             whileTap={buttonTap}
             animate={cart.length > 0 ? pulseAnimation : {}}
           >
@@ -780,8 +782,8 @@ export default function MenuInterface({ menuData, promotionsData = [] }: MenuInt
               indicatorColor="primary"
             >
               {filteredData.map((category) => (
-                <Tab 
-                  key={category.key} 
+                <Tab
+                  key={category.key}
                   label={category.key}
                   component={motion.div}
                   whileHover={{ scale: 1.05 }}

@@ -18,8 +18,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     try {
         // Conectar a MongoDB (conexión persistente)
+        // const client = await clientPromise;
+        // const db = client.db("menuDB");
+        const dbName = process.env.NODE_ENV === "development" ? "menuDevDB" : "menuDB";
         const client = await clientPromise;
-        const db = client.db("menuDB");
+        const db = client.db(dbName);
         const collection = db.collection("companies");
         // Buscar en la colección según el folderName
         const company = await collection?.findOne({ companyName: folder });

@@ -157,7 +157,7 @@ const Menuone: React.FC<MenuProps> = (props) => {
                             size={120} // Tamaño de la imagen
                             fontSize="22px" // Tamaño de la fuente
                             fontWeight="700" // Grosor de la fuente
-                            color="black" // Color del texto
+                            color="white" // Color del texto
                             fontFamily="Arial, sans-serif" // Familia de la fuente
                         />
                         : null}

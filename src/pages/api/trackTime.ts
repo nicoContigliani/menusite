@@ -3,8 +3,11 @@ import clientPromise from "../../../lib/mongoose";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     try {
+
+        const dbName = process.env.NODE_ENV === "development" ? "menuDevDB" : "menuDB";
         const client = await clientPromise;
-        const db = client.db("menuDB");
+        const db = client.db(dbName);
+        // const db = client.db("menuDB");
         const analytics = db.collection("tracktimes");
 
         if (req.method === "POST") {

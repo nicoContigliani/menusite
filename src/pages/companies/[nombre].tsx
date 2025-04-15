@@ -274,6 +274,7 @@ const EmpresaPage = ({ nombre }: { nombre: string }) => {
         const trackTimeData: any = results?.apitrackTime?.data || [];
         const uniqueCompaniesData: any | any[] = [...new Set(trackTimeData.map((item: any) => item.namecompanie))];
 
+
         if (trackTimeData.length >= 2000) {
             handleCreate();
             //create data of floating // when and how many

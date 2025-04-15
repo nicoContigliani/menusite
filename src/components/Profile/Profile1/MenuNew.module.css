@@ -1,124 +1,136 @@
 .container {
     max-width: 1200px;
-    margin: 0 auto;
+    margin: 2rem auto; /* Increased top/bottom margin for better spacing */
     padding: 1.5rem;
     font-family: "Roboto", sans-serif;
-    background-color: #333333;
-    color: #f5f2e9;
+    background-color: #282828; /* Darker background for better contrast */
+    color: #f8f8f2; /* Brighter text color */
+    border-radius: 12px; /* Slightly more rounded corners */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); /* More pronounced shadow */
 }
 
 .header {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem; /* Increased margin */
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #444; /* Subtle divider */
 }
 
 .logo {
     font-family: "Playfair Display", serif;
-    font-size: 3rem;
+    font-size: 3.5rem; /* Slightly larger logo */
     font-weight: 700;
-    color: #ffffff;
-    margin-bottom: 1.5rem;
+    color: #ffcb6b; /* Accent color for the logo */
+    margin-bottom: 1rem;
     text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Subtle text shadow */
+}
+
+.itemInfo {
+    text-align: center;
+    margin-bottom: 1rem;
 }
 
 .searchContainer {
-    width: 100%;
-    max-width: 400px;
+    width: 90%; /* Slightly reduced width on larger screens */
+    max-width: 500px; /* Increased max-width */
     display: flex;
     justify-content: center;
 }
 
 .searchInput {
     width: 100%;
-    padding: 0.75rem;
-    border: none;
-    border-bottom: 2px solid #f5f2e9;
+    padding: 0.8rem 1rem; /* Adjusted padding */
+    border: 1px solid #555; /* Added border */
+    border-radius: 8px; /* Rounded input */
     font-family: "Roboto", sans-serif;
-    background-color: transparent;
-    color: #f5f2e9;
+    background-color: #333; /* Darker input background */
+    color: #f8f8f2;
     font-size: 1rem;
     transition: border-color 0.3s ease;
 }
 
 .searchInput::placeholder {
-    color: #cccccc;
-    opacity: 0.7;
+    color: #777;
+    opacity: 0.8;
 }
 
 .searchInput:focus {
     outline: none;
-    border-bottom-color: #ffffff;
+    border-color: #ffcb6b; /* Accent color on focus */
+    box-shadow: 0 0 6px rgba(255, 203, 107, 0.5); /* Subtle focus shadow */
 }
 
 .main {
     display: grid;
-    gap: 2rem;
-    padding: 1.5rem;
-    background-color: rgba(255, 255, 255, 0.05);
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    gap: 2.5rem; /* Increased gap */
+    padding: 2rem; /* Increased padding */
+    background-color: rgba(255, 255, 255, 0.08); /* Slightly more opaque background */
+    border-radius: 15px; /* More rounded corners */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.35); /* More pronounced shadow */
 }
 
 .section {
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem; /* Increased margin */
 }
 
 .sectionHeader {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.75rem; /* Adjusted margin */
 }
 
 .sectionTitle {
     font-family: "Playfair Display", serif;
-    font-size: 2rem;
+    font-size: 2.2rem; /* Slightly larger title */
     font-weight: 700;
-    color: #f5f2e9;
-    border-bottom: 2px solid #f5f2e9;
-    padding-bottom: 0.5rem;
-    text-align: center;
+    color: #f8f8f2;
+    border-bottom: 3px solid #ffcb6b; /* Accent color for the border */
+    padding-bottom: 0.6rem;
+    text-align: left; /* Align titles to the left for better readability */
 }
 
 .sectionItems {
     display: grid;
-    gap: 1.5rem;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem; /* Increased gap */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Slightly wider min-width */
 }
 
 .menuItem {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 1rem; /* Increased gap */
+    border-radius: 12px;
+    overflow: hidden; /* Ensure image doesn't overflow rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25); /* Subtle item shadow */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: #333; /* Darker item background */
+}
+
+.menuItem:hover {
+    transform: translateY(-8px); /* More pronounced hover effect */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Stronger hover shadow */
 }
 
 .itemInfo {
-    padding: 5%;
+    padding: 1.5rem; /* Increased padding */
     display: flex;
-    gap: 1rem;
+    gap: 1.25rem; /* Increased gap */
     align-items: flex-start;
-    padding: 1.25rem;
-    border-radius: 12px;
-    background-color: rgba(255, 255, 255, 0.05);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.itemInfo:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 
 .cardImage {
     border-radius: 10px;
-    width: 100px;
-    height: 100px;
+    width: 120px; /* Slightly larger image */
+    height: 120px; /* Slightly larger image */
     object-fit: cover;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); /* Image shadow */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .cardImage:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    transform: scale(1.03);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.3);
 }
 
 .itemDetails {
@@ -130,51 +142,52 @@
 
 .itemInfo h2 {
     font-family: "Playfair Display", serif;
-    font-size: 1.25rem;
-    margin: 0 0 0.5rem 0;
-    color: #f5f2e9;
+    font-size: 1.4rem; /* Slightly larger title */
+    margin: 0 0 0.6rem 0;
+    color: #f8f8f2;
 }
 
 .itemDescription {
-    font-size: 0.9rem;
-    color: #cccccc;
+    font-size: 0.95rem; /* Slightly larger description */
+    color: #ccc;
     margin-right: 1rem;
-    line-height: 1.4;
+    line-height: 1.5; /* Improved line height */
 }
 
 .price {
     font-weight: 700;
-    color: #f5f2e9;
+    color: #ffcb6b; /* Accent color for price */
     white-space: nowrap;
-    margin-top: 0.5rem;
-    font-size: 1.1rem;
+    margin-top: 0.6rem;
+    font-size: 1.2rem; /* Slightly larger price */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Subtle price shadow */
 }
 
 .footer {
-    margin-top: 3rem;
+    margin-top: 4rem; /* Increased margin */
     text-align: center;
     font-size: 0.9rem;
-    color: #cccccc;
-    border-top: 1px solid #f5f2e9;
+    color: #777;
+    border-top: 1px solid #444;
     padding-top: 1.5rem;
 }
 
 /* Floating Button */
 .floatingButton {
     position: fixed;
-    bottom: 20px;
+    bottom: 30px; /* Increased bottom spacing */
     left: 50%;
     transform: translateX(-50%);
     z-index: 1000;
     width: 90%;
-    max-width: 300px;
-    padding: 1rem 2rem;
-    font-size: 1rem;
+    max-width: 350px; /* Slightly wider button */
+    padding: 1.2rem 2.5rem; /* Adjusted padding */
+    font-size: 1.1rem; /* Slightly larger font */
     border-radius: 30px;
-    background-color: #1976d2;
+    background-color: #1e88e5; /* A different shade of blue */
     color: white;
     border: none;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); /* More prominent shadow */
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.3s ease;
     animation: pulse 2s infinite;
@@ -182,18 +195,19 @@
 
 .floatingButton:hover {
     background-color: #1565c0;
-    transform: translateX(-50%) scale(1.05);
+    transform: translateX(-50%) scale(1.03); /* Subtle scale on hover */
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.4);
 }
 
 @keyframes pulse {
     0% {
-        box-shadow: 0 0 0 0 rgba(25, 118, 210, 0.7);
+        box-shadow: 0 0 0 0 rgba(30, 136, 229, 0.7);
     }
     70% {
-        box-shadow: 0 0 0 15px rgba(25, 118, 210, 0);
+        box-shadow: 0 0 0 15px rgba(30, 136, 229, 0);
     }
     100% {
-        box-shadow: 0 0 0 0 rgba(25, 118, 210, 0);
+        box-shadow: 0 0 0 0 rgba(30, 136, 229, 0);
     }
 }
 
@@ -201,54 +215,96 @@
 @media (max-width: 768px) {
     .container {
         padding: 1rem;
-     
+        margin: 1.5rem auto;
+    }
+
+    .header {
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.8rem;
     }
 
     .logo {
-        font-size: 2.5rem;
+        font-size: 3rem;
+        margin-bottom: 0.8rem;
     }
 
     .searchInput {
-        font-size: 0.9rem;
+        font-size: 0.95rem;
+        padding: 0.7rem 0.9rem;
     }
 
     .sectionTitle {
-        font-size: 1.75rem;
+        font-size: 1.9rem;
+        padding-bottom: 0.5rem;
     }
 
     .sectionItems {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .menuItem {
+        gap: 0.8rem;
+    }
+
+    .itemInfo {
+        padding: 1rem;
+        gap: 1rem;
+    }
+
+    .cardImage {
+        width: 100px;
+        height: 100px;
     }
 
     .itemInfo h2 {
-        font-size: 1.1rem;
+        font-size: 1.2rem;
+        margin-bottom: 0.4rem;
     }
 
     .itemDescription {
-        font-size: 0.85rem;
+        font-size: 0.9rem;
+        margin-right: 0.8rem;
     }
 
     .price {
-        font-size: 1rem;
+        font-size: 1.1rem;
+        margin-top: 0.4rem;
     }
 
     .floatingButton {
-        font-size: 0.9rem;
-        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+        padding: 1rem 2rem;
+        max-width: 95%;
     }
 }
 
 @media (max-width: 480px) {
     .logo {
-        font-size: 2rem;
+        font-size: 2.5rem;
     }
 
     .sectionTitle {
-        font-size: 1.5rem;
+        font-size: 1.6rem;
+    }
+
+    .itemInfo {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .cardImage {
+        width: 100%;
+        max-height: 150px;
+        object-fit: cover;
+    }
+
+    .itemDescription {
+        margin-right: 0;
     }
 
     .floatingButton {
-        font-size: 0.85rem;
-        padding: 0.5rem 1rem;
+        font-size: 0.95rem;
+        padding: 0.8rem 1.5rem;
     }
 }

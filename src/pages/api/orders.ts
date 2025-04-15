@@ -3,8 +3,11 @@ import clientPromise from "../../../lib/mongoose";
 import { ObjectId } from "mongodb";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  // const client = await clientPromise;
+  // const db = client.db("menuDB");
+  const dbName = process.env.NODE_ENV === "development" ? "menuDevDB" : "menuDB";
   const client = await clientPromise;
-  const db = client.db("menuDB");
+  const db = client.db(dbName);
   const ordersCollection = db.collection("orders");
 
   try {
@@ -272,18 +275,18 @@ async function handlePut(req: NextApiRequest, res: NextApiResponse, collection: 
     if (!id) {
       // Validar que sea una actualización masiva permitida (ej. cambiar estados)
       if (!updateData.status && !updateData.query) {
-        return res.status(400).json({ 
-          error: "For bulk updates, either 'status' or 'query' with update fields is required" 
+        return res.status(400).json({
+          error: "For bulk updates, either 'status' or 'query' with update fields is required"
         });
       }
 
       // Construir query para la actualización masiva
       const bulkQuery = updateData.query || {};
-      
+
       // Validar que no se intente actualizar todas las órdenes sin filtros
       if (Object.keys(bulkQuery).length === 0 && !updateData.status) {
-        return res.status(400).json({ 
-          error: "Bulk updates require filter conditions in 'query' field" 
+        return res.status(400).json({
+          error: "Bulk updates require filter conditions in 'query' field"
         });
       }
 

@@ -130,7 +130,7 @@ const Menufourd: React.FC<MenuProps> = (props) => {
             }}
         >
             <header className={styles.header}>
-                <h1>{namecompanies}</h1>
+                {/* <h1>{namecompanies}</h1> */}
                 <div className={styles.logo}
                     onMouseEnter={() => handleSectionEnter("logo")}
                 >
@@ -139,9 +139,9 @@ const Menufourd: React.FC<MenuProps> = (props) => {
                             namecompanies="LlakaScript"
                             logoUrl={iconURL}
                             size={120} // Tamaño de la imagen
-                            fontSize="22px" // Tamaño de la fuente
+                            fontSize="30px" // Tamaño de la fuente
                             fontWeight="700" // Grosor de la fuente
-                            color="black" // Color del texto
+                            color=" #1abc9c" // Color del texto
                             fontFamily="Arial, sans-serif" // Familia de la fuente
                         />
                         : null}

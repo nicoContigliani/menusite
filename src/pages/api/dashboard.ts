@@ -10,8 +10,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         console.log("Query received:", companyname);
 
         // Conexión a la base de datos
+        // const client = await clientPromise;
+        // const db = client.db("menuDB");
+        const dbName = process.env.NODE_ENV === "development" ? "menuDevDB" : "menuDB";
         const client = await clientPromise;
-        const db = client.db("menuDB");
+        const db = client.db(dbName);
         const companies = db.collection("companies");
         const analytics = db.collection("analytics");
 
@@ -30,14 +33,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             if (!company) {
                 return res.status(404).json({ message: "Company not found" });
             }
-
-
-
-
-
-
-
-
 
             return res.status(200).json(retunrDAta);
         }

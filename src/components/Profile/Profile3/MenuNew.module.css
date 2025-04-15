@@ -13,6 +13,15 @@
   margin: 0 auto;
   box-sizing: border-box;
   padding: 0 10px;
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  overflow-x: auto;
+  /* Permite scroll horizontal EN DESKTOP */
 }
 
 .header {
@@ -23,7 +32,7 @@
   padding: 10px 15px;
   background-color: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(8px);
-  position: sticky;
+  /* position: sticky; */
   top: 0;
   z-index: 10;
   width: 100%;
@@ -122,7 +131,7 @@
 }
 
 .menuItem:hover {
-  transform: translateY(-3px);
+  /* transform: translateY(-3px); */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   background-color: rgba(0, 0, 0, 0.5);
 }
@@ -170,214 +179,259 @@
 
 .schedules {
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
-  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.6);
+  /* padding: 10px; */
   text-align: center;
   border-radius: 8px;
   margin-top: 10px;
+
 }
 
 .footer {
   background-color: rgba(0, 0, 0, 0.7);
   text-align: center;
-  padding: 10px;
+  /* padding: 10px; */
+  padding-top: 1%;
+  padding-bottom: 1%;
   font-size: 0.8rem;
   width: 100%;
-  margin-top: 10px;
 }
 
+
+
+.menuItem {
+  min-width: 0;
+  margin-bottom: 16px;
+  /* Aumentado para mejor espaciado */
+  width: 100%;
+  box-sizing: border-box;
+  background-color: rgba(0, 0, 0, 0.6);
+  /* Mejor contraste */
+  border-radius: 9px;
+  /* Bordes más suaves */
+  overflow: hidden;
+  transition: all 0.3s ease;
+  /* Transición suave */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  /* Sombra más pronunciada */
+
+  /* Mejora para hover */
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+}
+
+.searchInput {
+  width: 100%;
+  padding: 12px 16px;
+  /* Más espacio interno */
+  margin: 16px 0;
+  /* Margen más consistente */
+  font-size: 16px;
+  border: 2px solid rgba(255, 111, 97, 0.3);
+  /* Borde sutil */
+  border-radius: 8px;
+  /* Bordes más redondeados */
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.1),
+    inset 0 1px 2px rgba(255, 255, 255, 0.1);
+  /* Sombra interna/externa */
+  outline: none;
+  box-sizing: border-box;
+  background-color: rgba(255, 255, 255, 0.12);
+  color: white;
+  transition: all 0.25s ease;
+
+  /* Placeholder mejorado */
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 300;
+  }
+
+  /* Efecto focus mejorado */
+  &:focus {
+    border-color: #ff6f61;
+    box-shadow:
+      0 0 0 3px rgba(255, 111, 97, 0.2),
+      inset 0 1px 2px rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+}
+
+
+/* Media queries mejoradas para móviles */
 @media (max-width: 768px) {
+  .container {
+    width: 100%;
+    /* Cambiado de 100vw a 100% para mayor compatibilidad */
+    max-width: 100%;
+    padding: 0 10px;
+    overflow-x: hidden;
+    box-sizing: border-box;
+    /* Asegura que el padding no cause desbordamiento */
+    margin: 0 auto;
+    /* Centra el contenedor */
+    overflow-x: hidden !important;
+    /* Fuerza el bloqueo en móvil */
+    touch-action: pan-y;
+    /* Deshabilita desplazamiento horizontal táctil */
+  }
+
   .header {
     flex-direction: column;
-    align-items: center;
+    justify-content: center;
+    width: 100%;
+    /* Asegura que el header no exceda el ancho */
+    max-width: 100%;
     padding: 10px;
+    margin: 0;
+    box-sizing: border-box;
+  }
+
+  .info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .search {
+    margin-bottom: 8px;
+    width: 85%;
+    padding: 0 10px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+  }
+
+  .main {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    /* Corregido para evitar desbordamiento */
+    gap: 8px;
+    padding: 0 10px;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+  }
+
+  .menuItem {
+    min-width: 0;
+    margin-bottom: 8px;
+    width: 100%;
+    /* Asegura que los items no excedan el ancho */
+    box-sizing: border-box;
   }
 
   .searchInput {
+    width: calc(100% - 20px);
+    /* Ajuste para considerar el padding */
+    padding: 10px;
+    margin: 15px 10px 0 10px;
+    /* Margen uniforme */
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    outline: none;
+    box-sizing: border-box;
+  }
+
+  .cardImage {
+    height: 100px;
+    object-fit: cover;
+    width: 100%;
+    /* Asegura que la imagen ocupe el 100% del contenedor */
+  }
+
+
+  /* Reglas adicionales para contenido interno */
+  .itemDetails,
+  .itemDetails h2,
+  .itemDescription,
+  .price {
     max-width: 100%;
-  }
-
-  .sectionHeader h2 {
-    font-size: 1.1rem;
-  }
-
-  .titleStructure {
-    font-size: 1.2rem;
-    padding: 0.3rem;
+    overflow: hidden;
+    word-break: break-word;
+    /* Rompe palabras largas */
   }
 }
 
 @media (max-width: 480px) {
-  .container {
-    padding: 0 5px;
-  }
-
   .main {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 5px;
-    padding: 1px 0;
-    padding-left: 1%;
-    padding-right: 1%;
+    grid-template-columns: repeat(2, 1fr);
+    /* Mantener 2 columnas incluso en móviles pequeños */
+    gap: 6px;
   }
 
   .menuItem {
-    width: 100%;
-    margin-bottom: 5px;
-    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    min-height: 180px;
+    /* Altura mínima para consistencia */
   }
 
   .cardImage {
-    height: 60px;
+    height: 90px;
+    flex-shrink: 0;
+    /* Evita que la imagen se comprima demasiado */
   }
 
   .itemDetails {
-    padding: 3px 4px;
+    flex: 1;
+    /* Ocupa el espacio restante */
+    display: flex;
+    flex-direction: column;
+    padding: 6px;
   }
 
   .itemDetails h2 {
-    font-size: 0.7rem;
-    margin-bottom: 2px;
+    font-size: 0.8rem;
+    white-space: normal;
+    /* Permite múltiples líneas */
   }
 
   .itemDescription {
-    display: block; /* Mostrar la descripción en móviles */
-    font-size: 12px;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
-    height: 2.6em;
+    flex-grow: 1;
   }
 
   .price {
-    font-size: 0.7rem;
-    margin: 0;
-  }
-
-  .sectionHeader {
-    margin-bottom: 5px;
-  }
-
-  .sectionHeader h2 {
-    font-size: 0.9rem;
-  }
-
-  .sectionHeader h2::after {
-    width: 25px;
-    height: 1px;
-  }
-
-  .titleStructure {
-    font-size: 1rem;
-    padding: 0.2rem;
+    margin-top: auto;
+    /* Empuja el precio hacia abajo */
   }
 }
 
+/* Para pantallas muy pequeñas (menos de 360px) */
 @media (max-width: 360px) {
-  .container {
-    padding: 0 3px;
-  }
-
   .main {
-    gap: 3px;
+    grid-template-columns: repeat(2, 1fr);
+    /* Mantenemos 2 columnas */
+    gap: 4px;
   }
 
   .menuItem {
-    border-radius: 4px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    min-height: 160px;
   }
 
   .cardImage {
-    height: 50px;
+    height: 80px;
   }
 
   .itemDetails h2 {
-    font-size: 0.65rem;
-    margin-bottom: 1px;
-  }
-
-  .price {
-    font-size: 0.65rem;
-  }
-
-  .sectionHeader h2 {
-    font-size: 0.85rem;
-  }
-}
-
-
-.floatingButton {
-  position: fixed; /* Mantiene el botón en la pantalla siempre */
-  bottom: 20px; /* Lo posiciona en la parte inferior */
-  left: 50%; /* Centra horizontalmente */
-  transform: translateX(-50%); /* Ajusta el centrado */
-  z-index: 1000; /* Lo coloca por encima de otros elementos */
-  width: 90%; /* Ancho del botón */
-  max-width: 300px; /* Ancho máximo */
-  padding: 12px 24px; /* Espaciado interno */
-  font-size: 16px; /* Tamaño de la fuente */
-  border-radius: 25px; /* Bordes redondeados */
-  background-color: #1976d2; /* Color de fondo */
-  color: white; /* Color del texto */
-  border: none; /* Sin borde */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra */
-  cursor: pointer; /* Cursor tipo puntero */
-  transition: background-color 0.3s ease; /* Transición suave */
-  animation: pulse 2s infinite; /* Animación de pulso */
-}
-
-/* Efecto al pasar el mouse */
-.floatingButton:hover {
-  background-color: #1565c0; /* Cambia el color de fondo al pasar el mouse */
-}
-
-/* Animación de pulso */
-@keyframes pulse {
-  0% {
-    box-shadow: 0 0 0 0 rgba(25, 118, 210, 0.7);
-  }
-  70% {
-    box-shadow: 0 0 0 15px rgba(25, 118, 210, 0);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(25, 118, 210, 0);
-  }
-}
-
-/* Ajustes para dispositivos móviles */
-@media (max-width: 600px) {
-  .floatingButton {
-    width: 80%; /* Ancho en dispositivos móviles */
-    bottom: 20px; /* Lo mantiene flotando siempre visible */
-    font-size: 14px; /* Tamaño de fuente más pequeño */
-    padding: 10px 20px; /* Espaciado interno reducido */
-  }
-}
-
-@media screen and (max-width: 480px) and (max-height: 700px) {
-  .container {
-    padding: 0 8px;
-    max-width: 100%;
-  }
-
-  .main {
-    grid-template-columns: repeat(2, 1fr); /* Reducir a 2 columnas para mejorar la visibilidad */
-    gap: 8px;
-  }
-
-  .menuItem {
-    border: none; /* Eliminar bordes en los elementos */
-    box-shadow: none; /* Eliminar sombras */
-  }
-
-  .itemDetails h2 {
-    font-size: 0.75rem; /* Ajustar tamaño del texto */
-  }
-
-  .price {
     font-size: 0.75rem;
   }
 
-  .floatingButton {
-    width: 95%;
-    max-width: 280px;
+  .itemDescription {
+    font-size: 0.7rem;
+  }
+}
+
+/* Ajuste especial para landscape en móviles */
+@media (max-width: 768px) and (orientation: landscape) {
+  .main {
+    grid-template-columns: repeat(3, 1fr);
+    /* 3 columnas en landscape */
   }
 }

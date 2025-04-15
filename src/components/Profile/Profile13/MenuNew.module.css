@@ -274,3 +274,48 @@
     }
   }
   
+  /* Responsividad para mantener dos columnas en mobile */
+@media (max-width: 768px) {
+    .sectionItems {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); /* Intenta con un valor menor */
+        gap: 10px; /* Reduce el espacio entre elementos */
+    }
+
+    /* Otros ajustes que puedas necesitar para mobile */
+    .header h1 {
+        font-size: 2.5rem; /* Ajusta el tamaño de la fuente si es necesario */
+    }
+
+    .sectionTitle {
+        font-size: 1.8rem; /* Ajusta el tamaño de la fuente si es necesario */
+    }
+
+    .filterInput {
+        width: 95%; /* Ocupa más ancho en mobile */
+    }
+
+    .menuWrapper {
+        width: 98%; /* Ocupa más ancho en mobile */
+    }
+    .menuItem {
+        padding: 15px; /* Reduce el padding */
+        gap: 10px; /* Reduce el gap interno */
+    }
+
+}
+
+/* Ajustes para pantallas aún más pequeñas (si es necesario) */
+@media (max-width: 480px) {
+    .sectionItems {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); /* Reduce aún más si es necesario */
+        gap: 10px;
+    }
+
+    .header h1 {
+        font-size: 2rem;
+    }
+
+    .sectionTitle {
+        font-size: 1.6rem;
+    }
+}

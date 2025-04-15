@@ -209,7 +209,7 @@ const Menutwo: React.FC<MenuProps> = (props) => {
                                         <div className={styles.itemDetails}>
                                             <h2>{item?.Name}</h2>
                                             <div className={styles.itemDescription}>{item?.Description}</div>
-                                            <div className={styles.price}>{`$${item.Price}`}</div>
+                                            <div className={styles.price}>{`${item.Price}`}</div>
                                         </div>
                                     </div>
                                     <div onMouseEnter={() => handleSectionEnter(`Button-${item.Name}`)}>
@@ -262,7 +262,7 @@ const Menutwo: React.FC<MenuProps> = (props) => {
                                         <div className={styles.itemDetails}>
                                             <h2>{item?.Name}</h2>
                                             <div className={styles.itemDescription}>{item?.Description}</div>
-                                            <div className={styles.price}>{`$${item.Price}`}</div>
+                                            <div className={styles.price}>{`${item.Price}`}</div>
                                         </div>
                                     </div>
                                     <div onMouseEnter={() => handleSectionEnter(`Button-${item.Name}`)}>

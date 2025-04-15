@@ -169,7 +169,7 @@ const MenuFourdTeen: React.FC<MenuProps> = (props) => {
                 >
                     {info ?
                         <Info
-                            info={info}
+                            info={info[0]}
                             fontSize="14px"
                             fontWeight="500"
                             color="#dddddd"

@@ -121,7 +121,17 @@ const Menufive: React.FC<MenuProps> = (props) => {
   }, [groupedSectionpromotions, searchTerm])
 
   return (
-    <div className={styles.menuContainer} style={{ backgroundImage: backgroundImages || "none" }}>
+    <div className={styles.menuContainer} style={{
+      backgroundImage: backgroundImages || "none",
+      backgroundSize: "cover",  // Hace que el fondo cubra todo el contenedor
+      backgroundPosition: "center",  // Centra la imagen
+      backgroundAttachment: "fixed",  // Parallax en scroll
+      backgroundRepeat: "no-repeat",  // Evita la repetición
+      position: "relative",
+      width: "100%",
+      height: "100vh",  // Asegura que el contenedor ocupe toda la pantalla
+      overflow: "scroll",  // Asegura que no haya desbordamientos
+    }}>
       <header className={styles.header} onMouseEnter={() => handleSectionEnter("header")}>
         <h1>{namecompanies}</h1>
         <div className={styles.logo} onMouseEnter={() => handleSectionEnter("logo")}>
@@ -130,9 +140,9 @@ const Menufive: React.FC<MenuProps> = (props) => {
               namecompanies="LlakaScript"
               logoUrl={iconURL}
               size={120} // Tamaño de la imagen
-              fontSize="22px" // Tamaño de la fuente
+              fontSize="30px" // Tamaño de la fuente
               fontWeight="700" // Grosor de la fuente
-              color="black" // Color del texto
+              color="#f39c12"
               fontFamily="Arial, sans-serif" // Familia de la fuente
             />
           ) : null}
@@ -279,7 +289,9 @@ const Menufive: React.FC<MenuProps> = (props) => {
           </>
         )}
       </Grid>
-
+      <footer className={styles.footer}>
+        <p>{`© ${new Date().getFullYear()} LlakaScript`}</p>
+      </footer>
     </div>
   )
 }

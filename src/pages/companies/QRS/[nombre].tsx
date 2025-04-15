@@ -189,6 +189,11 @@ const QRPage = ({ nombre, baseUrl }: QRPageProps) => {
 
     const dataUrl = [
         { 
+            title: "Update Info Menu", 
+            url: `${baseUrl}/newcompany`,
+            icon: <DownloadIcon color="primary" />
+        },
+        { 
             title: "Employees", 
             url: `${baseUrl}/employees/${nombre}`,
             icon: <DownloadIcon color="primary" />
@@ -202,7 +207,13 @@ const QRPage = ({ nombre, baseUrl }: QRPageProps) => {
             title: "Dashboard", 
             url: `${baseUrl}/company/dashboard/${nombre}`,
             icon: <DownloadIcon color="success" />
+        },
+        { 
+            title: "QR Code", 
+            url: `${baseUrl}/companies/QRS/${nombre}`,
+            icon: <DownloadIcon color="success" />
         }
+
     ];
 
     const togglePromotions = () => {

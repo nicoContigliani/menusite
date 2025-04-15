@@ -132,7 +132,7 @@ const Menutwelve: React.FC<MenuProps> = (props) => {
                                     <div className={styles.itemInfo}>
                                         <h3 className={styles.itemName}>{item.Name}</h3>
                                         <span className={styles.itemDescription}>{item.Description}</span>
-                                        <span className={styles.price}>${item.Price}</span>
+                                        <span className={styles.price}>{item.Price}</span>
                                     </div>
                                     <div onMouseEnter={() => handleSectionEnter(`Button-${item.Name}`)}>
                                         <CatchOrder

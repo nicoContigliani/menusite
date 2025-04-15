@@ -25,16 +25,16 @@ const profiles = [
     { name: "Profile2", path: "Profile2/Menutwo" },
     { name: "Profile3", path: "Profile3/Menuthree" },
     { name: "Profile4", path: "Profile4/Menufourd" },
-    { name: "Profile5", path: "Profile5/Menufive" },
+    // { name: "Profile5", path: "Profile5/Menufive" },
     { name: "Profile6", path: "Profile6/Menusix" },
-    { name: "Profile7", path: "Profile7/Menuseven" },
+    // { name: "Profile7", path: "Profile7/Menuseven" },
     { name: "Profile8", path: "Profile8/Menueight" },
     { name: "Profile9", path: "Profile9/Menunine" },
     { name: "Profile10", path: "Profile10/Menuten" },
     { name: "Profile11", path: "Profile11/Menueleven" },
     { name: "Profile12", path: "Profile12/Menutwelve" },
-    { name: "Profile13", path: "Profile13/Menuthirteen" },
-    { name: "Profile14", path: "Profile14/MenuFourdTeen" },
+    // { name: "Profile13", path: "Profile13/Menuthirteen" },
+    // { name: "Profile14", path: "Profile14/MenuFourdTeen" },
     { name: "Profile15", path: "Profile15/MenuFifteen" },
     { name: "Profile16", path: "Profile16/MenuSixteen" },
     { name: "ProfileE1", path: "ProfileE1/Ecomerceone" },
@@ -52,7 +52,6 @@ const GenericProfileComponent = dynamic(() => import("../../components/Profile/P
 })
 
 const ProfileProduction = (props: any) => {
-    console.log("🚀 ~ ProfileProduction ~ props:", props)
     const [dataGeneral, setDataGeneral] = useState<any | undefined>(undefined)
     const [selectedProfile, setSelectedProfile] = useState<string | null>(null)
     const [companyNames, setCompanyNames] = useState<string>("")
@@ -60,7 +59,6 @@ const ProfileProduction = (props: any) => {
     useEffect(() => {
         const funtionasync = async () => {
             setDataGeneral(props?.menuItems ?? {})
-            console.log("🚀 ~ funtionasync ~ props?.menuItems:", props?.menuItems)
             setSelectedProfile(props?.menuItems?.selectedProfile ?? null)
             setCompanyNames(props?.menuItems?.companyNames ?? "")
         }

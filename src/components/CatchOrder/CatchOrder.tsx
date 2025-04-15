@@ -61,7 +61,6 @@ const CatchOrder = (props: CatchOrderProps) => {
   const { Config = [], staff = [] } = hojas;
   
   const { hasPermission } = useRules(Config, staff);
-  console.log("🚀 ~ CatchOrder ~ hasPermission:", hasPermission)
   
   useEffect(() => {
     setRuleUsed(hasPermission);
@@ -106,14 +105,14 @@ const CatchOrder = (props: CatchOrderProps) => {
   // Función para manejar cambios en los checkboxes
 
   const handleCheckboxChange = (name: string, isChecked: boolean) => {
-    console.log(`Checkbox ${name} changed to:`, isChecked)
+    // console.log(`Checkbox ${name} changed to:`, isChecked)
 
     // Actualizar de forma más explícita para asegurar que el cambio persista
     const updatedExtras = {
       ...selectedExtras,
       [name]: isChecked,
     }
-    console.log("Nuevo estado de extras:", updatedExtras)
+    // console.log("Nuevo estado de extras:", updatedExtras)
     setSelectedExtras(updatedExtras)
   }
 

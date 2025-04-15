@@ -168,6 +168,9 @@ const Menueleven: React.FC<MenuProps> = (props: MenuProps) => {
                     <span className={styles.noResults}>No results found for "{searchTerm}"</span>
                 )}
             </div>
+            <footer className={styles.footer}>
+                <p>{`© ${new Date().getFullYear()} LlakaScript`}</p>
+            </footer>
         </div>
     )
 }

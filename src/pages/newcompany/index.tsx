@@ -286,9 +286,6 @@
 // export default page
 
 
-
-
-
 "use client"
 import dynamic from "next/dynamic"
 import { useEffect, useLayoutEffect, useMemo, useState } from "react"
@@ -317,10 +314,13 @@ import stepsData from "../../../dataJSON/stepsDataSet.json"
 import dataMocks from "../../../dataJSON/dataMocks.json"
 import { Grid } from "@mui/material"
 
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { showToast } from "../../../store/toastSlice"
 import { redirect } from "next/dist/server/api-utils"
 import { useRouter } from "next/router"
+import AuthB from "@/components/AuthB/AuthB"
+import ModalComponents from "@/components/ModalComponents/ModalComponents"
+import { RootState } from "../../../store/store"
 
 interface DescriptionItem {
   key: string
@@ -366,19 +366,45 @@ const index = () => {
   const [fullUrl, setFullUrl] = useState("");
   const [urlsGeneral, setUrlsGeneral] = useState({})
 
+  const users: any | any[] | undefined = useSelector((state: RootState) => state.auth)
+
+  const {
+    error,
+    isAuthenticated,
+    loading,
+    user
+  } = users
+
+
   localhostStorage({
     demo: true
   })
+  // handleCloseModal
+
+
+
+  // useEffect(() => {
+  //   const storedData = getLocalhostStorage()
+  //   if (storedData?.aud != null) {
+  //     const { aud, email, _id, access_token, expires_at, userid } = storedData
+  //     setIsLogin(true)
+  //   } else {
+  //     setOpenResponsive(true)
+  //   }
+  // }, [])
 
   useEffect(() => {
     const storedData = getLocalhostStorage()
-    if (storedData?.aud != null) {
-      const { aud, email, _id, access_token, expires_at, userid } = storedData
+    if (storedData?.aud != null || isAuthenticated|| user !== null) {
       setIsLogin(true)
     } else {
       setOpenResponsive(true)
     }
-  }, [])
+  }, [users])
+
+
+
+
   useEffect(() => {
     setUrlsGeneral({
       "employess": `${process.env.NEXT_PUBLIC_SITE_URL}/employees/${folderName}`,
@@ -485,10 +511,23 @@ const index = () => {
     }
   }, [finishit, folderName, router]);
 
+  const handleCloseModal = () => {
+    setOpenResponsive(false); // Close the modal correctly
+  };
+
+
 
 
   return (
     <div className={styles.main}>
+      <ModalComponents openResponsive={openResponsive} setOpenResponsive={setOpenResponsive} onClose={handleCloseModal}>
+        <AuthB
+          redirections={true}
+          setOpenResponsive={setOpenResponsive}
+          fullUrl={fullUrl}
+          setIsLogin={setIsLogin}
+        />
+      </ModalComponents>
       <div className={styles.header}>
         <Header
           imagetodo={{
@@ -513,9 +552,6 @@ const index = () => {
                 value={`https://menusi.netlify.app/companies/${folderName}`}
                 icon={"/images/flama.png"}
               /> */}
-
-
-
 
 
               <Button

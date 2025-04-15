@@ -13,22 +13,24 @@
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
+  box-sizing: border-box; /* Asegura que el padding no afecte el ancho total */
+  overflow-x: hidden; /* Evita el desplazamiento horizontal */
 }
 
 /* Header */
 .header {
   display: flex;
-  /* Added display: flex which was missing */
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  padding: 20px;
+  padding: 15px;
   background: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(10px);
   border-radius: 8px;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   flex-wrap: wrap;
+  box-sizing: border-box; /* Asegura que el padding no afecte el ancho total */
 }
 
 .logo {
@@ -36,16 +38,22 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  /* Changed from space-around for better alignment */
   padding-left: 10px;
+}
+
+.logo img {
+  max-width: 120px; /* Reducido aún más para pantallas pequeñas */
+  height: auto;
 }
 
 .info {
   flex: 2;
   display: flex;
+  flex-direction: column; /* Alinea los elementos verticalmente en pantallas pequeñas */
+  align-items: center; /* Centra los elementos horizontalmente */
   justify-content: center;
   color: #f4f4f4;
-  font-size: 18px;
+  font-size: 14px; /* Reducido para pantallas pequeñas */
   text-align: center;
 }
 
@@ -53,21 +61,21 @@
   flex: 1;
   display: flex;
   justify-content: flex-end;
-  /* Changed from space-around for better alignment */
   padding-right: 10px;
 }
 
 .searchInput {
   width: 100%;
-  max-width: 300px;
-  padding: 12px 18px;
+  max-width: 180px; /* Reducido aún más */
+  padding: 8px 12px; /* Reducido el padding */
   border: 2px solid #444;
   border-radius: 12px;
   background-color: #333;
   color: #f4f4f4;
-  font-size: 16px;
+  font-size: 12px; /* Reducido el tamaño de la fuente */
   outline: none;
   transition: all 0.3s ease;
+  box-sizing: border-box; /* Asegura que el padding no afecte el ancho total */
 }
 
 .searchInput:focus {
@@ -80,42 +88,40 @@
 .main {
   width: 100%;
   max-width: 1200px;
-  margin: 30px auto;
-  /* Added auto margins for proper centering */
+  margin: 15px auto; /* Reducido el margen */
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* Center content horizontally */
+  box-sizing: border-box; /* Asegura que el padding no afecte el ancho total */
 }
 
 .section {
   width: 100%;
-  /* Ensure sections take full width of main */
-  margin-bottom: 40px;
-  padding: 25px;
+  margin-bottom: 20px; /* Reducido el margen */
+  padding: 15px;
   border-radius: 12px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
   background: rgba(34, 34, 34, 0.8);
-  /* Added background for better contrast */
+  box-sizing: border-box; /* Asegura que el padding no afecte el ancho total */
 }
 
 .sectionHeader {
-  margin-bottom: 15px;
-  padding: 15px;
-  font-size: 24px;
+  margin-bottom: 8px; /* Reducido el margen */
+  padding: 10px;
+  font-size: 18px; /* Reducido el tamaño de la fuente */
   font-weight: bold;
   text-align: center;
   color: #ff9900;
-  border-bottom: 3px solid #ff9900;
+  border-bottom: 2px solid #ff9900;
 }
 
 /* Items */
 .sectionItems {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 25px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Reducido el minmax para más flexibilidad */
+  gap: 10px; /* Reducido el gap */
   width: 100%;
-  /* Ensure grid takes full width */
+  box-sizing: border-box; /* Asegura que el padding no afecte el ancho total */
 }
 
 .menuItem {
@@ -126,11 +132,12 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box; /* Asegura que el padding no afecte el ancho total */
 }
 
 .menuItem:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px); /* Reducido el efecto hover */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Reducido la sombra del hover */
 }
 
 .itemInfo {
@@ -141,9 +148,9 @@
 
 .cardImage {
   width: 100%;
-  height: 220px;
+  height: 120px; /* Reducido la altura de la imagen */
   overflow: hidden;
-  border-bottom: 3px solid #444;
+  border-bottom: 1px solid #444; /* Borde más delgado */
 }
 
 .cardImage img {
@@ -154,56 +161,56 @@
 }
 
 .cardImage img:hover {
-  transform: scale(1.1);
+  transform: scale(1.02); /* Reducido el efecto de escala */
 }
 
 .itemDetails {
-  padding: 20px;
+  padding: 10px; /* Reducido el padding */
   text-align: center;
   background-color: #222;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  /* Allow it to grow and fill available space */
+  box-sizing: border-box; /* Asegura que el padding no afecte el ancho total */
 }
 
 .itemDetails h2 {
-  font-size: 20px;
+  font-size: 16px; /* Reducido el tamaño de la fuente */
   font-weight: bold;
   color: #f4f4f4;
-  margin-bottom: 5px;
+  margin-bottom: 3px; /* Reducido el margen inferior */
 }
 
 .itemDescription {
-  font-size: 14px;
+  font-size: 10px; /* Reducido el tamaño de la fuente */
   color: #aaa;
-  margin-bottom: 10px;
+  margin-bottom: 5px; /* Reducido el margen inferior */
   flex-grow: 1;
-  /* Allow description to grow */
 }
 
 .price {
-  font-size: 18px;
+  font-size: 14px; /* Reducido el tamaño de la fuente */
   font-weight: bold;
   color: #ff9900;
-  margin: 10px 0;
+  margin: 5px 0; /* Reducido el margen */
 }
 
 /* Footer */
 .footer {
   width: 100%;
-  margin-top: 50px;
-  padding: 15px;
+  margin-top: 20px; /* Reducido el margen superior */
+  padding: 8px; /* Reducido el padding */
   text-align: center;
-  font-size: 14px;
+  font-size: 10px; /* Reducido el tamaño de la fuente */
   color: #f4f4f4;
   background-color: #222;
-  border-top: 2px solid #ff9900;
+  border-top: 1px solid #ff9900; /* Borde más delgado */
   border-radius: 8px;
+  box-sizing: border-box; /* Asegura que el padding no afecte el ancho total */
 }
 
 .footer div {
-  font-size: 16px;
+  font-size: 12px; /* Reducido el tamaño de la fuente */
   font-weight: 500;
 }
 
@@ -214,147 +221,176 @@
   .sectionItems {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  .info {
+    font-size: 15px;
+  }
 }
 
 /* Para pantallas pequeñas */
 @media (max-width: 768px) {
   .header {
-    flex-direction: column;
-    align-items: center;
-    padding: 15px;
-    gap: 15px;
+    padding: 10px;
   }
 
-  .logo,
-  .info,
-  .searchContainer {
-    flex: 0 0 100%;
-    width: 100%;
-    justify-content: center;
-    margin-bottom: 10px;
-    padding: 0;
+  .logo img {
+    max-width: 100px;
+  }
+
+  .info {
+    font-size: 13px;
   }
 
   .searchInput {
-    max-width: 100%;
-    width: 90%;
-  }
-
-  .sectionItems {
-    grid-template-columns: 1fr;
+    max-width: 150px;
+    padding: 6px 10px;
+    font-size: 11px;
   }
 
   .section {
-    padding: 15px;
+    padding: 10px;
+    margin-bottom: 15px;
+  }
+
+  .sectionHeader {
+    padding: 6px;
+    font-size: 16px;
+    margin-bottom: 6px;
+  }
+
+  .cardImage {
+    height: 100px;
+  }
+
+  .itemDetails {
+    padding: 8px;
+  }
+
+  .itemDetails h2 {
+    font-size: 14px;
+  }
+
+  .price {
+    font-size: 12px;
   }
 }
 
 /* Para pantallas muy pequeñas */
 @media (max-width: 480px) {
   .container {
-    padding: 10px;
+    padding: 0 5px; /* Reducido el padding lateral */
   }
 
   .header {
-    padding: 10px;
+    padding: 8px;
+    flex-direction: column; /* Apila los elementos del header */
+    align-items: center;
+  }
+
+  .logo {
+    padding-left: 0;
+    margin-bottom: 5px; /* Añade espacio debajo del logo */
+    justify-content: center; /* Centra el logo */
   }
 
   .info {
-    font-size: 14px;
+    font-size: 11px;
+    margin-bottom: 5px; /* Añade espacio debajo de la info */
+  }
+
+  .searchContainer {
+    padding-right: 0;
+    justify-content: center; /* Centra el buscador */
   }
 
   .searchInput {
-    padding: 10px 15px;
-    font-size: 14px;
+    max-width: 90%; /* Ocupa más ancho en pantallas muy pequeñas */
+    padding: 5px 8px;
+    font-size: 10px;
   }
 
   .section {
-    padding: 10px;
+    padding: 8px;
+    margin-bottom: 10px;
   }
 
   .sectionHeader {
-    padding: 10px;
-    font-size: 20px;
-  }
-
-  .menuItem {
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  }
-
-  .cardImage {
-    height: 180px;
-  }
-
-  .itemDetails {
-    padding: 15px;
-  }
-
-  .itemDetails h2 {
-    font-size: 16px;
-  }
-
-  .price {
+    padding: 5px;
     font-size: 14px;
+    margin-bottom: 5px;
   }
 
   .sectionItems {
-    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-    /* Ajusta aún más las tarjetas */
-    gap: 15px;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); /* Aún más reducido */
+    gap: 8px;
+  }
+
+  .cardImage {
+    height: 80px;
+  }
+
+  .itemDetails h2 {
+    font-size: 12px;
+  }
+
+  .price {
+    font-size: 10px;
+  }
+
+  .footer {
+    padding: 5px;
+    font-size: 8px;
+    margin-top: 15px;
+  }
+
+  .footer div {
+    font-size: 10px;
   }
 }
 
-
-
 .floatingButton {
-  position: fixed; /* Mantiene el botón en la pantalla siempre */
-  bottom: 20px; /* Lo posiciona en la parte inferior */
-  left: 50%; /* Centra horizontalmente */
-  transform: translateX(-50%); /* Ajusta el centrado */
-  z-index: 1000; /* Lo coloca por encima de otros elementos */
-  width: 90%; /* Ancho del botón */
-  max-width: 300px; /* Ancho máximo */
-  padding: 12px 24px; /* Espaciado interno */
-  font-size: 16px; /* Tamaño de la fuente */
-  border-radius: 25px; /* Bordes redondeados */
-  background-color: #1976d2; /* Color de fondo */
-  color: white; /* Color del texto */
-  border: none; /* Sin borde */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra */
-  cursor: pointer; /* Cursor tipo puntero */
-  transition: background-color 0.3s ease; /* Transición suave */
-  animation: pulse 2s infinite; /* Animación de pulso */
+  position: fixed;
+  bottom: 10px; /* Aún más cerca del borde inferior */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  width: 98%; /* Ocupa casi todo el ancho */
+  max-width: 400px; /* Aumentado el max-width para pantallas más grandes en horizontal */
+  padding: 8px 16px; /* Aún más reducido */
+  font-size: 12px; /* Aún más reducido */
+  border-radius: 20px; /* Bordes más redondeados */
 }
 
-/* Efecto al pasar el mouse */
-.floatingButton:hover {
-  background-color: #1565c0; /* Cambia el color de fondo al pasar el mouse */
-}
-
-/* Animación de pulso */
 @keyframes pulse {
   0% {
     box-shadow: 0 0 0 0 rgba(25, 118, 210, 0.7);
   }
   70% {
-    box-shadow: 0 0 0 15px rgba(25, 118, 210, 0);
+    box-shadow: 0 0 0 8px rgba(25, 118, 210, 0); /* Aún más pequeño el pulso */
   }
   100% {
     box-shadow: 0 0 0 0 rgba(25, 118, 210, 0);
   }
 }
 
-/* Ajustes para dispositivos móviles */
 @media (max-width: 600px) {
   .floatingButton {
-    width: 90%; /* Ancho en dispositivos móviles */
-    bottom: 20px; /* Lo mantiene flotando siempre visible */
-    font-size: 14px; /* Tamaño de fuente más pequeño */
-    padding: 10px 20px; /* Espaciado interno reducido */
+    font-size: 10px; /* Aún más pequeño en móviles */
+    padding: 6px 12px; /* Aún más reducido en móviles */
   }
 }
 
-.orderButton{
+.orderButton {
   background-color: #262626;
   color: #f4f4f4;
+  padding: 6px 10px; /* Reducido el padding */
+  border-radius: 6px; /* Reducido el radio del borde */
+  font-size: 12px; /* Reducido el tamaño de la fuente */
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 8px; /* Reducido el margen superior */
+}
+
+.orderButton:hover {
+  background-color: #333;
 }
