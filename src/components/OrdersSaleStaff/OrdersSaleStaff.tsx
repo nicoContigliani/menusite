@@ -128,6 +128,7 @@ const OrdersSaleStaff = () => {
   // Selectores de Redux
   const { data } = useSelector((state: RootState) => state.chExcelData as unknown as { data: any })
   const user = useSelector((state: RootState) => state.auth)
+  console.log("🚀 ~ OrdersSaleStaff ~ user:", user)
 
   // Hook personalizado para gestión de órdenes
   const {
@@ -147,6 +148,7 @@ const OrdersSaleStaff = () => {
     companyName: data?.companyName,
     userEmail: user?.user?.email,
   })
+  console.log("🚀 ~ OrdersSaleStaff ~ ordersByStatus:", ordersByStatus)
 
   // Efecto para animación de título
   useEffect(() => {
@@ -258,6 +260,9 @@ const OrdersSaleStaff = () => {
 
       const dataPayment = {
         orderId: order?.id,
+        orderGeneral: order,
+        waiter: order?.email,
+        cashier: user?.user?.email,
         payment: paymentSummary,
         status: "completed",
         companyName: data?.companyName,
@@ -491,7 +496,7 @@ const OrdersSaleStaff = () => {
                 <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
                   <IconButton
                     size="small"
-                    onClick={()=>handleLogout}
+                    onClick={() => handleLogout}
                     color="default"
                   >
                     <LogoutIcon fontSize="small" />
