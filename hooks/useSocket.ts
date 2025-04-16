@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import io from "socket.io-client";
 
-const NODE_ENV: string = process.env.NEXT_PUBLIC_NODE_ENV || "";
+const NEXT_PUBLIC_NODE_ENV: string = process.env.NEXT_PUBLIC_NEXT_PUBLIC_NODE_ENV || "";
 
 
 interface OrderItem {
@@ -126,7 +126,7 @@ const useSocketChat = (socketUrl: string): UseSocketChatReturn => {
       setIsConnected(true);
       setReconnectAttempts(0);
 
-      if (NODE_ENV === "development") console.log('✅ Socket conectado');
+      if (NEXT_PUBLIC_NODE_ENV === "development") console.log('✅ Socket conectado');
 
       // Reunirse a la sala si ya tenemos nombre y sala
       if (name && room) {
@@ -136,12 +136,12 @@ const useSocketChat = (socketUrl: string): UseSocketChatReturn => {
 
     newSocket.on('disconnect', (reason: any) => {
       setIsConnected(false);
-      if (NODE_ENV === "development") console.log('❌ Socket desconectado:', reason);
+      if (NEXT_PUBLIC_NODE_ENV === "development") console.log('❌ Socket desconectado:', reason);
 
       if (reason === 'io server disconnect' || reason === 'io client disconnect') {
         setTimeout(() => {
           if (reconnectAttempts < maxReconnectAttempts) {
-            if (NODE_ENV === "development") console.log(`🔁 Intentando reconectar (${reconnectAttempts + 1}/${maxReconnectAttempts})`);
+            if (NEXT_PUBLIC_NODE_ENV === "development") console.log(`🔁 Intentando reconectar (${reconnectAttempts + 1}/${maxReconnectAttempts})`);
             newSocket.connect();
             setReconnectAttempts(prev => prev + 1);
           }
@@ -150,15 +150,15 @@ const useSocketChat = (socketUrl: string): UseSocketChatReturn => {
     });
 
     newSocket.on('reconnect_attempt', (attempt: any) => {
-      if (NODE_ENV === "development") console.log(`🔁 Intento de reconexión ${attempt}`);
+      if (NEXT_PUBLIC_NODE_ENV === "development") console.log(`🔁 Intento de reconexión ${attempt}`);
     });
 
     newSocket.on('reconnect_error', (error: any) => {
-      if (NODE_ENV === "development") console.log('⚠️ Error de reconexión:', error);
+      if (NEXT_PUBLIC_NODE_ENV === "development") console.log('⚠️ Error de reconexión:', error);
     });
 
     newSocket.on('reconnect_failed', () => {
-      if (NODE_ENV === "development") console.log('❌ Reconexión fallida');
+      if (NEXT_PUBLIC_NODE_ENV === "development") console.log('❌ Reconexión fallida');
     });
 
     newSocket.on('new_message', (data: { from: string; message: string }) => {
@@ -176,7 +176,7 @@ const useSocketChat = (socketUrl: string): UseSocketChatReturn => {
 
     return () => {
       newSocket.disconnect();
-      if (NODE_ENV === "development") console.log('🔌 Socket desconectado (cleanup)');
+      if (NEXT_PUBLIC_NODE_ENV === "development") console.log('🔌 Socket desconectado (cleanup)');
     };
   }, [initializeSocket]);
 
@@ -184,7 +184,7 @@ const useSocketChat = (socketUrl: string): UseSocketChatReturn => {
   useEffect(() => {
     if (!isConnected && socket && reconnectAttempts < maxReconnectAttempts) {
       const timer = setTimeout(() => {
-        if (NODE_ENV === "development") console.log(`🔁 Intentando reconexión manual (${reconnectAttempts + 1}/${maxReconnectAttempts})`);
+        if (NEXT_PUBLIC_NODE_ENV === "development") console.log(`🔁 Intentando reconexión manual (${reconnectAttempts + 1}/${maxReconnectAttempts})`);
         socket.connect();
         setReconnectAttempts(prev => prev + 1);
       }, reconnectDelay);
@@ -204,7 +204,7 @@ const useSocketChat = (socketUrl: string): UseSocketChatReturn => {
   const joinRoom = useCallback(() => {
     if (name && room && socket) {
       socket.emit('join_channel', room);
-      if (NODE_ENV === "development") console.log(`🚪 Uniéndose a la sala: ${room}`);
+      if (NEXT_PUBLIC_NODE_ENV === "development") console.log(`🚪 Uniéndose a la sala: ${room}`);
     }
   }, [name, room, socket]);
 

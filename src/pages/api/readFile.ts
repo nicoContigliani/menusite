@@ -20,7 +20,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         // Conectar a MongoDB (conexión persistente)
         // const client = await clientPromise;
         // const db = client.db("menuDB");
-        const dbName = process.env.NODE_ENV === "development" ? "menuDevDB" : "menuDB";
+        const dbName = process.env.NEXT_PUBLIC_NODE_ENV === "development" ? "menuDevDB" : "menuDB";
         const client = await clientPromise;
         const db = client.db(dbName);
         const collection = db.collection("companies");

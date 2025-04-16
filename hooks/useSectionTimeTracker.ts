@@ -155,13 +155,13 @@ const useSectionTimeTracker = (namecompanies: string) => {
         } else {
           // throw new Error("Error en el envío");
           // console.error("❌ Error al enviar datos:");
-          if (process.env.NODE_ENV === "development") console.log("❌ Error al enviar datos:");
+          if (process.env.NEXT_PUBLIC_NODE_ENV === "development") console.log("❌ Error al enviar datos:");
 
         }
       } catch (error) {
         // console.error("❌ Error al enviar datos:", error);
 
-        if (process.env.NODE_ENV === "development") console.log("❌ Error al enviar datos:");
+        if (process.env.NEXT_PUBLIC_NODE_ENV === "development") console.log("❌ Error al enviar datos:");
 
       }
     },

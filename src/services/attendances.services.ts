@@ -9,7 +9,7 @@ interface AttendanceRecord {
 }
 
 export async function registerAttendance(record: AttendanceRecord) {
-  const dbName = process.env.NODE_ENV === "development" ? "menuDevDB" : "menuDB";
+  const dbName = process.env.NEXT_PUBLIC_NEXT_PUBLIC_NODE_ENV === "development" ? "menuDevDB" : "menuDB";
   const client = await clientPromise;
   const db = client.db(dbName);
   
@@ -53,7 +53,7 @@ export async function registerAttendance(record: AttendanceRecord) {
 }
 
 export async function getTodayShifts(email: string, companyName: string) {
-  const dbName = process.env.NODE_ENV === "development" ? "menuDevDB" : "menuDB";
+  const dbName = process.env.NEXT_PUBLIC_NEXT_PUBLIC_NODE_ENV === "development" ? "menuDevDB" : "menuDB";
   const client = await clientPromise;
   const db = client.db(dbName);
   

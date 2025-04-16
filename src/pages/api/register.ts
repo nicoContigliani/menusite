@@ -13,7 +13,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (!email || !password || !fullname || !birthday || !phone) {
     return res.status(400).json({ error: "Email, password and companyName are required" });
   }
-  const dbName = process.env.NODE_ENV === "development" ? "menuDevDB" : "menuDB";
+  const dbName = process.env.NEXT_PUBLIC_NODE_ENV === "development" ? "menuDevDB" : "menuDB";
   const client = await clientPromise;
   const db = client.db(dbName);
   // const client = await clientPromise;

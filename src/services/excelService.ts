@@ -13,7 +13,7 @@ export async function readAndInsertExcelData(todo: any) {
 
 
 
-  const dbName = process.env.NODE_ENV === "development" ? "menuDevDB" : "menuDB";
+  const dbName = process.env.NEXT_PUBLIC_NODE_ENV === "development" ? "menuDevDB" : "menuDB";
   const client = await clientPromise;
   const db = client.db(dbName);
 
@@ -61,16 +61,16 @@ export async function readAndInsertExcelData(todo: any) {
 export async function getCompanyByName(companyName: any) {
   console.log("🚀 ~ getCompanyByName ~ companyName:", companyName)
   try {
-    // const dbName = process.env.NODE_ENV === "development" ? "menuDevDB" : "menuDB";
+    // const dbName = process.env.NEXT_PUBLIC_NODE_ENV === "development" ? "menuDevDB" : "menuDB";
     // const db = client.db("menuDB");
     const client = await clientPromise;
-    const dbName = process.env.NODE_ENV === "development" ? "menuDevDB" : "menuDB";
+    const dbName = process.env.NEXT_PUBLIC_NODE_ENV === "development" ? "menuDevDB" : "menuDB";
     const db = client.db(dbName);
     const companies = db.collection("companies");
 
 
 
-    // const dbName = process.env.NODE_ENV === "development" ? "menuDevDB" : "menuDB";
+    // const dbName = process.env.NEXT_PUBLIC_NODE_ENV === "development" ? "menuDevDB" : "menuDB";
     // const db = client.db(dbName);
     // const client = await clientPromise;
 
