@@ -97,20 +97,20 @@ const OrdersQueryComponent: React.FC<{ companiesName: string }> = ({
     { field: "fullname", label: "Cliente", width: 180, filterable: true },
     { field: "email", label: "Email", width: 200, filterable: true },
     { field: "phone", label: "Teléfono", width: 150, filterable: true },
-    { 
-      field: "createdAt", 
-      label: "Fecha Creación", 
-      width: 180, 
+    {
+      field: "createdAt",
+      label: "Fecha Creación",
+      width: 180,
       filterable: false,
       format: (value: string | Date) => {
         const date = new Date(value);
         return date.toLocaleString();
       }
     },
-    { 
-      field: "cart", 
-      label: "Productos", 
-      width: 250, 
+    {
+      field: "cart",
+      label: "Productos",
+      width: 250,
       filterable: false,
       format: (cart: any[]) => {
         return cart.map(item => `${item.quantity}x ${item.name}`).join(', ');
@@ -128,14 +128,49 @@ const OrdersQueryComponent: React.FC<{ companiesName: string }> = ({
   const processedResults = useMemo(() => {
     let filtered = [...results];
 
+    // Filtros generales
     Object.entries(filters).forEach(([key, value]) => {
-      if (value) {
+      if (value && key !== 'dateFrom' && key !== 'dateTo') {
         filtered = filtered.filter((item) =>
           String(item[key] || "").toLowerCase().includes(value.toLowerCase())
         );
       }
     });
 
+    // Filtrado por rango de fechas (corregido)
+    if (filters.dateFrom) {
+      const filterDateFrom = new Date(filters.dateFrom);
+      filterDateFrom.setHours(0, 0, 0, 0); // Normalizar a inicio del día
+      
+      filtered = filtered.filter((item) => {
+        try {
+          const itemDate = new Date(item.createdAt);
+          itemDate.setHours(0, 0, 0, 0); // Normalizar a inicio del día
+          return itemDate >= filterDateFrom;
+        } catch (e) {
+          console.error("Error al procesar fecha:", item.createdAt, e);
+          return false;
+        }
+      });
+    }
+
+    if (filters.dateTo) {
+      const filterDateTo = new Date(filters.dateTo);
+      filterDateTo.setHours(23, 59, 59, 999); // Normalizar a fin del día
+      
+      filtered = filtered.filter((item) => {
+        try {
+          const itemDate = new Date(item.createdAt);
+          itemDate.setHours(0, 0, 0, 0); // Normalizar a inicio del día
+          return itemDate <= filterDateTo;
+        } catch (e) {
+          console.error("Error al procesar fecha:", item.createdAt, e);
+          return false;
+        }
+      });
+    }
+
+    // Filtros por columna
     Object.entries(columnFilters).forEach(([column, value]) => {
       if (value) {
         filtered = filtered.filter((item) =>
@@ -144,18 +179,22 @@ const OrdersQueryComponent: React.FC<{ companiesName: string }> = ({
       }
     });
 
+    // Ordenamiento
     filtered.sort((a, b) => {
       const aValue = a[orderBy];
       const bValue = b[orderBy];
-      
-      // Manejo especial para fechas
+
       if (orderBy === "createdAt" || orderBy === "updatedAt") {
-        const dateA = new Date(aValue).getTime();
-        const dateB = new Date(bValue).getTime();
-        return order === "asc" ? dateA - dateB : dateB - dateA;
+        try {
+          const dateA = new Date(aValue).getTime();
+          const dateB = new Date(bValue).getTime();
+          return order === "asc" ? dateA - dateB : dateB - dateA;
+        } catch (e) {
+          console.error("Error al ordenar por fecha:", e);
+          return 0;
+        }
       }
-      
-      // Ordenamiento normal para otros campos
+
       return order === "asc"
         ? String(aValue).localeCompare(String(bValue))
         : String(bValue).localeCompare(String(aValue));
@@ -394,74 +433,82 @@ const OrdersQueryComponent: React.FC<{ companiesName: string }> = ({
       )}
 
       {results.length > 0 && (
-        <Paper>
-          <TableContainer>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  {columns.map((col) => (
-                    <TableCell key={col.field} style={{ width: col.width }}>
-                      <Box display="flex" alignItems="center">
-                        <TableSortLabel
-                          active={orderBy === col.field}
-                          direction={orderBy === col.field ? order : 'asc'}
-                          onClick={() => handleSort(col.field)}
-                        >
-                          {col.label}
-                        </TableSortLabel>
-                        {col.filterable && (
-                          <IconButton
-                            size="small"
-                            onClick={(e) => openFilterMenu(e, col.field)}
-                          >
-                            <FilterList fontSize="small" />
-                          </IconButton>
-                        )}
-                      </Box>
-                      {columnFilters[col.field] && (
-                        <Box display="flex" alignItems="center" mt={1}>
-                          <Typography variant="caption" color="textSecondary">
-                            Filtro: {columnFilters[col.field]}
-                          </Typography>
-                          <IconButton
-                            size="small"
-                            onClick={() => clearColumnFilter(col.field)}
-                          >
-                            <Clear fontSize="small" />
-                          </IconButton>
-                        </Box>
-                      )}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {processedResults
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row, idx) => (
-                    <TableRow key={idx}>
+        <>
+          {processedResults.length === 0 ? (
+            <Typography variant="body1" color="textSecondary" sx={{ mt: 2 }}>
+              No se encontraron resultados con los filtros aplicados.
+            </Typography>
+          ) : (
+            <Paper>
+              <TableContainer>
+                <Table>
+                  <TableHead>
+                    <TableRow>
                       {columns.map((col) => (
-                        <TableCell key={col.field}>
-                          {col.format 
-                            ? col.format(row[col.field]) 
-                            : row[col.field] || '-'}
+                        <TableCell key={col.field} style={{ width: col.width }}>
+                          <Box display="flex" alignItems="center">
+                            <TableSortLabel
+                              active={orderBy === col.field}
+                              direction={orderBy === col.field ? order : 'asc'}
+                              onClick={() => handleSort(col.field)}
+                            >
+                              {col.label}
+                            </TableSortLabel>
+                            {col.filterable && (
+                              <IconButton
+                                size="small"
+                                onClick={(e) => openFilterMenu(e, col.field)}
+                              >
+                                <FilterList fontSize="small" />
+                              </IconButton>
+                            )}
+                          </Box>
+                          {columnFilters[col.field] && (
+                            <Box display="flex" alignItems="center" mt={1}>
+                              <Typography variant="caption" color="textSecondary">
+                                Filtro: {columnFilters[col.field]}
+                              </Typography>
+                              <IconButton
+                                size="small"
+                                onClick={() => clearColumnFilter(col.field)}
+                              >
+                                <Clear fontSize="small" />
+                              </IconButton>
+                            </Box>
+                          )}
                         </TableCell>
                       ))}
                     </TableRow>
-                  ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <TablePagination
-            component="div"
-            count={processedResults.length}
-            page={page}
-            onPageChange={handleChangePage}
-            rowsPerPage={rowsPerPage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-            rowsPerPageOptions={[5, 10, 25]}
-          />
-        </Paper>
+                  </TableHead>
+                  <TableBody>
+                    {processedResults
+                      .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                      .map((row, idx) => (
+                        <TableRow key={idx}>
+                          {columns.map((col) => (
+                            <TableCell key={col.field}>
+                              {col.format
+                                ? col.format(row[col.field])
+                                : row[col.field] || '-'}
+                            </TableCell>
+                          ))}
+                        </TableRow>
+                      ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+              <TablePagination
+                component="div"
+                count={processedResults.length}
+                page={page}
+                onPageChange={handleChangePage}
+                rowsPerPage={rowsPerPage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                rowsPerPageOptions={[5, 10, 25]}
+              />
+            </Paper>
+          )}
+        </>
       )}
 
       <Menu
