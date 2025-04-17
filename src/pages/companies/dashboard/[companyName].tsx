@@ -1219,6 +1219,7 @@ import QueryBuilderOutlinedIcon from "@mui/icons-material/QueryBuilderOutlined"
 import AnalyticsOutlinedIcon from "@mui/icons-material/AnalyticsOutlined"
 import DonutSmallOutlinedIcon from "@mui/icons-material/DonutSmallOutlined"
 import CierreZPage from "@/components/CierreZ/CierreZ"
+import OrdersQueryComponent from "@/components/OrdersQueryComponent/OrdersQueryComponent"
 
 const CompanyDashboardPage = () => {
   const router = useRouter()
@@ -1229,6 +1230,7 @@ const CompanyDashboardPage = () => {
   const [loading, setLoading] = useState(true)
   const [companiesData, setCompaniesData] = useState<any | undefined>()
   const [activeSection, setActiveSection] = useState("z-closing")
+  const [company,setCompany]=useState<any>({})
 
   useEffect(() => {
     if (!companyName) return
@@ -1244,6 +1246,7 @@ const CompanyDashboardPage = () => {
         })
 
         const result = await response.json()
+        setCompany(result.data)
 
         if (!response.ok) {
           throw new Error(result.error || "Error fetching data")
@@ -1265,22 +1268,26 @@ const CompanyDashboardPage = () => {
         setLoading(false)
       }
     }
-
+    
     fetchCompanyData()
   }, [companyName, dispatch])
+  
+  
+  console.log("🚀 ~ CompanyDashboardPage ~ companiesData:", companiesData?.data)
+
 
   if (!companyName || loading) {
     return (
-      <Box 
-        display="flex" 
-        justifyContent="center" 
-        alignItems="center" 
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
         minHeight="100vh"
         component={motion.div}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-      >
+        >
         <CircularProgress />
       </Box>
     )
@@ -1348,6 +1355,10 @@ const CompanyDashboardPage = () => {
             transition={{ duration: 0.3 }}
           >
             <Typography variant="h4">Orders</Typography>
+            {
+              (companiesData?.data?.companiesData||company) &&
+              <OrdersQueryComponent companiesName={companiesData?.data?.companyName||companiesData?.data?.companyName} />
+            }
           </motion.div>
         )
       case "employees":
