@@ -136,7 +136,7 @@ const Menufourd: React.FC<MenuProps> = (props) => {
                 >
                     {iconURL ?
                         <Logo
-                            namecompanies="LlakaScript"
+                            namecompanies={namecompanies || "LlakaScript"}
                             logoUrl={iconURL}
                             size={120} // Tamaño de la imagen
                             fontSize="30px" // Tamaño de la fuente
@@ -287,17 +287,17 @@ const Menufourd: React.FC<MenuProps> = (props) => {
                     </div>
                 ))}
             </main>
-              {
-                            orders.length > 0 &&
-                            <div className={styles.floatingButton}>
-                                <Orderflow
-                                    orders={orders} // Lista de órdenes seleccionadas
-                                    editOrder={editOrder} // Función para editar una orden
-                                    deleteOrder={deleteOrder} // Función para eliminar una orden
-                                    info={info}
-                                />
-                            </div>
-                        }
+            {
+                orders.length > 0 &&
+                <div className={styles.floatingButton}>
+                    <Orderflow
+                        orders={orders} // Lista de órdenes seleccionadas
+                        editOrder={editOrder} // Función para editar una orden
+                        deleteOrder={deleteOrder} // Función para eliminar una orden
+                        info={info}
+                    />
+                </div>
+            }
             <div
                 onMouseEnter={() => handleSectionEnter(`Button-${schedules}`)}
             >
