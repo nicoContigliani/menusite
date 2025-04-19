@@ -23,8 +23,8 @@ interface MenuItem {
     Price: string | number
     Menu_Title: string
     Item_Image: string,
-    extra?:any,
-    extras?:any
+    extra?: any,
+    extras?: any
 }
 
 interface MenuProps {
@@ -152,7 +152,7 @@ const Menuone: React.FC<MenuProps> = (props) => {
                 >
                     {iconURL ?
                         <Logo
-                            namecompanies="LlakaScript"
+                            namecompanies={namecompanies || "LlakaScript"}
                             logoUrl={iconURL}
                             size={120} // Tamaño de la imagen
                             fontSize="22px" // Tamaño de la fuente
@@ -163,7 +163,7 @@ const Menuone: React.FC<MenuProps> = (props) => {
                         : null}
                 </div>
 
-                <div className={styles.itemInfo }
+                <div className={styles.itemInfo}
                     onMouseEnter={() => handleSectionEnter("info")}
                     onMouseLeave={() => handleSectionLeave("info")}
                 >
@@ -250,7 +250,7 @@ const Menuone: React.FC<MenuProps> = (props) => {
                                         </div>
                                     </div>
                                     <div onMouseEnter={() => handleSectionEnter(`Button-${item.Name}`)}>
-                                    <CatchOrder
+                                        <CatchOrder
                                             title={item.Name}
                                             description={item.Description}
                                             price={item.Price}
