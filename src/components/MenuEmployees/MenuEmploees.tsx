@@ -168,6 +168,7 @@ import useRules from '../../../hooks/useRules';
 import { reduceSeccions } from '@/services/reduceSeccions.services';
 import { getLocalhostStorage } from '@/services/localstorage.services';
 import MenuInterface from './MenuOrderDetails/OrderSpeedMUI';
+import MenuLayout from '../MenuLayout/MenuLayout';
 
 type MenuEmploeesProps = {
     menuItems?: {
@@ -175,10 +176,10 @@ type MenuEmploeesProps = {
         companyNames?: string;
         hojas?: { staff?: any[] };
     };
-    namecompanies:any
+    namecompanies: any
 };
 
-const MenuEmploees: React.FC<MenuEmploeesProps> = ({ menuItems,namecompanies }) => {
+const MenuEmploees: React.FC<MenuEmploeesProps> = ({ menuItems, namecompanies }) => {
     const [dataGeneral, setDataGeneral] = useState<any>(undefined);
     const [selectedProfile, setSelectedProfile] = useState<string | null>(null);
     const [companyNames, setCompanyNames] = useState<string>("");
@@ -253,7 +254,9 @@ const MenuEmploees: React.FC<MenuEmploeesProps> = ({ menuItems,namecompanies }) 
     return (
         <div>
             {isLogin && validationEmploeesMail && (
-                <MenuInterface menuData={menuDatas} promotionsData={promotionsDatas} />
+                <div>
+                        <MenuInterface menuData={menuDatas} promotionsData={promotionsDatas} />
+                </div>
             )}
         </div>
     );
