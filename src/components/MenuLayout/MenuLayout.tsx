@@ -425,7 +425,7 @@ const MenuLayout = (props: any) => {
                                                     <Typography sx={{
                                                         fontSize: isMobile ? '0.75rem' : '0.85rem'
                                                     }}>
-                                                        +54 9 11 1234-5678
+                                                        +5492612444106
                                                     </Typography>
                                                 </Box>
 
@@ -437,7 +437,7 @@ const MenuLayout = (props: any) => {
                                                 }}>
                                                     <WhatsApp fontSize="small" />
                                                     <Link
-                                                        href="https://wa.me/5491112345678"
+                                                        href="https://wa.me/5492612444106"
                                                         target="_blank"
                                                         rel="noopener noreferrer"
                                                         sx={{

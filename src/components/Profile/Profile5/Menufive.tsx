@@ -137,7 +137,7 @@ const Menufive: React.FC<MenuProps> = (props) => {
         <div className={styles.logo} onMouseEnter={() => handleSectionEnter("logo")}>
           {iconURL ? (
             <Logo
-              namecompanies="LlakaScript"
+              namecompanies={namecompanies || "LlakaScript"}
               logoUrl={iconURL}
               size={120} // Tamaño de la imagen
               fontSize="30px" // Tamaño de la fuente

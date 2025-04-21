@@ -219,7 +219,7 @@ const EmpresaPage = ({ nombre }: { nombre: string }) => {
     const si = await login(email, password);
 
     if (si !== null) {
-      await recordAttendance('getIn', email, companyName);
+         await recordAttendance('getIn', email, companyName);
     }
 
 
@@ -266,6 +266,7 @@ const EmpresaPage = ({ nombre }: { nombre: string }) => {
   // UI handlers
   const handleAuthModeToggle = () => {
     dispatch(clearError());
+    toggleAuthMode();
     // setError(null);
     // setIsRegistering(!isRegistering);
   };

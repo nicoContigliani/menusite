@@ -115,7 +115,7 @@ const MenuSixTeen: React.FC<MenuProps> = (props) => {
                     {iconURL ?
 
                         <Logo
-                            namecompanies="LlakaScript"
+                            namecompanies={namecompanies || "LlakaScript"}
                             logoUrl={iconURL}
                             size={120} // Tamaño de la imagen
                             fontSize="22px" // Tamaño de la fuente

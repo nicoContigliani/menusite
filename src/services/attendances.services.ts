@@ -9,10 +9,10 @@ interface AttendanceRecord {
 }
 
 export async function registerAttendance(record: AttendanceRecord) {
-  const dbName = process.env.NEXT_PUBLIC_NEXT_PUBLIC_NODE_ENV === "development" ? "menuDevDB" : "menuDB";
+  const dbName = process.env.NEXT_PUBLIC_NODE_ENV === "development" ? "menuDevDB" : "menuDB";
   const client = await clientPromise;
   const db = client.db(dbName);
-  
+
   try {
     // 1. Verificar en companies si el usuario pertenece al staff
     const company = await db.collection('companies').findOne(
@@ -24,7 +24,7 @@ export async function registerAttendance(record: AttendanceRecord) {
       throw new Error('Company not found');
     }
 
-    const isStaff = company.hojas.staff.some((member: any) => 
+    const isStaff = company.hojas.staff.some((member: any) =>
       member.email.toLowerCase() === record.email.toLowerCase()
     );
 
@@ -45,7 +45,7 @@ export async function registerAttendance(record: AttendanceRecord) {
       action: record.action,
       timestamp: record.timestamp
     };
-    
+
   } catch (error) {
     console.error('Error in registerAttendance:', error);
     throw error;
@@ -56,7 +56,7 @@ export async function getTodayShifts(email: string, companyName: string) {
   const dbName = process.env.NEXT_PUBLIC_NEXT_PUBLIC_NODE_ENV === "development" ? "menuDevDB" : "menuDB";
   const client = await clientPromise;
   const db = client.db(dbName);
-  
+
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
