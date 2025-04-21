@@ -43,7 +43,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import {
   Search as SearchIcon,
   ShoppingCart as ShoppingCartIcon,
-  Info as InfoIcon,
+  // AddTaskIcon as InfoIcon,
   Add as AddIcon,
   Remove as RemoveIcon,
   Delete as DeleteIcon,
@@ -51,6 +51,8 @@ import {
   LocalOffer as PromoIcon,
   Check,
 } from "@mui/icons-material";
+import AddTaskIcon from '@mui/icons-material/AddTask';
+
 import { Avatar } from '@mui/material';
 import RoomServiceIcon from '@mui/icons-material/RoomService';
 
@@ -98,6 +100,8 @@ type CartItem = {
   extras: MenuItemExtra[];
   extrasTotal: number;
   Description: any;
+  comments?: any; // Nuevo campo para comentarios específicos del ítem
+
 };
 
 type InfoType = {
@@ -201,7 +205,7 @@ export default function MenuInterface({ menuData, promotionsData = [] }: MenuInt
   const isMobile = useMediaQuery("(max-width: 768px)");
   const theme = useTheme();
   const { data } = useSelector((state: RootState) => state.chExcelData as unknown as { data: ExcelData });
-  const user = useSelector((state: RootState) => state.auth);
+  const user: any = useSelector((state: RootState) => state.auth);
 
   // Socket Connection
   const socket = io("https://socketserver-t4g9.onrender.com", {
@@ -374,7 +378,28 @@ export default function MenuInterface({ menuData, promotionsData = [] }: MenuInt
   // ======================================
   // Cart Management Functions
   // ======================================
-  const addToCart = (item: MenuItemType, extras: MenuItemExtra[] = []) => {
+  // const addToCart = (item: MenuItemType, extras: MenuItemExtra[] = []) => {
+  //   const price = Number.parseFloat(item.Price.replace("$", ""));
+  //   const extrasTotal = extras.reduce((sum, extra) => sum + extra.price, 0);
+
+  //   const newItem: CartItem = {
+  //     id: Date.now().toString(),
+  //     itemId: item.Item_id,
+  //     name: item.Name,
+  //     price: price,
+  //     quantity: 1,
+  //     extras: extras,
+  //     extrasTotal: extrasTotal,
+  //     Description: item.Description
+  //   };
+
+  //   setCart([...cart, newItem]);
+  //   setDetailsOpen(false);
+  //   setSelectedExtras([]);
+  // };
+
+
+  const addToCart = (item: MenuItemType, extras: MenuItemExtra[] = [], itemComments: string = "") => {
     const price = Number.parseFloat(item.Price.replace("$", ""));
     const extrasTotal = extras.reduce((sum, extra) => sum + extra.price, 0);
 
@@ -386,13 +411,16 @@ export default function MenuInterface({ menuData, promotionsData = [] }: MenuInt
       quantity: 1,
       extras: extras,
       extrasTotal: extrasTotal,
-      Description: item.Description
+      Description: item.Description,
+      comments: itemComments // Agregamos los comentarios específicos
     };
 
     setCart([...cart, newItem]);
     setDetailsOpen(false);
     setSelectedExtras([]);
+    setComments(""); // Limpiamos el campo de comentarios después de agregar
   };
+
 
   const openDetails = (item: MenuItemType) => {
     setSelectedItem(item);
@@ -823,18 +851,20 @@ export default function MenuInterface({ menuData, promotionsData = [] }: MenuInt
                     </Box>
 
                     <Box sx={{ display: "flex", gap: 1 }}>
-                      {item.extras && item.extras.length > 0 && (
-                        <motion.div whileHover={buttonHover} whileTap={buttonTap}>
-                          <IconButton color="primary" onClick={() => openDetails(item)} size="small">
-                            <InfoIcon />
-                          </IconButton>
-                        </motion.div>
-                      )}
                       <motion.div whileHover={buttonHover} whileTap={buttonTap}>
-                        <IconButton color="secondary" onClick={() => addToCart(item)} size="small">
+                        <IconButton color="info" onClick={() => addToCart(item)} size="small">
                           <AddIcon />
                         </IconButton>
                       </motion.div>
+
+                      {item.extras && item.extras.length > 0 && (
+                        <motion.div whileHover={buttonHover} whileTap={buttonTap}>
+                          <IconButton color="primary" onClick={() => openDetails(item)} size="small">
+                            <AddTaskIcon />
+                          </IconButton>
+                        </motion.div>
+                      )}
+
                     </Box>
                   </Box>
                 </ListItem>
@@ -857,6 +887,76 @@ export default function MenuInterface({ menuData, promotionsData = [] }: MenuInt
       </Container>
 
       {/* Item Details Dialog */}
+
+      {/* TODO TEXT INPUT  */}
+
+      {/* <Dialog open={detailsOpen} onClose={() => setDetailsOpen(false)} fullWidth maxWidth="sm">
+        {selectedItem && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.2 }}
+          >
+            <DialogTitle>{selectedItem.Name}</DialogTitle>
+            <DialogContent dividers>
+              <Typography variant="body1" paragraph>
+                {selectedItem.Description}
+              </Typography>
+              <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
+                {selectedItem.Price}
+              </Typography>
+
+              {selectedItem.extras && selectedItem.extras.length > 0 && (
+                <>
+                  <Typography variant="subtitle1" sx={{ mt: 2, mb: 1 }}>
+                    Extras disponibles:
+                  </Typography>
+                  <FormGroup>
+                    {selectedItem.extras.map((extra) => (
+                      <motion.div
+                        key={extra.name}
+                        whileHover={{ x: 5 }}
+                        transition={{ type: "spring", stiffness: 300 }}
+                      >
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              checked={selectedExtras.some(e => e.name === extra.name)}
+                              onChange={() => handleExtraToggle(extra)}
+                            />
+                          }
+                          label={`${extra.name.replace("_", " ")} (+$${extra.price})`}
+                        />
+                      </motion.div>
+                    ))}
+
+                  </FormGroup>
+                </>
+              )}
+
+              {selectedExtras.length > 0 && (
+                <Box sx={{ mt: 2 }}>
+                  <Typography variant="subtitle2">
+                    Extras seleccionados: ${selectedExtras.reduce((sum, extra) => sum + extra.price, 0)}
+                  </Typography>
+                </Box>
+              )}
+            </DialogContent>
+            <DialogActions>
+              <motion.div whileHover={buttonHover} whileTap={buttonTap}>
+                <Button onClick={() => setDetailsOpen(false)}>Cancelar</Button>
+              </motion.div>
+              <motion.div whileHover={buttonHover} whileTap={buttonTap}>
+                <Button variant="contained" color="primary" onClick={() => addToCart(selectedItem, selectedExtras)}>
+                  Agregar al pedido
+                </Button>
+              </motion.div>
+            </DialogActions>
+          </motion.div>
+        )}
+      </Dialog> */}
+
+
       <Dialog open={detailsOpen} onClose={() => setDetailsOpen(false)} fullWidth maxWidth="sm">
         {selectedItem && (
           <motion.div
@@ -900,6 +1000,19 @@ export default function MenuInterface({ menuData, promotionsData = [] }: MenuInt
                 </>
               )}
 
+              {/* Campo de comentarios específico para este ítem */}
+              <TextField
+                fullWidth
+                label="Comentarios para este plato"
+                value={comments}
+                onChange={(e) => setComments(e.target.value)}
+                sx={{ mt: 2, mb: 1 }}
+                size="small"
+                multiline
+                rows={2}
+                placeholder="Ej: Sin picante, bien cocido, etc."
+              />
+
               {selectedExtras.length > 0 && (
                 <Box sx={{ mt: 2 }}>
                   <Typography variant="subtitle2">
@@ -913,7 +1026,11 @@ export default function MenuInterface({ menuData, promotionsData = [] }: MenuInt
                 <Button onClick={() => setDetailsOpen(false)}>Cancelar</Button>
               </motion.div>
               <motion.div whileHover={buttonHover} whileTap={buttonTap}>
-                <Button variant="contained" color="primary" onClick={() => addToCart(selectedItem, selectedExtras)}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => addToCart(selectedItem, selectedExtras, comments)}
+                >
                   Agregar al pedido
                 </Button>
               </motion.div>
@@ -921,6 +1038,8 @@ export default function MenuInterface({ menuData, promotionsData = [] }: MenuInt
           </motion.div>
         )}
       </Dialog>
+
+
 
       {/* Filter Dialog */}
       <Dialog open={filterOpen} onClose={() => setFilterOpen(false)}>

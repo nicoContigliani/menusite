@@ -253,16 +253,6 @@ const EmpresaPage = ({ nombre }: { nombre: string }) => {
   // }, [handleLogin, handleRegister])
 
 
-
-
-
-
-
-
-
-
-
-
   // UI handlers
   const handleAuthModeToggle = () => {
     dispatch(clearError());
@@ -270,8 +260,6 @@ const EmpresaPage = ({ nombre }: { nombre: string }) => {
     // setError(null);
     // setIsRegistering(!isRegistering);
   };
-
-
 
   // Use access control hook
   const { access, hasAccess } = useAccessControl(Config, staff);

@@ -187,6 +187,7 @@ import {
     Avatar,
     Box,
     Button,
+    Chip,
     Divider,
     FormControl,
     IconButton,
@@ -358,7 +359,7 @@ const OrderAsk = (props: any) => {
                 ) : (
                     <>
                         <List sx={{ mb: 2 }}>
-                            {cart.map((item: any, index: number) => (
+                            {/* {cart.map((item: any, index: number) => (
                                 <motion.div
                                     key={item.id}
                                     custom={index}
@@ -407,6 +408,56 @@ const OrderAsk = (props: any) => {
                                         </Box>
                                     </ListItem>
                                 </motion.div>
+                            ))} */}
+
+// En el componente OrderAsk, donde se muestran los ítems del carrito:
+                            {cart.map((item: any) => (
+                                <Box key={item.id} sx={{ mb: 2, p: 2, backgroundColor: '#fff', borderRadius: 1 }}>
+                                    <Box display="flex" justifyContent="space-between">
+                                        <Typography fontWeight="bold">{item.name}</Typography>
+                                        <Typography>${(item.price + item.extrasTotal) * item.quantity}</Typography>
+                                    </Box>
+
+                                    {/* Mostrar comentarios si existen */}
+                                    {item.comments && (
+                                        <Typography variant="body2" color="text.secondary" sx={{ mt: 1, fontStyle: 'italic' }}>
+                                            <strong>Notas:</strong> {item.comments}
+                                        </Typography>
+                                    )}
+
+                                    {/* Mostrar extras si existen */}
+                                    {item.extras.length > 0 && (
+                                        <Box sx={{ mt: 1 }}>
+                                            <Typography variant="caption" color="text.secondary">
+                                                Extras:
+                                            </Typography>
+                                            {item.extras.map((extra: any, idx: any) => (
+                                                <Chip
+                                                    key={idx}
+                                                    label={`${extra.name} (+$${extra.price})`}
+                                                    size="small"
+                                                    sx={{ ml: 0.5, mb: 0.5 }}
+                                                />
+                                            ))}
+                                        </Box>
+                                    )}
+
+                                    {/* Controles de cantidad */}
+                                    <Box display="flex" alignItems="center" justifyContent="space-between" mt={1}>
+                                        <Box display="flex" alignItems="center">
+                                            <IconButton onClick={() => decrementQuantity(item.id)} size="small">
+                                                <RemoveIcon />
+                                            </IconButton>
+                                            <Typography mx={1}>{item.quantity}</Typography>
+                                            <IconButton onClick={() => incrementQuantity(item.id)} size="small">
+                                                <AddIcon />
+                                            </IconButton>
+                                        </Box>
+                                        <IconButton onClick={() => removeFromCart(item.id)} color="error" size="small">
+                                            <DeleteIcon />
+                                        </IconButton>
+                                    </Box>
+                                </Box>
                             ))}
                         </List>
 
