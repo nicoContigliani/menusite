@@ -1294,6 +1294,7 @@ interface OrderItem {
   }>
   extrasTotal?: number
   Description: string
+  comments?: any
 }
 
 interface Order {
@@ -1480,7 +1481,7 @@ const OrdersListView = ({ ordersByStatus, onOrderAction }: OrdersScreenStaffProp
 
   const allOrders = Object.entries(ordersByStatus)
     .flatMap(([status, orders]) =>
-      (orders || []).map((order:any) => ({
+      (orders || []).map((order: any) => ({
         ...order,
         statusPriority: statusPriority[status as keyof typeof statusPriority] || 99,
       })),
@@ -1546,19 +1547,18 @@ const OrderListItem = ({
         mb: 1,
         "&:before": { display: "none" },
         borderLeft: 3,
-        borderColor: `${
-          status === "pending"
-            ? "warning.main"
-            : status === "processing"
-              ? "info.main"
-              : status === "paused"
-                ? "text.disabled"
-                : status === "finished"
-                  ? "success.main"
-                  : status === "delivered"
-                    ? "secondary.main"
-                    : "error.main"
-        }`,
+        borderColor: `${status === "pending"
+          ? "warning.main"
+          : status === "processing"
+            ? "info.main"
+            : status === "paused"
+              ? "text.disabled"
+              : status === "finished"
+                ? "success.main"
+                : status === "delivered"
+                  ? "secondary.main"
+                  : "error.main"
+          }`,
       }}
     >
       <AccordionSummary
@@ -1694,19 +1694,18 @@ const StatusColumn = ({ status, orders, onOrderAction }: StatusColumnProps) => {
         display: "flex",
         flexDirection: "column",
         borderTop: 3,
-        borderColor: `${
-          status === "pending"
-            ? "warning.main"
-            : status === "processing"
-              ? "info.main"
-              : status === "paused"
-                ? "text.disabled"
-                : status === "finished"
-                  ? "success.main"
-                  : status === "delivered"
-                    ? "secondary.main"
-                    : "error.main"
-        }`,
+        borderColor: `${status === "pending"
+          ? "warning.main"
+          : status === "processing"
+            ? "info.main"
+            : status === "paused"
+              ? "text.disabled"
+              : status === "finished"
+                ? "success.main"
+                : status === "delivered"
+                  ? "secondary.main"
+                  : "error.main"
+          }`,
       }}
     >
       <Box
@@ -1754,6 +1753,7 @@ interface OrderItemProps {
 }
 
 const OrderItem = ({ order, status, onOrderAction }: OrderItemProps) => {
+  console.log("🚀 ~ OrderItem ~ order:", order)
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"))
   const config = statusConfig[status]
@@ -1819,6 +1819,7 @@ const OrderItem = ({ order, status, onOrderAction }: OrderItemProps) => {
                       item.extras && item.extras.length > 0 ? (
                         <List dense disablePadding sx={{ ml: 2 }}>
                           {item.extras.map((extra, idx) => (
+
                             <ListItem key={idx} disablePadding sx={{ py: 0 }}>
                               <ListItemText
                                 primary={
@@ -1828,8 +1829,16 @@ const OrderItem = ({ order, status, onOrderAction }: OrderItemProps) => {
                                   </Box>
                                 }
                               />
+
                             </ListItem>
                           ))}
+                          {
+                            (item?.comments) &&
+                            <span>
+                              `Nota: ${item?.comments}`
+                            </span>
+
+                          }
                         </List>
                       ) : null
                     }

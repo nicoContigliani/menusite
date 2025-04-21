@@ -275,7 +275,7 @@ export default function OrdersList({ data, loading, onAction }: OrderListProps) 
             ]
         };
 
-        
+
         const statusActions = baseActions[order.status as keyof typeof baseActions] || [];
         const commonActions = [];
 
