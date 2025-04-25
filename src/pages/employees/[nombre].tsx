@@ -20,7 +20,7 @@ import { GeolocationService } from '@/services/locationUser.services';
 import { LocationDiffService } from '@/services/locationDiff.services';
 import useAccessControl from '../../../hooks/useAccessControl';
 
-// Dynamic imports
+// Dynamic imports menu
 const MenuEmploees = dynamic(() => import('@/components/MenuEmployees/MenuEmploees'), {
   loading: () => (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
@@ -36,11 +36,11 @@ const OrdersSpeed = dynamic(() => import('@/components/OrdersSpeed/OrdersSpeed')
     </motion.div>
   ),
 });
-
+//menu
 const CustomSpeedDial = dynamic(() => import('@/components/SpeedDial/SpeedDial'), {
   loading: () => null,
 });
-
+//tv
 const OrdersSpeedPresentation = dynamic(() => import('@/components/OrdersSpeedPresentation/OrdersSpeedPresentation'), {
   loading: () => (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
@@ -48,7 +48,7 @@ const OrdersSpeedPresentation = dynamic(() => import('@/components/OrdersSpeedPr
     </motion.div>
   ),
 });
-
+//admin
 const OrdersSpeedPresentationStaff = dynamic(() => import('@/components/OrdersSpeedPresentationStaff/OrdersSpeedPresentationStaff'), {
   loading: () => (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
@@ -56,7 +56,7 @@ const OrdersSpeedPresentationStaff = dynamic(() => import('@/components/OrdersSp
     </motion.div>
   ),
 });
-
+//sale
 const OrdersSaleStaff = dynamic(() => import('@/components/OrdersSaleStaff/OrdersSaleStaff'), {
   loading: () => (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
@@ -219,7 +219,7 @@ const EmpresaPage = ({ nombre }: { nombre: string }) => {
     const si = await login(email, password);
 
     if (si !== null) {
-         await recordAttendance('getIn', email, companyName);
+      await recordAttendance('getIn', email, companyName);
     }
 
 
@@ -462,7 +462,7 @@ const EmpresaPage = ({ nombre }: { nombre: string }) => {
             </div>
           </div>
           <div className={styles.bottomBar}>
-            <p>&copy; {new Date().getFullYear()} Llakascript Technologies. All rights reserved.</p>
+            <>&copy; {new Date().getFullYear()} Llakascript Technologies. All rights reserved.</>
           </div>
         </footer>
       </div>

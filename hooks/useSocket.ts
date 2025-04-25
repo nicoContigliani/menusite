@@ -1,8 +1,5 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import io from "socket.io-client";
-
-const NEXT_PUBLIC_NODE_ENV: string = process.env.NEXT_PUBLIC_NEXT_PUBLIC_NODE_ENV || "";
-
 
 interface OrderItem {
   id: string;
@@ -18,8 +15,9 @@ interface OrderItem {
   Description: string;
 }
 
-interface OrderData {
-  id: string;
+export interface OrderData {
+  _id: string;
+  id?: string;
   orderType: string;
   dataTypeOrder: string;
   cart: OrderItem[];
@@ -32,6 +30,9 @@ interface OrderData {
   whathsapp: string;
   channel: string;
   name: string;
+  status?: "pending" | "processing" | "paused" | "finished" | "cancelled" | "delivered";
+  createdAt?: string;
+  updatedAt?: string;
   timestamp?: string;
 }
 
@@ -44,34 +45,34 @@ interface Message {
 }
 
 interface UseSocketChatReturn {
-  name: any;
-  setName: (name: any) => void;
-  room: any;
-  setRoom: (room: any) => void;
-  message: any;
-  setMessage: (message: any) => void;
+  name: string;
+  setName: (name: string) => void;
+  room: string;
+  setRoom: (room: string) => void;
+  message: string;
+  setMessage: (message: string) => void;
   messages: Message[];
-  joinRoom: () => void;
+  // joinRoom: () => void;
+  joinRoom: (room: any) => void;
   sendMessage: () => void;
-  sendOrder: (orderDetails: OrderData, roomsname: any | undefined) => void;
-  parsedMessages: Array<OrderData | any>;
+  sendOrder: (orderDetails: OrderData, roomsname?: string) => void;
+  parsedMessages: OrderData[] | any;
   isConnected: boolean;
   reconnectAttempts: number;
 }
 
-const useSocketChat = (socketUrl: string): UseSocketChatReturn => {
+const useSocketChat = (socketUrl: any): UseSocketChatReturn => {
   const [socket, setSocket] = useState<any | null>(null);
+  const socketRef = useRef<any | null>(null);
   const [name, setName] = useState('');
   const [room, setRoom] = useState('');
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState<Message[]>([]);
-  const [parsedMessages, setParsedMessages] = useState<Array<OrderData | string>>([]);
   const [isConnected, setIsConnected] = useState(false);
   const [reconnectAttempts, setReconnectAttempts] = useState(0);
-  const maxReconnectAttempts = 5;
-  const reconnectDelay = 5000; // 5 segundos
+  const maxReconnectAttempts = 30;
+  const reconnectDelay = 5000;
 
-  // Función para parsear profundamente JSON anidado
   const deepParseJson = useCallback((str: string): any => {
     try {
       let parsed = JSON.parse(str);
@@ -88,30 +89,52 @@ const useSocketChat = (socketUrl: string): UseSocketChatReturn => {
     }
   }, []);
 
-  // Procesar mensajes entrantes
-  const processIncomingMessage = useCallback((data: { from: string; message: string }): Message => {
-    const parsed = deepParseJson(data.message);
+ 
+  // }, [deepParseJson]);
 
-    if (parsed && typeof parsed === 'object' && parsed.id) {
+
+  const processIncomingMessage = useCallback((data: { from: string; message: string }): Message => {
+    try {
+      const parsed = typeof data.message === 'string' ? deepParseJson(data.message) : data.message;
+
+      if (parsed && typeof parsed === 'object' && (parsed._id || parsed.id)) {
+        const orderData: OrderData = {
+          ...parsed,
+          _id: parsed._id || parsed.id,
+          status: parsed.status || 'pending', // Valor por defecto
+          timestamp: parsed.timestamp || new Date().toISOString()
+        };
+
+        return {
+          name: data.from,
+          message: `Orden recibida (ID: ${orderData._id})`,
+          isOrder: true,
+          orderData,
+          timestamp: new Date().toISOString()
+        };
+      }
+
       return {
         name: data.from,
-        message: `Orden recibida (ID: ${parsed.id})`,
-        isOrder: true,
-        orderData: parsed,
+        message: typeof parsed === 'string' ? parsed : JSON.stringify(parsed),
+        isOrder: false,
+        timestamp: new Date().toISOString()
+      };
+    } catch (error) {
+      console.error('Error processing message:', error);
+      return {
+        name: data.from,
+        message: data.message,
+        isOrder: false,
         timestamp: new Date().toISOString()
       };
     }
-
-    return {
-      name: data.from,
-      message: typeof parsed === 'string' ? parsed : data.message,
-      isOrder: false,
-      timestamp: new Date().toISOString()
-    };
   }, [deepParseJson]);
 
-  // Función para inicializar el socket
+
   const initializeSocket = useCallback(() => {
+    if (socketRef.current) return socketRef.current;
+
     const newSocket = io(socketUrl, {
       transports: ['websocket'],
       reconnection: true,
@@ -121,27 +144,20 @@ const useSocketChat = (socketUrl: string): UseSocketChatReturn => {
       forceNew: true
     });
 
-    // Event listeners
     newSocket.on('connect', () => {
       setIsConnected(true);
       setReconnectAttempts(0);
-
-      if (NEXT_PUBLIC_NODE_ENV === "development") console.log('✅ Socket conectado');
-
-      // Reunirse a la sala si ya tenemos nombre y sala
-      if (name && room) {
-        newSocket.emit('join_channel', room);
-      }
+      console.log('Socket connected');
     });
 
     newSocket.on('disconnect', (reason: any) => {
       setIsConnected(false);
-      if (NEXT_PUBLIC_NODE_ENV === "development") console.log('❌ Socket desconectado:', reason);
+      console.log('Socket disconnected:', reason);
 
       if (reason === 'io server disconnect' || reason === 'io client disconnect') {
         setTimeout(() => {
           if (reconnectAttempts < maxReconnectAttempts) {
-            if (NEXT_PUBLIC_NODE_ENV === "development") console.log(`🔁 Intentando reconectar (${reconnectAttempts + 1}/${maxReconnectAttempts})`);
+            console.log(`Attempting to reconnect (${reconnectAttempts + 1}/${maxReconnectAttempts})`);
             newSocket.connect();
             setReconnectAttempts(prev => prev + 1);
           }
@@ -149,64 +165,70 @@ const useSocketChat = (socketUrl: string): UseSocketChatReturn => {
       }
     });
 
-    newSocket.on('reconnect_attempt', (attempt: any) => {
-      if (NEXT_PUBLIC_NODE_ENV === "development") console.log(`🔁 Intento de reconexión ${attempt}`);
-    });
-
-    newSocket.on('reconnect_error', (error: any) => {
-      if (NEXT_PUBLIC_NODE_ENV === "development") console.log('⚠️ Error de reconexión:', error);
-    });
-
-    newSocket.on('reconnect_failed', () => {
-      if (NEXT_PUBLIC_NODE_ENV === "development") console.log('❌ Reconexión fallida');
+    newSocket.on('connect_error', (err: any) => {
+      console.log('Socket connection error:', err);
     });
 
     newSocket.on('new_message', (data: { from: string; message: string }) => {
+      console.log('New message received:', data);
       const newMessage = processIncomingMessage(data);
       setMessages(prev => [...prev, newMessage]);
     });
 
+    newSocket.on('joined_channel', (channel: string) => {
+      console.log(`Successfully joined channel: ${channel}`);
+    });
+
+    socketRef.current = newSocket;
     setSocket(newSocket);
     return newSocket;
-  }, [socketUrl, name, room, reconnectAttempts, processIncomingMessage]);
+  }, [socketUrl, processIncomingMessage]);
 
-  // Efecto para inicializar el socket
   useEffect(() => {
     const newSocket = initializeSocket();
-
     return () => {
       newSocket.disconnect();
-      if (NEXT_PUBLIC_NODE_ENV === "development") console.log('🔌 Socket desconectado (cleanup)');
+      socketRef.current = null;
     };
   }, [initializeSocket]);
 
-  // Efecto para reconexión periódica si está desconectado
-  useEffect(() => {
-    if (!isConnected && socket && reconnectAttempts < maxReconnectAttempts) {
-      const timer = setTimeout(() => {
-        if (NEXT_PUBLIC_NODE_ENV === "development") console.log(`🔁 Intentando reconexión manual (${reconnectAttempts + 1}/${maxReconnectAttempts})`);
-        socket.connect();
-        setReconnectAttempts(prev => prev + 1);
-      }, reconnectDelay);
-
-      return () => clearTimeout(timer);
-    }
-  }, [isConnected, socket, reconnectAttempts]);
-
-  // Actualizar parsedMessages cuando cambian los mensajes
-  useEffect(() => {
-    const newParsedMessages = messages.map(msg => {
-      return msg.isOrder && msg.orderData ? msg.orderData : msg.message;
-    });
-    setParsedMessages(newParsedMessages);
+  // Extract only order messages and normalize data
+  const parsedMessages = useMemo(() => {
+    return messages
+      .filter(msg => msg.isOrder && msg.orderData)
+      .map(msg => ({
+        ...msg.orderData!,
+        _id: msg.orderData!._id || msg.orderData!.id,
+        timestamp: msg.timestamp
+      }));
   }, [messages]);
 
-  const joinRoom = useCallback(() => {
-    if (name && room && socket) {
-      socket.emit('join_channel', room);
-      if (NEXT_PUBLIC_NODE_ENV === "development") console.log(`🚪 Uniéndose a la sala: ${room}`);
+  // const joinRoom = useCallback(() => {
+  //   if (name && room && socket && isConnected) {
+  //     console.log(`Joining room: ${room}`);
+  //     socket.emit('join_channel', room);
+  //   }
+  // }, [name, room, socket, isConnected]);
+
+  // En useSocketChat.ts
+  const joinRoom: any = useCallback((roomName?: any) => {
+    const targetRoom = roomName || room;
+    if (name && targetRoom && socket && isConnected) {
+      console.log(`Joining room: ${targetRoom}`);
+      socket.emit('join_channel', targetRoom);
     }
-  }, [name, room, socket]);
+  }, [name, room, socket, isConnected]);
+
+  // Y actualiza el efecto que maneja la conexión
+  useEffect(() => {
+    if (name && room && isConnected) {
+      joinRoom();
+      console.log(`Unido a la sala: ${room} como ${name}`);
+    }
+  }, [name, room, isConnected, joinRoom]);
+
+
+
 
   const sendMessage = useCallback(() => {
     if (message && room && socket) {
@@ -215,26 +237,36 @@ const useSocketChat = (socketUrl: string): UseSocketChatReturn => {
         name,
         message,
       });
-      console.log(`✉️ Mensaje enviado a ${room}`);
       setMessage('');
     }
   }, [message, room, socket, name]);
 
-  const sendOrder = useCallback((orderDetails: OrderData, roomsname: any | undefined) => {
-    if (room && socket) {
+  const sendOrder = useCallback((orderDetails: OrderData, roomsname?: string) => {
+    if (socket) {
+      const targetRoom = roomsname || room;
       const orderWithMetadata: OrderData = {
         ...orderDetails,
-        channel: roomsname || room,
+        channel: targetRoom,
         name: name || 'System',
         timestamp: new Date().toISOString(),
       };
 
+      console.log('Sending order update:', orderWithMetadata);
+
+      // Update local state immediately for better UX
+      setMessages(prev => [...prev, {
+        name: name || 'System',
+        message: `Orden actualizada (ID: ${orderDetails._id})`,
+        isOrder: true,
+        orderData: orderWithMetadata,
+        timestamp: new Date().toISOString()
+      }]);
+
       socket.emit('send_message', {
-        channel: room,
+        channel: targetRoom,
         name: name || 'System',
         message: JSON.stringify(orderWithMetadata),
       });
-      console.log(`🛒 Orden enviada a ${room}`);
     }
   }, [room, socket, name]);
 

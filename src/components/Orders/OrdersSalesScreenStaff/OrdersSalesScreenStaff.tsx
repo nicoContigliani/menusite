@@ -534,7 +534,6 @@ const OrderItem = ({ order, status, onOrderAction }: OrderItemProps) => {
                 color={config.color === "default" ? "default" : (config.color as any)}
               />
             </Box>
-
             <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
               <Person fontSize="small" sx={{ mr: 0.5, opacity: 0.7, fontSize: "1rem" }} />
               <Typography variant="body2" noWrap sx={{ maxWidth: "150px" }}>

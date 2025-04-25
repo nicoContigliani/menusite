@@ -73,7 +73,6 @@ interface OrderDetailsProps {
 }
 
 const OrderDetails = ({ order, index }: OrderDetailsProps) => {
-    console.log("🚀 ~ OrderDetails ~ order:", order)
     const theme = useTheme();
     const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
 

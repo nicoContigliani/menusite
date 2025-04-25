@@ -7,6 +7,7 @@ export interface OrderItem {
   quantity: number;
   price: number;
   specialInstructions?: string;
+  extra?: any[] | any | null
 }
 
 export interface Customer {

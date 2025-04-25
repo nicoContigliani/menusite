@@ -208,9 +208,9 @@ export default function MenuInterface({ menuData, promotionsData = [] }: MenuInt
   const user: any = useSelector((state: RootState) => state.auth);
 
   // Socket Connection
-  const socket = io("https://socketserver-t4g9.onrender.com", {
-    transports: ["websocket"],
-  });
+  // const socket = io("https://socketserver-t4g9.onrender.com", {
+  //   transports: ["websocket"],
+  // });
 
   const {
     name,
@@ -226,6 +226,7 @@ export default function MenuInterface({ menuData, promotionsData = [] }: MenuInt
     parsedMessages,
     isConnected,
     reconnectAttempts,
+    // } = useSocketChat('https://socketserver-t4g9.onrender.com');
   } = useSocketChat('https://socketserver-t4g9.onrender.com');
 
   // ======================================
@@ -245,6 +246,8 @@ export default function MenuInterface({ menuData, promotionsData = [] }: MenuInt
     }
   }, [data]);
 
+  const channelName = `kitchen-${data.companyName}`;
+
   // ======================================
   // Socket Connection Management
   // ======================================
@@ -253,13 +256,15 @@ export default function MenuInterface({ menuData, promotionsData = [] }: MenuInt
       setName(user?.user?.email || '');
     }
     if (data) {
-      setRoom(data?.companyName || '');
+      // setRoom(data?.companyName || '');
+      setRoom(channelName);
+
     }
   }, [user, data, setName, setRoom]);
 
   useEffect(() => {
     if (name && room && isConnected) {
-      joinRoom();
+      joinRoom(channelName);
       console.log(`Unido a la sala: ${room} como ${name}`);
     }
   }, [name, room, isConnected, joinRoom]);

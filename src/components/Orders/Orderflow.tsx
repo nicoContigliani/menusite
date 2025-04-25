@@ -628,7 +628,7 @@ const Orderflow: React.FC<OrderFlowProps> = ({ orders, deleteOrder, editOrder, i
     }
 
     // Prepare order details
-    const orderDetails = {
+    const orderDetails:any = {
       id: Date.now().toString(),
       orderType: orderType === "en el lugar" ? "mesa" : orderType,
       dataTypeOrder: orderType === "en el lugar" ? `Mesa: ${tableNumber}` :
