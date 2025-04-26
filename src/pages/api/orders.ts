@@ -33,9 +33,64 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 }
 
+// async function handleGet(req: NextApiRequest, res: NextApiResponse, collection: any) {
+//   const { id, status, customer, dateFrom, dateTo, sort = "desc", watch } = req.query;
+//   console.log("🚀 ~ handleGet ~ req.query:", req.query)
+
+//   // Modo Watch (Server-Sent Events)
+//   if (watch === "true") {
+//     return setupChangeStream(req, res, collection);
+//   }
+
+//   // Modo GET tradicional
+//   const query: any = {};
+
+//   if (id) {
+//     try {
+//       query._id = new ObjectId(id as string);
+//     } catch {
+//       return res.status(400).json({ error: "Invalid order ID format" });
+//     }
+//   }
+
+//   // Manejar múltiples estados
+//   if (status) {
+//     if (typeof status === 'string' && status.includes(',')) {
+//       query.status = { $in: status.split(',') };
+//     } else {
+//       query.status = status;
+//     }
+//   }
+
+//   if (customer) query["customer.email"] = customer;
+
+//   if (dateFrom || dateTo) {
+//     query.createdAt = {};
+//     if (dateFrom) query.createdAt.$gte = new Date(dateFrom as string);
+//     if (dateTo) query.createdAt.$lte = new Date(dateTo as string);
+//   }
+
+//   const sortOption = { createdAt: sort === "asc" ? 1 : -1 };
+
+//   try {
+//     if (id) {
+//       const order = await collection.findOne(query);
+//       if (!order) return res.status(404).json({ error: "Order not found" });
+//       return res.status(200).json(order);
+//     } else {
+//       const orders = await collection.find(query).sort(sortOption).toArray();
+//       console.log("🚀 ~ handleGet ~ orders:", orders); // Agregado para debug
+//       return res.status(200).json(orders);
+//     }
+//   } catch (error) {
+//     console.error("Error fetching orders:", error);
+//     return res.status(500).json({ error: "Error fetching orders" });
+//   }
+// }
+
+
 async function handleGet(req: NextApiRequest, res: NextApiResponse, collection: any) {
   const { id, status, customer, dateFrom, dateTo, sort = "desc", watch } = req.query;
-  console.log("🚀 ~ handleGet ~ req.query:", req.query)
 
   // Modo Watch (Server-Sent Events)
   if (watch === "true") {
@@ -64,10 +119,23 @@ async function handleGet(req: NextApiRequest, res: NextApiResponse, collection: 
 
   if (customer) query["customer.email"] = customer;
 
-  if (dateFrom || dateTo) {
-    query.createdAt = {};
-    if (dateFrom) query.createdAt.$gte = new Date(dateFrom as string);
-    if (dateTo) query.createdAt.$lte = new Date(dateTo as string);
+  // Si no se proporcionan fechas, filtrar por el día actual
+  if (!dateFrom && !dateTo) {
+    const today = new Date();
+    const startOfDay = new Date(today.setHours(0, 0, 0, 0));
+    const endOfDay = new Date(today.setHours(23, 59, 59, 999));
+
+    query.createdAt = {
+      $gte: startOfDay,
+      $lte: endOfDay
+    };
+  } else {
+    // Usar las fechas proporcionadas
+    if (dateFrom || dateTo) {
+      query.createdAt = {};
+      if (dateFrom) query.createdAt.$gte = new Date(dateFrom as string);
+      if (dateTo) query.createdAt.$lte = new Date(dateTo as string);
+    }
   }
 
   const sortOption = { createdAt: sort === "asc" ? 1 : -1 };
@@ -79,7 +147,6 @@ async function handleGet(req: NextApiRequest, res: NextApiResponse, collection: 
       return res.status(200).json(order);
     } else {
       const orders = await collection.find(query).sort(sortOption).toArray();
-      console.log("🚀 ~ handleGet ~ orders:", orders); // Agregado para debug
       return res.status(200).json(orders);
     }
   } catch (error) {
@@ -87,6 +154,10 @@ async function handleGet(req: NextApiRequest, res: NextApiResponse, collection: 
     return res.status(500).json({ error: "Error fetching orders" });
   }
 }
+
+
+
+
 
 async function setupChangeStream(req: NextApiRequest, res: NextApiResponse, collection: any) {
   // Configura SSE

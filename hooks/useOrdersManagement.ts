@@ -307,12 +307,27 @@ export function useOrdersManagement({
     setError(null)
 
     try {
+      // const params = new URLSearchParams({
+      //   status: statusesToFetch,
+      //   sort: sortDirection,
+      //   limit: orderLimit.toString(),
+      //   company: companyName,
+      // })
+
+
+      const today = new Date();
+      const startOfDay = new Date(today.setHours(0, 0, 0, 0)).toISOString();
+      const endOfDay = new Date(today.setHours(23, 59, 59, 999)).toISOString();
+
       const params = new URLSearchParams({
         status: statusesToFetch,
         sort: sortDirection,
         limit: orderLimit.toString(),
         company: companyName,
-      })
+        dateFrom: startOfDay,
+        dateTo: endOfDay
+      });
+
 
       const res = await fetch(`/api/orders?${params}`)
       if (!res.ok) throw new Error(`Error: ${res.status}`)
@@ -333,19 +348,19 @@ export function useOrdersManagement({
     if (!parsedMessages || parsedMessages.length === 0) return
 
     // Procesar solo mensajes que son órdenes
-    const socketOrders = parsedMessages.filter((msg:any) => msg._id && msg.status)
-    
+    const socketOrders = parsedMessages.filter((msg: any) => msg._id && msg.status)
+
     setHistoricalOrders(prev => {
       // Filtrar para evitar duplicados
       const newOrders = socketOrders.filter(
-        (newOrder:any) => !prev.some((existingOrder:any) => existingOrder._id === newOrder._id)
+        (newOrder: any) => !prev.some((existingOrder: any) => existingOrder._id === newOrder._id)
       )
-      
+
       // Actualizar órdenes existentes si hay cambios
       const updatedOrders = prev.map(existingOrder => {
         const updatedOrder = socketOrders.find(
-          (newOrder:any) => newOrder._id === existingOrder._id && 
-                      newOrder.updatedAt > existingOrder.updatedAt
+          (newOrder: any) => newOrder._id === existingOrder._id &&
+            newOrder.updatedAt > existingOrder.updatedAt
         )
         return updatedOrder || existingOrder
       })
@@ -402,9 +417,9 @@ export function useOrdersManagement({
       }
 
       await updateOrderStatus(order._id, newStatus)
-      
+
       // Actualizar el estado local
-      setHistoricalOrders(prev => 
+      setHistoricalOrders(prev =>
         prev.map(o => o._id === order._id ? { ...o, status: newStatus } : o)
       )
     } catch (error) {

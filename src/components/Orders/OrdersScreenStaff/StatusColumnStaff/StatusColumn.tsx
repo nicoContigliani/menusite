@@ -1,47 +1,77 @@
-import React from 'react'
-
+import React, { useState } from 'react';
 import {
   Box,
-  Card,
-  CardContent,
+  Paper,
   Typography,
   List,
-  ListItem,
-  ListItemText,
-  Chip,
-  Divider,
-  Button,
-  Grid,
-  Paper,
-  Stack,
   Badge,
+  Button,
+  TextField,
+  InputAdornment,
+  IconButton,
   useTheme,
   useMediaQuery,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  DialogActions,
-} from "@mui/material"
+} from "@mui/material";
 import {
-  AccessTime,
-  CheckCircle,
-  Cancel,
-  LocalShipping,
-  Pending,
-  PlayArrow,
-  Pause,
-  LocalDining,
-  Person,
-  ExpandMore,
-  ShoppingCart,
-} from "@mui/icons-material"
-import OrderItem from '../OrderItemStaff/OrderItem'
+  Search,
+  Clear,
+} from "@mui/icons-material";
+import OrderItem from '../OrderItemStaff/OrderItem';
 
 const StatusColumn = (props: any) => {
-    const { status, orders, onOrderAction,statusConfig } = props
-    const theme = useTheme()
-    const isMobile = useMediaQuery(theme.breakpoints.down("sm"))
-    const config = statusConfig[status]
+    const { status, orders, onOrderAction, statusConfig } = props;
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+    const config = statusConfig[status];
+    
+    // Estado para la paginación
+    const [page, setPage] = useState(1);
+    const itemsPerPage = 5;
+    
+    // Estado para el filtro de búsqueda
+    const [searchTerm, setSearchTerm] = useState('');
+    
+    // Filtrar órdenes basado en el término de búsqueda
+    const filteredOrders = orders.filter((order: any) => {
+        const searchLower = searchTerm.toLowerCase();
+        return (
+            order.id.toLowerCase().includes(searchLower) ||
+            order.dataTypeOrder?.toLowerCase().includes(searchLower) ||
+            order.fullname?.toLowerCase().includes(searchLower) ||
+            order.comments?.toLowerCase().includes(searchLower)
+        );
+    });
+    
+    // Calcular páginas con las órdenes filtradas
+    const totalPages = Math.ceil(filteredOrders.length / itemsPerPage);
+    
+    // Obtener órdenes para la página actual
+    const paginatedOrders = filteredOrders.slice(
+        (page - 1) * itemsPerPage,
+        page * itemsPerPage
+    );
+
+    const handleNextPage = () => {
+        if (page < totalPages) {
+            setPage(page + 1);
+        }
+    };
+
+    const handlePrevPage = () => {
+        if (page > 1) {
+            setPage(page - 1);
+        }
+    };
+
+    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchTerm(e.target.value);
+        setPage(1); // Resetear a la primera página al buscar
+    };
+
+    const clearSearch = () => {
+        setSearchTerm('');
+        setPage(1);
+    };
 
     return (
         <Paper
@@ -81,9 +111,37 @@ const StatusColumn = (props: any) => {
                     {config.label}
                 </Typography>
                 <Badge
-                    badgeContent={orders.length}
+                    badgeContent={filteredOrders.length}
                     color={config.color === "default" ? "default" : (config.color as any)}
                     showZero
+                />
+            </Box>
+
+            {/* Campo de búsqueda */}
+            <Box sx={{ p: 1.5, borderBottom: 1, borderColor: 'divider' }}>
+                <TextField
+                    fullWidth
+                    variant="outlined"
+                    size="small"
+                    placeholder="Buscar orden..."
+                    value={searchTerm}
+                    onChange={handleSearchChange}
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment position="start">
+                                <Search />
+                            </InputAdornment>
+                        ),
+                        endAdornment: searchTerm && (
+                            <IconButton
+                                size="small"
+                                onClick={clearSearch}
+                                edge="end"
+                            >
+                                <Clear fontSize="small" />
+                            </IconButton>
+                        ),
+                    }}
                 />
             </Box>
 
@@ -91,17 +149,55 @@ const StatusColumn = (props: any) => {
                 sx={{
                     overflow: "auto",
                     flexGrow: 1,
-                    maxHeight: { xs: "calc(100vh - 180px)", md: "calc(100vh - 220px)" },
+                    maxHeight: { xs: "calc(100vh - 230px)", md: "calc(100vh - 270px)" },
                 }}
             >
                 <List disablePadding>
-                    {orders.map((order:any) => (
-                        <OrderItem key={order._id} order={order} status={status} onOrderAction={onOrderAction} statusConfig={statusConfig} />
-                    ))}
+                    {paginatedOrders.length > 0 ? (
+                        paginatedOrders.map((order: any) => (
+                            <OrderItem key={order._id} order={order} status={status} onOrderAction={onOrderAction} statusConfig={statusConfig} />
+                        ))
+                    ) : (
+                        <Box sx={{ p: 2, textAlign: 'center' }}>
+                            <Typography variant="body2" color="textSecondary">
+                                No se encontraron órdenes
+                            </Typography>
+                        </Box>
+                    )}
                 </List>
             </Box>
+            
+            {/* Controles de paginación */}
+            {filteredOrders.length > itemsPerPage && (
+                <Box sx={{ 
+                    display: 'flex', 
+                    justifyContent: 'space-between', 
+                    p: 1,
+                    borderTop: 1,
+                    borderColor: 'divider',
+                    bgcolor: 'background.paper'
+                }}>
+                    <Button 
+                        size="small" 
+                        onClick={handlePrevPage} 
+                        disabled={page === 1}
+                    >
+                        Anterior
+                    </Button>
+                    <Typography variant="body2" sx={{ alignSelf: 'center' }}>
+                        Página {page} de {totalPages}
+                    </Typography>
+                    <Button 
+                        size="small" 
+                        onClick={handleNextPage} 
+                        disabled={page === totalPages}
+                    >
+                        Siguiente
+                    </Button>
+                </Box>
+            )}
         </Paper>
-    )
-}
+    );
+};
 
-export default StatusColumn
+export default StatusColumn;
