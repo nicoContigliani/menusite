@@ -157,7 +157,11 @@ const OrdersScreenStaff = ({ ordersByStatus, onOrderAction, viewMode = "column",
 
   // Render list view for mobile
   if (viewMode === "list") {
-    return <OrdersListView ordersByStatus={ordersByStatus} onOrderAction={onOrderAction} statusConfig={statusConfig} />
+    return <OrdersListView
+      ordersByStatus={ordersByStatus}
+      onOrderAction={onOrderAction}
+      statusConfig={statusConfig}
+    />
   }
 
   // Render column view (default)
@@ -228,7 +232,12 @@ const OrdersScreenStaff = ({ ordersByStatus, onOrderAction, viewMode = "column",
                     minWidth: { xs: "280px", md: "auto" },
                   }}
                 >
-                  <StatusColumn status={status} statusConfig={statusConfig} orders={ordersByStatus[status] || []} onOrderAction={onOrderAction} />
+                  <StatusColumn
+                    status={status}
+                    statusConfig={statusConfig}
+                    orders={ordersByStatus[status] || []}
+                    onOrderAction={onOrderAction}
+                  />
                 </Grid>
               ))}
             </Grid>
