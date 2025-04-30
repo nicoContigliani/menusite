@@ -148,7 +148,6 @@ const OrdersSaleStaff = () => {
     companyName: data?.companyName,
     userEmail: user?.user?.email,
   })
-  console.log("🚀 ~ OrdersSaleStaff ~ ordersByStatus:", ordersByStatus)
 
   // Efecto para animación de título
   useEffect(() => {

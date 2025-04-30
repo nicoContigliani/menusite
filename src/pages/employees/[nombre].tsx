@@ -257,6 +257,7 @@ const EmpresaPage = ({ nombre }: { nombre: string }) => {
   const handleAuthModeToggle = () => {
     dispatch(clearError());
     toggleAuthMode();
+    
     // setError(null);
     // setIsRegistering(!isRegistering);
   };
