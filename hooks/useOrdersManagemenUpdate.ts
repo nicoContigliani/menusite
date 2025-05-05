@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react"
 import { useOrderUpdatesGeneral } from "./useOrderUpdatesGeneral"
 import useSocketChat from "./useSocket"
+import { socketHost } from "@/services/socketHost.services"
 
 export interface Order {
   _id: string
@@ -19,7 +20,7 @@ interface UseOrdersManagementProps {
 export function useOrdersManagemenUpdate({
   companyName,
   userEmail,
-  socketUrl = "https://socketserver-t4g9.onrender.com",
+  socketUrl = `${socketHost()}`||'https://socketserver-t4g9.onrender.com',
 }: UseOrdersManagementProps) {
 
   const [orders, setOrders] = useState<Order[]>([])

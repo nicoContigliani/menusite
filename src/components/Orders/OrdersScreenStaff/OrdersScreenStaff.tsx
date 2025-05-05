@@ -151,9 +151,16 @@ const OrdersScreenStaff = ({ ordersByStatus, onOrderAction, viewMode = "column",
   const isTablet = useMediaQuery(theme.breakpoints.down("md"))
 
   // Filter out empty status categories
+  // const activeStatuses = Object.entries(ordersByStatus)
+  //   .filter(([_, orders]) => orders && orders.length > 0)
+  //   .map(([status]) => status as keyof typeof statusConfig)
+
   const activeStatuses = Object.entries(ordersByStatus)
-    .filter(([_, orders]) => orders && orders.length > 0)
-    .map(([status]) => status as keyof typeof statusConfig)
+    ?.filter((entry): entry is [keyof typeof statusConfig, any] => {
+      const [_, orders] = entry;
+      return !!orders?.length;
+    })
+    ?.map(([status]) => status);
 
   // Render list view for mobile
   if (viewMode === "list") {

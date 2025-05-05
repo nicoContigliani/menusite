@@ -373,9 +373,112 @@ async function handlePost(req: NextApiRequest, res: NextApiResponse, collection:
 //   }
 // }
 
+
+//////////////////////////////////////******************************** */
+
+// async function handlePut(req: NextApiRequest, res: NextApiResponse, collection: any) {
+//   const { id } = req.query;
+//   const updateData = req.body;
+//   console.log("🚀 ~ handlePut ~ id:", id)
+//   console.log("🚀 ~ handlePut ~ updateData:", updateData)
+
+//   try {
+//     // CASO 1: Actualización MASIVA
+//     if (!id) {
+//       if (!updateData.query || typeof updateData.query !== "object") {
+//         return res.status(400).json({
+//           error: "Missing or invalid 'query' field for bulk update"
+//         });
+//       }
+
+//       if (!updateData.updates || typeof updateData.updates !== "object") {
+//         return res.status(400).json({
+//           error: "Missing or invalid 'updates' field for bulk update"
+//         });
+//       }
+
+//       if (Object.keys(updateData.query).length === 0) {
+//         return res.status(400).json({
+//           error: "Cannot update all orders without a filter"
+//         });
+//       }
+
+//       const update = {
+//         $set: {
+//           ...updateData.updates,
+//           updatedAt: new Date()
+//         },
+//         $inc: { version: 1 }
+//       };
+
+//       const result = await collection.updateMany(updateData.query, update);
+
+//       return res.status(200).json({
+//         message: "Bulk update successful",
+//         matchedCount: result.matchedCount,
+//         modifiedCount: result.modifiedCount
+//       });
+//     }
+
+//     // CASO 2: Actualización INDIVIDUAL
+//     const currentOrder = await collection.findOne({ _id: new ObjectId(id as string) });
+//     if (!currentOrder) {
+//       return res.status(404).json({ error: "Order not found" });
+//     }
+
+//     // Verificar versión para evitar conflictos
+//     // if (updateData.version && updateData.version !== currentOrder.version) {
+//     //   return res.status(409).json({
+//     //     error: "Conflict",
+//     //     message: "Order was modified by another user",
+//     //     currentOrder
+//     //   });
+//     // }
+
+//     // DETECTAR SI ES UNA ACTUALIZACIÓN COMPLETA
+//     const isCompleteUpdate = updateData._id && updateData.cart && updateData.orderType;
+
+//     let update;
+//     if (isCompleteUpdate) {
+//       // ACTUALIZACIÓN COMPLETA
+//       update = {
+//         ...updateData,
+//         _id: currentOrder._id, // Mantener el ID original
+//         createdAt: currentOrder.createdAt, // Mantener fecha de creación
+//         updatedAt: new Date(),
+//         version: currentOrder.version + 1
+//       };
+//     } else {
+//       // ACTUALIZACIÓN PARCIAL
+//       update = {
+//         ...updateData,
+//         updatedAt: new Date(),
+//         version: currentOrder.version + 1
+//       };
+
+//       // Eliminar campos no modificables
+//       delete update._id;
+//       delete update.createdAt;
+//     }
+
+//     const result = await collection.findOneAndUpdate(
+//       { _id: new ObjectId(id as string) },
+//       { $set: update },
+//       { returnDocument: "after" }
+//     );
+
+//     return res.status(200).json(result.value);
+//   } catch (error) {
+//     console.error("Error updating order:", error);
+//     return res.status(500).json({ error: "Error updating order" });
+//   }
+// }
+
 async function handlePut(req: NextApiRequest, res: NextApiResponse, collection: any) {
   const { id } = req.query;
   const updateData = req.body;
+  console.log("🚀 ~ handlePut ~ id:", id);
+  console.log("🚀 ~ handlePut ~ updateData:", updateData);
 
   try {
     // CASO 1: Actualización MASIVA
@@ -416,7 +519,16 @@ async function handlePut(req: NextApiRequest, res: NextApiResponse, collection: 
     }
 
     // CASO 2: Actualización INDIVIDUAL
-    const currentOrder = await collection.findOne({ _id: new ObjectId(id as string) });
+    let query;
+    // Check if id is a valid MongoDB ObjectId (24-character hex string)
+    if (/^[0-9a-fA-F]{24}$/.test(id as string)) {
+      query = { _id: new ObjectId(id as string) };
+    } else {
+      // Handle numeric or other ID types
+      query = { id: id }; // Assuming you might have an 'id' field for non-ObjectId identifiers
+    }
+
+    const currentOrder = await collection.findOne(query);
     if (!currentOrder) {
       return res.status(404).json({ error: "Order not found" });
     }
@@ -457,7 +569,7 @@ async function handlePut(req: NextApiRequest, res: NextApiResponse, collection: 
     }
 
     const result = await collection.findOneAndUpdate(
-      { _id: new ObjectId(id as string) },
+      query,
       { $set: update },
       { returnDocument: "after" }
     );
@@ -468,7 +580,6 @@ async function handlePut(req: NextApiRequest, res: NextApiResponse, collection: 
     return res.status(500).json({ error: "Error updating order" });
   }
 }
-
 
 
 

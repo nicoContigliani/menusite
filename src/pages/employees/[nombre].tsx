@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiEye, FiEyeOff, FiLoader, FiLogIn, FiUserPlus } from 'react-icons/fi';
+import HubIcon from '@mui/icons-material/Hub';
 import {
   loginSuccess,
   registerSuccess,
@@ -80,6 +81,8 @@ import Link from 'next/link';
 import { RootState } from '../../../store/store';
 import { useAuth } from '../../../hooks/useAuth';
 import { recordAttendance } from '@/services/attendance.services';
+import OrderSpeedGeneric from '@/components/orderSpeedGeneric/orderSpeedGeneric';
+import { socketHost } from '@/services/socketHost.services';
 
 // Interfaces
 interface CompaniesData {
@@ -145,7 +148,7 @@ const EmpresaPage = ({ nombre }: { nombre: string }) => {
   const [orderPresentationShow, setOrderPresentationShow] = useState(false);
   const [orderPresentationShowStaff, setOrderPresentationShowStaff] = useState(false);
   const [orderSalesShow, setSalesShow] = useState(false);
-
+  const [genericShow, setGenericShow] = useState(false);
 
 
   const {
@@ -257,7 +260,7 @@ const EmpresaPage = ({ nombre }: { nombre: string }) => {
   const handleAuthModeToggle = () => {
     dispatch(clearError());
     toggleAuthMode();
-    
+
     // setError(null);
     // setIsRegistering(!isRegistering);
   };
@@ -289,10 +292,20 @@ const EmpresaPage = ({ nombre }: { nombre: string }) => {
     setOrderPresentationShow(type === "PresentationSpeed");
     setOrderPresentationShowStaff(type === "PresentationSpeedStaff");
     setSalesShow(type === "SalesStaff");
+
+    setGenericShow(type === "GenericComponent");
+
+
   };
 
 
   const speedDialActions = useMemo(() => [
+    {
+      icon: <HubIcon />,
+      name: "Generic Component Staff",
+      onClick: () => handleSpeedDialAction("GenericComponent"),
+      visible: hasAccess('sales')
+    },
     {
       icon: <PointOfSaleIcon />,
       name: "Sales Staff",
@@ -403,6 +416,20 @@ const EmpresaPage = ({ nombre }: { nombre: string }) => {
               transition={{ duration: 0.3 }}
             >
               <OrdersSaleStaff />
+            </motion.div>
+          )}
+          {genericShow && (
+            <motion.div
+              key="genericShow"
+              className={styles.ordersContainer}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.3 }}
+            >
+              <OrderSpeedGeneric
+                
+              />
             </motion.div>
           )}
         </AnimatePresence>

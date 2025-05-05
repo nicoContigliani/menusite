@@ -499,6 +499,7 @@ import useSocketChat from "../../../hooks/useSocket"
 
 // Styles
 import styles from "./OrderFlow.module.css"
+import { socketHost } from "@/services/socketHost.services"
 
 // Types
 interface OrderExtra {
@@ -557,7 +558,7 @@ const Orderflow: React.FC<OrderFlowProps> = ({ orders, deleteOrder, editOrder, i
   const {
     sendOrder: sendSocketOrder,
     // Otros métodos del socket que no se usan pueden omitirse
-  } = useSocketChat('https://socketserver-t4g9.onrender.com')
+  } = useSocketChat(`${socketHost()}`||'https://socketserver-t4g9.onrender.com')
 
   // Effects
   useEffect(() => {

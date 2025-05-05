@@ -105,9 +105,6 @@ const OrderItem = (props: any) => {
 
     }
 
-
-
-
     return (
         <>
             <ListItem alignItems="flex-start" sx={{ p: 1 }}>
@@ -115,11 +112,11 @@ const OrderItem = (props: any) => {
                     <CardContent sx={{ p: 1.5, "&:last-child": { pb: 1.5 } }}>
                         <Box sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}>
                             <Typography variant="subtitle2" fontWeight="bold">
-                                #{order.id}
+                                #{order?.id}
                             </Typography>
                             <Chip
                                 size="small"
-                                label={order.orderType}
+                                label={order?.orderType}
                                 color={config.color === "default" ? "default" : (config.color as any)}
                             />
                         </Box>
@@ -141,30 +138,30 @@ const OrderItem = (props: any) => {
                         </Typography>
 
                         <List dense disablePadding>
-                            {order.cart.map((item: any) => (
-                                <ListItem key={item.id} disablePadding sx={{ py: 0.25 }}>
+                            {order?.cart?.map((item: any) => (
+                                <ListItem key={item?.id} disablePadding sx={{ py: 0.25 }}>
                                     <ListItemText
                                         primary={
                                             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
                                                 <Typography variant="body2" sx={{ fontSize: "0.8rem" }}>
-                                                    <strong>{item.quantity}x</strong> {item.name}
+                                                    <strong>{item.quantity}x</strong> {item?.name}
                                                 </Typography>
                                                 <Typography variant="body2" sx={{ fontSize: "0.8rem", ml: 1, flexShrink: 0 }}>
-                                                    ${item.price.toFixed(2)}
+                                                    ${item?.price?.toFixed(2)}
                                                 </Typography>
                                             </Box>
                                         }
                                         secondary={
-                                            item.extras && item.extras.length > 0 ? (
+                                            item?.extras && item?.extras.length > 0 ? (
                                                 <List dense disablePadding sx={{ ml: 2 }}>
-                                                    {item.extras.map((extra: any, idx: any) => (
+                                                    {item?.extras?.map((extra: any, idx: any) => (
 
                                                         <ListItem key={idx} disablePadding sx={{ py: 0 }}>
                                                             <ListItemText
                                                                 primary={
                                                                     <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                                                                        <Typography variant="caption">+ {extra.name}</Typography>
-                                                                        <Typography variant="caption">${extra.price.toFixed(2)}</Typography>
+                                                                        <Typography variant="caption">+ {extra?.name}</Typography>
+                                                                        <Typography variant="caption">${extra?.price.toFixed(2)}</Typography>
                                                                     </Box>
                                                                 }
                                                             />
@@ -219,8 +216,8 @@ const OrderItem = (props: any) => {
                                 // console.log("Orden actualizada:", updatedOrder);
                             }}
                             menuData={{
-                                mainMenu: hojas.Hoja1 || [],
-                                promotions: hojas.Promotion || []
+                                mainMenu: hojas?.Hoja1 || [],
+                                promotions: hojas?.Promotion || []
                             }}
                         />
 
@@ -265,7 +262,7 @@ const OrderItem = (props: any) => {
                                             fontSize: "0.7rem",
                                         }}
                                     >
-                                        {isMobile ? action.icon : action.label}
+                                        {isMobile ? action.icon : action?.label}
                                     </Button>
                                 ))}
                             </Stack>
@@ -278,4 +275,5 @@ const OrderItem = (props: any) => {
     )
 }
 
-export default OrderItem
+// export default OrderItem
+export default React.memo(OrderItem);

@@ -1,20 +1,20 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
-  Box,
-  Paper,
-  Typography,
-  List,
-  Badge,
-  Button,
-  TextField,
-  InputAdornment,
-  IconButton,
-  useTheme,
-  useMediaQuery,
+    Box,
+    Paper,
+    Typography,
+    List,
+    Badge,
+    Button,
+    TextField,
+    InputAdornment,
+    IconButton,
+    useTheme,
+    useMediaQuery,
 } from "@mui/material";
 import {
-  Search,
-  Clear,
+    Search,
+    Clear,
 } from "@mui/icons-material";
 import OrderItem from '../OrderItemStaff/OrderItem';
 
@@ -23,33 +23,52 @@ const StatusColumn = (props: any) => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
     const config = statusConfig[status];
-    
+
     // Estado para la paginación
     const [page, setPage] = useState(1);
     const itemsPerPage = 5;
-    
+
     // Estado para el filtro de búsqueda
     const [searchTerm, setSearchTerm] = useState('');
-    
-    // Filtrar órdenes basado en el término de búsqueda
-    const filteredOrders = orders.filter((order: any) => {
+
+    // // Filtrar órdenes basado en el término de búsqueda
+    // const filteredOrders = orders.filter((order: any) => {
+    //     const searchLower = searchTerm.toLowerCase();
+    //     return (
+    //         order.id.toLowerCase().includes(searchLower) ||
+    //         order.dataTypeOrder?.toLowerCase().includes(searchLower) ||
+    //         order.fullname?.toLowerCase().includes(searchLower) ||
+    //         order.comments?.toLowerCase().includes(searchLower)
+    //     );
+    // });
+
+    // // Calcular páginas con las órdenes filtradas
+    // const totalPages = Math.ceil(filteredOrders.length / itemsPerPage);
+
+    // // Obtener órdenes para la página actual
+    // const paginatedOrders = filteredOrders.slice(
+    //     (page - 1) * itemsPerPage,
+    //     page * itemsPerPage
+    // );
+
+    const filteredOrders = useMemo(() => {
         const searchLower = searchTerm.toLowerCase();
-        return (
-            order.id.toLowerCase().includes(searchLower) ||
+        return orders.filter((order: any) => (
+            order.id?.toLowerCase().includes(searchLower) ||
             order.dataTypeOrder?.toLowerCase().includes(searchLower) ||
             order.fullname?.toLowerCase().includes(searchLower) ||
             order.comments?.toLowerCase().includes(searchLower)
-        );
-    });
-    
-    // Calcular páginas con las órdenes filtradas
-    const totalPages = Math.ceil(filteredOrders.length / itemsPerPage);
-    
-    // Obtener órdenes para la página actual
-    const paginatedOrders = filteredOrders.slice(
-        (page - 1) * itemsPerPage,
-        page * itemsPerPage
-    );
+        ));
+    }, [orders, searchTerm]);
+
+    const totalPages = useMemo(() => (
+        Math.ceil(filteredOrders.length / itemsPerPage)
+    ), [filteredOrders]);
+
+    const paginatedOrders = useMemo(() => (
+        filteredOrders.slice((page - 1) * itemsPerPage, page * itemsPerPage)
+    ), [filteredOrders, page]);
+
 
     const handleNextPage = () => {
         if (page < totalPages) {
@@ -166,20 +185,20 @@ const StatusColumn = (props: any) => {
                     )}
                 </List>
             </Box>
-            
+
             {/* Controles de paginación */}
             {filteredOrders.length > itemsPerPage && (
-                <Box sx={{ 
-                    display: 'flex', 
-                    justifyContent: 'space-between', 
+                <Box sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
                     p: 1,
                     borderTop: 1,
                     borderColor: 'divider',
                     bgcolor: 'background.paper'
                 }}>
-                    <Button 
-                        size="small" 
-                        onClick={handlePrevPage} 
+                    <Button
+                        size="small"
+                        onClick={handlePrevPage}
                         disabled={page === 1}
                     >
                         Anterior
@@ -187,9 +206,9 @@ const StatusColumn = (props: any) => {
                     <Typography variant="body2" sx={{ alignSelf: 'center' }}>
                         Página {page} de {totalPages}
                     </Typography>
-                    <Button 
-                        size="small" 
-                        onClick={handleNextPage} 
+                    <Button
+                        size="small"
+                        onClick={handleNextPage}
                         disabled={page === totalPages}
                     >
                         Siguiente

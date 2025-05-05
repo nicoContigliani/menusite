@@ -68,6 +68,7 @@ import { ResponsiveIconMenu } from "@/components/ResponsiveIconMenu/ResponsiveIc
 import { GenericDrawer } from "@/components/CartDrawer/CartDrawer";
 import OrderAsk from "./orderAsk/OrderAsk";
 import { recordAttendance } from "@/services/attendance.services";
+import { socketHost } from "@/services/socketHost.services";
 
 // ======================================
 // Type Definitions
@@ -227,7 +228,7 @@ export default function MenuInterface({ menuData, promotionsData = [] }: MenuInt
     isConnected,
     reconnectAttempts,
     // } = useSocketChat('https://socketserver-t4g9.onrender.com');
-  } = useSocketChat('https://socketserver-t4g9.onrender.com');
+  } = useSocketChat(`${socketHost()}`||'https://socketserver-t4g9.onrender.com');
 
   // ======================================
   // Data Initialization Effects

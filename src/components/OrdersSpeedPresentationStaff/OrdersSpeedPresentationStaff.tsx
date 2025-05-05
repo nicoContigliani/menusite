@@ -47,11 +47,25 @@ const OrdersSpeedPresentationStaff = () => {
 
   const [open, setOpen] = useState(false);
 
-
   const { data } = useSelector((state: RootState) => state.chExcelData as unknown as { data: any })
   const user = useSelector((state: RootState) => state.auth)
 
   const {
+    // ordersByStatus,
+    // lastRefresh,
+    // isLoadingHistory,
+    // isUpdating,
+    // error,
+    // updateError,
+    // successMessage,
+    // fetchHistoricalOrders,
+    // handleOrderAction,
+    // handleOrderUpdateAction,
+    // clearMessages,
+    // setUpdateError,
+    // setError,
+    // isConnected,
+    historicalOrders,
     ordersByStatus,
     lastRefresh,
     isLoadingHistory,
@@ -59,17 +73,22 @@ const OrdersSpeedPresentationStaff = () => {
     error,
     updateError,
     successMessage,
+    isConnected,
+    reconnectAttempts,
     fetchHistoricalOrders,
     handleOrderAction,
     handleOrderUpdateAction,
     clearMessages,
     setUpdateError,
     setError,
-    isConnected,
+    room,
+    name,
   } = useOrdersManagement({
     companyName: data?.companyName,
     userEmail: user?.user?.email,
   })
+  console.log("🚀 ~ OrdersSpeedPresentationStaff ~ historicalOrders:", historicalOrders)
+  console.log("🚀 ~ OrdersSpeedPresentationStaff ~ ordersByStatus:", ordersByStatus)
 
   const totalOrders = Object.values(ordersByStatus).reduce((sum, orders) => sum + (orders?.length || 0), 0)
   const pendingCount = ordersByStatus.pending?.length || 0
