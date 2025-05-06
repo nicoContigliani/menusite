@@ -231,7 +231,7 @@ const OrderListItem: React.FC<OrderListItemProps> = ({
                 </AccordionDetails>
             </Accordion>
 
-            <EditOrderModal
+            {/* <EditOrderModal
                 open={open}
                 handleClose={handleClose}
                 order={localOrder}
@@ -245,7 +245,7 @@ const OrderListItem: React.FC<OrderListItemProps> = ({
                     mainMenu: hojas.Hoja1 || [],
                     promotions: hojas.Promotion || []
                 }}
-            />
+            /> */}
         </>
     );
 };

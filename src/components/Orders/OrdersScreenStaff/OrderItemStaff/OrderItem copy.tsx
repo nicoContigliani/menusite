@@ -64,8 +64,7 @@ const OrderItem = (props: any) => {
     const companiesData = useSelector((state: RootState) => state.chExcelData.data as unknown as CompaniesData | undefined);
     const { hojas, companyName } = companiesData || { hojas: { Config: [], staff: [] } };
     const { Config = [], staff = [] } = hojas;
-    const user = useSelector((state: RootState) => state.auth) || localStorage.getItem("email");
-
+    const user = useSelector((state: RootState) => state.auth)
     // console.log("🚀 ~ OrderItem ~ hojas:", hojas.Promotion)
     //modal
     const [open, setOpen] = useState(false);
@@ -82,9 +81,6 @@ const OrderItem = (props: any) => {
         companyName,
         userEmail: user?.user?.email
     });
-
-
-
 
 
     const theme = useTheme()
