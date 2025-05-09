@@ -39,7 +39,11 @@ const OrdersSpeed = dynamic(() => import('@/components/OrdersSpeed/OrdersSpeed')
 });
 //menu
 const CustomSpeedDial = dynamic(() => import('@/components/SpeedDial/SpeedDial'), {
-  loading: () => null,
+  loading: () => (
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+      <Skeleton active paragraph={{ rows: 8 }} />
+    </motion.div>
+  ),
 });
 //tv
 const OrdersSpeedPresentation = dynamic(() => import('@/components/OrdersSpeedPresentation/OrdersSpeedPresentation'), {
@@ -422,13 +426,13 @@ const EmpresaPage = ({ nombre }: { nombre: string }) => {
             <motion.div
               key="genericShow"
               className={styles.ordersContainer}
-              initial={{ opacity: 0, x: 20 }}
+              initial={{ opacity: 0, x: 0 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.3 }}
             >
               <OrderSpeedGeneric
-                
+
               />
             </motion.div>
           )}

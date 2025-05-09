@@ -3,7 +3,7 @@
 .authenticatedContainer,
 .authPageContainer {
   position: relative;
-  min-height: 100vh;
+  min-height: 100dvh;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -21,14 +21,14 @@
 /* ============ AUTHENTICATED STATE ============ */
 .authenticatedContainer {
   position: relative;
-  padding: 1rem;
+  padding: 0rem;
   background-color: #f8f9fa;
 }
 
 .menuContainer,
 .ordersContainer {
   width: 100%;
-  min-height: 80vh;
+  min-height: 80dvh;
   padding: 1rem;
   display: flex;
   flex-direction: column;
@@ -44,7 +44,7 @@
 /* ============ AUTH PAGE ============ */
 .heroSection {
   position: relative;
-  min-height: 100vh;
+  min-height: 100dvh;
   width: 100%;
   display: flex;
   flex-direction: column;

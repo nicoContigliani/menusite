@@ -168,7 +168,7 @@ const StatusColumn = (props: any) => {
                 sx={{
                     overflow: "auto",
                     flexGrow: 1,
-                    maxHeight: { xs: "calc(100vh - 230px)", md: "calc(100vh - 270px)" },
+                    maxHeight: { xs: "calc(100dvh - 230px)", md: "calc(100dvh - 270px)" },
                 }}
             >
                 <List disablePadding>
