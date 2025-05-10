@@ -1,3 +1,4 @@
+import { socketHost } from '@/services/socketHost.services';
 import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import io, { Socket } from 'socket.io-client';
 
@@ -79,8 +80,7 @@ export function useOrdersManagementSocketApi({
   companyName,
   userEmail,
   // socketUrl = 'https://socketserver-t4g9.onrender.com',
-  socketUrl = 'http://localhost:4000',
-
+  socketUrl = `${socketHost()}`||'https://socketserver-t4g9.onrender.com',
   orderLimit = 50,
   statusesToFetch = 'pending,processing,paused,finished,cancelled,delivered',
   sortDirection = 'desc',

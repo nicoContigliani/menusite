@@ -316,24 +316,24 @@ const EmpresaPage = ({ nombre }: { nombre: string }) => {
       onClick: () => handleSpeedDialAction("SalesStaff"),
       visible: hasAccess('sales')
     },
-    {
-      icon: <DashboardIcon />,
-      name: "Presentation Staff",
-      onClick: () => handleSpeedDialAction("PresentationSpeedStaff"),
-      visible: hasAccess('presentationStaff')
-    },
+    // {
+    //   icon: <DashboardIcon />,
+    //   name: "Presentation Staff",
+    //   onClick: () => handleSpeedDialAction("PresentationSpeedStaff"),
+    //   visible: hasAccess('presentationStaff')
+    // },
     {
       icon: <TvIcon />,
       name: "Presentation",
       onClick: () => handleSpeedDialAction("PresentationSpeed"),
       visible: hasAccess('presentation')
     },
-    {
-      icon: <GradingIcon />,
-      name: 'Orderskichen',
-      onClick: () => handleSpeedDialAction("OrderSpeed"),
-      visible: hasAccess('kichen')
-    },
+    // {
+    //   icon: <GradingIcon />,
+    //   name: 'Orderskichen',
+    //   onClick: () => handleSpeedDialAction("OrderSpeed"),
+    //   visible: hasAccess('kichen')
+    // },
     {
       icon: <FileCopyIcon />,
       name: 'Orders',
