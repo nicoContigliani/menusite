@@ -1917,8 +1917,8 @@ const OrderSpeedGeneric = () => {
         updateOrder,
         clearMessages,
     } = useOrdersManagementSocketApi({
-        companyName: data?.companyName || "LlakaScript",
-        userEmail: user?.user?.email || "nico.contigliani@gmail.com",
+        companyName: data?.companyName,
+        userEmail: user?.user?.email,
         orderLimit: 50,
     })
 
