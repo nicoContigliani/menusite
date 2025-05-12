@@ -20,7 +20,7 @@ interface UseOrdersManagementProps {
 export function useOrdersManagemenUpdate({
   companyName,
   userEmail,
-  socketUrl = `${socketHost()}`||'https://socketserver-t4g9.onrender.com',
+  socketUrl = 'https://socketserver-t4g9.onrender.com',
 }: UseOrdersManagementProps) {
 
   const [orders, setOrders] = useState<Order[]>([])

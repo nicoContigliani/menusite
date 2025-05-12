@@ -228,7 +228,7 @@ export default function MenuInterface({ menuData, promotionsData = [] }: MenuInt
     isConnected,
     reconnectAttempts,
     // } = useSocketChat('https://socketserver-t4g9.onrender.com');
-  } = useSocketChat(`${socketHost()}`||'https://socketserver-t4g9.onrender.com');
+  } = useSocketChat('https://socketserver-t4g9.onrender.com');
 
   // ======================================
   // Data Initialization Effects

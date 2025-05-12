@@ -1352,7 +1352,7 @@ export default function MenuInterface({ menuData, promotionsData = [] }: MenuInt
   } = useOrdersManagementSocketApi({
     companyName: data?.companyName,
     userEmail: user?.user?.email,
-    socketUrl:`${socketHost()}`||'https://socketserver-t4g9.onrender.com'
+    socketUrl:'https://socketserver-t4g9.onrender.com'
   });
 
   // ======================================

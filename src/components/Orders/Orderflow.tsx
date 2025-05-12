@@ -558,7 +558,7 @@ const Orderflow: React.FC<OrderFlowProps> = ({ orders, deleteOrder, editOrder, i
   const {
     sendOrder: sendSocketOrder,
     // Otros métodos del socket que no se usan pueden omitirse
-  } = useSocketChat(`${socketHost()}`||'https://socketserver-t4g9.onrender.com')
+  } = useSocketChat('https://socketserver-t4g9.onrender.com')
 
   // Effects
   useEffect(() => {

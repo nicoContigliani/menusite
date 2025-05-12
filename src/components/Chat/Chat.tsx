@@ -64,7 +64,7 @@ import io from "socket.io-client";
 
 // const socket = io("https://glitch.com/edit/#!/translucent-salt-moonstone?path=server.js%3A1%3A0")
 
-const socket = io(`${socketHost()}`||'https://socketserver-t4g9.onrender.com', {
+const socket = io('https://socketserver-t4g9.onrender.com', {
   transports: ["websocket"], // Fuerza el uso de WebSockets
 });
 

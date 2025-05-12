@@ -61,7 +61,7 @@ const OrdersSpeed = () => {
     reconnectAttempts,
     joinRoom,
     sendOrder
-  } = useSocketChat(`${socketHost()}`||'https://socketserver-t4g9.onrender.com');
+  } = useSocketChat('https://socketserver-t4g9.onrender.com');
 
   // Title animation effect
   useEffect(() => {
