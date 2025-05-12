@@ -80,7 +80,7 @@ export function useOrdersManagementSocketApi({
   companyName,
   userEmail,
   // socketUrl = 'https://socketserver-t4g9.onrender.com',
-  socketUrl = `${socketHost()}`||'https://socketserver-t4g9.onrender.com',
+  socketUrl = 'https://socketserver-t4g9.onrender.com',
   orderLimit = 50,
   statusesToFetch = 'pending,processing,paused,finished,cancelled,delivered',
   sortDirection = 'desc',
