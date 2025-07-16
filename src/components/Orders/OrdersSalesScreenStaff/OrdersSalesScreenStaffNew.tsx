@@ -475,6 +475,9 @@ const OrdersSalesScreenStaffNew = ({
           onPaymentSubmit={handlePaymentSubmit}
           orderTotal={calculateOrderTotal(selectedOrder)}
         />
+
+
+        
       )}
     </Box>
   );
