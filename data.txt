@@ -1,0 +1,11 @@
+a idea es mejorar estos procesos
+1- Centro de acopios
+Registro de personal
+Captura de artículos
+entrada y salida de kits
+
+2- distribución
+registro de beneficiarios
+obtener código de barras con los kits necesarios
+lista de kits para la comunidad
+leer los códigos para entrega de los kits
